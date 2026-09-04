@@ -55,7 +55,6 @@ export default function Home() {
         </section>
 
         <section className="feature-grid">
-          <div className="feature-photo photo-two" role="img" aria-label="Klein Cain varsity football players in purple uniforms" />
           <div className="feature-copy">
             <p className="section-label light">WHY CAIN IS FAVORED</p>
             <h2>The gap is bigger than the records.</h2>
