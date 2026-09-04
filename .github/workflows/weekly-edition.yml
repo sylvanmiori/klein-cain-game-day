@@ -53,7 +53,7 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         if: env.RUN_EDITION == 'true'
         with:
-          path: out
+          path: dist/client
       - name: Deploy to GitHub Pages
         id: deployment
         if: env.RUN_EDITION == 'true'
