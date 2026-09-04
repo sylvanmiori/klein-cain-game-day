@@ -1,8 +1,9 @@
 import edition from '../content/current-edition.json';
+import roster from '../content/roster-2026.json';
 
 const sources = [
   ['Official schedule', 'https://www.kleincainathletics.com/sport/football/boys/?tab=schedule'],
-  ['MaxPreps — Klein Cain', 'https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/'],
+  ['MaxPreps — Klein Cain roster', roster.sourceUrl],
   ['MaxPreps — Oak Ridge', 'https://www.maxpreps.com/tx/conroe/oak-ridge-war-eagles/football/'],
   ['Rivals — Earl O’Guinn Jr.', 'https://www.on3.com/rivals/earl-oguinn-jr-286130/'],
   ['Rivals — Finn Walker', 'https://www.on3.com/rivals/finn-walker-285232/'],
@@ -125,6 +126,25 @@ export default function Home() {
             <a href="https://kleinisd.hometownticketing.com/" target="_blank" rel="noreferrer">TICKETS ↗</a>
             <a href="https://www.nfhsnetwork.com/" target="_blank" rel="noreferrer">STREAM INFO ↗</a>
           </div>
+        </section>
+
+        <section className="roster" aria-labelledby="roster-heading">
+          <div className="roster-head">
+            <div>
+              <p className="section-label">2026 VARSITY ROSTER</p>
+              <h2 id="roster-heading">Klein Cain, by number.</h2>
+            </div>
+            <p>{roster.players.length} players · <a href={roster.sourceUrl} target="_blank" rel="noreferrer">{roster.source} roster ↗</a> · updated {roster.updated}</p>
+          </div>
+          <ol className="roster-list">
+            {roster.players.map((player, index) => (
+              <li key={`${player.number}-${player.name}-${index}`}>
+                <b>{player.number}</b>
+                <span><strong>{player.name}</strong><small>{player.position} · {player.class}</small></span>
+              </li>
+            ))}
+          </ol>
+          <p className="roster-note">Shared numbers and missing fields are shown as listed by the source.</p>
         </section>
       </article>
 
