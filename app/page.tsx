@@ -71,7 +71,7 @@ export default function Home() {
           <div className="player-grid">
             {edition.players.map((player) => (
               <article className={`player-card ${player.team === 'OAK RIDGE' ? 'red' : ''}`} key={player.name}>
-                <img className="player-photo" src={player.image} alt={`${player.name}, ${player.team} football`} />
+                <img className="player-photo" src={player.image || './player-placeholder.svg'} alt={`${player.name}, ${player.team} football`} />
                 <div className="player-identity">
                   <div className="player-top"><span>{player.team}</span><b>#{player.number}</b></div>
                   <h3>{player.name}</h3>
