@@ -6,7 +6,6 @@ const repository = 'klein-cain-game-day';
 const nextConfig: NextConfig = {
   output: 'export',
   trailingSlash: true,
-  basePath: isGitHubPages ? `/${repository}` : '',
   assetPrefix: isGitHubPages ? `/${repository}/` : '',
 };
 
