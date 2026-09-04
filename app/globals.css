@@ -8,58 +8,62 @@ a { color:inherit; text-decoration:none; }
 .masthead { height:70px; padding:0 3.5vw; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; border-bottom:1px solid var(--line); background:rgba(241,238,231,.96); }
 .wordmark { font-size:18px; font-weight:900; letter-spacing:-.045em; }
 .wordmark span { color:var(--purple); padding:0 .2em; }
-.masthead p { margin:0; font:italic 13px Georgia,serif; color:#645f56; }
+.masthead p { margin:0; font:italic 13px "Helvetica Neue", Helvetica, Arial, sans-serif; color:#645f56; }
 .issue { justify-self:end; font-size:10px; font-weight:800; letter-spacing:.14em; }
-.hero { min-height:700px; position:relative; display:flex; align-items:end; overflow:hidden; color:#fff; background:#21142a; }
-.hero-photo { position:absolute; inset:0; background:url('https://www.kleincainfootball.org/assets/05446/703f18761e5cb10da3bc0300780c0828') center 34%/cover no-repeat; filter:saturate(.72) contrast(1.06); transform:scale(1.012); }
-.hero-shade { position:absolute; inset:0; background:linear-gradient(90deg,rgba(12,5,18,.9) 0%,rgba(20,9,29,.47) 47%,rgba(9,4,12,.12) 75%),linear-gradient(0deg,rgba(0,0,0,.68),transparent 54%); }
-.hero-copy { position:relative; z-index:1; max-width:800px; padding:9vw 4vw 5vw; }
+.hero { display:grid; grid-template-columns:minmax(430px,.9fr) minmax(0,1.1fr); grid-template-rows:minmax(590px,calc(100vh - 140px)) 92px; overflow:hidden; color:#fff; background:#261333; }
+.hero-copy { display:flex; flex-direction:column; justify-content:flex-end; min-width:0; padding:80px 4vw 72px; background:linear-gradient(145deg,#321846 0%,#5f2791 100%); }
+.hero-photo { position:relative; min-width:0; margin:0; overflow:hidden; background:#151217; }
+.hero-photo img { width:100%; height:100%; display:block; object-fit:cover; object-position:52% 56%; filter:saturate(.78) contrast(1.04); }
+.hero-photo figcaption { position:absolute; right:18px; bottom:14px; padding:6px 8px; background:rgba(13,10,15,.74); font-size:8px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#ddd5e1; }
 .kicker,.section-label { font-size:10px; font-weight:900; letter-spacing:.18em; text-transform:uppercase; }
 .kicker { color:#e5c4ff; }
-.hero h1 { margin:.1em 0 .14em; font-size:clamp(76px,11.6vw,174px); line-height:.76; letter-spacing:-.078em; font-weight:950; }
-.dek { max-width:650px; margin:0; font:clamp(18px,2.05vw,28px)/1.33 Georgia,serif; }
-.scorebug { position:absolute; z-index:2; right:3.5vw; bottom:3.5vw; width:330px; padding:18px 20px 17px; background:rgba(12,9,14,.91); border-top:4px solid var(--violet); backdrop-filter:blur(12px); }
-.scorebug>div { display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; border-bottom:1px solid #4b444e; }
-.scorebug .home span { color:#d9b8f3; }
-.scorebug span { font-size:13px; font-weight:900; letter-spacing:.06em; }
-.scorebug strong { font-size:28px; }
-.scorebug b { position:absolute; left:50%; top:49px; color:#908b92; font-size:8px; letter-spacing:.13em; }
-.scorebug p { margin:14px 0 0; font-size:10px; font-weight:800; letter-spacing:.12em; }
+.hero h1 { margin:.16em 0 .2em; max-width:720px; font-size:clamp(72px,8.4vw,132px); line-height:.78; letter-spacing:-.078em; font-weight:950; }
+.dek { max-width:580px; margin:0; font:clamp(17px,1.45vw,23px)/1.38 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.matchup-rail { grid-column:1/-1; display:grid; grid-template-columns:1fr 42px 1fr auto; align-items:center; gap:22px; min-width:0; padding:0 4vw; background:#121013; border-top:1px solid #4e4552; }
+.matchup-rail>div { display:flex; align-items:baseline; gap:15px; }
+.matchup-rail .home span { color:#d9b8f3; }
+.matchup-rail span { font-size:13px; font-weight:900; letter-spacing:.08em; }
+.matchup-rail strong { color:#a29ca5; font-size:19px; }
+.matchup-rail b { color:#746e76; font-size:9px; letter-spacing:.14em; }
+.matchup-rail p { margin:0; padding-left:30px; border-left:1px solid #4e4552; font-size:10px; font-weight:800; letter-spacing:.12em; white-space:nowrap; }
 .snapshot { display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--line); }
 .snapshot>div { min-height:148px; padding:26px 3vw; display:flex; flex-direction:column; border-right:1px solid var(--line); }
 .snapshot span { font-size:9px; font-weight:900; letter-spacing:.16em; }
 .snapshot strong { margin-top:auto; font-size:clamp(24px,3.15vw,46px); letter-spacing:-.06em; }
 .snapshot small { color:#908a80; font-size:.34em; }
-.snapshot em { font:italic 12px Georgia,serif; color:#6a655d; }
+.snapshot em { font:italic 12px "Helvetica Neue", Helvetica, Arial, sans-serif; color:#6a655d; }
 article>section { border-bottom:1px solid var(--line); }
 .section-label { color:var(--purple); }
 .light { color:#d9b8f3; }
 .opening { display:grid; grid-template-columns:.7fr 2.15fr 1fr; gap:5vw; padding:90px 4vw 110px; }
-.opening h2,.section-head h2,.feature-copy h2,.recruiting h2,.gameday h2 { margin:0; font-family:Georgia,serif; letter-spacing:-.04em; }
+.opening h2,.section-head h2,.feature-copy h2,.recruiting h2,.gameday h2 { margin:0; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; font-weight:850; letter-spacing:-.055em; }
 .opening h2 { font-size:clamp(38px,5.2vw,74px); line-height:.99; }
-.opening>p:last-child { margin:0; font:18px/1.65 Georgia,serif; }
+.opening>p:last-child { margin:0; font:18px/1.65 "Helvetica Neue", Helvetica, Arial, sans-serif; }
 .byline { margin:28px 0 0; font-size:9px; font-weight:900; letter-spacing:.13em; color:#716b62; }
 .feature-grid { display:grid; grid-template-columns:1.25fr 1fr; min-height:720px; background:#17131a; color:#f6f1e8; }
 .feature-photo { min-height:550px; background:center/cover no-repeat; }
 .photo-two { background-image:linear-gradient(0deg,rgba(0,0,0,.12),rgba(0,0,0,.12)),url('https://www.kleincainfootball.org/assets/05446/fd9d76c595f62bc0427a6db5c47b9b50'); }
 .feature-copy { align-self:center; padding:8vw 6vw; }
 .feature-copy h2 { margin:.35em 0 .55em; font-size:clamp(45px,5.8vw,84px); line-height:.94; }
-.feature-copy>p:not(.section-label) { max-width:590px; font:17px/1.65 Georgia,serif; color:#d8d0c7; }
+.feature-copy>p:not(.section-label) { max-width:590px; font:17px/1.65 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#d8d0c7; }
 .players { padding:105px 4vw 120px; }
 .section-head { display:grid; grid-template-columns:.7fr 3fr; gap:5vw; margin-bottom:62px; }
 .section-head h2 { max-width:980px; font-size:clamp(40px,5.5vw,76px); line-height:.97; }
-.player-grid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid #272421; border-left:1px solid #272421; }
-.player-card { min-height:440px; padding:26px; border-right:1px solid #272421; border-bottom:1px solid #272421; display:flex; flex-direction:column; }
-.player-top { display:flex; justify-content:space-between; align-items:start; }
+.player-grid { border-top:1px solid #272421; }
+.player-card { min-height:148px; display:grid; grid-template-columns:104px minmax(240px,.8fr) minmax(190px,.58fr) minmax(300px,1.35fr); gap:28px; align-items:center; padding:20px 22px 20px 0; border-bottom:1px solid #aaa49b; }
+.player-photo { width:82px; height:82px; margin-left:2px; border-radius:50%; object-fit:cover; object-position:center top; background:#ddd7cf; border:3px solid #ded7e0; }
+.red .player-photo { border-color:#e3c4c7; }
+.player-top { display:flex; gap:12px; align-items:center; }
 .player-top span { padding:6px 8px; background:var(--purple); color:#fff; font-size:9px; font-weight:900; letter-spacing:.12em; }
 .red .player-top span { background:var(--red); }
-.player-top b { font-size:78px; line-height:.78; letter-spacing:-.08em; color:#c9c2b8; }
-.player-card h3 { margin:50px 0 3px; font-size:27px; letter-spacing:-.045em; }
-.player-card .role { margin:0; font:italic 14px Georgia,serif; color:#6e685f; }
-.rating { display:flex; flex-direction:column; gap:4px; margin:25px 0 18px; padding-top:15px; border-top:1px solid #c9c2b8; }
+.player-top b { color:#8a847b; font-size:11px; letter-spacing:.05em; }
+.player-card h3 { margin:12px 0 2px; font-size:25px; letter-spacing:-.045em; }
+.player-card .role { margin:0; font:italic 14px "Helvetica Neue", Helvetica, Arial, sans-serif; color:#6e685f; }
+.rating { display:flex; flex-direction:column; gap:7px; margin:0; padding-left:26px; border-left:1px solid #c9c2b8; }
 .rating strong { font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
-.rating span { font:italic 12px Georgia,serif; color:#6e685f; }
-.player-card>p:last-child { margin:auto 0 0; font:15px/1.55 Georgia,serif; }
+.rating span { font:italic 12px "Helvetica Neue", Helvetica, Arial, sans-serif; color:#6e685f; }
+.player-copy { margin:0; font:14px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.photo-note { margin:14px 0 0; font:italic 10px "Helvetica Neue", Helvetica, Arial, sans-serif; color:#777067; }
 .recruiting { padding:105px 4vw; background:#251633; color:#fff; }
 .recruiting>div:first-child { display:grid; grid-template-columns:.7fr 3fr; gap:5vw; margin-bottom:55px; }
 .recruiting h2 { font-size:clamp(42px,6vw,86px); line-height:.95; }
@@ -67,27 +71,27 @@ article>section { border-bottom:1px solid var(--line); }
 .recruit-row:last-of-type { border-bottom:1px solid #6e4c83; }
 .recruit-no { font-size:70px; font-weight:950; letter-spacing:-.08em; color:#b68ad2; }
 .recruit-row strong { font-size:13px; letter-spacing:.06em; }
-.recruit-row p { margin:6px 0 0; max-width:730px; font:16px/1.5 Georgia,serif; color:#d5cbd9; }
+.recruit-row p { margin:6px 0 0; max-width:730px; font:16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#d5cbd9; }
 .recruit-row a,.gameday-links a { font-size:10px; font-weight:900; letter-spacing:.12em; border-bottom:1px solid currentColor; padding-bottom:4px; white-space:nowrap; }
-.fineprint { margin:26px 0 0; max-width:780px; font:12px/1.5 Georgia,serif; color:#af9eba; }
+.fineprint { margin:26px 0 0; max-width:780px; font:12px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#af9eba; }
 .keys { padding:105px 4vw 120px; }
 .keys ol { list-style:none; padding:0; margin:0 0 0 calc(18% + 5vw); border-top:1px solid #292622; }
 .keys li { display:grid; grid-template-columns:95px 1fr; gap:30px; padding:38px 0; border-bottom:1px solid #292622; }
 .keys li>span { font-size:35px; font-weight:900; color:var(--purple); }
 .keys h3 { margin:0 0 7px; font-size:29px; letter-spacing:-.04em; }
-.keys li p { margin:0; max-width:700px; font:16px/1.58 Georgia,serif; }
+.keys li p { margin:0; max-width:700px; font:16px/1.58 "Helvetica Neue", Helvetica, Arial, sans-serif; }
 .gameday { padding:95px 4vw; display:grid; grid-template-columns:1fr 1.7fr; gap:7vw; background:#111; color:#fff; }
 .gameday h2 { margin-top:.28em; font-size:clamp(45px,6vw,86px); line-height:.95; }
 .gameday dl { margin:0; border-top:1px solid #555; }
 .gameday dl div { display:grid; grid-template-columns:130px 1fr; padding:16px 0; border-bottom:1px solid #555; }
 .gameday dt { font-size:9px; font-weight:900; letter-spacing:.13em; color:#aaa; }
-.gameday dd { margin:0; font:17px Georgia,serif; }
+.gameday dd { margin:0; font:17px "Helvetica Neue", Helvetica, Arial, sans-serif; }
 .gameday-links { grid-column:2; display:flex; gap:28px; }
 footer { padding:70px 4vw 40px; display:grid; grid-template-columns:1fr 1fr; gap:60px; background:#e1ddd5; }
-footer>div:first-child p { font:italic 13px Georgia,serif; color:#686259; }
+footer>div:first-child p { font:italic 13px "Helvetica Neue", Helvetica, Arial, sans-serif; color:#686259; }
 .sources { display:grid; grid-template-columns:1fr 1fr; gap:12px 24px; font-size:11px; }
 .sources strong { grid-column:1/-1; font-size:9px; letter-spacing:.15em; }
 .sources a { border-bottom:1px solid #aaa49a; padding-bottom:8px; }
-.disclaimer { grid-column:1/-1; margin:30px 0 0; padding-top:25px; border-top:1px solid #bbb5aa; font:11px/1.5 Georgia,serif; color:#6a645b; }
+.disclaimer { grid-column:1/-1; margin:30px 0 0; padding-top:25px; border-top:1px solid #bbb5aa; font:11px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#6a645b; }
 @media(max-width:900px){
-  .masthead{grid-template-columns:1fr auto;height:62px;padding:0 18px}.masthead p{display:none}.hero{min-height:690px}.hero-photo{background-position:61% center}.hero-copy{padding:0 20px 230px}.hero h1{font-size:clamp(66px,23vw,110px)}.scorebug{left:20px;right:20px;bottom:20px;width:auto}.snapshot{grid-template-columns:1fr 1fr}.snapshot>div{min-height:125px;border-bottom:1px solid var(--line)}.opening,.section-head,.recruiting>div:first-child{grid-template-columns:1fr;padding-left:20px;padding-right:20px}.feature-grid{grid-template-columns:1fr}.feature-copy{padding:70px 20px}.players,.recruiting,.keys,.gameday,footer{padding-left:20px;padding-right:20px}.player-grid{grid-template-columns:1fr}.player-card{min-height:370px}.recruit-row{grid-template-columns:70px 1fr;gap:20px}.recruit-no{font-size:50px}.recruit-row a{grid-column:2}.keys ol{margin-left:0}.gameday{grid-template-columns:1fr}.gameday-links{grid-column:1}footer{grid-template-columns:1fr}.disclaimer{grid-column:1}.sources{grid-template-columns:1fr}}
+  .masthead{grid-template-columns:1fr auto;height:62px;padding:0 18px}.masthead p{display:none}.hero{grid-template-columns:1fr;grid-template-rows:auto 62vw auto}.hero-copy{padding:72px 20px 58px}.hero h1{font-size:clamp(66px,22vw,108px)}.hero-photo{grid-row:2}.hero-photo img{object-position:52% 54%}.hero-photo figcaption{right:10px;bottom:8px;max-width:70%;text-align:right}.matchup-rail{grid-column:1;grid-template-columns:1fr 24px 1fr;padding:20px;gap:10px}.matchup-rail>div{flex-direction:column;gap:3px}.matchup-rail p{grid-column:1/-1;padding:15px 0 0;border-left:0;border-top:1px solid #4e4552}.snapshot{grid-template-columns:1fr 1fr}.snapshot>div{min-height:125px;border-bottom:1px solid var(--line)}.opening,.section-head,.recruiting>div:first-child{grid-template-columns:1fr;padding-left:20px;padding-right:20px}.feature-grid{grid-template-columns:1fr}.feature-copy{padding:70px 20px}.players,.recruiting,.keys,.gameday,footer{padding-left:20px;padding-right:20px}.player-card{grid-template-columns:74px 1fr;gap:14px 18px;min-height:0;padding:18px 0}.player-photo{width:68px;height:68px;margin:0}.rating{grid-column:2;padding:12px 0 0;border-left:0;border-top:1px solid #c9c2b8}.player-copy{grid-column:1/-1}.recruit-row{grid-template-columns:70px 1fr;gap:20px}.recruit-no{font-size:50px}.recruit-row a{grid-column:2}.keys ol{margin-left:0}.gameday{grid-template-columns:1fr}.gameday-links{grid-column:1}footer{grid-template-columns:1fr}.disclaimer{grid-column:1}.sources{grid-template-columns:1fr}}

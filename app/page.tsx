@@ -19,18 +19,20 @@ export default function Home() {
       </header>
 
       <section className="hero" id="top">
-        <div className="hero-photo" role="img" aria-label="Klein Cain Hurricanes varsity football team" />
-        <div className="hero-shade" />
         <div className="hero-copy">
           <p className="kicker">Friday night briefing · {edition.venue}</p>
           <h1>{edition.headline.split(' ').slice(0, 1)}<br />{edition.headline.split(' ').slice(1).join(' ')}</h1>
           <p className="dek">{edition.dek}</p>
         </div>
-        <div className="scorebug" aria-label="Matchup details">
+        <figure className="hero-photo">
+          <img src="./team-2026.jpg" alt="Klein Cain Hurricanes varsity football team" />
+          <figcaption>2026 Klein Cain varsity · Klein Cain Football Booster Club</figcaption>
+        </figure>
+        <div className="matchup-rail" aria-label="Matchup details">
           <div><span>OAK RIDGE</span><strong>{edition.away.record}</strong></div>
           <b>AT</b>
           <div className="home"><span>KLEIN CAIN</span><strong>{edition.home.record}</strong></div>
-          <p>{edition.kickoff} · KLEIN, TX</p>
+          <p>{edition.kickoff} · KLEIN MEMORIAL STADIUM</p>
         </div>
       </section>
 
@@ -69,14 +71,18 @@ export default function Home() {
           <div className="player-grid">
             {edition.players.map((player) => (
               <article className={`player-card ${player.team === 'OAK RIDGE' ? 'red' : ''}`} key={player.name}>
-                <div className="player-top"><span>{player.team}</span><b>{player.number}</b></div>
-                <h3>{player.name}</h3>
-                <p className="role">{player.role}</p>
+                <img className="player-photo" src={player.image} alt={`${player.name}, ${player.team} football`} />
+                <div className="player-identity">
+                  <div className="player-top"><span>{player.team}</span><b>#{player.number}</b></div>
+                  <h3>{player.name}</h3>
+                  <p className="role">{player.role}</p>
+                </div>
                 <div className="rating"><strong>{player.tag}</strong><span>{player.rating}</span></div>
-                <p>{player.copy}</p>
+                <p className="player-copy">{player.copy}</p>
               </article>
             ))}
           </div>
+          <p className="photo-note">Player portraits: MaxPreps and public athlete profiles.</p>
         </section>
 
         <section className="recruiting">
