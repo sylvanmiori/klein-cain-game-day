@@ -3,6 +3,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://sylvanmiori.github.io/klein-cain-game-day/'),
+  icons: { icon: 'favicon.svg' },
   title: 'Klein Cain vs Oak Ridge | Cain Game Day',
   description: 'The Sept. 4, 2026 game-day briefing for Klein Cain vs Oak Ridge.',
   openGraph: {
