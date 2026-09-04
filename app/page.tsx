@@ -21,7 +21,7 @@ export default function Home() {
       <section className="hero" id="top">
         <div className="hero-copy">
           <p className="kicker">Friday night briefing · {edition.venue}</p>
-          <h1>{edition.headline.split(' ').slice(0, 1)}<br />{edition.headline.split(' ').slice(1).join(' ')}</h1>
+          <h1>{edition.headline}</h1>
           <p className="dek">{edition.dek}</p>
         </div>
         <figure className="hero-photo">
