@@ -66,7 +66,7 @@ export default function Home() {
         <section className="players" id="players">
           <div className="section-head">
             <p className="section-label">PLAYER FILE</p>
-            <h2>Six names to know before the band hits the first note.</h2>
+            <h2>Six players to watch.</h2>
           </div>
           <div className="player-grid">
             {edition.players.map((player) => (
@@ -104,7 +104,7 @@ export default function Home() {
         </section>
 
         <section className="keys">
-          <div className="section-head"><p className="section-label">THREE KEYS</p><h2>How the favorite makes the forecast look smart.</h2></div>
+          <div className="section-head"><p className="section-label">THREE KEYS</p><h2>How Cain controls the game.</h2></div>
           <ol>
             <li><span>01</span><div><h3>Find No. 88</h3><p>Finn Walker’s length can wreck a slow-developing pass game. Chip him, move the launch point and make Oak Ridge find pressure somewhere else.</p></div></li>
             <li><span>02</span><div><h3>Make the first stop</h3><p>Cain scored 42 last week and still needed every point. One early three-and-out changes the night from a race into a game Cain can dictate.</p></div></li>
