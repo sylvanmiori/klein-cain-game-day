@@ -1,0 +1,68 @@
+name: Weekly game-day edition
+
+on:
+  schedule:
+    - cron: '30 11 * 8-11 5'
+  workflow_dispatch:
+    inputs:
+      game_date:
+        description: 'Optional YYYY-MM-DD game date for a manual run'
+        required: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: game-day-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Research and write today's edition
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-5.4-mini
+          GAME_DATE: ${{ inputs.game_date }}
+        run: node scripts/build-edition.mjs
+      - name: Build website
+        if: env.RUN_EDITION == 'true'
+        run: npm run build
+      - name: Save edition to archive
+        if: env.RUN_EDITION == 'true'
+        run: |
+          git config user.name "Cain Game Day Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add content/current-edition.json content/archive/
+          git diff --cached --quiet || git commit -m "Publish $EDITION_SLUG"
+          git push
+      - uses: actions/configure-pages@v5
+        if: env.RUN_EDITION == 'true'
+      - uses: actions/upload-pages-artifact@v3
+        if: env.RUN_EDITION == 'true'
+        with:
+          path: out
+      - name: Deploy to GitHub Pages
+        id: deployment
+        if: env.RUN_EDITION == 'true'
+        uses: actions/deploy-pages@v4
+      - name: Email the link
+        if: env.RUN_EDITION == 'true'
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          NEWSLETTER_TO: ${{ secrets.NEWSLETTER_TO }}
+          PUBLIC_URL: ${{ steps.deployment.outputs.page_url }}
+        run: node scripts/send-newsletter.mjs
