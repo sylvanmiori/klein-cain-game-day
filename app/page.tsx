@@ -1,5 +1,6 @@
 import edition from '../content/current-edition.json';
 import roster from '../content/roster-2026.json';
+import { PlayerReport } from '../components/player-report';
 
 const sources = [
   ['Official schedule', 'https://www.kleincainathletics.com/sport/football/boys/?tab=schedule'],
@@ -70,16 +71,7 @@ export default function Home() {
           </div>
           <div className="player-grid">
             {edition.players.map((player) => (
-              <article className={`player-card ${player.team === 'OAK RIDGE' ? 'red' : ''}`} key={player.name}>
-                <img className="player-photo" src={player.image || './player-placeholder.svg'} alt={`${player.name}, ${player.team} football`} />
-                <div className="player-identity">
-                  <div className="player-top"><span>{player.team}</span><b>#{player.number}</b></div>
-                  <h3>{player.name}</h3>
-                  <p className="role">{player.role}</p>
-                </div>
-                <div className="rating"><strong>{player.tag}</strong><span>{player.rating}</span></div>
-                <p className="player-copy">{player.copy}</p>
-              </article>
+              <PlayerReport player={player} key={player.name} />
             ))}
           </div>
           <p className="photo-note">Player portraits: MaxPreps and public athlete profiles.</p>
