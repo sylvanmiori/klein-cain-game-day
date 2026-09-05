@@ -2,8 +2,12 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { sitePath } from '../lib/site-path';
 
+const siteUrl = process.env.DEPLOY_TARGET === 'cloudflare'
+  ? 'https://kleincain.gameday.report/'
+  : 'https://sylvanmiori.github.io/klein-cain-game-day/';
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://sylvanmiori.github.io/klein-cain-game-day/'),
+  metadataBase: new URL(siteUrl),
   icons: {
     icon: [
       { url: sitePath('/favicon-32x32.png'), sizes: '32x32', type: 'image/png' },
@@ -17,16 +21,16 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Final: Klein Cain 45, Oak Ridge 20 | Cain Game Day',
     description: 'Final score, players to know and recruiting notes from Klein Cain’s Week 2 win.',
-    url: 'https://sylvanmiori.github.io/klein-cain-game-day/',
+    url: siteUrl,
     siteName: 'Cain Game Day',
-    images: [{ url: 'https://sylvanmiori.github.io/klein-cain-game-day/og.png', width: 1731, height: 909, alt: 'Klein Cain vs Oak Ridge game-day briefing' }],
+    images: [{ url: `${siteUrl}og.png`, width: 1731, height: 909, alt: 'Klein Cain vs Oak Ridge game-day briefing' }],
     type: 'article',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Final: Klein Cain 45, Oak Ridge 20 | Cain Game Day',
     description: 'Final score and game report for Klein Cain’s 45–20 win over Oak Ridge.',
-    images: ['https://sylvanmiori.github.io/klein-cain-game-day/og.png'],
+    images: [`${siteUrl}og.png`],
   },
 };
 

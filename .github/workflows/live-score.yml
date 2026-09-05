@@ -29,6 +29,7 @@ concurrency:
 
 jobs:
   update:
+    if: vars.CLOUDFLARE_ENABLED != 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5

@@ -1,8 +1,7 @@
 name: Weekly game-day edition
 
 on:
-  schedule:
-    - cron: '30 11 * 8-11 5'
+  # Research is manual until the edition template and API access are ready.
   workflow_dispatch:
     inputs:
       game_date:
@@ -61,11 +60,3 @@ jobs:
         id: deployment
         if: env.RUN_EDITION == 'true'
         uses: actions/deploy-pages@v4
-      - name: Email the link
-        if: env.RUN_EDITION == 'true'
-        env:
-          GMAIL_USER: ${{ secrets.GMAIL_USER }}
-          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
-          NEWSLETTER_TO: ${{ secrets.NEWSLETTER_TO }}
-          PUBLIC_URL: ${{ steps.deployment.outputs.page_url }}
-        run: node scripts/send-newsletter.mjs

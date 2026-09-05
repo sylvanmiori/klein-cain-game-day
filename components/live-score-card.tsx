@@ -35,7 +35,10 @@ export function LiveScoreCard({ initialScore, dateShort, kickoff, venue, predict
   const refresh = useCallback(async () => {
     setRefreshing(true);
     try {
-      const response = await fetch(`${liveDataUrl}?t=${Date.now()}`, { cache: 'no-store' });
+      const useCloudflare = window.location.hostname === 'kleincain.gameday.report'
+        || window.location.hostname.endsWith('.workers.dev');
+      const endpoint = useCloudflare ? `/api/score?game=${encodeURIComponent(initialScore.slug)}` : `${liveDataUrl}?t=${Date.now()}`;
+      const response = await fetch(endpoint, { cache: 'no-store' });
       if (!response.ok) return;
       const next = (await response.json()) as LiveScore;
       if (next.slug === initialScore.slug) setScore(next);
@@ -49,7 +52,9 @@ export function LiveScoreCard({ initialScore, dateShort, kickoff, venue, predict
   useEffect(() => {
     void refresh();
     if (score.status === 'final') return;
-    const timer = window.setInterval(() => void refresh(), 30_000);
+    const timer = window.setInterval(() => {
+      if (document.visibilityState === 'visible') void refresh();
+    }, 60_000);
     return () => window.clearInterval(timer);
   }, [refresh, score.status]);
 

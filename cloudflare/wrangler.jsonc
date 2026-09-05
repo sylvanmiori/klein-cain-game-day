@@ -1,0 +1,23 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "gameday-report",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-09-05",
+  "workers_dev": false,
+  "assets": {
+    "directory": "../dist/client",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "kv_namespaces": [
+    { "binding": "SCORES", "id": "230ad4e9643a45b7b9e7a9a88ca3db6a" }
+  ],
+  "triggers": { "crons": ["* * * * *"] },
+  "observability": { "enabled": true },
+  "routes": [
+    { "pattern": "gameday.report", "custom_domain": true },
+    { "pattern": "kleincain.gameday.report", "custom_domain": true }
+  ]
+}

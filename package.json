@@ -12,7 +12,9 @@
     "start": "wrangler dev --config dist/server/wrangler.json",
     "edition": "node scripts/build-edition.mjs",
     "score": "node scripts/update-live-score.mjs",
-    "email": "node scripts/send-newsletter.mjs",
+    "build:cloudflare": "DEPLOY_TARGET=cloudflare vinext build",
+    "deploy:cloudflare": "wrangler deploy --config cloudflare/wrangler.jsonc",
+    "test:score": "node --test cloudflare/*.test.mjs",
     "lint": "oxlint",
     "format": "oxfmt"
   },
