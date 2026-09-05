@@ -30,16 +30,8 @@
   "metaDescription": "Final score and game report for Klein Cain’s 45–20 win over Oak Ridge.",
   "socialDescription": "Final score, players to know and recruiting notes from Klein Cain’s Week 2 win.",
   "ogImage": "/og.png",
-  "prediction": {
-    "home": 44,
-    "away": 20,
-    "winProbability": 80,
-    "source": "Massey projection via Rivals"
-  },
-  "weather": {
-    "label": "HUMID",
-    "detail": "storms possible earlier"
-  },
+  "prediction": null,
+  "weather": null,
   "scheduledFacts": [
     {
       "label": "Forecast",

@@ -80,6 +80,23 @@ for (const file of files) {
     if (edition.slug !== expectedSlug) fail(`slug should be ${expectedSlug}`);
   }
 
+  // Machine-owned fields must carry their attribution, so nothing reaches the
+  // page without a named source the reader can check.
+  const attributed = (value, label, extra = () => true) => {
+    if (value === null || value === undefined) return;
+    if (!value.source) fail(`${label} is missing a source name`);
+    if (!String(value.sourceUrl || '').startsWith('https://')) fail(`${label} is missing an https sourceUrl`);
+    if (!Number.isFinite(Date.parse(value.asOf))) fail(`${label} is missing a valid asOf timestamp`);
+    extra(value);
+  };
+  attributed(edition.prediction, 'prediction', (pick) => {
+    if (!Number.isInteger(pick.margin)) fail('prediction.margin must be an integer');
+  });
+  attributed(edition.weather, 'weather', (weather) => {
+    if (!Number.isFinite(weather.tempF)) fail('weather.tempF must be a number');
+    if (!weather.condition) fail('weather.condition must say what the forecast is');
+  });
+
   if (edition.state === 'final' && !edition.final) fail('state is "final" but there is no final section');
   if (edition.state === 'preview' && edition.final) fail('state is "preview" but a final section is present');
   if (!edition.preview && !edition.final) fail('has neither a preview nor a final section');

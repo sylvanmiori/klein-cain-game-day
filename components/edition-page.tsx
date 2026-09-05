@@ -17,6 +17,8 @@ import {
   editionPath,
   editions,
   opponentOf,
+  predictionFact,
+  weatherFact,
 } from '../lib/edition';
 import { sitePath } from '../lib/site-path';
 
@@ -215,6 +217,13 @@ export function EditionPage({ edition }: { edition: Edition }) {
   const rosterHash = edition.current ? '#roster-heading' : sitePath('/#roster-heading');
   const nextFact = nextGameFact(edition);
   const resultFacts = nextFact ? [...edition.resultFacts, nextFact] : edition.resultFacts;
+  // Machine-refreshed facts sit alongside the editorial ones. They appear only
+  // once a source has actually supplied them, so a missing forecast shows
+  // nothing rather than an empty slot.
+  const autoFacts = [predictionFact(edition, publication.schoolName), weatherFact(edition)].filter(
+    (fact): fact is NonNullable<typeof fact> => fact !== null,
+  );
+  const scheduledFacts = [...edition.scheduledFacts, ...autoFacts];
 
   const report = preview && final
     ? (
@@ -270,7 +279,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
               venue={edition.venue}
               home={edition.home}
               away={edition.away}
-              scheduledFacts={edition.scheduledFacts}
+              scheduledFacts={scheduledFacts}
               resultFacts={resultFacts}
             />
           )
@@ -284,7 +293,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
               venue={edition.venue}
               away={{ ...edition.away, score: edition.final?.awayScore ?? null }}
               home={{ ...edition.home, score: edition.final?.homeScore ?? null }}
-              facts={edition.state === 'final' ? edition.resultFacts : edition.scheduledFacts}
+              facts={edition.state === 'final' ? edition.resultFacts : scheduledFacts}
             />
           )}
       </section>

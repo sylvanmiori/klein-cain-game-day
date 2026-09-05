@@ -30,7 +30,12 @@
   "metaDescription": "An early look at Klein Cain’s Sept. 18 district opener and homecoming game against Tomball.",
   "socialDescription": "Early matchup facts and players to watch for the Sept. 18 district opener.",
   "ogImage": "",
-  "prediction": null,
+  "prediction": {
+    "margin": -3,
+    "source": "Dave Campbell’s Texas Football",
+    "sourceUrl": "https://www.texasfootball.com/",
+    "asOf": "2026-09-05T17:33:09.721Z"
+  },
   "weather": null,
   "scheduledFacts": [
     {
@@ -44,10 +49,6 @@
     {
       "label": "Tomball opener",
       "value": "W 38–0 vs Stratford"
-    },
-    {
-      "label": "Next update",
-      "value": "Game day · Sept. 18"
     }
   ],
   "resultFacts": [],

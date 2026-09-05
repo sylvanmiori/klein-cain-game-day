@@ -90,8 +90,26 @@ export type Edition = {
   metaDescription: string;
   socialDescription: string;
   ogImage: string;
-  prediction: { home: number; away: number; winProbability: number; source: string } | null;
-  weather: { label: string; detail: string } | null;
+  /* The two fields below are machine-owned: scripts/refresh-facts.mjs writes
+     them from named public sources and nothing else may. Both carry their own
+     attribution and an asOf stamp so the page can say how fresh a number is. */
+  prediction: {
+    /** Signed margin from the covered school's point of view. */
+    margin: number;
+    source: string;
+    sourceUrl: string;
+    asOf: string;
+  } | null;
+  weather: {
+    tempF: number;
+    condition: string;
+    precipPct: number | null;
+    humidityPct: number | null;
+    wind: string | null;
+    source: string;
+    sourceUrl: string;
+    asOf: string;
+  } | null;
   /** Facts shown under the matchup card before kickoff. */
   scheduledFacts: Fact[];
   /** Facts shown under the matchup card once a score exists. */
@@ -130,6 +148,33 @@ export function opponentOf(edition: Edition, schoolName: string) {
 
 export function editionByWeek(week: number) {
   return editions.find((edition) => edition.week === week);
+}
+
+/** The published pick, phrased so it never reads as our own forecast. */
+export function predictionFact(edition: Edition, schoolName: string): Fact | null {
+  const pick = edition.prediction;
+  if (!pick) return null;
+  const opponent = opponentOf(edition, schoolName);
+  const favorite = pick.margin === 0 ? null : pick.margin > 0 ? schoolName : opponent.name;
+  return {
+    label: 'Pick',
+    value: favorite ? `${favorite} by ${Math.abs(pick.margin)}` : 'Even',
+    href: pick.sourceUrl,
+  };
+}
+
+/** A forecast goes stale quickly, so an old one is dropped rather than shown. */
+const FORECAST_MAX_AGE_MS = 3 * 24 * 60 * 60 * 1000;
+
+/** Forecast for the kickoff hour, never presented as a certainty. */
+export function weatherFact(edition: Edition, now = Date.now()): Fact | null {
+  const weather = edition.weather;
+  if (!weather) return null;
+  const asOf = Date.parse(weather.asOf);
+  if (!Number.isFinite(asOf) || now - asOf > FORECAST_MAX_AGE_MS) return null;
+  const parts = [`${weather.tempF}°F`, weather.condition];
+  if (weather.precipPct !== null) parts.push(`${weather.precipPct}% rain`);
+  return { label: 'Forecast', value: parts.join(' · '), href: weather.sourceUrl };
 }
 
 /** Every school named on the page, used for the not-affiliated footer line. */

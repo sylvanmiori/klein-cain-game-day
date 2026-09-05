@@ -66,6 +66,26 @@ The parser requires an unambiguous team/opponent match and valid scores. A sourc
 
 Manual corrections use `POST /api/score/override`, disabled unless the Worker secret `SCORE_ADMIN_TOKEN` is configured. Supply bearer authorization and JSON fields `date`, `status` (`live` or `final`), `homeScore` and `awayScore`. Scores follow venue order, not always Klein Cain first. A live override pauses source updates for 15 minutes; a final stops them. There is no public editing interface.
 
+## Automated facts
+
+`scripts/refresh-facts.mjs` refreshes upcoming editions from public sources on a schedule. No language model runs in it. It may write only four fields: `home.record`, `away.record`, `prediction` and `weather`. Copy, players, headlines, sources and metadata stay editorial and are never touched by automation.
+
+Sources, all free and unauthenticated:
+
+- **Records** come from the District 15-6A standings table on the school's own Dave Campbell's team page, which is server rendered. One request covers every district opponent. Teams are matched on the exact string `"<name> <mascot>"` so `Klein` cannot match `Klein Cain`.
+- **The pick** comes from the `pick` field of the same Dave Campbell's scores endpoint the live score already uses. It is a signed margin from Klein Cain's point of view, verified against played games: +16 before the one-point win at Humble, +18 before the 25-point win over Oak Ridge. It is published as `Tomball by 3`, attributed and linked, never as our own forecast.
+- **Weather** comes from the National Weather Service (`api.weather.gov`), which needs no key. The hourly feed reaches about six days ahead, so a game further out gets no weather rather than an invented one. A forecast older than three days is dropped at build time instead of shown.
+
+Massey is deliberately not a source. `masseyratings.com` answers automated requests with a Cloudflare bot challenge, and its `robots.txt` disallows `/data/` and `/scores.php`. Getting around either would be bot-detection bypass, so the Dave Campbell's pick replaces it. The Massey numbers on the Week 2 page stay as authored editorial text.
+
+`.github/workflows/refresh-facts.yml` runs the refresh at 6 AM Central daily, and every three hours on Thursday and Friday when the forecast matters. The repository is public, so Actions minutes are free. Each run validates before committing, pushes to `main`, and Cloudflare rebuilds. Every automated fact change is a reviewable diff in git history.
+
+Failure is quiet by design. A source that is down, changes shape or does not match the scheduled game is reported in the job log and the previous verified value is kept. The job does not fail the build, and nothing unverified reaches the page.
+
+`npm run refresh` runs it locally; `node scripts/refresh-facts.mjs --dry-run` reports what would change without writing.
+
+Two known limits. Statewide rank is not available from these sources (`hsRank` is 99999 for every row), so the rank line stays editorial. And `deploy.yml` ignores `content/**`, so a fact-only commit refreshes Cloudflare but not the GitHub Pages fallback.
+
 ## Weekly editions
 
 `scripts/build-edition.mjs` is disabled. It writes the retired schema v1 and throws if run. Its research prompt is kept as the starting point for a v2 rewrite. `.github/workflows/weekly-edition.yml` still calls it and will fail until it is rewritten; the workflow is manual-only, so nothing runs on a schedule.
@@ -74,7 +94,8 @@ Before any automated generation is enabled, these have to be settled: how genera
 
 ## Remaining setup
 
-- Verify Week 3 (Tomball at Klein Cain, September 18, 2026) against current public sources. Its content was carried over from the earlier hardcoded page and has not been rechecked.
+- Verify Week 3 (Tomball at Klein Cain, September 18, 2026) against current public sources. Records and the pick now refresh automatically, but the players, copy and rank line were carried over from the earlier hardcoded page and have not been rechecked.
+- Decide when an edition is promoted to `current`. Nothing does this yet, so the live score card and the home page still point at the previous game until someone flips the flag.
 - Design the cloud workflow for producing and publishing weekly editions.
 - Approve and enforce a budget before enabling AI API calls.
 - Confirm data-source permissions before commercial expansion.

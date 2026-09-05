@@ -1,0 +1,52 @@
+name: Refresh game facts
+
+# Deterministic public-data refresh. No language model runs here.
+# scripts/refresh-facts.mjs may only write four fields on upcoming editions:
+# home.record, away.record, prediction and weather. Each carries its own source
+# and timestamp, and a source outage keeps the previous verified value.
+#
+# A commit here pushes to main, which Cloudflare Workers Builds deploys.
+# Every automated fact change is therefore a reviewable diff in git history.
+
+on:
+  schedule:
+    # 6:00 AM Central, daily: records and the published pick.
+    - cron: '0 11 * * *'
+    # Every three hours on Thursday and Friday, when the forecast matters.
+    - cron: '0 */3 * * 4,5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-facts
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+
+      - name: Read public sources
+        id: refresh
+        run: npm run refresh
+
+      # The same checks that gate a human edit gate a machine one.
+      - name: Validate editions
+        run: npm run validate
+
+      - name: Commit refreshed facts
+        if: steps.refresh.outputs.changed == 'true'
+        run: |
+          git config user.name "Cain Game Day Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add content/editions/
+          git diff --cached --quiet || git commit -m "Refresh game facts from public sources"
+          git push

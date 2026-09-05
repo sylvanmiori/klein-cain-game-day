@@ -40,7 +40,8 @@ a { color:inherit; text-decoration:none; }
 .game-time small { max-width:150px; margin-top:8px; color:#a6a8b2; font-size:10px; line-height:1.25; }
 .game-facts { display:grid; grid-template-columns:repeat(4,1fr); margin:0; padding:0; list-style:none; border-top:1px solid #343640; background:#202127; }
 .game-facts li { min-width:0; padding:15px 18px 17px; border-right:1px solid #343640; }
-.game-facts li:last-child { border-right:0; }
+.game-facts li:nth-child(4n),.game-facts li:last-child { border-right:0; }
+.game-facts li:nth-child(n+5) { border-top:1px solid #343640; }
 .game-facts span { display:block; margin-bottom:5px; color:#a6a8b2; font-size:10px; font-weight:650; }
 .game-facts strong { display:block; overflow:hidden; font-size:13px; line-height:1.25; font-weight:800; text-overflow:ellipsis; white-space:nowrap; }
 .game-facts a { color:#8cc8ff; font-size:12px; font-weight:750; }
