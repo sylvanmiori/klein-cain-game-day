@@ -48,10 +48,15 @@ for (const { edition, file } of pages) {
 
   for (const game of schedule) {
     if (game.opponent === opponent || game.date === edition.date) continue;
-    // Several schedule opponents are prefixes of others ("Klein" of
-    // "Klein Cain", "Magnolia" of "Magnolia West"), so this page's own two
-    // team names are removed before the check runs.
-    const text = identity.replaceAll(publication.schoolName, '').replaceAll(opponent, '');
+    // URLs are dropped first: on the GitHub Pages build every asset path
+    // carries the repository name, which contains "klein". Then this page's own
+    // two team names are removed, because several schedule opponents are
+    // prefixes of others ("Klein" of "Klein Cain", "Magnolia" of "Magnolia
+    // West").
+    const text = identity
+      .replace(/https?:\/\/[^"'\s]*/g, '')
+      .replaceAll(publication.schoolName, '')
+      .replaceAll(opponent, '');
     if (new RegExp(`\\b${game.opponent.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(text)) {
       problems.push(`${file}: identity fields still name ${game.opponent}, but this edition is vs ${opponent}`);
     }
