@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 2,
+  "slug": "2026-08-27-humble",
+  "week": 1,
+  "issue": "00",
+  "state": "final",
+  "date": "2026-08-27",
+  "dateLong": "August 27, 2026",
+  "dateShort": "AUG 27, 2026",
+  "kickoff": "7:00 PM",
+  "venue": "Turner Stadium",
+  "event": "",
+  "updated": "",
+  "home": {
+    "name": "Humble",
+    "mascot": "Wildcats",
+    "logo": "/humble-logo.png",
+    "record": "0–1",
+    "rank": null
+  },
+  "away": {
+    "name": "Klein Cain",
+    "mascot": "Hurricanes",
+    "logo": "/favicon.png",
+    "record": "1–0",
+    "rank": null
+  },
+  "pageTitle": "2026 Week 1 Final: Klein Cain at Humble",
+  "metaTitle": "Week 1 Final: Klein Cain 42, Humble 41 | Cain Game Day",
+  "metaDescription": "Quarter-by-quarter score and verified leaders from Klein Cain’s 42–41 win at Humble.",
+  "socialDescription": "Klein Cain opened 2026 with a one-point road win at Humble.",
+  "ogImage": "",
+  "prediction": null,
+  "weather": null,
+  "scheduledFacts": [],
+  "resultFacts": [
+    {
+      "label": "Fourth quarter",
+      "value": "Humble outscored Cain 13–7"
+    },
+    {
+      "label": "Halftime",
+      "value": "Tied 21–21"
+    },
+    {
+      "label": "Total offense",
+      "value": "Cain 469 yards"
+    },
+    {
+      "label": "Box score",
+      "value": "MaxPreps",
+      "href": "https://www.maxpreps.com/tx/football/game/humble-vs-klein-cain-houston/8-27-2026/?c=6cacfe2c-0c45-46ec-ae5a-27bec2c1411a"
+    }
+  ],
+  "preview": null,
+  "final": {
+    "headline": "Cain survives the opener, 42–41",
+    "byline": "",
+    "body": "Klein Cain scored in every quarter and carried a 35–28 lead into the fourth. Humble closed with 13 points, but the Hurricanes held the one-point margin.",
+    "homeScore": 41,
+    "awayScore": 42,
+    "quarters": {
+      "labels": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "rows": [
+        {
+          "team": "Cain",
+          "scores": [
+            "14",
+            "7",
+            "14",
+            "7"
+          ],
+          "total": "42"
+        },
+        {
+          "team": "Humble",
+          "scores": [
+            "7",
+            "14",
+            "7",
+            "13"
+          ],
+          "total": "41"
+        }
+      ]
+    },
+    "notes": [],
+    "leaders": {
+      "heading": "Verified game leaders",
+      "source": "MaxPreps box score",
+      "items": [
+        {
+          "name": "Jace Hanks",
+          "number": "9",
+          "role": "QB · Junior",
+          "image": "/players/jace-hanks.jpg",
+          "stat": "201 passing yards",
+          "detail": "15 of 24 · 2 TD"
+        },
+        {
+          "name": "Eyan Johnson",
+          "number": "16",
+          "role": "RB / SB · Senior",
+          "image": "/players/eyan-johnson.jpg",
+          "stat": "110 rushing yards",
+          "detail": "11 carries · 1 TD"
+        },
+        {
+          "name": "Cooper Karns",
+          "number": "10",
+          "role": "WR · Senior",
+          "image": "/players/cooper-karns.jpg",
+          "stat": "110 receiving yards",
+          "detail": "6 catches · 1 TD"
+        }
+      ]
+    }
+  },
+  "sources": [],
+  "footerNote": "Independent fan publication · Game data from MaxPreps and Dave Campbell’s Texas Football.",
+  "disclaimerEntities": [
+    "Klein ISD",
+    "Klein Cain High School",
+    "Humble High School",
+    "MaxPreps"
+  ],
+  "current": false
+}

@@ -14,13 +14,35 @@ Updated September 5, 2026. Keep this file current when accounts, hosting or auto
 
 Cloudflare deployment completed and was verified September 5, 2026. HTTPS, the parent-domain redirect, Week 1 and Week 3 routes, static assets, the score endpoint and the one-minute schedule all work. The existing Worker is connected to the GitHub repository, and its first automatic build from a GitHub push succeeded. GitHub Pages remains a fallback during migration.
 
-The site contains Week 1, Week 2 and Week 3 pages. Some matchup content and metadata are still game-specific. The weekly research schedule is disabled until the page can safely render new editions. Email delivery has been removed from the workflow. This is a website-only project for now.
+The site is edition-driven. Every game page, including the home page, is rendered from one JSON file in `content/editions/` by a single component, `components/edition-page.tsx`. Adding a game means adding a file; no route, component or metadata change is needed. Page titles, share cards, matchup facts, players, recruiting rows, sources and the not-affiliated line all come from that file, so a new edition cannot inherit the previous opponent. Week 1, Week 2 and Week 3 exist today.
+
+The weekly research schedule is still disabled. The edition template is now data-driven, but the generation and fact-checking workflow has not been designed or costed. Email delivery has been removed from the workflow. This is a website-only project for now.
 
 ## Costs
 
 Checkout quoted $19.20 registration and $19.20 annual renewal. The domain requires annual renewal, not a one-time lifetime purchase. Check Cloudflare for the invoice, renewal date and auto-renew setting.
 
 The code targets Cloudflare's free Worker and KV allowances. Those quotas are finite; review usage before adding schools or substantial traffic. Optional AI research would have separate API charges and is not enabled. No paid hosting plan or email service has been configured by this migration.
+
+## Editions
+
+One JSON file per game in `content/editions/`, named for its slug. `content/editions/TEMPLATE.md` carries the starting block and the rules. The shape is typed in `lib/edition.ts` (schema v2).
+
+- `config/season-2026.json` is the authority on date, opponent, venue, home/away and kickoff. An edition that disagrees fails validation.
+- Exactly one edition sets `"current": true`. That edition is the home page at `/` and is the only page with the live score card, the roster and the team photo. Every other edition is prerendered at `/games/week-<n>` by `app/games/[week]/page.tsx`.
+- `config/publication.json` holds the school, wordmark and site-level sources. `config/program.json` holds program history and past seasons. The season record in the schedule card is derived from recorded results.
+- Editions are their own archive. The retired `content/current-edition.json` and `content/archive/` were removed with schema v1.
+
+To publish a new game: add the file, set `current` on the right edition, run `npm run validate`, `npm run build:cloudflare`, then push to `main`.
+
+### Guardrails
+
+Two scripts run automatically as part of `npm run build` and `npm run build:cloudflare`. Both exit non-zero and stop the build.
+
+- `scripts/validate-editions.mjs` checks structure against the schedule and enforces the editorial rules: a preview player must carry a rating or say plainly that none is listed, a recruiting row must carry an https source, postgame leaders need a stat and a named box score, the disclaimer must name the opponent, and a preview must have content.
+- `scripts/check-build.mjs` reads the built HTML and fails if a page's title, meta tags, heading or disclaimer names an opponent from a different week. Both checks account for schedule names that are prefixes of others, such as Klein and Klein Cain, or Magnolia and Magnolia West.
+
+These are the reason weekly research can be enabled later without a person rereading every page. They check shape and staleness, not truth. Nothing verifies that a statistic is real, so generated facts still need a human or a cited source.
 
 ## Publishing
 
@@ -32,7 +54,7 @@ Automatic publishing uses Cloudflare Workers Builds connected directly to the Gi
 
 After the connection is tested, pushes to `main` build and deploy without this computer. The old GitHub score schedule is disabled; its manual workflow remains only as a fallback for GitHub Pages.
 
-Local commands use Node 24 or newer: `npm ci`, `npm run test:score`, `npm run build:cloudflare`, then `npm run deploy:cloudflare` with Cloudflare authorization.
+Local commands use Node 24 or newer: `npm ci`, `npm run validate`, `npm run test:score`, `npm run build:cloudflare` (which validates and then checks the built pages), then `npm run deploy:cloudflare` with Cloudflare authorization.
 
 ## Scores
 
@@ -44,10 +66,16 @@ The parser requires an unambiguous team/opponent match and valid scores. A sourc
 
 Manual corrections use `POST /api/score/override`, disabled unless the Worker secret `SCORE_ADMIN_TOKEN` is configured. Supply bearer authorization and JSON fields `date`, `status` (`live` or `final`), `homeScore` and `awayScore`. Scores follow venue order, not always Klein Cain first. A live override pauses source updates for 15 minutes; a final stops them. There is no public editing interface.
 
+## Weekly editions
+
+`scripts/build-edition.mjs` is disabled. It writes the retired schema v1 and throws if run. Its research prompt is kept as the starting point for a v2 rewrite. `.github/workflows/weekly-edition.yml` still calls it and will fail until it is rewritten; the workflow is manual-only, so nothing runs on a schedule.
+
+Before any automated generation is enabled, these have to be settled: how generated facts are verified against a source, how citations are captured per claim, what the page shows when a fact is unavailable, and what the API spend is per edition and per season.
+
 ## Remaining setup
 
-- Make pages, matchup cards and metadata edition-driven before enabling weekly research.
-- Verify each upcoming game's facts. Do not invent player statistics or recaps.
+- Verify Week 3 (Tomball at Klein Cain, September 18, 2026) against current public sources. Its content was carried over from the earlier hardcoded page and has not been rechecked.
+- Design the cloud workflow for producing and publishing weekly editions.
 - Approve and enforce a budget before enabling AI API calls.
 - Confirm data-source permissions before commercial expansion.
 

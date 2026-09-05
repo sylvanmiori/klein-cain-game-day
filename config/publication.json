@@ -3,6 +3,23 @@
   "domain": "gameday.report",
   "schoolId": "kleincain",
   "schoolName": "Klein Cain",
+  "schoolMascot": "Hurricanes",
+  "schoolLogo": "/favicon.png",
   "schoolHostname": "kleincain.gameday.report",
-  "timezone": "America/Chicago"
+  "timezone": "America/Chicago",
+  "wordmark": "CAIN GAME DAY",
+  "desk": "Cain Game Day desk",
+  "siteName": "Cain Game Day",
+  "sources": [
+    {
+      "label": "MaxPreps — Klein Cain roster",
+      "href": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/roster/"
+    }
+  ],
+  "photoCredit": "Team photography via the Klein Cain Football Booster Club.",
+  "forecastNote": "Forecasts are estimates, not guarantees.",
+  "wordmarkParts": [
+    "CAIN",
+    "GAME DAY"
+  ]
 }

@@ -8,12 +8,15 @@ Start with the [project guide](docs/PROJECT-GUIDE.md) for accounts, costs, publi
 
 The public site is https://kleincain.gameday.report/. https://gameday.report/ redirects to Klein Cain while it is the only school. GitHub Pages remains available as a migration fallback.
 
-Weekly research is disabled until the edition template is fully data-driven.
+Every game page is rendered from one JSON file in `content/editions/`. See [content/editions/TEMPLATE.md](content/editions/TEMPLATE.md) to add a game.
+
+Weekly AI research is still disabled. The template is data-driven now, but generated facts, citations and costs are not yet controlled.
 
 ## Development
 
 Use Node 24 or newer. Run `npm ci`, then `npm run dev`.
 
+- `npm run validate` checks every edition file against the schedule and the editorial rules.
 - `npm run test:score` tests the score parser and Cloudflare Worker.
-- `npm run build:cloudflare` builds root-relative static assets.
+- `npm run build:cloudflare` validates, builds root-relative static assets, then checks the built pages for stale opponents.
 - `npm run deploy:cloudflare` deploys the website and score Worker.

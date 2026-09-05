@@ -1,7 +1,9 @@
 name: Weekly game-day edition
 
 on:
-  # Research is manual until the edition template and API access are ready.
+  # Disabled. scripts/build-edition.mjs writes the retired edition schema v1
+  # and throws; it must be rewritten for content/editions/*.json (schema v2)
+  # before this workflow can run. See docs/PROJECT-GUIDE.md.
   workflow_dispatch:
     inputs:
       game_date:

@@ -1,6 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { MatchupCard } from './matchup-card';
+import type { Fact, Team } from '../lib/edition';
 
 export type LiveScore = {
   schemaVersion: number;
@@ -21,14 +23,26 @@ type Props = {
   dateShort: string;
   kickoff: string;
   venue: string;
-  prediction: { home: number; away: number; winProbability: number };
-  ranks: { home: number; away: number };
-  weather: string;
+  home: Team;
+  away: Team;
+  /** Shown before kickoff. */
+  scheduledFacts: Fact[];
+  /** Shown once the feed reports a live or final score. */
+  resultFacts: Fact[];
 };
 
 const liveDataUrl = 'https://raw.githubusercontent.com/sylvanmiori/klein-cain-game-day/live-data/live-score.json';
 
-export function LiveScoreCard({ initialScore, dateShort, kickoff, venue, prediction, ranks, weather }: Props) {
+export function LiveScoreCard({
+  initialScore,
+  dateShort,
+  kickoff,
+  venue,
+  home,
+  away,
+  scheduledFacts,
+  resultFacts,
+}: Props) {
   const [score, setScore] = useState(initialScore);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -63,61 +77,34 @@ export function LiveScoreCard({ initialScore, dateShort, kickoff, venue, predict
   }, [score.status]);
 
   const isScheduled = score.status === 'scheduled';
-  const isLive = score.status === 'live';
   const updated = new Intl.DateTimeFormat('en-US', {
     timeZone: 'America/Chicago',
     hour: 'numeric',
     minute: '2-digit',
   }).format(new Date(score.updatedAt));
 
+  // The feed supplies only the score and its provenance. Records, ranks and
+  // forecasts stay editorial so polling can never invent them.
+  const facts: Fact[] = isScheduled
+    ? scheduledFacts
+    : [...resultFacts, { label: 'Score source', value: score.source, href: score.sourceUrl }];
+
   return (
-    <div className={`matchup-card ${score.status}`} aria-label="Oak Ridge at Klein Cain matchup">
-      <div className="score-status">
-        {isLive && <span className="live-dot" aria-hidden="true" />}
-        <strong>{score.statusLabel}</strong>
+    <MatchupCard
+      status={score.status}
+      statusLabel={score.statusLabel}
+      showLiveDot={score.status === 'live'}
+      statusDetail={
         <button type="button" onClick={() => void refresh()} disabled={refreshing}>
           {refreshing ? 'Checking…' : `Updated ${updated} CT`}
         </button>
-      </div>
-
-      <div className="matchup-teams">
-        <div className="team away">
-          <img src="./oak-ridge-logo.png" alt="Oak Ridge War Eagles logo" />
-          <div>
-            <h2>Oak Ridge</h2>
-            <span>War Eagles</span>
-            {isScheduled ? <strong>{score.awayRecord}</strong> : <b className="team-score">{score.awayScore}</b>}
-          </div>
-        </div>
-        <div className="game-time">
-          {isScheduled ? <><span>{dateShort}</span><strong>{kickoff}</strong></> : <strong>{score.statusLabel}</strong>}
-          <small>{venue}</small>
-        </div>
-        <div className="team home">
-          <div>
-            <h2>Klein Cain</h2>
-            <span>Hurricanes</span>
-            {isScheduled ? <strong>{score.homeRecord}</strong> : <b className="team-score">{score.homeScore}</b>}
-          </div>
-          <img src="./favicon.png" alt="Klein Cain Hurricanes logo" />
-        </div>
-      </div>
-
-      {isScheduled ? (
-        <ul className="game-facts">
-          <li><span>Forecast</span><strong>Cain {prediction.home}–{prediction.away}</strong></li>
-          <li><span>Win chance</span><strong>{prediction.winProbability}% Cain</strong></li>
-          <li><span>Texas rank</span><strong>Cain {ranks.home} · Oak Ridge {ranks.away}</strong></li>
-          <li><span>Weather</span><strong>{weather}</strong></li>
-        </ul>
-      ) : (
-        <ul className="game-facts final-facts">
-          <li><span>Massey forecast</span><strong>Cain {prediction.home}–{prediction.away}</strong></li>
-          <li><span>Record</span><strong>Klein Cain {score.homeRecord}</strong></li>
-          <li><span>Next</span><strong>Tomball · Sept. 18</strong></li>
-          <li><span>Score source</span><a href={score.sourceUrl} target="_blank" rel="noreferrer">{score.source}</a></li>
-        </ul>
-      )}
-    </div>
+      }
+      dateShort={dateShort}
+      kickoff={kickoff}
+      venue={venue}
+      away={{ ...away, score: score.awayScore }}
+      home={{ ...home, score: score.homeScore }}
+      facts={facts}
+    />
   );
 }

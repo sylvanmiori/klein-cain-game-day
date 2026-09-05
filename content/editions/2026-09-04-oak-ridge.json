@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 2,
+  "slug": "2026-09-04-oak-ridge",
+  "week": 2,
+  "issue": "01",
+  "state": "final",
+  "date": "2026-09-04",
+  "dateLong": "September 4, 2026",
+  "dateShort": "SEP 4, 2026",
+  "kickoff": "7:00 PM",
+  "venue": "Klein Memorial Stadium",
+  "event": "Future Hurricane Night",
+  "updated": "11:20 PM CT",
+  "home": {
+    "name": "Klein Cain",
+    "mascot": "Hurricanes",
+    "logo": "/favicon.png",
+    "record": "2–0",
+    "rank": 132
+  },
+  "away": {
+    "name": "Oak Ridge",
+    "mascot": "War Eagles",
+    "logo": "/oak-ridge-logo.png",
+    "record": "0–2",
+    "rank": 793
+  },
+  "pageTitle": "2026 Week 2 Final: Oak Ridge at Klein Cain",
+  "metaTitle": "Final: Klein Cain 45, Oak Ridge 20 | Cain Game Day",
+  "metaDescription": "Final score and game report for Klein Cain’s 45–20 win over Oak Ridge.",
+  "socialDescription": "Final score, players to know and recruiting notes from Klein Cain’s Week 2 win.",
+  "ogImage": "/og.png",
+  "prediction": {
+    "home": 44,
+    "away": 20,
+    "winProbability": 80,
+    "source": "Massey projection via Rivals"
+  },
+  "weather": {
+    "label": "HUMID",
+    "detail": "storms possible earlier"
+  },
+  "scheduledFacts": [
+    {
+      "label": "Forecast",
+      "value": "Cain 44–20"
+    },
+    {
+      "label": "Win chance",
+      "value": "80% Cain"
+    },
+    {
+      "label": "Texas rank",
+      "value": "Cain 132 · Oak Ridge 793"
+    },
+    {
+      "label": "Weather",
+      "value": "HUMID · storms possible earlier"
+    }
+  ],
+  "resultFacts": [
+    {
+      "label": "Massey forecast",
+      "value": "Cain 44–20"
+    },
+    {
+      "label": "Record",
+      "value": "Klein Cain 2–0"
+    }
+  ],
+  "preview": {
+    "playersHeading": "Six players to watch",
+    "playersNote": "Player portraits: MaxPreps and public athlete profiles.",
+    "intro": null,
+    "players": [
+      {
+        "team": "CAIN",
+        "number": "1",
+        "name": "Earl O’Guinn Jr.",
+        "image": "/players/earl-oguinn.jpg",
+        "role": "RB / WR · Junior",
+        "tag": "3-star · 2028",
+        "rating": "82.00 Industry",
+        "copy": "The clearest breakaway threat in this game. O’Guinn averaged 50.5 rushing yards per game as a sophomore and is the only current Hurricane listed in the Rivals prospect database."
+      },
+      {
+        "team": "CAIN",
+        "number": "10",
+        "name": "Cooper Karns",
+        "image": "/players/cooper-karns.jpg",
+        "role": "WR · Senior",
+        "tag": "Returning producer",
+        "rating": "71.8 rec. YPG in 2025",
+        "copy": "Karns returns after five receiving touchdowns and nearly 72 yards per game last fall. If Oak Ridge crowds the box, he is the player most likely to make it pay."
+      },
+      {
+        "team": "CAIN",
+        "number": "7",
+        "name": "Christian Redeo",
+        "image": "/players/christian-redeo.jpg",
+        "role": "DB · Senior",
+        "tag": "Back-end anchor",
+        "rating": "7.2 tackles per game in 2025",
+        "copy": "A steady tackler from the secondary. That matters after Cain allowed 41 in the opener and faces an Oak Ridge offense that needs explosive plays to keep pace."
+      },
+      {
+        "team": "OAK RIDGE",
+        "number": "88",
+        "name": "Finn Walker",
+        "image": "/players/finn-walker.jpg",
+        "role": "DL · Senior",
+        "tag": "3-star · Kansas State commit",
+        "rating": "87.43 Industry",
+        "copy": "Walker is the headliner at 6-foot-7 and 260 pounds. He is committed to Kansas State, and Rivals lists offers from Oklahoma State, Baylor, Arkansas and Syracuse. Cain has to know where No. 88 is on every passing down."
+      },
+      {
+        "team": "OAK RIDGE",
+        "number": "5",
+        "name": "Elijah Berton",
+        "image": "/players/elijah-berton.jpg",
+        "role": "EDGE · Senior",
+        "tag": "Verified prospect profile",
+        "rating": "6’1” · 230 lbs",
+        "copy": "Berton gives the War Eagles a second edge body with recruiting visibility. No public star rating was listed as of game day, so the size and role are the useful tells."
+      },
+      {
+        "team": "OAK RIDGE",
+        "number": "20",
+        "name": "Cody Cooksey",
+        "image": "/players/cody-cooksey.jpg",
+        "role": "RB · Junior",
+        "tag": "Skill player to track",
+        "rating": "5’11” · 165 lbs",
+        "copy": "The listed junior running back is a natural pressure point in a game where Oak Ridge will want to keep Cain’s offense off the field. Public recruiting services do not list a rating."
+      }
+    ],
+    "recruiting": {
+      "heading": "Recruiting notes",
+      "note": "Ratings and recruiting status change often. “Unrated” here means no public rating was found in the linked Rivals/On3 data on Sept. 4, not that a player has no college interest.",
+      "rows": [
+        {
+          "number": "88",
+          "name": "Finn Walker",
+          "team": "Oak Ridge",
+          "note": "Three-star defensive lineman · Kansas State commit · Rivals Industry No. 680 nationally, No. 77 at DL, No. 91 in Texas.",
+          "href": "https://www.on3.com/rivals/finn-walker-285232/",
+          "linkLabel": "View Rivals"
+        },
+        {
+          "number": "1",
+          "name": "Earl O’Guinn Jr.",
+          "team": "Klein Cain",
+          "note": "Three-star 2028 running back · Rivals Industry No. 726 nationally, No. 56 at RB, No. 91 in Texas. SMU has made contact; LSU is also listed.",
+          "href": "https://www.on3.com/rivals/earl-oguinn-jr-286130/",
+          "linkLabel": "View Rivals"
+        }
+      ]
+    },
+    "keys": {
+      "heading": "Three keys for Klein Cain",
+      "items": [
+        {
+          "title": "Find No. 88",
+          "body": "Finn Walker’s length can wreck a slow-developing pass game. Chip him, move the launch point and make Oak Ridge find pressure somewhere else."
+        },
+        {
+          "title": "Make the first stop",
+          "body": "Cain scored 42 last week and still needed every point. One early three-and-out changes the night from a race into a game Cain can dictate."
+        },
+        {
+          "title": "Get O’Guinn into space",
+          "body": "Runs, screens, quick motion: the delivery method matters less than giving Cain’s young playmaker a clean edge and one defender to beat."
+        }
+      ]
+    },
+    "gameInfo": {
+      "heading": "Game information",
+      "facts": [
+        {
+          "label": "Kickoff",
+          "value": "7:00 PM"
+        },
+        {
+          "label": "Site",
+          "value": "Klein Memorial Stadium"
+        },
+        {
+          "label": "Home",
+          "value": "Klein Cain Hurricanes"
+        },
+        {
+          "label": "Event",
+          "value": "Future Hurricane Night"
+        },
+        {
+          "label": "Conditions",
+          "value": "Warm, humid; monitor storms"
+        }
+      ],
+      "links": [
+        {
+          "label": "Tickets",
+          "href": "https://kleinisd.hometownticketing.com/"
+        },
+        {
+          "label": "Stream info",
+          "href": "https://www.nfhsnetwork.com/"
+        }
+      ]
+    }
+  },
+  "final": {
+    "headline": "Klein Cain beats Oak Ridge, 45–20",
+    "byline": "Cain Game Day desk · Updated 11:20 PM CT",
+    "body": "Klein Cain followed its one-point opener at Humble with a 25-point win over Oak Ridge. The Hurricanes are 2–0 heading into an open week before the Sept. 18 district opener against Tomball.",
+    "homeScore": 45,
+    "awayScore": 20,
+    "quarters": null,
+    "notes": [
+      {
+        "heading": "The prediction was close",
+        "paragraphs": [
+          "Massey projected Klein Cain to win 44–20. The Hurricanes won 45–20, one point from the projected score.",
+          "Klein Cain improved to 2–0 and allowed 21 fewer points than it did in the 42–41 opener against Humble."
+        ]
+      }
+    ],
+    "leaders": null
+  },
+  "sources": [
+    {
+      "label": "Official schedule",
+      "href": "https://www.kleincainathletics.com/sport/football/boys/?tab=schedule"
+    },
+    {
+      "label": "MaxPreps — Oak Ridge",
+      "href": "https://www.maxpreps.com/tx/conroe/oak-ridge-war-eagles/football/"
+    },
+    {
+      "label": "Hudl — Oak Ridge roster",
+      "href": "https://fan.hudl.com/usa/tx/conroe/organization/6632/oak-ridge-high-school/team/17069/boys-varsity-football/roster?ss=2026"
+    },
+    {
+      "label": "Oak Ridge High School logo",
+      "href": "https://orhs.conroeisd.net/"
+    },
+    {
+      "label": "Rivals — Earl O’Guinn Jr.",
+      "href": "https://www.on3.com/rivals/earl-oguinn-jr-286130/"
+    },
+    {
+      "label": "Rivals — Finn Walker",
+      "href": "https://www.on3.com/rivals/finn-walker-285232/"
+    },
+    {
+      "label": "Official booster photography",
+      "href": "https://www.kleincainfootball.org/varsity"
+    }
+  ],
+  "footerNote": "",
+  "disclaimerEntities": [
+    "Klein ISD",
+    "Klein Cain High School",
+    "Oak Ridge High School",
+    "MaxPreps",
+    "Rivals"
+  ],
+  "current": true
+}

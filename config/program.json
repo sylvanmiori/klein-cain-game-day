@@ -1,0 +1,24 @@
+{
+  "seasonLabel": "2026 schedule",
+  "districtNote": "* District 15-6A game",
+  "facts": [
+    { "label": "Playoff appearances", "value": "6" },
+    { "label": "State titles", "value": "0" },
+    { "label": "Home field", "value": "Klein Memorial" },
+    { "label": "Capacity", "value": "8,500" }
+  ],
+  "pastSeasons": [
+    { "year": "2025", "record": "4–6" },
+    { "year": "2024", "record": "9–2" },
+    { "year": "2023", "record": "8–4" },
+    { "year": "2022", "record": "10–2" },
+    { "year": "2021", "record": "9–3" },
+    { "year": "2020", "record": "8–3" },
+    { "year": "2019", "record": "6–5" },
+    { "year": "2018", "record": "2–8" }
+  ],
+  "links": [
+    { "label": "Season records", "href": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/history/" },
+    { "label": "Program data", "href": "https://www.texasfootball.com/team/klein-cain-hurricanes" }
+  ]
+}

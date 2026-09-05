@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 2,
+  "slug": "2026-09-18-tomball",
+  "week": 3,
+  "issue": "02",
+  "state": "preview",
+  "date": "2026-09-18",
+  "dateLong": "September 18, 2026",
+  "dateShort": "SEP 18, 2026",
+  "kickoff": "7:00 PM",
+  "venue": "Klein Memorial Stadium",
+  "event": "District opener",
+  "updated": "",
+  "home": {
+    "name": "Klein Cain",
+    "mascot": "Hurricanes",
+    "logo": "/favicon.png",
+    "record": "2–0",
+    "rank": 132
+  },
+  "away": {
+    "name": "Tomball",
+    "mascot": "Cougars",
+    "logo": "/tomball-logo.png",
+    "record": "1–0",
+    "rank": 69
+  },
+  "pageTitle": "2026 Week 3 Preview: Tomball at Klein Cain",
+  "metaTitle": "Week 3 Preview: Tomball at Klein Cain | Cain Game Day",
+  "metaDescription": "An early look at Klein Cain’s Sept. 18 district opener and homecoming game against Tomball.",
+  "socialDescription": "Early matchup facts and players to watch for the Sept. 18 district opener.",
+  "ogImage": "",
+  "prediction": null,
+  "weather": null,
+  "scheduledFacts": [
+    {
+      "label": "Setting",
+      "value": "District opener · Homecoming"
+    },
+    {
+      "label": "Early Texas rank",
+      "value": "Tomball 69 · Cain 132"
+    },
+    {
+      "label": "Tomball opener",
+      "value": "W 38–0 vs Stratford"
+    },
+    {
+      "label": "Next update",
+      "value": "Game day · Sept. 18"
+    }
+  ],
+  "resultFacts": [],
+  "preview": {
+    "playersHeading": "Early players to watch",
+    "playersNote": "Opening-week statistics from MaxPreps. Recruiting ratings from Rivals/On3. This list will be rechecked on game day.",
+    "intro": {
+      "heading": "Early read",
+      "body": "This matchup is two weeks away, and Tomball still plays Cinco Ranch and Klein Forest before coming to Klein Memorial. The numbers below are a starting point. The full forecast, current records and final player list will update on game day.",
+      "facts": [
+        {
+          "label": "Cain",
+          "value": "43.5 points per game"
+        },
+        {
+          "label": "Tomball",
+          "value": "277 rush yards in opener"
+        },
+        {
+          "label": "Tomball defense",
+          "value": "5 sacks · 0 points allowed"
+        }
+      ]
+    },
+    "players": [
+      {
+        "team": "CAIN",
+        "number": "9",
+        "name": "Jace Hanks",
+        "image": "/players/jace-hanks.jpg",
+        "role": "QB · Junior",
+        "tag": "Week 1 passing leader",
+        "rating": "201 yards · 2 TD",
+        "copy": "Hanks completed 15 of 24 passes in the opener and accounted for 285 total yards. His early efficiency gives Cain a useful counter to Tomball’s run-heavy approach."
+      },
+      {
+        "team": "CAIN",
+        "number": "16",
+        "name": "Eyan Johnson",
+        "image": "/players/eyan-johnson.jpg",
+        "role": "RB / SB · Senior",
+        "tag": "10.0 yards per carry",
+        "rating": "110 yards · 1 TD",
+        "copy": "Johnson needed 11 carries to reach 110 yards against Humble. Tomball opened with five sacks, so Cain’s ability to stay ahead of the chains will matter."
+      },
+      {
+        "team": "CAIN",
+        "number": "10",
+        "name": "Cooper Karns",
+        "image": "/players/cooper-karns.jpg",
+        "role": "WR · Senior",
+        "tag": "Week 1 receiving leader",
+        "rating": "6 catches · 110 yards",
+        "copy": "Karns produced 110 yards and a touchdown in the opener. He gives Hanks an established target when Tomball commits extra bodies to the run."
+      },
+      {
+        "team": "TOMBALL",
+        "number": "4",
+        "name": "Trevon Johnson",
+        "image": "/players/trevon-johnson.jpg",
+        "role": "RB / MLB · Senior",
+        "tag": "Opening-week producer",
+        "rating": "142 rushing yards",
+        "copy": "Johnson led Tomball’s ground game in the 38–0 win over Stratford. The 6-foot, 205-pound senior is the first test for a Cain defense that gave up 41 in Week 1."
+      },
+      {
+        "team": "TOMBALL",
+        "number": "22",
+        "name": "Ian Thomas",
+        "image": "/players/ian-thomas.jpg",
+        "role": "RB · Junior",
+        "tag": "Rivals Industry 91.83",
+        "rating": "No. 106 national · No. 6 RB",
+        "copy": "Thomas had 207 total yards in Tomball’s opener, including 80 receiving. Rivals lists the 2028 back among the top players in his class."
+      },
+      {
+        "team": "TOMBALL",
+        "number": "38",
+        "name": "Andres von der Meden",
+        "image": "/player-placeholder.svg",
+        "role": "K · Senior",
+        "tag": "Rivals Industry 80.33",
+        "rating": "No. 5 kicker · 2027",
+        "copy": "The specialist has a public Rivals rating and gives Tomball another way to turn field position into points. His listed number comes from the 2026 Dave Campbell’s roster."
+      }
+    ],
+    "recruiting": {
+      "heading": "Tomball recruiting notes",
+      "note": "",
+      "rows": [
+        {
+          "number": "22",
+          "name": "Ian Thomas",
+          "team": "Tomball",
+          "note": "Rivals Industry rating 91.83 · 2028 running back · No. 106 nationally and No. 6 at the position as of Sept. 5.",
+          "href": "https://www.on3.com/high-school/tomball-tomball-tx-18178/football/roster/",
+          "linkLabel": "View Rivals"
+        },
+        {
+          "number": "38",
+          "name": "Andres von der Meden",
+          "team": "Tomball",
+          "note": "Rivals Industry rating 80.33 · 2027 kicker · listed No. 5 at the position.",
+          "href": "https://www.on3.com/high-school/tomball-tomball-tx-18178/football/roster/",
+          "linkLabel": "View Rivals"
+        }
+      ]
+    },
+    "keys": null,
+    "gameInfo": null
+  },
+  "final": null,
+  "sources": [],
+  "footerNote": "Independent fan publication · Early information will be rechecked before kickoff.",
+  "disclaimerEntities": [
+    "Klein ISD",
+    "Klein Cain High School",
+    "Tomball High School",
+    "MaxPreps",
+    "Rivals"
+  ],
+  "current": false
+}

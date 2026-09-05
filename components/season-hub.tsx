@@ -1,44 +1,81 @@
 import schedule from '../config/season-2026.json';
+import program from '../config/program.json';
+import { editions, editionPath } from '../lib/edition';
 import { sitePath } from '../lib/site-path';
 
-const pastSeasons = [
-  ['2025', '4–6'], ['2024', '9–2'], ['2023', '8–4'], ['2022', '10–2'],
-  ['2021', '9–3'], ['2020', '8–3'], ['2019', '6–5'], ['2018', '2–8'],
-];
+/** Season record derived from recorded results, so it cannot go stale. */
+function seasonRecord() {
+  let wins = 0;
+  let losses = 0;
+  for (const game of schedule) {
+    const result = 'result' in game ? game.result : '';
+    if (typeof result !== 'string' || !result) continue;
+    if (result.startsWith('W')) wins += 1;
+    if (result.startsWith('L')) losses += 1;
+  }
+  return `${wins}–${losses}`;
+}
 
-const editionLinks: Record<string, string> = {
-  '2026-08-27': '/games/week-1',
-  '2026-09-04': '/',
-  '2026-09-18': '/games/week-3',
-};
+const editionLinks = new Map(editions.map((edition) => [edition.date, editionPath(edition)]));
 
 export function SeasonHub({ activeDate }: { activeDate: string }) {
   return (
     <section className="season-hub" id="schedule" aria-labelledby="schedule-heading">
       <div className="season-card">
-        <div className="season-head"><h2 id="schedule-heading">2026 schedule</h2><p>2–0</p></div>
+        <div className="season-head">
+          <h2 id="schedule-heading">{program.seasonLabel}</h2>
+          <p>{seasonRecord()}</p>
+        </div>
         <ol>
           {schedule.map((game) => {
-            const content = <><time dateTime={game.date}>{new Date(`${game.date}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</time><span>{game.home ? 'vs' : 'at'} <strong>{game.opponent}</strong></span><b>{'result' in game && game.result ? game.result : game.kickoff}</b></>;
-            return <li className={game.date === activeDate ? 'current' : ''} key={game.date}>{editionLinks[game.date] ? <a href={sitePath(editionLinks[game.date])}>{content}</a> : content}</li>;
+            const href = editionLinks.get(game.date);
+            const content = (
+              <>
+                <time dateTime={game.date}>
+                  {new Date(`${game.date}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                </time>
+                <span>
+                  {game.home ? 'vs' : 'at'} <strong>{game.opponent}</strong>
+                </span>
+                <b>{'result' in game && game.result ? game.result : game.kickoff}</b>
+              </>
+            );
+            return (
+              <li className={game.date === activeDate ? 'current' : ''} key={game.date}>
+                {href ? <a href={sitePath(href)}>{content}</a> : content}
+              </li>
+            );
           })}
         </ol>
-        <p className="district-note">* District 15-6A game</p>
+        <p className="district-note">{program.districtNote}</p>
       </div>
 
       <div className="history-card">
         <h2>Program history</h2>
         <dl className="history-facts">
-          <div><dt>Playoff appearances</dt><dd>6</dd></div>
-          <div><dt>State titles</dt><dd>0</dd></div>
-          <div><dt>Home field</dt><dd>Klein Memorial</dd></div>
-          <div><dt>Capacity</dt><dd>8,500</dd></div>
+          {program.facts.map((fact) => (
+            <div key={fact.label}>
+              <dt>{fact.label}</dt>
+              <dd>{fact.value}</dd>
+            </div>
+          ))}
         </dl>
         <h3>Past seasons</h3>
         <ul className="past-seasons">
-          {pastSeasons.map(([year, record]) => <li key={year}><span>{year}</span><strong>{record}</strong></li>)}
+          {program.pastSeasons.map((season) => (
+            <li key={season.year}>
+              <span>{season.year}</span>
+              <strong>{season.record}</strong>
+            </li>
+          ))}
         </ul>
-        <p className="history-source"><a href="https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/history/" target="_blank" rel="noreferrer">Season records</a><a href="https://www.texasfootball.com/team/klein-cain-hurricanes" target="_blank" rel="noreferrer">Program data</a></p>
+        <p className="history-source">
+          {program.links.map((link) => (
+            <a key={link.label} href={link.href} target="_blank" rel="noreferrer">
+              {link.label}
+            </a>
+          ))}
+        </p>
       </div>
     </section>
   );

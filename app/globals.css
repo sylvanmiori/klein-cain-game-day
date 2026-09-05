@@ -90,7 +90,8 @@ article>section { border-bottom:1px solid var(--line); }
 .recruit-no { font-size:70px; font-weight:950; letter-spacing:-.08em; color:#b68ad2; }
 .recruit-row strong { font-size:13px; letter-spacing:.06em; }
 .recruit-row p { margin:6px 0 0; max-width:730px; font:16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#d5cbd9; }
-.recruit-row a,.gameday-links a { font-size:10px; font-weight:900; letter-spacing:.12em; white-space:nowrap; transition:color .15s ease; }
+.recruit-row a,.gameday-links a { font-size:10px; font-weight:900; letter-spacing:.12em; text-transform:uppercase; white-space:nowrap; transition:color .15s ease; }
+.recruit-row strong,.gameday dt { text-transform:uppercase; }
 .recruit-row a:hover,.gameday-links a:hover { color:#c9a7e2; }
 .fineprint { margin:26px 0 0; max-width:780px; font:12px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#af9eba; }
 .keys { padding:64px 4vw 72px; }

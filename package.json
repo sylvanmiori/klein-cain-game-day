@@ -7,16 +7,18 @@
   },
   "scripts": {
     "dev": "vinext dev",
-    "build": "vinext build",
+    "build": "npm run validate && vinext build && node scripts/check-build.mjs",
     "prepare:pages": "node scripts/prepare-pages.mjs",
     "start": "wrangler dev --config dist/server/wrangler.json",
     "edition": "node scripts/build-edition.mjs",
     "score": "node scripts/update-live-score.mjs",
-    "build:cloudflare": "DEPLOY_TARGET=cloudflare vinext build",
+    "build:cloudflare": "npm run validate && DEPLOY_TARGET=cloudflare vinext build && node scripts/check-build.mjs",
     "deploy:cloudflare": "wrangler deploy --config cloudflare/wrangler.jsonc",
     "test:score": "node --test cloudflare/*.test.mjs",
     "lint": "oxlint",
-    "format": "oxfmt"
+    "format": "oxfmt",
+    "validate": "node scripts/validate-editions.mjs",
+    "check": "node scripts/check-build.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

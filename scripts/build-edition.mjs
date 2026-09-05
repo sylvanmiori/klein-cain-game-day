@@ -1,3 +1,15 @@
+// DISABLED. This script writes the retired schema v1 (content/current-edition.json),
+// which nothing renders any more. Editions are now schema v2 files in
+// content/editions/, validated by scripts/validate-editions.mjs. The research
+// prompt below is kept as the starting point for the v2 rewrite; see the
+// "Weekly editions" section of docs/PROJECT-GUIDE.md before re-enabling it.
+if (!process.env.ALLOW_RETIRED_EDITION_SCRIPT) {
+  throw new Error(
+    'scripts/build-edition.mjs targets the retired edition schema v1. '
+    + 'Rewrite it for content/editions/*.json (schema v2) before running it.',
+  );
+}
+
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
