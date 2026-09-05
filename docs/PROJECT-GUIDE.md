@@ -92,6 +92,8 @@ Massey is deliberately not a source. `masseyratings.com` answers automated reque
 
 `.github/workflows/refresh-facts.yml` promotes and then refreshes at 6 AM Central daily, and every three hours on Thursday and Friday when the forecast matters. The repository is public, so Actions minutes are free. Each run validates before committing, pushes to `main`, and Cloudflare rebuilds. Every automated fact change is a reviewable diff in git history.
 
+The rating is all-or-nothing. A statewide scores response is around a megabyte and timed out from GitHub's runners on the first cloud run, which produced a rating from 758 of 1,315 games without stopping anything. Requests now allow 60 seconds and retry three times, and if any date is still unavailable the rating is skipped entirely rather than computed from a partial season.
+
 Failure is quiet by design. A source that is down, changes shape or does not match the scheduled game is reported in the job log and the previous verified value is kept. The job does not fail the build, and nothing unverified reaches the page.
 
 `npm run refresh` runs it locally; `node scripts/refresh-facts.mjs --dry-run` reports what would change without writing.

@@ -66,18 +66,27 @@ function playedDates(games, day) {
 // both teams have enough games, so an early-season number is simply withheld.
 let model = null;
 try {
+  const dates = playedDates(schedule, today);
   const rows = [];
-  for (const date of playedDates(schedule, today)) {
+  let missing = 0;
+  for (const date of dates) {
     try {
       rows.push(...(await fetchScoreRows(date)));
     } catch (error) {
+      missing += 1;
       problems.push(`rating: ${date}: ${error.message}`);
     }
   }
-  const played = buildGames(rows);
-  if (played.length > 0) {
-    model = rate(played);
-    console.log(`Rating: ${played.length} games, ${model.ratings.size} teams, home edge ${model.homeEdge.toFixed(2)}.`);
+  // A rating built on part of the season is worse than none: a missing week
+  // silently distorts every team that played in it. Publish nothing instead.
+  if (missing > 0) {
+    problems.push(`rating: ${missing} of ${dates.length} dates unavailable, so no rating was computed`);
+  } else {
+    const played = buildGames(rows);
+    if (played.length > 0) {
+      model = rate(played);
+      console.log(`Rating: ${played.length} games, ${model.ratings.size} teams, home edge ${model.homeEdge.toFixed(2)}.`);
+    }
   }
 } catch (error) {
   problems.push(`rating: ${error.message}`);

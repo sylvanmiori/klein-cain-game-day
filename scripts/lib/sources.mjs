@@ -4,16 +4,30 @@
 // previous verified value rather than publishing a guess.
 
 const USER_AGENT = 'kleincain.gameday.report (contact: SylvanMiori@gmail.com)';
-const TIMEOUT = 20000;
+// A statewide scores response is around a megabyte and is slower from a cloud
+// runner than from a laptop, so this is generous and retried.
+const TIMEOUT = 60000;
+const ATTEMPTS = 3;
+
+const wait = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
 
 async function get(url, options = {}) {
-  const response = await fetch(url, {
-    ...options,
-    headers: { 'user-agent': USER_AGENT, ...options.headers },
-    signal: AbortSignal.timeout(TIMEOUT),
-  });
-  if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
-  return response;
+  let lastError;
+  for (let attempt = 1; attempt <= ATTEMPTS; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        ...options,
+        headers: { 'user-agent': USER_AGENT, ...options.headers },
+        signal: AbortSignal.timeout(TIMEOUT),
+      });
+      if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
+      return response;
+    } catch (error) {
+      lastError = error;
+      if (attempt < ATTEMPTS) await wait(attempt * 2000);
+    }
+  }
+  throw lastError;
 }
 
 /* ------------------------------------------------------------------ weather */
