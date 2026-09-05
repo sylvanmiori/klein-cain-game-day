@@ -20,7 +20,7 @@ import {
   parseDistrictRecords,
   recordFor,
 } from './lib/sources.mjs';
-import { buildGames, predict, rate } from './lib/rating.mjs';
+import { buildGames, formatRecord, predict, rate, teamRecords } from './lib/rating.mjs';
 
 const root = process.cwd();
 const dryRun = process.argv.includes('--dry-run');
@@ -95,6 +95,32 @@ try {
     if (played.length > 0) {
       model = rate(played);
       console.log(`Rating: ${played.length} games, ${model.ratings.size} teams, home edge ${model.homeEdge.toFixed(2)}.`);
+
+      // Every opponent's record, from the same complete scan. Written to its
+      // own file so the hand-maintained schedule stays hand-maintained.
+      const records = teamRecords(played);
+      const table = {};
+      const unresolved = [];
+      for (const game of schedule) {
+        const key = game.dctfName ?? game.opponent;
+        const record = formatRecord(records.get(key));
+        if (record) table[game.opponent] = record;
+        else unresolved.push(`${game.opponent} (looked up as "${key}")`);
+      }
+      if (unresolved.length) problems.push(`opponent records: no results yet for ${unresolved.join(', ')}`);
+      const file = 'content/opponent-records.json';
+      const next = {
+        records: table,
+        source: 'Dave Campbell’s Texas Football',
+        sourceUrl: 'https://www.texasfootball.com/scores/',
+        asOf: new Date().toISOString(),
+      };
+      const before = await readFile(path.join(root, file), 'utf8').catch(() => '');
+      const beforeRecords = before ? JSON.parse(before).records : {};
+      for (const [team, value] of Object.entries(table)) {
+        if (beforeRecords[team] !== value) changes.push(`${file}: ${team} ${beforeRecords[team] ?? '(none)'} -> ${value}`);
+      }
+      if (!dryRun) await writeFile(path.join(root, file), `${JSON.stringify(next, null, 2)}\n`);
     }
   }
 } catch (error) {

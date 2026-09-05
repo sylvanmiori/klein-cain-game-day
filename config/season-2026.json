@@ -1,6 +1,6 @@
 [
   { "date":"2026-08-27", "opponent":"Humble", "venue":"Turner Stadium", "location":"Humble, TX", "home":false, "kickoff":"7:00 PM", "result":"W 42–41" },
-  { "date":"2026-09-04", "opponent":"Oak Ridge", "venue":"Klein Memorial Stadium", "location":"Klein, TX", "home":true, "kickoff":"7:00 PM", "event":"Future Hurricane Night", "result":"W 45–20" },
+  { "date":"2026-09-04", "opponent":"Oak Ridge", "dctfName":"Conroe Oak Ridge", "venue":"Klein Memorial Stadium", "location":"Klein, TX", "home":true, "kickoff":"7:00 PM", "event":"Future Hurricane Night", "result":"W 45–20" },
   { "date":"2026-09-18", "opponent":"Tomball", "venue":"Klein Memorial Stadium", "location":"Klein, TX", "home":true, "kickoff":"7:00 PM" },
   { "date":"2026-09-25", "opponent":"Magnolia West", "venue":"Magnolia West High School", "location":"Magnolia, TX", "home":false, "kickoff":"7:00 PM" },
   { "date":"2026-10-01", "opponent":"Klein Collins", "venue":"Klein Memorial Stadium", "location":"Klein, TX", "home":true, "kickoff":"7:00 PM" },

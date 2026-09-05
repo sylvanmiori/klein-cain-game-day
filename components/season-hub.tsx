@@ -1,5 +1,6 @@
 import schedule from '../config/season-2026.json';
 import program from '../config/program.json';
+import opponentRecords from '../content/opponent-records.json';
 import { editions, editionPath } from '../lib/edition';
 import { sitePath } from '../lib/site-path';
 
@@ -23,6 +24,10 @@ const atNoon = (date: string) => new Date(`${date}T12:00:00`);
 /** Games fall on both Thursdays and Fridays, so the day is worth showing. */
 const weekday = (date: string) => atNoon(date).toLocaleDateString('en-US', { weekday: 'short' });
 const monthDay = (date: string) => atNoon(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+/** Opponent records refresh with the rest of the season data. */
+const records: Record<string, string> = opponentRecords.records;
+const record = (opponent: string) => records[opponent] ?? '';
 
 /** Results read "W 42–41". Colour reinforces the letter, it never replaces it. */
 function outcome(game: { result?: string }) {
@@ -53,6 +58,8 @@ export function SeasonHub({ activeDate }: { activeDate: string }) {
                 </time>
                 <span>
                   {game.home ? 'vs' : 'at'} <strong>{game.opponent}</strong>
+                  {/* A real space, so the text reads "Humble (1–1)" when copied. */}
+                  {record(game.opponent) && <>{' '}<small className="opp-record">({record(game.opponent)})</small></>}
                 </span>
                 <b className={outcome(game)}>{'result' in game && game.result ? game.result : game.kickoff}</b>
               </>

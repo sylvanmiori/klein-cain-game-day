@@ -151,3 +151,34 @@ export function predict({ ratings, games, homeEdge }, homeTeam, awayTeam) {
   if ((games.get(homeTeam) ?? 0) < MIN_GAMES || (games.get(awayTeam) ?? 0) < MIN_GAMES) return null;
   return { home, away, margin: home - away + homeEdge };
 }
+
+/**
+ * Win-loss record for every team, from the same completed games the rating
+ * uses. Free: the season scan is already loaded, so no extra requests.
+ */
+export function teamRecords(games) {
+  const records = new Map();
+  const bump = (team, result) => {
+    const record = records.get(team) ?? { won: 0, lost: 0, tied: 0 };
+    record[result] += 1;
+    records.set(team, record);
+  };
+  for (const game of games) {
+    if (game.homeScore === game.awayScore) {
+      bump(game.home, 'tied');
+      bump(game.away, 'tied');
+      continue;
+    }
+    const homeWon = game.homeScore > game.awayScore;
+    bump(game.home, homeWon ? 'won' : 'lost');
+    bump(game.away, homeWon ? 'lost' : 'won');
+  }
+  return records;
+}
+
+/** "2–0", or "2–0–1" when a tie exists. En dash, matching the rest of the site. */
+export function formatRecord(record) {
+  if (!record) return null;
+  const base = `${record.won}\u2013${record.lost}`;
+  return record.tied > 0 ? `${base}\u2013${record.tied}` : base;
+}

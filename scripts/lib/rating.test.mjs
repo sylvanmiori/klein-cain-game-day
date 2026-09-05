@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { MARGIN_CAP, buildGames, homeAdvantage, predict, rate } from './rating.mjs';
+import { MARGIN_CAP, buildGames, formatRecord, homeAdvantage, predict, rate, teamRecords } from './rating.mjs';
 
 /** The feed reports one game twice, once per school, with different game ids. */
 const bothViews = (date, home, away, homeScore, awayScore) => [
@@ -81,4 +81,17 @@ test('a team without enough games earns no published rating', () => {
 test('an unknown team is never predicted', () => {
   const model = rate(buildGames(bothViews('2026-08-28', 'A', 'B', 20, 10)));
   assert.equal(predict(model, 'A', 'Nobody'), null);
+});
+
+test('records come from the same completed games as the rating', () => {
+  const games = buildGames([
+    ...bothViews('2026-08-28', 'A', 'B', 21, 7),
+    ...bothViews('2026-09-04', 'B', 'A', 14, 10),
+    ...bothViews('2026-09-11', 'A', 'C', 3, 3),
+  ]);
+  const records = teamRecords(games);
+  assert.equal(formatRecord(records.get('A')), '1–1–1');
+  assert.equal(formatRecord(records.get('B')), '1–1');
+  assert.equal(formatRecord(records.get('C')), '0–0–1');
+  assert.equal(formatRecord(records.get('Nobody')), null);
 });
