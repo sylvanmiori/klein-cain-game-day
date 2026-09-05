@@ -46,11 +46,13 @@ export function PlayerReport({ player }: { player: Player }) {
         <summary>
           <Portrait player={player} />
           <Identity player={player} />
-          <span className="player-toggle">
-            <span className="toggle-closed">Read report</span>
-            <span className="toggle-open">Close report</span>
-            <b aria-hidden="true">+</b>
-          </span>
+            <span className="player-toggle">
+              <span className="toggle-closed">Read report</span>
+              <span className="toggle-open">Close report</span>
+              <svg aria-hidden="true" viewBox="0 0 16 16">
+                <path d="m3 6 5 5 5-5" />
+              </svg>
+            </span>
         </summary>
         <div className="mobile-player-details">
           <Report player={player} />
