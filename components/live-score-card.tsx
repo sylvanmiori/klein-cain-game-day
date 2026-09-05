@@ -107,7 +107,7 @@ export function LiveScoreCard({ initialScore, dateShort, kickoff, venue, predict
         </ul>
       ) : (
         <ul className="game-facts final-facts">
-          <li><span>Defense</span><strong>21 fewer points allowed than Week 1</strong></li>
+          <li><span>Massey forecast</span><strong>Cain {prediction.home}–{prediction.away}</strong></li>
           <li><span>Record</span><strong>Klein Cain {score.homeRecord}</strong></li>
           <li><span>Next</span><strong>Tomball · Sept. 18</strong></li>
           <li><span>Score source</span><a href={score.sourceUrl} target="_blank" rel="noreferrer">{score.source} ↗</a></li>
