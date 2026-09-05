@@ -28,15 +28,9 @@ Cloudflare will serve the static site and run the score service. GitHub stores t
 
 Configuration: `cloudflare/wrangler.jsonc`. The provisioned `gameday-report-scores` KV namespace stores scores, and its namespace ID is saved in that file so future deployments reuse it.
 
-GitHub Actions needs:
+Automatic publishing uses Cloudflare Workers Builds connected directly to the GitHub repository. In the existing `gameday-report` Worker, open **Settings → Builds → Connect**, choose `sylvanmiori/klein-cain-game-day`, use `main` as the production branch and the repository root as the root directory. Set the build command to `npm run build:cloudflare` and the deploy command to `npm run deploy:cloudflare`. This connection avoids a long-lived Cloudflare token in GitHub.
 
-- Repository variable `CLOUDFLARE_ACCOUNT_ID`: Sylvan's account ID.
-- Repository secret `CLOUDFLARE_API_TOKEN`: scoped deployment token, not the global API key.
-- Repository variable `CLOUDFLARE_ENABLED`: set to `true` after the new site is verified.
-
-Enter secret values directly in GitHub settings, never in source or chat. Local Cloudflare login does not authorize GitHub Actions.
-
-When enabled, a push to `main` tests, builds and deploys to Cloudflare. The old GitHub live-score job is skipped when `CLOUDFLARE_ENABLED` is true, avoiding duplicate polling.
+After the connection is tested, pushes to `main` build and deploy without this computer. The old GitHub score schedule is disabled; its manual workflow remains only as a fallback for GitHub Pages.
 
 Local commands use Node 24 or newer: `npm ci`, `npm run test:score`, `npm run build:cloudflare`, then `npm run deploy:cloudflare` with Cloudflare authorization.
 
@@ -52,7 +46,7 @@ Manual corrections use `POST /api/score/override`, disabled unless the Worker se
 
 ## Remaining setup
 
-- Configure GitHub deployment credentials and test cloud-only publishing.
+- Connect the existing Worker to GitHub and test automatic cloud publishing.
 - Make pages, matchup cards and metadata edition-driven before enabling weekly research.
 - Verify each upcoming game's facts. Do not invent player statistics or recaps.
 - Approve and enforce a budget before enabling AI API calls.
