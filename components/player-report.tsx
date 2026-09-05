@@ -33,7 +33,7 @@ function Report({ player }: { player: Player }) {
 }
 
 export function PlayerReport({ player }: { player: Player }) {
-  const teamClass = player.team === 'OAK RIDGE' ? 'red' : '';
+  const teamClass = player.team !== 'CAIN' ? 'red' : '';
 
   return (
     <>

@@ -1,10 +1,11 @@
 import edition from '../content/current-edition.json';
-import schedule from '../config/season-2026.json';
 import liveScore from '../public/live-score.json';
 import { LiveScoreCard, type LiveScore } from '../components/live-score-card';
 import roster from '../content/roster-2026.json';
 import { PlayerReport } from '../components/player-report';
 import { GameReportTabs } from '../components/game-report-tabs';
+import { SeasonHub } from '../components/season-hub';
+import { sitePath } from '../lib/site-path';
 
 const sources = [
   ['Official schedule', 'https://www.kleincainathletics.com/sport/football/boys/?tab=schedule'],
@@ -119,18 +120,13 @@ export default function Home() {
           </>}
         />
 
-        <section className="season" id="schedule" aria-labelledby="schedule-heading">
-          <div className="season-head"><h2 id="schedule-heading">2026 schedule</h2><p>Klein Cain is 2–0</p></div>
-          <ol>
-            {schedule.map((game) => (
-              <li className={game.date === '2026-09-04' ? 'current' : ''} key={game.date}>
-                <time dateTime={game.date}>{new Date(`${game.date}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</time>
-                <span>{game.home ? 'vs' : 'at'} <strong>{game.opponent}</strong></span>
-                <b>{'result' in game && game.result ? game.result : game.kickoff}</b>
-              </li>
-            ))}
-          </ol>
-        </section>
+        <SeasonHub activeDate="2026-09-04" />
+
+        <nav className="edition-switcher" aria-label="Game editions">
+          <a href={sitePath('/games/week-1')}>← Week 1: Humble</a>
+          <span>Week 2</span>
+          <a href={sitePath('/games/week-3')}>Week 3: Tomball →</a>
+        </nav>
 
         <section className="roster" aria-labelledby="roster-heading">
           <div className="roster-head">
