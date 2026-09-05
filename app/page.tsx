@@ -40,13 +40,28 @@ export default function Home() {
       </section>
 
       <section className="snapshot" aria-label="Game snapshot">
-        <div><span>MASSEY FORECAST</span><strong>CAIN {edition.prediction.home}</strong><em>{edition.opponent} {edition.prediction.away}</em></div>
-        <div><span>WIN CHANCE</span><strong>{edition.prediction.winProbability}%</strong><em>{edition.prediction.source}</em></div>
-        <div><span>STATE RANK</span><strong>{edition.home.rank} <small>vs</small> {edition.away.rank}</strong><em>MaxPreps, Sept. 3</em></div>
-        <div><span>GAME-NIGHT AIR</span><strong>{edition.weatherLabel}</strong><em>{edition.weatherDetail}</em></div>
+        <ul>
+          <li><strong>Cain {edition.prediction.home}–{edition.prediction.away}</strong><span>Massey forecast</span></li>
+          <li><strong>{edition.prediction.winProbability}% Cain</strong><span>win chance</span></li>
+          <li><strong>No. {edition.home.rank} vs No. {edition.away.rank}</strong><span>Texas rank</span></li>
+          <li><strong>{edition.weatherLabel}</strong><span>{edition.weatherDetail}</span></li>
+        </ul>
       </section>
 
       <article>
+        <section className="players" id="players">
+          <div className="section-head">
+            <p className="section-label">PLAYER FILE</p>
+            <h2>Six players to watch.</h2>
+          </div>
+          <div className="player-grid">
+            {edition.players.map((player) => (
+              <PlayerReport player={player} key={player.name} />
+            ))}
+          </div>
+          <p className="photo-note">Player portraits: MaxPreps and public athlete profiles.</p>
+        </section>
+
         <section className="opening">
           <p className="section-label">THE READ</p>
           <div>
@@ -63,19 +78,6 @@ export default function Home() {
             <p>Both teams are one play from matching records. The wider evidence says otherwise. MaxPreps ranks Cain No. 132 in Texas and Oak Ridge No. 793. Massey’s model lands in the same place, projecting a 44–20 Cain win with an 80 percent win probability.</p>
             <p>There is a warning in the opener: Cain gave up 41 points. A favorite that trades stops for scores leaves the upset door open. The fastest way to shut it is a clean first quarter.</p>
           </div>
-        </section>
-
-        <section className="players" id="players">
-          <div className="section-head">
-            <p className="section-label">PLAYER FILE</p>
-            <h2>Six players to watch.</h2>
-          </div>
-          <div className="player-grid">
-            {edition.players.map((player) => (
-              <PlayerReport player={player} key={player.name} />
-            ))}
-          </div>
-          <p className="photo-note">Player portraits: MaxPreps and public athlete profiles.</p>
         </section>
 
         <section className="recruiting">
