@@ -5,7 +5,7 @@ import liveScore from '../public/live-score.json';
 import { GameReportTabs } from './game-report-tabs';
 import { LiveScoreCard, type LiveScore } from './live-score-card';
 import { MatchupCard } from './matchup-card';
-import { PlayerReport } from './player-report';
+import { PlayerReports } from './player-reports';
 import { SeasonHub } from './season-hub';
 import {
   type Edition,
@@ -58,11 +58,7 @@ function PreviewView({ edition, preview }: { edition: Edition; preview: PreviewS
           <div className="section-head">
             <h2>{preview.playersHeading}</h2>
           </div>
-          <div className="player-grid">
-            {preview.players.map((player) => (
-              <PlayerReport player={{ ...player, image: sitePath(player.image) }} key={`${player.team}-${player.name}`} />
-            ))}
-          </div>
+          <PlayerReports players={preview.players.map((player) => ({ ...player, image: sitePath(player.image) }))} />
           {preview.playersNote && <p className="photo-note">{preview.playersNote}</p>}
         </section>
       )}
