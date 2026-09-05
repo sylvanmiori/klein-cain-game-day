@@ -20,7 +20,7 @@ const editions = await Promise.all(
 
 const pages = editions.map((edition) => ({
   edition,
-  file: edition.current ? 'index.html' : path.join('games', `week-${edition.week}.html`),
+  file: path.join('games', `week-${edition.week}.html`),
 }));
 
 const problems = [];

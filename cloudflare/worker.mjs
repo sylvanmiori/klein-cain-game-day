@@ -23,6 +23,12 @@ const worker = {
     if (url.hostname !== publication.schoolHostname && !url.hostname.endsWith('.workers.dev')
       && !['localhost', '127.0.0.1'].includes(url.hostname)) return new Response('School not found', { status: 404 });
 
+    // /team was the program page for one deploy before it moved to /.
+    if (url.pathname === '/team' || url.pathname === '/team/') {
+      url.pathname = '/';
+      return Response.redirect(url.toString(), 301);
+    }
+
     if (url.pathname === '/api/score') {
       if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
       const slug = url.searchParams.get('game') || snapshot.slug;

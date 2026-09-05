@@ -18,7 +18,7 @@ const icons: Metadata['icons'] = {
 /** Titles, descriptions and share cards all come from the edition file, so an
  *  old opponent can never survive in metadata after a new edition ships. */
 export function editionMetadata(edition: Edition, siteName: string): Metadata {
-  const url = edition.current ? siteUrl : `${siteUrl}games/week-${edition.week}`;
+  const url = `${siteUrl}games/week-${edition.week}`;
   const images = edition.ogImage
     ? [{ url: `${siteUrl}${edition.ogImage.replace(/^\//, '')}`, width: 1731, height: 909, alt: edition.pageTitle }]
     : [];

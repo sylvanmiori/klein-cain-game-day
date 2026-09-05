@@ -186,8 +186,9 @@ export const editions: Edition[] = Object.values(modules)
 
 export const currentEdition: Edition = editions.find((edition) => edition.current) ?? editions[editions.length - 1];
 
+/** Every edition has its own route. `/` is the program page, not a game. */
 export function editionPath(edition: Edition) {
-  return edition.current ? '/' : `/games/week-${edition.week}`;
+  return `/games/week-${edition.week}`;
 }
 
 /** The team on the page that is not the school this site covers. */

@@ -8,9 +8,9 @@ export const dynamic = 'force-static';
 
 type Params = { week: string };
 
-/** Only editions that are not the home page get their own /games route. */
+/** Every edition has a route; `/` is the program page rather than a game. */
 export function generateStaticParams(): Params[] {
-  return editions.filter((edition) => !edition.current).map((edition) => ({ week: `week-${edition.week}` }));
+  return editions.map((edition) => ({ week: `week-${edition.week}` }));
 }
 
 function resolve(week: string) {

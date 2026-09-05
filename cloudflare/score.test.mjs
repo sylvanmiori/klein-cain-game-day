@@ -68,3 +68,12 @@ void test('cron skips off days and already-final games without fetching the sour
     SCORES: { get: async () => ({ status: 'final' }) },
   });
 });
+
+test('the retired /team address redirects to the program page', async () => {
+  const response = await worker.fetch(new Request('https://kleincain.gameday.report/team'), {
+    SCORES: { get: async () => null, put: async () => {} },
+    ASSETS: { fetch: async () => new Response('asset') },
+  });
+  assert.equal(response.status, 301);
+  assert.equal(new URL(response.headers.get('location')).pathname, '/');
+});

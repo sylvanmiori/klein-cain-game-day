@@ -1,39 +1,21 @@
-import type { Metadata } from 'next';
-import publication from '../../config/publication.json';
-import schedule from '../../config/season-2026.json';
-import { MatchupCard } from '../../components/matchup-card';
-import { SeasonHub } from '../../components/season-hub';
-import { RosterSection, SeasonStats } from '../../components/team-sections';
+import publication from '../config/publication.json';
+import schedule from '../config/season-2026.json';
+import liveScore from '../public/live-score.json';
+import { LiveScoreCard, type LiveScore } from './live-score-card';
+import { SeasonHub } from './season-hub';
+import { RosterSection, SeasonStats } from './team-sections';
 import {
   apDate,
+  currentEdition,
   editionPath,
   editions,
   latestEditionWithStats,
-  nextEdition,
   opponentOf,
   predictionFact,
   rankFact,
-} from '../../lib/edition';
-import { sitePath } from '../../lib/site-path';
-
-export const dynamic = 'force-static';
-
-const siteUrl = process.env.DEPLOY_TARGET === 'cloudflare'
-  ? 'https://kleincain.gameday.report/'
-  : 'https://sylvanmiori.github.io/klein-cain-game-day/';
-
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: `${publication.schoolName} ${publication.schoolMascot} football | ${publication.siteName}`,
-  description: `Schedule, results, season leaders and roster for ${publication.schoolName} football.`,
-  openGraph: {
-    title: `${publication.schoolName} ${publication.schoolMascot} football`,
-    description: `Schedule, results, season leaders and roster for ${publication.schoolName} football.`,
-    url: `${siteUrl}team`,
-    siteName: publication.siteName,
-    type: 'website',
-  },
-};
+  weatherFact,
+} from '../lib/edition';
+import { sitePath } from '../lib/site-path';
 
 /** Record from recorded results, matching the season card. */
 function seasonRecord() {
@@ -53,25 +35,20 @@ function seasonRecord() {
  * game. Each game keeps its own report; this is where the schedule, the season
  * leaders and the roster live together.
  */
-export default function TeamPage() {
-  const today = new Intl.DateTimeFormat('en-CA', {
-    timeZone: publication.timezone,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(new Date());
-
-  const next = nextEdition(today);
+export function TeamPage() {
+  // The featured game is whichever edition is current: promotion keeps that on
+  // the most recent game for three days, then moves it to the next one. Using
+  // the live card means the front page carries a live score on game night.
+  const featured = currentEdition;
   const stats = latestEditionWithStats();
-  // The same facts the game page shows, capped at the row's four columns.
-  const facts = next
-    ? [
-      ...next.scheduledFacts,
-      ...[rankFact(next), predictionFact(next, publication.schoolName)].filter(
-        (fact): fact is NonNullable<typeof fact> => fact !== null,
-      ),
-    ].slice(0, 4)
-    : [];
+  const autoFacts = [rankFact(featured), predictionFact(featured, publication.schoolName), weatherFact(featured)]
+    .filter((fact): fact is NonNullable<typeof fact> => fact !== null);
+  const facts = [...featured.scheduledFacts, ...autoFacts].slice(0, 4);
+  // Once the featured game is final, say what is next rather than stopping.
+  const upcoming = schedule.find((game) => game.date > featured.date);
+  const resultFacts = upcoming
+    ? [...featured.resultFacts, { label: 'Next', value: `${upcoming.opponent} · ${apDate(upcoming.date)}` }]
+    : featured.resultFacts;
 
   return (
     <main>
@@ -97,23 +74,20 @@ export default function TeamPage() {
           </p>
         </div>
 
-        {next && (
-          <MatchupCard
-            status="scheduled"
-            statusLabel="Next game"
-            statusDetail={<span>{`${apDate(next.date)} · ${next.kickoff}`}</span>}
-            dateShort={next.dateShort}
-            kickoff={next.kickoff}
-            venue={next.venue}
-            away={next.away}
-            home={next.home}
-            facts={facts}
-          />
-        )}
+        <LiveScoreCard
+          initialScore={liveScore as LiveScore}
+          dateShort={featured.dateShort}
+          kickoff={featured.kickoff}
+          venue={featured.venue}
+          home={featured.home}
+          away={featured.away}
+          scheduledFacts={facts}
+          resultFacts={resultFacts}
+        />
       </section>
 
       <article>
-        <SeasonHub activeDate={next?.date ?? ''} />
+        <SeasonHub activeDate={featured.date} />
 
         <nav className="edition-switcher" aria-label="Game reports">
           {editions.map((edition) => (

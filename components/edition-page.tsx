@@ -6,7 +6,7 @@ import { LiveScoreCard, type LiveScore } from './live-score-card';
 import { MatchupCard } from './matchup-card';
 import { PlayerReports } from './player-reports';
 import { SeasonHub } from './season-hub';
-import { RosterSection, SeasonStats } from './team-sections';
+import { SeasonStats } from './team-sections';
 import {
   type Edition,
   type Fact,
@@ -215,7 +215,7 @@ function FinalView({ final }: { final: FinalSection }) {
 export function EditionPage({ edition }: { edition: Edition }) {
   const { preview, final } = edition;
   const home = sitePath('/');
-  const rosterHash = edition.current ? '#roster-heading' : sitePath('/#roster-heading');
+  const rosterHash = sitePath('/#roster-heading');
   const nextFact = nextGameFact(edition);
   const resultFacts = nextFact ? [...edition.resultFacts, nextFact] : edition.resultFacts;
   // Machine-refreshed facts sit alongside the editorial ones. They appear only
@@ -252,27 +252,18 @@ export function EditionPage({ edition }: { edition: Edition }) {
   return (
     <main>
       <header className="masthead">
-        <a className="wordmark" href={edition.current ? '#top' : home} aria-label={`${publication.siteName} home`}>
+        <a className="wordmark" href={home} aria-label={`${publication.siteName} home`}>
           <img src={sitePath(publication.schoolLogo)} alt="" /> {publication.wordmark}
         </a>
         <nav aria-label="Site navigation">
           {preview && preview.players.length > 0 && <a href="#players">Players</a>}
           {final && !(preview && preview.players.length > 0) && <a href="#final">Recap</a>}
           <a href="#schedule">Schedule</a>
-          <a href={sitePath('/team')}>Team</a>
           <a href={rosterHash}>Roster</a>
         </nav>
-        {edition.current
-          ? (
-            <a className="issue" href="#archive">
-              Issue {edition.issue} · {edition.dateShort}
-            </a>
-          )
-          : (
-            <span className="issue">
-              Week {edition.week} · {apDate(edition.date, true)}
-            </span>
-          )}
+        <a className="issue" href="#archive">
+          Week {edition.week} · {apDate(edition.date, true)}
+        </a>
       </header>
 
       <section className="game-overview" id="top">
@@ -323,41 +314,31 @@ export function EditionPage({ edition }: { edition: Edition }) {
           })}
         </nav>
 
-        {edition.current && <RosterSection />}
       </article>
 
-      {edition.current
-        ? (
-          <footer id="archive">
-            <div>
-              <a className="wordmark" href="#top">
-                {publication.wordmarkParts[0]} <span>/</span> {publication.wordmarkParts[1]}
-              </a>
-              <p>
-                Issue {edition.issue} · {opponentOf(edition, publication.schoolName).name} · {apDate(edition.date, true)}
-              </p>
-            </div>
-            <div className="sources">
-              <strong>Sources</strong>
-              {[...edition.sources, ...publication.sources].map((source) => (
-                <a key={source.label} href={source.href} target="_blank" rel="noreferrer">
-                  {source.label}
-                </a>
-              ))}
-            </div>
-            <p className="disclaimer">
-              {disclaimerLine(edition)} {publication.forecastNote} {publication.photoCredit}
-            </p>
-          </footer>
-        )
-        : (
-          <footer className="compact-footer">
-            <a className="wordmark" href={home}>
-              {publication.wordmarkParts[0]} <span>/</span> {publication.wordmarkParts[1]}
+      {/* Every game page carries its own sources and its own not-affiliated
+          line, because both are specific to the teams on that page. */}
+      <footer id="archive">
+        <div>
+          <a className="wordmark" href={home}>
+            {publication.wordmarkParts[0]} <span>/</span> {publication.wordmarkParts[1]}
+          </a>
+          <p>
+            Week {edition.week} · {opponentOf(edition, publication.schoolName).name} · {apDate(edition.date, true)}
+          </p>
+        </div>
+        <div className="sources">
+          <strong>Sources</strong>
+          {[...edition.sources, ...publication.sources].map((source) => (
+            <a key={source.label} href={source.href} target="_blank" rel="noreferrer">
+              {source.label}
             </a>
-            <p>{edition.footerNote}</p>
-          </footer>
-        )}
+          ))}
+        </div>
+        <p className="disclaimer">
+          {disclaimerLine(edition)} {publication.forecastNote} {publication.photoCredit}
+        </p>
+      </footer>
     </main>
   );
 }
