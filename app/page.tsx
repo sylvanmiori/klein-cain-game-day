@@ -4,6 +4,7 @@ import liveScore from '../public/live-score.json';
 import { LiveScoreCard, type LiveScore } from '../components/live-score-card';
 import roster from '../content/roster-2026.json';
 import { PlayerReport } from '../components/player-report';
+import { GameReportTabs } from '../components/game-report-tabs';
 
 const sources = [
   ['Official schedule', 'https://www.kleincainathletics.com/sport/football/boys/?tab=schedule'],
@@ -43,74 +44,80 @@ export default function Home() {
       </section>
 
       <article>
-        <section className="players" id="players">
-          <div className="section-head">
-            <h2>Players from the matchup</h2>
-          </div>
-          <div className="player-grid">
-            {edition.players.map((player) => (
-              <PlayerReport player={player} key={player.name} />
-            ))}
-          </div>
-          <p className="photo-note">Player portraits: MaxPreps and public athlete profiles.</p>
-        </section>
+        <GameReportTabs
+          initialStatus={(liveScore as LiveScore).status}
+          finalView={<>
+            <section className="opening final-recap" id="final">
+              <div>
+                <h2>{edition.readHeadline}</h2>
+                <p className="byline">Cain Game Day desk · Updated {edition.updated}</p>
+              </div>
+              <p>{edition.readBody}</p>
+            </section>
 
-        <section className="opening">
-          <div>
-            <h2>{edition.readHeadline}</h2>
-            <p className="byline">Cain Game Day desk · Updated {edition.updated}</p>
-          </div>
-          <p>{edition.readBody}</p>
-        </section>
+            <section className="feature-grid">
+              <div className="feature-copy">
+                <h2>The prediction was close</h2>
+                <p>Massey projected Klein Cain to win 44–20. The Hurricanes won 45–20, one point from the projected score.</p>
+                <p>Klein Cain improved to 2–0 and allowed 21 fewer points than it did in the 42–41 opener against Humble.</p>
+              </div>
+            </section>
+          </>}
+          previewView={<>
+            <section className="players" id="players">
+              <div className="section-head">
+                <h2>Six players to watch</h2>
+              </div>
+              <div className="player-grid">
+                {edition.players.map((player) => (
+                  <PlayerReport player={player} key={player.name} />
+                ))}
+              </div>
+              <p className="photo-note">Player portraits: MaxPreps and public athlete profiles.</p>
+            </section>
 
-        <section className="feature-grid">
-          <div className="feature-copy">
-            <h2>The prediction was close</h2>
-            <p>Massey projected Klein Cain to win 44–20. The Hurricanes won 45–20, one point from the projected score.</p>
-            <p>Klein Cain improved to 2–0 and allowed 21 fewer points than it did in the 42–41 opener against Humble.</p>
-          </div>
-        </section>
+            <section className="recruiting" id="recruiting">
+              <div>
+                <h2>Recruiting notes</h2>
+              </div>
+              <div className="recruit-row">
+                <span className="recruit-no">88</span>
+                <div><strong>FINN WALKER · OAK RIDGE</strong><p>Three-star defensive lineman · Kansas State commit · Rivals Industry No. 680 nationally, No. 77 at DL, No. 91 in Texas.</p></div>
+                <a href="https://www.on3.com/rivals/finn-walker-285232/" target="_blank" rel="noreferrer">VIEW RIVALS ↗</a>
+              </div>
+              <div className="recruit-row">
+                <span className="recruit-no">1</span>
+                <div><strong>EARL O’GUINN JR. · KLEIN CAIN</strong><p>Three-star 2028 running back · Rivals Industry No. 726 nationally, No. 56 at RB, No. 91 in Texas. SMU has made contact; LSU is also listed.</p></div>
+                <a href="https://www.on3.com/rivals/earl-oguinn-jr-286130/" target="_blank" rel="noreferrer">VIEW RIVALS ↗</a>
+              </div>
+              <p className="fineprint">Ratings and recruiting status change often. “Unrated” here means no public rating was found in the linked Rivals/On3 data on Sept. 4, not that a player has no college interest.</p>
+            </section>
 
-        <section className="recruiting">
-          <div>
-            <h2>Recruiting notes</h2>
-          </div>
-          <div className="recruit-row">
-            <span className="recruit-no">88</span>
-            <div><strong>FINN WALKER · OAK RIDGE</strong><p>Three-star defensive lineman · Kansas State commit · Rivals Industry No. 680 nationally, No. 77 at DL, No. 91 in Texas.</p></div>
-            <a href="https://www.on3.com/rivals/finn-walker-285232/" target="_blank" rel="noreferrer">VIEW RIVALS ↗</a>
-          </div>
-          <div className="recruit-row">
-            <span className="recruit-no">1</span>
-            <div><strong>EARL O’GUINN JR. · KLEIN CAIN</strong><p>Three-star 2028 running back · Rivals Industry No. 726 nationally, No. 56 at RB, No. 91 in Texas. SMU has made contact; LSU is also listed.</p></div>
-            <a href="https://www.on3.com/rivals/earl-oguinn-jr-286130/" target="_blank" rel="noreferrer">VIEW RIVALS ↗</a>
-          </div>
-          <p className="fineprint">Ratings and recruiting status change often. “Unrated” here means no public rating was found in the linked Rivals/On3 data on Sept. 4, not that a player has no college interest.</p>
-        </section>
+            <section className="keys" id="keys">
+              <div className="section-head"><h2>Three keys for Klein Cain</h2></div>
+              <ol>
+                <li><span>01</span><div><h3>Find No. 88</h3><p>Finn Walker’s length can wreck a slow-developing pass game. Chip him, move the launch point and make Oak Ridge find pressure somewhere else.</p></div></li>
+                <li><span>02</span><div><h3>Make the first stop</h3><p>Cain scored 42 last week and still needed every point. One early three-and-out changes the night from a race into a game Cain can dictate.</p></div></li>
+                <li><span>03</span><div><h3>Get O’Guinn into space</h3><p>Runs, screens, quick motion: the delivery method matters less than giving Cain’s young playmaker a clean edge and one defender to beat.</p></div></li>
+              </ol>
+            </section>
 
-        <section className="keys">
-          <div className="section-head"><h2>Three keys for Klein Cain</h2></div>
-          <ol>
-            <li><span>01</span><div><h3>Find No. 88</h3><p>Finn Walker’s length can wreck a slow-developing pass game. Chip him, move the launch point and make Oak Ridge find pressure somewhere else.</p></div></li>
-            <li><span>02</span><div><h3>Make the first stop</h3><p>Cain scored 42 last week and still needed every point. One early three-and-out changes the night from a race into a game Cain can dictate.</p></div></li>
-            <li><span>03</span><div><h3>Get O’Guinn into space</h3><p>Runs, screens, quick motion: the delivery method matters less than giving Cain’s young playmaker a clean edge and one defender to beat.</p></div></li>
-          </ol>
-        </section>
-
-        <section className="gameday">
-          <div><h2>Game information</h2><p>{edition.date}</p></div>
-          <dl>
-            <div><dt>KICKOFF</dt><dd>7:00 PM</dd></div>
-            <div><dt>SITE</dt><dd>Klein Memorial Stadium</dd></div>
-            <div><dt>HOME</dt><dd>Klein Cain Hurricanes</dd></div>
-            <div><dt>EVENT</dt><dd>{edition.event}</dd></div>
-            <div><dt>CONDITIONS</dt><dd>Warm, humid; monitor storms</dd></div>
-          </dl>
-          <div className="gameday-links">
-            <a href="https://kleinisd.hometownticketing.com/" target="_blank" rel="noreferrer">TICKETS ↗</a>
-            <a href="https://www.nfhsnetwork.com/" target="_blank" rel="noreferrer">STREAM INFO ↗</a>
-          </div>
-        </section>
+            <section className="gameday" id="game-info">
+              <div><h2>Game information</h2><p>{edition.date}</p></div>
+              <dl>
+                <div><dt>KICKOFF</dt><dd>7:00 PM</dd></div>
+                <div><dt>SITE</dt><dd>Klein Memorial Stadium</dd></div>
+                <div><dt>HOME</dt><dd>Klein Cain Hurricanes</dd></div>
+                <div><dt>EVENT</dt><dd>{edition.event}</dd></div>
+                <div><dt>CONDITIONS</dt><dd>Warm, humid; monitor storms</dd></div>
+              </dl>
+              <div className="gameday-links">
+                <a href="https://kleinisd.hometownticketing.com/" target="_blank" rel="noreferrer">TICKETS ↗</a>
+                <a href="https://www.nfhsnetwork.com/" target="_blank" rel="noreferrer">STREAM INFO ↗</a>
+              </div>
+            </section>
+          </>}
+        />
 
         <section className="season" id="schedule" aria-labelledby="schedule-heading">
           <div className="season-head"><h2 id="schedule-heading">2026 schedule</h2><p>Klein Cain is 2–0</p></div>

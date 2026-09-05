@@ -53,6 +53,10 @@ export function LiveScoreCard({ initialScore, dateShort, kickoff, venue, predict
     return () => window.clearInterval(timer);
   }, [refresh, score.status]);
 
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('cain-score-status', { detail: score.status }));
+  }, [score.status]);
+
   const isScheduled = score.status === 'scheduled';
   const isLive = score.status === 'live';
   const updated = new Intl.DateTimeFormat('en-US', {
