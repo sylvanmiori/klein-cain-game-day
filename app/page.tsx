@@ -6,6 +6,7 @@ const sources = [
   ['Official schedule', 'https://www.kleincainathletics.com/sport/football/boys/?tab=schedule'],
   ['MaxPreps — Klein Cain roster', roster.sourceUrl],
   ['MaxPreps — Oak Ridge', 'https://www.maxpreps.com/tx/conroe/oak-ridge-war-eagles/football/'],
+  ['Hudl — Oak Ridge roster', 'https://fan.hudl.com/usa/tx/conroe/organization/6632/oak-ridge-high-school/team/17069/boys-varsity-football/roster?ss=2026'],
   ['Rivals — Earl O’Guinn Jr.', 'https://www.on3.com/rivals/earl-oguinn-jr-286130/'],
   ['Rivals — Finn Walker', 'https://www.on3.com/rivals/finn-walker-285232/'],
   ['Official booster photography', 'https://www.kleincainfootball.org/varsity'],
