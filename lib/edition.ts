@@ -183,7 +183,10 @@ export function predictionFact(edition: Edition, schoolName: string): Fact | nul
   const candidates: { label: string; margin: number; href?: string }[] = [
     edition.rating && { label: 'Our rating', margin: edition.rating.margin },
     edition.massey && { label: 'Massey', margin: edition.massey.margin, href: edition.massey.sourceUrl },
-    edition.prediction && { label: 'DCTF pick', margin: edition.prediction.margin, href: edition.prediction.sourceUrl },
+    // No href: this margin comes from Dave Campbell's data feed, which appears
+    // to drive their Pick'Em contest, and is not displayed on any public page.
+    // Linking it would send a reader somewhere the number is not shown.
+    edition.prediction && { label: 'Model Prediction', margin: edition.prediction.margin },
   ].filter((candidate): candidate is { label: string; margin: number; href?: string } => Boolean(candidate));
 
   const chosen = candidates[0];
