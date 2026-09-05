@@ -1,20 +1,35 @@
 import schedule from '../config/season-2026.json';
 import program from '../config/program.json';
-import opponentRecords from '../content/opponent-records.json';
+import seasonData from '../content/season-data.json';
 import { editions, editionPath } from '../lib/edition';
 import { sitePath } from '../lib/site-path';
 
-/** Season record derived from recorded results, so it cannot go stale. */
-function seasonRecord() {
+export type GameResult = { outcome: string; us: number; them: number };
+const results: Record<string, GameResult> = seasonData.results;
+
+/** Results come from the score feed, so the schedule cannot go stale. */
+export function resultFor(date: string): GameResult | null {
+  return results[date] ?? null;
+}
+
+export function resultLabel(result: GameResult) {
+  return `${result.outcome} ${result.us}\u2013${result.them}`;
+}
+
+/** Season record derived from those same results. */
+export function seasonRecord() {
   let wins = 0;
   let losses = 0;
+  let ties = 0;
   for (const game of schedule) {
-    const result = 'result' in game ? game.result : '';
-    if (typeof result !== 'string' || !result) continue;
-    if (result.startsWith('W')) wins += 1;
-    if (result.startsWith('L')) losses += 1;
+    const result = resultFor(game.date);
+    if (!result) continue;
+    if (result.outcome === 'W') wins += 1;
+    else if (result.outcome === 'L') losses += 1;
+    else ties += 1;
   }
-  return `${wins}–${losses}`;
+  const base = `${wins}\u2013${losses}`;
+  return ties > 0 ? `${base}\u2013${ties}` : base;
 }
 
 const editionLinks = new Map(editions.map((edition) => [edition.date, editionPath(edition)]));
@@ -26,14 +41,13 @@ const weekday = (date: string) => atNoon(date).toLocaleDateString('en-US', { wee
 const monthDay = (date: string) => atNoon(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
 /** Opponent records refresh with the rest of the season data. */
-const records: Record<string, string> = opponentRecords.records;
+const records: Record<string, string> = seasonData.records;
 const record = (opponent: string) => records[opponent] ?? '';
 
-/** Results read "W 42–41". Colour reinforces the letter, it never replaces it. */
-function outcome(game: { result?: string }) {
-  const result = typeof game.result === 'string' ? game.result : '';
-  if (result.startsWith('W')) return 'win';
-  if (result.startsWith('L')) return 'loss';
+/** Colour reinforces the W or L, it never replaces it. */
+function outcomeClass(result: GameResult | null) {
+  if (result?.outcome === 'W') return 'win';
+  if (result?.outcome === 'L') return 'loss';
   return '';
 }
 
@@ -61,7 +75,12 @@ export function SeasonHub({ activeDate }: { activeDate: string }) {
                   {/* A real space, so the text reads "Humble (1–1)" when copied. */}
                   {record(game.opponent) && <>{' '}<small className="opp-record">({record(game.opponent)})</small></>}
                 </span>
-                <b className={outcome(game)}>{'result' in game && game.result ? game.result : game.kickoff}</b>
+                <b className={outcomeClass(resultFor(game.date))}>
+                  {(() => {
+                    const result = resultFor(game.date);
+                    return result ? resultLabel(result) : game.kickoff;
+                  })()}
+                </b>
               </>
             );
             return (

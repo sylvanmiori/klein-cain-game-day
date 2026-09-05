@@ -20,7 +20,8 @@
     "validate": "node scripts/validate-editions.mjs",
     "check": "node scripts/check-build.mjs",
     "refresh": "node scripts/refresh-facts.mjs",
-    "promote": "node scripts/promote-edition.mjs"
+    "promote": "node scripts/promote-edition.mjs",
+    "editions": "node scripts/build-editions.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

@@ -180,6 +180,14 @@ for (const file of files) {
   }
 }
 
+// Without this the season would quietly stop producing pages once it passed
+// the last edition anyone had created.
+for (const game of schedule) {
+  if (!editions.some(({ edition }) => edition.date === game.date)) {
+    problems.push(`no edition for the ${game.date} game against ${game.opponent}; run "npm run editions"`);
+  }
+}
+
 const current = editions.filter(({ edition }) => edition.current);
 if (current.length !== 1) {
   problems.push(`exactly one edition must set "current": true (found ${current.length})`);

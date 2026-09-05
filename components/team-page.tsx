@@ -2,7 +2,7 @@ import publication from '../config/publication.json';
 import schedule from '../config/season-2026.json';
 import liveScore from '../public/live-score.json';
 import { LiveScoreCard, type LiveScore } from './live-score-card';
-import { SeasonHub } from './season-hub';
+import { SeasonHub, seasonRecord } from './season-hub';
 import { RosterSection, SeasonStats } from './team-sections';
 import {
   apDate,
@@ -16,19 +16,6 @@ import {
   weatherFact,
 } from '../lib/edition';
 import { sitePath } from '../lib/site-path';
-
-/** Record from recorded results, matching the season card. */
-function seasonRecord() {
-  let wins = 0;
-  let losses = 0;
-  for (const game of schedule) {
-    const result = 'result' in game ? game.result : '';
-    if (typeof result !== 'string') continue;
-    if (result.startsWith('W')) wins += 1;
-    if (result.startsWith('L')) losses += 1;
-  }
-  return `${wins}–${losses}`;
-}
 
 /**
  * The program page: everything that is true all season rather than about one

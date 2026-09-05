@@ -39,6 +39,7 @@ function PreviewView({ edition, preview }: { edition: Edition; preview: PreviewS
             <h2>{preview.intro.heading}</h2>
             <p>{preview.intro.body}</p>
           </div>
+          {preview.intro.facts.length > 0 && (
           <dl>
             {preview.intro.facts.map((fact) => (
               <div key={fact.label}>
@@ -50,6 +51,7 @@ function PreviewView({ edition, preview }: { edition: Edition; preview: PreviewS
               </div>
             ))}
           </dl>
+          )}
         </section>
       )}
 

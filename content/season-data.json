@@ -1,4 +1,16 @@
 {
+  "results": {
+    "2026-08-27": {
+      "outcome": "W",
+      "us": 42,
+      "them": 41
+    },
+    "2026-09-04": {
+      "outcome": "W",
+      "us": 45,
+      "them": 20
+    }
+  },
   "records": {
     "Humble": "1–1",
     "Oak Ridge": "0–2",
@@ -13,5 +25,5 @@
   },
   "source": "Dave Campbell’s Texas Football",
   "sourceUrl": "https://www.texasfootball.com/scores/",
-  "asOf": "2026-09-05T20:05:57.812Z"
+  "asOf": "2026-09-05T21:18:29.706Z"
 }

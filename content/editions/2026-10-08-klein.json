@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 2,
+  "slug": "2026-10-08-klein",
+  "week": 6,
+  "issue": "05",
+  "state": "preview",
+  "date": "2026-10-08",
+  "dateLong": "October 8, 2026",
+  "dateShort": "OCT 8, 2026",
+  "kickoff": "7:00 PM",
+  "venue": "Klein Memorial Stadium",
+  "event": "",
+  "updated": "",
+  "home": {
+    "name": "Klein",
+    "mascot": "Bearkats",
+    "logo": "/team-placeholder.svg",
+    "record": "2–0",
+    "rank": 70
+  },
+  "away": {
+    "name": "Klein Cain",
+    "mascot": "Hurricanes",
+    "logo": "/favicon.png",
+    "record": "2–0",
+    "rank": 81
+  },
+  "pageTitle": "2026 Week 6 Preview: Klein Cain at Klein",
+  "metaTitle": "Week 6 Preview: Klein Cain at Klein | Cain Game Day",
+  "metaDescription": "Matchup facts, records and the published forecast for Klein Cain's Week 6 game against Klein on October 8, 2026.",
+  "socialDescription": "Records, ranking and forecast for Klein Cain at Klein.",
+  "ogImage": "",
+  "prediction": {
+    "margin": -5,
+    "source": "Dave Campbell’s Texas Football",
+    "sourceUrl": "https://www.texasfootball.com/",
+    "asOf": "2026-09-05T21:18:32.067Z"
+  },
+  "massey": null,
+  "rankings": {
+    "source": "Dave Campbell’s Texas Football computer rankings",
+    "sourceUrl": "https://www.texasfootball.com/article/2026/09/01/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-2",
+    "asOf": "2026-09-05T21:18:31.831Z"
+  },
+  "stats": null,
+  "finalScore": null,
+  "rating": null,
+  "weather": null,
+  "scheduledFacts": [],
+  "resultFacts": [],
+  "preview": {
+    "playersHeading": "Players to watch",
+    "playersNote": "",
+    "intro": {
+      "heading": "The matchup",
+      "body": "Klein Cain plays at Klein on October 8, 2026 at 7:00 PM, at Klein Memorial Stadium. Records, the statewide ranking and the published forecast on this page update automatically as the season goes on. Player notes are added only when they can be checked against a named source.",
+      "facts": []
+    },
+    "players": [],
+    "recruiting": null,
+    "keys": null,
+    "gameInfo": null
+  },
+  "final": null,
+  "sources": [],
+  "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
+  "disclaimerEntities": [
+    "Klein ISD",
+    "Klein Cain High School",
+    "Klein High School",
+    "MaxPreps",
+    "Dave Campbell’s Texas Football"
+  ],
+  "current": false
+}

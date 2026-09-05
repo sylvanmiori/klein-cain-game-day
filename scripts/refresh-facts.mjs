@@ -108,17 +108,36 @@ try {
         else unresolved.push(`${game.opponent} (looked up as "${key}")`);
       }
       if (unresolved.length) problems.push(`opponent records: no results yet for ${unresolved.join(', ')}`);
-      const file = 'content/opponent-records.json';
+      // Our own results, so the schedule and the season record stop being
+      // hand-typed and cannot drift from the opponent records beside them.
+      const results = {};
+      const school = publication.schoolName;
+      for (const row of rows) {
+        if (row.school !== school || !/final/i.test(String(row.status || ''))) continue;
+        const us = Number(row.score);
+        const them = Number(row.opponentScore);
+        if (!Number.isInteger(us) || !Number.isInteger(them)) continue;
+        results[row.gameDate] = { outcome: us > them ? 'W' : us < them ? 'L' : 'T', us, them };
+      }
+
+      const file = 'content/season-data.json';
       const next = {
+        results,
         records: table,
         source: 'Dave Campbell’s Texas Football',
         sourceUrl: 'https://www.texasfootball.com/scores/',
         asOf: new Date().toISOString(),
       };
       const before = await readFile(path.join(root, file), 'utf8').catch(() => '');
-      const beforeRecords = before ? JSON.parse(before).records : {};
+      const previous = before ? JSON.parse(before) : { records: {}, results: {} };
       for (const [team, value] of Object.entries(table)) {
-        if (beforeRecords[team] !== value) changes.push(`${file}: ${team} ${beforeRecords[team] ?? '(none)'} -> ${value}`);
+        if (previous.records?.[team] !== value) changes.push(`${file}: ${team} ${previous.records?.[team] ?? '(none)'} -> ${value}`);
+      }
+      for (const [date, value] of Object.entries(results)) {
+        const was = previous.results?.[date];
+        if (!was || was.us !== value.us || was.them !== value.them) {
+          changes.push(`${file}: ${date} result -> ${value.outcome} ${value.us}–${value.them}`);
+        }
       }
       if (!dryRun) await writeFile(path.join(root, file), `${JSON.stringify(next, null, 2)}\n`);
     }

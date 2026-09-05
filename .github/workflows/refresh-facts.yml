@@ -1,7 +1,8 @@
 name: Advance the season
 
 # Deterministic public-data jobs. No language model runs here.
-# promote-edition.mjs decides which edition the home page shows, keeps the live
+# build-editions.mjs creates a starter page for any scheduled game that has
+# none. promote-edition.mjs decides which edition the home page shows, keeps the live
 # score card pointed at that game, and captures a final score once one exists.
 # refresh-facts.mjs may only write home.record, away.record, prediction, rating
 # and weather. Each carries its own source and timestamp, and a source outage
@@ -36,8 +37,14 @@ jobs:
           cache: npm
       - run: npm ci
 
-      # Promote first: it decides which edition is current and captures a
-      # final score, which the refresh below then builds on.
+      # Create any missing edition first, so a newly reached week has a page
+      # for the steps below to fill in.
+      - name: Create missing editions
+        id: editions
+        run: npm run editions
+
+      # Then promote: it decides which edition is current and captures a final
+      # score, a recap and the season statistics.
       - name: Promote the current edition
         id: promote
         run: npm run promote
@@ -51,10 +58,10 @@ jobs:
         run: npm run validate
 
       - name: Commit refreshed facts
-        if: steps.promote.outputs.changed == 'true' || steps.refresh.outputs.changed == 'true'
+        if: steps.editions.outputs.changed == 'true' || steps.promote.outputs.changed == 'true' || steps.refresh.outputs.changed == 'true'
         run: |
           git config user.name "Cain Game Day Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add content/editions/ public/live-score.json
+          git add content/ public/live-score.json
           git diff --cached --quiet || git commit -m "Advance the season from public sources"
           git push

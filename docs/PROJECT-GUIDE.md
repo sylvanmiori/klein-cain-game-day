@@ -76,6 +76,21 @@ The parser requires an unambiguous team/opponent match and valid scores. A sourc
 
 Manual corrections use `POST /api/score/override`, disabled unless the Worker secret `SCORE_ADMIN_TOKEN` is configured. Supply bearer authorization and JSON fields `date`, `status` (`live` or `final`), `homeScore` and `awayScore`. Scores follow venue order, not always Klein Cain first. A live override pauses source updates for 15 minutes; a final stops them. There is no public editing interface.
 
+## Running unattended
+
+The season now advances without anyone opening an editor. Every weekday at 6 AM Central, and every three hours on Thursday and Friday, one workflow runs four steps in order:
+
+1. `build-editions.mjs` creates a starter page for any scheduled game that does not have one.
+2. `promote-edition.mjs` moves the front page to the right game, captures a final score, writes the recap and snapshots the season statistics.
+3. `refresh-facts.mjs` fills records, ranks, the prediction, our rating, the forecast, every opponent's record and our own results.
+4. `validate-editions.mjs` gates the commit, and the build re-checks the rendered pages.
+
+Simulated across the season, promotion lands on the right game every week: Sept 22 moves to Magnolia West, Oct 8 to Klein, Nov 6 to Klein Forest, and after the last game it stays there rather than falling off the end.
+
+Two invariants keep it honest. The validator fails if any scheduled game has no edition, so the season cannot quietly stop producing pages. And it fails if a game before kickoff has no prediction from any source.
+
+What automation still does not write is analysis. A generated edition has no players to watch, no keys and no recruiting notes, and its opening paragraph says only what is known and what updates later. Those sections stay empty until a person or a reviewed process fills them, because filling them automatically means inventing them.
+
 ## Advancing the season
 
 `scripts/promote-edition.mjs` decides which edition the home page shows. The rule: a played game keeps the home page for three days, then the next upcoming edition takes over, so a Friday game is still current through Monday and hands over on Tuesday. `scripts/lib/season.mjs` holds the rule and is unit tested, including the case that matters most, that the edition is already current on its own game day so the live score card is on screen at kickoff.
@@ -97,6 +112,7 @@ Sources, all free and unauthenticated:
 - **The model prediction** comes from the `pick` field of the same Dave Campbell's scores endpoint the live score already uses: `POST /api/schools/scoresGetJson` with the game date, then the row matching the school and opponent. It is shown on the page as **Model Prediction** and is deliberately **not hyperlinked**, because the field is not rendered on any public Dave Campbell's page. Their scores UI shows only status, teams and scores, and their own markup for a game omits it; it appears to feed the Pick'Em contest instead. Linking it would send a reader somewhere the number is not shown. It is a signed margin from Klein Cain's point of view. Verified across 2,236 completed games rather than assumed: 1,216 paired rows are exact negatives with no exceptions, which rules out a poll or a count, and the sign predicts the winner 71.0 percent of the time. The median absolute pick is 11 and the range is -71 to 71, a plausible margin scale.
 - **Our rating** is computed in `scripts/lib/rating.mjs` from every Texas result so far, roughly 1,300 games across 1,435 teams by early September. It is the classic Massey least-squares method, which is public: assert `rating(winner) - rating(loser) = margin` for every game and solve the overdetermined system. It is **not** the rating published on masseyratings.com, which is a refined proprietary system, and the validator rejects any attempt to attribute it to Massey. Two modelling choices are ours rather than derived from data: margins are capped at 28 so running up the score earns nothing, and a ridge term keeps the system solvable while the game graph is still in disconnected pieces. Home advantage is measured from the data, not assumed. Nothing is published until both teams have at least four games, so early in a season it correctly shows nothing.
 - **Statewide rank** comes from Dave Campbell's weekly "Computer Rankings for All 1,500 TXHSFB Teams" article. Team pages link the recent ones, so `findRankingsArticle` picks the newest by the date in its URL rather than guessing a slug, and the parser refuses anything yielding fewer than 500 teams. This is where the original `Cain 132 · Tomball 69` came from: the numbers were right when written and then froze. As of the Week 2 article they are Cain 81 and Tomball 43, which is exactly why they are now refreshed rather than typed in. The `NR` on a team page is the separate AP-style poll, not this ranking.
+- **Our own results** and the season record come from the same scan: `content/season-data.json` holds a result per game date, so the schedule and the record can no longer be hand-typed or drift from the opponent records beside them. `config/season-2026.json` no longer carries a `result` field.
 - **Opponent records** in the schedule are computed from the same complete season scan the rating uses, so they cost no extra requests, and are written to `content/opponent-records.json` rather than into the hand-maintained schedule. Teams are matched on Dave Campbell's exact school name; `config/season-2026.json` carries a `dctfName` where it differs, which today is Oak Ridge, listed there as "Conroe Oak Ridge". Exact matching matters: the feed also contains "Arlington Oakridge", and a substring match on "Klein" would hit five different schools. As a cross-check, all eight district opponents agree exactly with the standings table, which is a separate source.
 - **Weather** comes from the National Weather Service (`api.weather.gov`), which needs no key. The hourly feed reaches about six days ahead, so a game further out gets no weather rather than an invented one. A forecast older than three days is dropped at build time instead of shown.
 
@@ -149,6 +165,7 @@ Before any automated generation is enabled, these have to be settled: how genera
 ## Remaining setup
 
 - Verify Week 3 (Tomball at Klein Cain, September 18, 2026) against current public sources. Records, the pick, the rating and the forecast now refresh automatically, and the unsupported rank line has been removed, but the player capsules and the early-read copy were carried over from the earlier hardcoded page and have not been rechecked.
+- Add real logos for the seven district opponents that currently fall back to `public/team-placeholder.svg`.
 - Consider adding the opponent's season leaders alongside ours; the same parser works against any MaxPreps team stats URL.
 - Decide whether the recap should ever be written by a language model. The deterministic one covers the facts; anything more expressive needs the cost, citation and review controls that are still undecided.
 - Design the cloud workflow for producing and publishing weekly editions.

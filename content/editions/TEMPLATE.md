@@ -3,6 +3,12 @@
 An edition is one JSON file in this directory. Adding the file adds the page.
 No TypeScript, route or component changes are needed.
 
+Most of the time you do not need to do this by hand. `npm run editions` creates
+a starter edition for every scheduled game that lacks one, deriving the teams,
+mascots, dates, venue and titles, and the scheduled workflow runs it daily. Use
+the steps below when you want to write a fuller edition: players to watch,
+recruiting notes, keys and game information are never generated.
+
 1. Copy the block below to `content/editions/<date>-<opponent-slug>.json`. The
    filename must equal the `slug`.
 2. Fill in every field from verified sources. `config/season-2026.json` is the
