@@ -18,6 +18,12 @@ function seasonRecord() {
 
 const editionLinks = new Map(editions.map((edition) => [edition.date, editionPath(edition)]));
 
+// Noon avoids a timezone shift moving the date across a day boundary.
+const atNoon = (date: string) => new Date(`${date}T12:00:00`);
+/** Games fall on both Thursdays and Fridays, so the day is worth showing. */
+const weekday = (date: string) => atNoon(date).toLocaleDateString('en-US', { weekday: 'short' });
+const monthDay = (date: string) => atNoon(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
 export function SeasonHub({ activeDate }: { activeDate: string }) {
   return (
     <section className="season-hub" id="schedule" aria-labelledby="schedule-heading">
@@ -32,7 +38,10 @@ export function SeasonHub({ activeDate }: { activeDate: string }) {
             const content = (
               <>
                 <time dateTime={game.date}>
-                  {new Date(`${game.date}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                  {/* A real space, so the day and date do not run together for
+                      screen readers or when the schedule is copied. */}
+                  <span className="dow">{weekday(game.date)}</span>{' '}
+                  {monthDay(game.date)}
                 </time>
                 <span>
                   {game.home ? 'vs' : 'at'} <strong>{game.opponent}</strong>

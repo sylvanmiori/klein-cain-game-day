@@ -186,7 +186,7 @@ export function predictionFact(edition: Edition, schoolName: string): Fact | nul
     // No href: this margin comes from Dave Campbell's data feed, which appears
     // to drive their Pick'Em contest, and is not displayed on any public page.
     // Linking it would send a reader somewhere the number is not shown.
-    edition.prediction && { label: 'Model Prediction', margin: edition.prediction.margin },
+    edition.prediction && { label: 'Model prediction', margin: edition.prediction.margin },
   ].filter((candidate): candidate is { label: string; margin: number; href?: string } => Boolean(candidate));
 
   const chosen = candidates[0];
