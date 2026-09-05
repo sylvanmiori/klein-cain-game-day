@@ -38,7 +38,7 @@ export function SeasonHub({ activeDate }: { activeDate: string }) {
         <ul className="past-seasons">
           {pastSeasons.map(([year, record]) => <li key={year}><span>{year}</span><strong>{record}</strong></li>)}
         </ul>
-        <p className="history-source"><a href="https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/history/" target="_blank" rel="noreferrer">Season records ↗</a><a href="https://www.texasfootball.com/team/klein-cain-hurricanes" target="_blank" rel="noreferrer">Program data ↗</a></p>
+        <p className="history-source"><a href="https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/history/" target="_blank" rel="noreferrer">Season records</a><a href="https://www.texasfootball.com/team/klein-cain-hurricanes" target="_blank" rel="noreferrer">Program data</a></p>
       </div>
     </section>
   );

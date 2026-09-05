@@ -62,7 +62,7 @@ export default function WeekOne() {
         </section>
 
         <SeasonHub activeDate="2026-08-27" />
-        <nav className="edition-switcher" aria-label="Game editions"><span>Week 1</span><a href={sitePath('/')}>Week 2: Oak Ridge →</a><a href={sitePath('/games/week-3')}>Week 3: Tomball →</a></nav>
+        <nav className="edition-switcher" aria-label="Game editions"><span>Week 1</span><a href={sitePath('/')}>Week 2: Oak Ridge</a><a href={sitePath('/games/week-3')}>Week 3: Tomball</a></nav>
       </article>
 
       <footer className="compact-footer"><a className="wordmark" href={sitePath('/')}>CAIN <span>/</span> GAME DAY</a><p>Independent fan publication · Game data from MaxPreps and Dave Campbell’s Texas Football.</p></footer>

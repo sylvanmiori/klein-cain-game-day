@@ -38,7 +38,7 @@ export function StaticMatchupCard({ status, statusDetail, venue, left, right, fa
         </div>
       </div>
       <ul className="game-facts">
-        {facts.map((fact) => <li key={fact.label}><span>{fact.label}</span>{fact.href ? <a href={fact.href} target="_blank" rel="noreferrer">{fact.value} ↗</a> : <strong>{fact.value}</strong>}</li>)}
+        {facts.map((fact) => <li key={fact.label}><span>{fact.label}</span>{fact.href ? <a href={fact.href} target="_blank" rel="noreferrer">{fact.value}</a> : <strong>{fact.value}</strong>}</li>)}
       </ul>
     </div>
   );

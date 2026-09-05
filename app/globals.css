@@ -41,6 +41,7 @@ a { color:inherit; text-decoration:none; }
 .game-facts span { display:block; margin-bottom:5px; color:#a6a8b2; font-size:10px; font-weight:650; }
 .game-facts strong { display:block; overflow:hidden; font-size:13px; line-height:1.25; font-weight:800; text-overflow:ellipsis; white-space:nowrap; }
 .game-facts a { color:#8cc8ff; font-size:12px; font-weight:750; }
+.game-facts a:hover { color:#c8e7ff; }
 article>section { border-bottom:1px solid var(--line); }
 .game-report section { border-bottom:1px solid var(--line); }
 .report-tabs { display:flex; justify-content:center; gap:4px; padding:10px 20px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--paper); }
@@ -86,7 +87,8 @@ article>section { border-bottom:1px solid var(--line); }
 .recruit-no { font-size:70px; font-weight:950; letter-spacing:-.08em; color:#b68ad2; }
 .recruit-row strong { font-size:13px; letter-spacing:.06em; }
 .recruit-row p { margin:6px 0 0; max-width:730px; font:16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#d5cbd9; }
-.recruit-row a,.gameday-links a { font-size:10px; font-weight:900; letter-spacing:.12em; border-bottom:1px solid currentColor; padding-bottom:4px; white-space:nowrap; }
+.recruit-row a,.gameday-links a { font-size:10px; font-weight:900; letter-spacing:.12em; white-space:nowrap; transition:color .15s ease; }
+.recruit-row a:hover,.gameday-links a:hover { color:#c9a7e2; }
 .fineprint { margin:26px 0 0; max-width:780px; font:12px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#af9eba; }
 .keys { padding:64px 4vw 72px; }
 .keys ol { max-width:900px; list-style:none; padding:0; margin:0; border-top:1px solid #292622; }
@@ -140,6 +142,8 @@ article>section { border-bottom:1px solid var(--line); }
 .past-seasons li { display:flex; justify-content:space-between; padding:9px 10px; background:#fff; font-size:11px; }
 .past-seasons strong { font-variant-numeric:tabular-nums; }
 .history-source { display:flex; gap:14px; margin:16px 0 0; color:var(--purple); font-size:9px; font-weight:800; }
+.history-source a { transition:color .15s ease; }
+.history-source a:hover { color:#32104e; }
 .week-recap { display:grid; grid-template-columns:1fr minmax(360px,.75fr); gap:7vw; padding:56px 4vw 62px; border-bottom:1px solid var(--line); }
 .week-recap h2,.compact-head h2,.early-read h2 { margin:0; font-size:clamp(27px,3vw,40px); line-height:1.04; font-weight:850; letter-spacing:-.05em; }
 .week-recap p,.early-read p { max-width:680px; margin:18px 0 0; font-size:15px; line-height:1.58; }
@@ -164,7 +168,8 @@ article>section { border-bottom:1px solid var(--line); }
 .early-read dd { margin:0; text-align:right; font-size:12px; font-weight:850; }
 .edition-switcher { display:flex; justify-content:center; align-items:center; gap:10px; padding:18px 4vw; border-bottom:1px solid var(--line); background:#fff; }
 .edition-switcher a,.edition-switcher span { padding:9px 14px; border-radius:999px; font-size:10px; font-weight:800; }
-.edition-switcher a { color:var(--purple); background:#f2ebf7; }
+.edition-switcher a { color:var(--purple); background:#f2ebf7; transition:background .15s ease,color .15s ease; }
+.edition-switcher a:hover { color:#fff; background:var(--purple); }
 .edition-switcher span { color:#fff; background:#1c1d22; }
 .compact-footer { display:flex; justify-content:space-between; align-items:center; gap:30px; padding:28px 4vw; background:#e1ddd5; }
 .compact-footer p { margin:0; color:#686259; font-size:10px; }
@@ -172,7 +177,8 @@ article>section { border-bottom:1px solid var(--line); }
 .roster-head { display:flex; justify-content:space-between; align-items:end; gap:40px; margin-bottom:30px; }
 .roster-head h2 { margin:0; font-size:clamp(30px,3.4vw,44px); line-height:1; font-weight:900; letter-spacing:-.045em; }
 .roster-head>p { margin:0; font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#706a61; text-align:right; }
-.roster-head a { color:var(--purple); border-bottom:1px solid currentColor; }
+.roster-head a { color:var(--purple); transition:color .15s ease; }
+.roster-head a:hover { color:#32104e; }
 .roster-list { list-style:none; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); margin:0; padding:0; border-top:1px solid #aaa49a; border-left:1px solid #aaa49a; }
 .roster-list li { min-width:0; min-height:53px; display:grid; grid-template-columns:36px minmax(0,1fr); gap:10px; align-items:center; padding:9px 10px; border-right:1px solid #aaa49a; border-bottom:1px solid #aaa49a; }
 .roster-list li>b { font-size:18px; line-height:1; letter-spacing:-.05em; color:var(--purple); font-variant-numeric:tabular-nums; }
@@ -187,7 +193,9 @@ footer { padding:70px 4vw 40px; display:grid; grid-template-columns:1fr 1fr; gap
 footer>div:first-child p { font:italic 13px "Helvetica Neue", Helvetica, Arial, sans-serif; color:#686259; }
 .sources { display:grid; grid-template-columns:1fr 1fr; gap:12px 24px; font-size:11px; }
 .sources strong { grid-column:1/-1; font-size:9px; letter-spacing:.15em; }
-.sources a { border-bottom:1px solid #aaa49a; padding-bottom:8px; }
+.sources a { padding:4px 0; transition:color .15s ease; }
+.sources a:hover { color:var(--purple); }
+.history-source a:focus-visible,.edition-switcher a:focus-visible,.recruit-row a:focus-visible,.gameday-links a:focus-visible,.roster-head a:focus-visible,.sources a:focus-visible { outline:2px solid var(--purple); outline-offset:3px; }
 .disclaimer { grid-column:1/-1; margin:30px 0 0; padding-top:25px; border-top:1px solid #bbb5aa; font:11px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#6a645b; }
 @media(max-width:900px){
   .masthead{height:50px;padding:0 16px}.wordmark{font-size:13px}.wordmark img{width:25px;height:25px}.masthead nav{gap:12px}.masthead nav a{font-size:10px}.issue{display:none}.game-overview{padding:18px 14px 24px}.preview-title{display:block;margin-bottom:14px;padding:0 2px}.preview-title h1{font-size:21px;line-height:1.18}.preview-title p{margin-top:7px;font-size:11px}.matchup-card{border-radius:16px}.score-status{min-height:34px;padding:6px 10px}.matchup-teams{grid-template-columns:1fr 72px 1fr;min-height:158px;padding:16px 10px 18px}.team{flex-direction:column;gap:7px;text-align:center}.team.home{flex-direction:column-reverse;justify-content:flex-start;text-align:center}.team img{width:58px;height:58px;flex-basis:58px}.team h2{font-size:15px}.team span{margin-top:2px;font-size:9px}.team strong{margin-top:7px;font-size:14px}.team .team-score{margin-top:6px;font-size:34px}.game-time span{font-size:9px}.game-time strong{font-size:17px}.game-time small{max-width:72px;margin-top:6px;font-size:8px}.game-facts{grid-template-columns:1fr 1fr}.game-facts li{padding:11px 12px 12px;border-bottom:1px solid #343640}.game-facts li:nth-child(2){border-right:0}.game-facts li:nth-child(n+3){border-bottom:0}.game-facts span{margin-bottom:3px;font-size:9px}.game-facts strong{font-size:11px;white-space:normal}.game-facts a{font-size:10px}.report-tabs{justify-content:stretch;padding:9px 14px}.report-tabs button{flex:1;min-width:0}.opening{grid-template-columns:1fr;padding:38px 20px 44px}.opening>p:last-child{margin-top:24px}.feature-copy{padding:42px 20px 48px}.players{padding-top:38px;padding-bottom:50px}.players .section-head{margin-bottom:18px}.players,.recruiting,.keys,.gameday,.season,.roster,footer{padding-left:20px;padding-right:20px}.player-card-desktop{display:none}.player-card-mobile{display:block;min-height:0;padding:0}.player-card-mobile summary{position:relative;display:grid;grid-template-columns:74px 1fr;gap:10px 18px;align-items:center;padding:15px 0 38px;cursor:pointer;list-style:none}.player-card-mobile summary::-webkit-details-marker{display:none}.player-card h3{margin:8px 0 1px;font-size:21px}.player-photo{width:66px;height:66px;margin:0}.player-toggle{position:absolute;right:1px;bottom:12px;display:flex;align-items:center;gap:6px;font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--purple)}.red .player-toggle{color:var(--red)}.player-toggle svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s ease}.toggle-open{display:none}.player-card-mobile[open] .toggle-closed{display:none}.player-card-mobile[open] .toggle-open{display:inline}.player-card-mobile[open] .player-toggle svg{transform:rotate(180deg)}.mobile-player-details{padding:0 0 20px 92px}.mobile-player-details .rating{padding:13px 0 0;border-left:0;border-top:1px solid #c9c2b8}.mobile-player-details .player-copy{margin-top:13px;font-size:13px;line-height:1.48}.recruiting{padding-top:48px;padding-bottom:54px}.recruit-row{grid-template-columns:54px 1fr;gap:16px}.recruit-no{font-size:42px}.recruit-row a{grid-column:2}.keys{padding-top:48px;padding-bottom:54px}.keys ol{margin-left:0}.keys li{grid-template-columns:48px 1fr;gap:14px;padding:26px 0}.keys li>span{font-size:26px}.gameday{grid-template-columns:1fr;padding-top:48px;padding-bottom:54px}.gameday-links{grid-column:1}.season-hub{grid-template-columns:1fr;padding:38px 14px 44px}.season-card .season-head{display:flex;padding:20px 18px 16px}.season-card .season-head p{margin:0}.season-card li>a,.season-card li:not(:has(a)){grid-template-columns:55px 1fr auto;gap:9px;padding:9px 14px}.history-card{padding:24px 18px}.week-recap,.early-read{grid-template-columns:1fr;padding:38px 20px 44px}.quarter-box,.early-read dl{margin-top:24px}.game-leaders{padding:38px 20px 44px}.leader-grid{grid-template-columns:1fr}.compact-head{display:block}.compact-head p{margin-top:6px}.edition-switcher{justify-content:flex-start;overflow-x:auto;padding-left:14px;padding-right:14px}.edition-switcher a,.edition-switcher span{flex:0 0 auto}.compact-footer{display:block}.compact-footer p{margin-top:10px}.roster-head{display:block}.roster-head>p{margin-top:12px;text-align:left}.roster-list{grid-template-columns:repeat(2,minmax(0,1fr))}.team-photo-footer img{height:auto;max-height:none}.team-photo-footer figcaption{right:10px;bottom:8px;max-width:75%;text-align:right}footer{grid-template-columns:1fr}.disclaimer{grid-column:1}.sources{grid-template-columns:1fr}

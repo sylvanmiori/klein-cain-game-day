@@ -62,12 +62,12 @@ export default function WeekThree() {
 
         <section className="recruiting">
           <div><h2>Tomball recruiting notes</h2></div>
-          <div className="recruit-row"><span className="recruit-no">22</span><div><strong>IAN THOMAS · TOMBALL</strong><p>Rivals Industry rating 91.83 · 2028 running back · No. 106 nationally and No. 6 at the position as of Sept. 5.</p></div><a href="https://www.on3.com/high-school/tomball-tomball-tx-18178/football/roster/" target="_blank" rel="noreferrer">VIEW RIVALS ↗</a></div>
-          <div className="recruit-row"><span className="recruit-no">38</span><div><strong>ANDRES VON DER MEDEN · TOMBALL</strong><p>Rivals Industry rating 80.33 · 2027 kicker · listed No. 5 at the position.</p></div><a href="https://www.on3.com/high-school/tomball-tomball-tx-18178/football/roster/" target="_blank" rel="noreferrer">VIEW RIVALS ↗</a></div>
+          <div className="recruit-row"><span className="recruit-no">22</span><div><strong>IAN THOMAS · TOMBALL</strong><p>Rivals Industry rating 91.83 · 2028 running back · No. 106 nationally and No. 6 at the position as of Sept. 5.</p></div><a href="https://www.on3.com/high-school/tomball-tomball-tx-18178/football/roster/" target="_blank" rel="noreferrer">VIEW RIVALS</a></div>
+          <div className="recruit-row"><span className="recruit-no">38</span><div><strong>ANDRES VON DER MEDEN · TOMBALL</strong><p>Rivals Industry rating 80.33 · 2027 kicker · listed No. 5 at the position.</p></div><a href="https://www.on3.com/high-school/tomball-tomball-tx-18178/football/roster/" target="_blank" rel="noreferrer">VIEW RIVALS</a></div>
         </section>
 
         <SeasonHub activeDate="2026-09-18" />
-        <nav className="edition-switcher" aria-label="Game editions"><a href={sitePath('/games/week-1')}>← Week 1: Humble</a><a href={sitePath('/')}>← Week 2: Oak Ridge</a><span>Week 3</span></nav>
+        <nav className="edition-switcher" aria-label="Game editions"><a href={sitePath('/games/week-1')}>Week 1: Humble</a><a href={sitePath('/')}>Week 2: Oak Ridge</a><span>Week 3</span></nav>
       </article>
 
       <footer className="compact-footer"><a className="wordmark" href={sitePath('/')}>CAIN <span>/</span> GAME DAY</a><p>Independent fan publication · Early information will be rechecked before kickoff.</p></footer>

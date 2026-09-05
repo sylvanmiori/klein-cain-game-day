@@ -84,12 +84,12 @@ export default function Home() {
               <div className="recruit-row">
                 <span className="recruit-no">88</span>
                 <div><strong>FINN WALKER · OAK RIDGE</strong><p>Three-star defensive lineman · Kansas State commit · Rivals Industry No. 680 nationally, No. 77 at DL, No. 91 in Texas.</p></div>
-                <a href="https://www.on3.com/rivals/finn-walker-285232/" target="_blank" rel="noreferrer">VIEW RIVALS ↗</a>
+                <a href="https://www.on3.com/rivals/finn-walker-285232/" target="_blank" rel="noreferrer">VIEW RIVALS</a>
               </div>
               <div className="recruit-row">
                 <span className="recruit-no">1</span>
                 <div><strong>EARL O’GUINN JR. · KLEIN CAIN</strong><p>Three-star 2028 running back · Rivals Industry No. 726 nationally, No. 56 at RB, No. 91 in Texas. SMU has made contact; LSU is also listed.</p></div>
-                <a href="https://www.on3.com/rivals/earl-oguinn-jr-286130/" target="_blank" rel="noreferrer">VIEW RIVALS ↗</a>
+                <a href="https://www.on3.com/rivals/earl-oguinn-jr-286130/" target="_blank" rel="noreferrer">VIEW RIVALS</a>
               </div>
               <p className="fineprint">Ratings and recruiting status change often. “Unrated” here means no public rating was found in the linked Rivals/On3 data on Sept. 4, not that a player has no college interest.</p>
             </section>
@@ -113,8 +113,8 @@ export default function Home() {
                 <div><dt>CONDITIONS</dt><dd>Warm, humid; monitor storms</dd></div>
               </dl>
               <div className="gameday-links">
-                <a href="https://kleinisd.hometownticketing.com/" target="_blank" rel="noreferrer">TICKETS ↗</a>
-                <a href="https://www.nfhsnetwork.com/" target="_blank" rel="noreferrer">STREAM INFO ↗</a>
+                <a href="https://kleinisd.hometownticketing.com/" target="_blank" rel="noreferrer">TICKETS</a>
+                <a href="https://www.nfhsnetwork.com/" target="_blank" rel="noreferrer">STREAM INFO</a>
               </div>
             </section>
           </>}
@@ -123,9 +123,9 @@ export default function Home() {
         <SeasonHub activeDate="2026-09-04" />
 
         <nav className="edition-switcher" aria-label="Game editions">
-          <a href={sitePath('/games/week-1')}>← Week 1: Humble</a>
+          <a href={sitePath('/games/week-1')}>Week 1: Humble</a>
           <span>Week 2</span>
-          <a href={sitePath('/games/week-3')}>Week 3: Tomball →</a>
+          <a href={sitePath('/games/week-3')}>Week 3: Tomball</a>
         </nav>
 
         <section className="roster" aria-labelledby="roster-heading">
@@ -133,7 +133,7 @@ export default function Home() {
             <div>
               <h2 id="roster-heading">Klein Cain roster</h2>
             </div>
-            <p>{roster.players.length} players · <a href={roster.sourceUrl} target="_blank" rel="noreferrer">{roster.source} roster ↗</a> · updated {roster.updated}</p>
+            <p>{roster.players.length} players · <a href={roster.sourceUrl} target="_blank" rel="noreferrer">{roster.source} roster</a> · updated {roster.updated}</p>
           </div>
           <ol className="roster-list">
             {roster.players.map((player, index) => (
@@ -154,7 +154,7 @@ export default function Home() {
 
       <footer id="archive">
         <div><a className="wordmark" href="#top">CAIN <span>/</span> GAME DAY</a><p>Issue 01 · Oak Ridge · Sept. 4, 2026</p></div>
-        <div className="sources"><strong>Sources</strong>{sources.map(([label, href]) => <a key={label} href={href} target="_blank" rel="noreferrer">{label} ↗</a>)}</div>
+        <div className="sources"><strong>Sources</strong>{sources.map(([label, href]) => <a key={label} href={href} target="_blank" rel="noreferrer">{label}</a>)}</div>
         <p className="disclaimer">Independent fan publication. Not affiliated with Klein ISD, Klein Cain High School, Oak Ridge High School, MaxPreps or Rivals. Forecasts are estimates, not guarantees. Team photography via the Klein Cain Football Booster Club.</p>
       </footer>
     </main>
