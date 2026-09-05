@@ -54,6 +54,9 @@ article>section { border-bottom:1px solid var(--line); }
 .opening h2,.section-head h2,.feature-copy h2,.recruiting h2,.gameday h2 { margin:0; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; font-weight:850; letter-spacing:-.055em; }
 .opening h2 { font-size:clamp(30px,3.5vw,48px); line-height:1; }
 .opening>p:last-child { margin:0; font:16px/1.6 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.opening.final-recap { display:block; }
+.opening.final-recap>div { max-width:900px; margin:0 auto; }
+.opening.final-recap>p:last-child { max-width:900px; margin:24px auto 0; }
 .byline { margin:28px 0 0; font-size:9px; font-weight:900; letter-spacing:.13em; color:#716b62; }
 .feature-grid { display:block; background:#17131a; color:#f6f1e8; }
 .feature-copy { max-width:860px; margin:0 auto; padding:64px 4vw 72px; }
