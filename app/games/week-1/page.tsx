@@ -36,7 +36,7 @@ export default function WeekOne() {
           left={{ name:'Klein Cain', mascot:'Hurricanes', logo:sitePath('/favicon.png'), record:'1–0', score:42 }}
           right={{ name:'Humble', mascot:'Wildcats', logo:sitePath('/humble-logo.png'), record:'0–1', score:41 }}
           facts={[
-            { label:'Result', value:'Klein Cain won 42–41' },
+            { label:'Fourth quarter', value:'Humble outscored Cain 13–7' },
             { label:'Halftime', value:'Tied 21–21' },
             { label:'Total offense', value:'Cain 469 yards' },
             { label:'Box score', value:'MaxPreps', href:'https://www.maxpreps.com/tx/football/game/humble-vs-klein-cain-houston/8-27-2026/?c=6cacfe2c-0c45-46ec-ae5a-27bec2c1411a' },
