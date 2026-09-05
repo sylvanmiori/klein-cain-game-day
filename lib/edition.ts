@@ -100,6 +100,19 @@ export type Edition = {
     sourceUrl: string;
     asOf: string;
   } | null;
+  /** Verified final score, captured from the score feed once a game is played. */
+  finalScore: { home: number; away: number; source: string; sourceUrl: string; asOf: string } | null;
+  /** Our own least-squares rating, published only once the season supports it. */
+  rating: {
+    home: number;
+    away: number;
+    /** Predicted margin from the covered school's point of view. */
+    margin: number;
+    method: string;
+    source: string;
+    sourceUrl: string;
+    asOf: string;
+  } | null;
   weather: {
     tempF: number;
     condition: string;
@@ -160,6 +173,18 @@ export function predictionFact(edition: Edition, schoolName: string): Fact | nul
     label: 'Pick',
     value: favorite ? `${favorite} by ${Math.abs(pick.margin)}` : 'Even',
     href: pick.sourceUrl,
+  };
+}
+
+/** Our own rating, always labelled as ours and never as a neutral forecast. */
+export function ratingFact(edition: Edition, schoolName: string): Fact | null {
+  const rating = edition.rating;
+  if (!rating) return null;
+  const opponent = opponentOf(edition, schoolName);
+  const favorite = rating.margin === 0 ? null : rating.margin > 0 ? schoolName : opponent.name;
+  return {
+    label: 'Our rating',
+    value: favorite ? `${favorite} by ${Math.abs(Math.round(rating.margin))}` : 'Even',
   };
 }
 

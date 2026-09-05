@@ -111,8 +111,8 @@ export function recordFor(records, team) {
  * the school's point of view. Verified against played games: +16 before a
  * one-point win, +18 before a 25-point win.
  */
-export async function fetchPick(game, schoolName) {
-  const [year, month, day] = game.date.split('-');
+export async function fetchScoreRows(isoDate) {
+  const [year, month, day] = isoDate.split('-');
   const response = await get('https://www.texasfootball.com/api/schools/scoresGetJson', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -120,9 +120,16 @@ export async function fetchPick(game, schoolName) {
   });
   const payload = await response.json();
   const envelope = typeof payload.d === 'string' ? JSON.parse(payload.d) : payload.d;
-  if (!envelope?.success) throw new Error('Pick source returned an unsuccessful response.');
+  if (!envelope?.success) throw new Error('Score source returned an unsuccessful response.');
   const games = typeof envelope.data === 'string' ? JSON.parse(envelope.data) : envelope.data;
-  if (!Array.isArray(games)) throw new Error('Pick source format changed.');
+  if (!Array.isArray(games)) throw new Error('Score source format changed.');
+  // Each game appears once per school and the two rows carry different game
+  // ids, so the date is attached here to key them back together.
+  return games.map((row) => ({ ...row, gameDate: isoDate }));
+}
+
+export async function fetchPick(game, schoolName) {
+  const games = await fetchScoreRows(game.date);
 
   const normalize = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   const rows = games.filter((row) => normalize(row.school) === normalize(schoolName)

@@ -1,9 +1,11 @@
-name: Refresh game facts
+name: Advance the season
 
-# Deterministic public-data refresh. No language model runs here.
-# scripts/refresh-facts.mjs may only write four fields on upcoming editions:
-# home.record, away.record, prediction and weather. Each carries its own source
-# and timestamp, and a source outage keeps the previous verified value.
+# Deterministic public-data jobs. No language model runs here.
+# promote-edition.mjs decides which edition the home page shows, keeps the live
+# score card pointed at that game, and captures a final score once one exists.
+# refresh-facts.mjs may only write home.record, away.record, prediction, rating
+# and weather. Each carries its own source and timestamp, and a source outage
+# keeps the previous verified value.
 #
 # A commit here pushes to main, which Cloudflare Workers Builds deploys.
 # Every automated fact change is therefore a reviewable diff in git history.
@@ -34,6 +36,12 @@ jobs:
           cache: npm
       - run: npm ci
 
+      # Promote first: it decides which edition is current and captures a
+      # final score, which the refresh below then builds on.
+      - name: Promote the current edition
+        id: promote
+        run: npm run promote
+
       - name: Read public sources
         id: refresh
         run: npm run refresh
@@ -43,10 +51,10 @@ jobs:
         run: npm run validate
 
       - name: Commit refreshed facts
-        if: steps.refresh.outputs.changed == 'true'
+        if: steps.promote.outputs.changed == 'true' || steps.refresh.outputs.changed == 'true'
         run: |
           git config user.name "Cain Game Day Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add content/editions/
-          git diff --cached --quiet || git commit -m "Refresh game facts from public sources"
+          git add content/editions/ public/live-score.json
+          git diff --cached --quiet || git commit -m "Advance the season from public sources"
           git push

@@ -29,7 +29,7 @@ for (const file of files) {
     'schemaVersion', 'slug', 'week', 'issue', 'state', 'date', 'dateLong', 'dateShort', 'kickoff',
     'venue', 'event', 'updated', 'home', 'away', 'pageTitle', 'metaTitle', 'metaDescription',
     'socialDescription', 'ogImage', 'prediction', 'weather', 'scheduledFacts', 'resultFacts',
-    'preview', 'final', 'sources', 'footerNote', 'disclaimerEntities', 'current',
+    'preview', 'final', 'finalScore', 'rating', 'sources', 'footerNote', 'disclaimerEntities', 'current',
   ];
   for (const key of required) if (!(key in edition)) fail(`is missing "${key}"`);
 
@@ -91,6 +91,18 @@ for (const file of files) {
   };
   attributed(edition.prediction, 'prediction', (pick) => {
     if (!Number.isInteger(pick.margin)) fail('prediction.margin must be an integer');
+  });
+  attributed(edition.finalScore, 'finalScore', (score) => {
+    for (const side of ['home', 'away']) {
+      if (!Number.isInteger(score[side])) fail(`finalScore.${side} must be an integer`);
+    }
+  });
+  attributed(edition.rating, 'rating', (rating) => {
+    if (!Number.isFinite(rating.margin)) fail('rating.margin must be a number');
+    if (!rating.method) fail('rating.method must state how the number was produced');
+    if (rating.source === 'Massey' || /massey/i.test(rating.source || '')) {
+      fail('our rating must never be attributed to Massey');
+    }
   });
   attributed(edition.weather, 'weather', (weather) => {
     if (!Number.isFinite(weather.tempF)) fail('weather.tempF must be a number');

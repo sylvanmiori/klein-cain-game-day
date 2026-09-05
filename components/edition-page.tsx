@@ -18,6 +18,7 @@ import {
   editions,
   opponentOf,
   predictionFact,
+  ratingFact,
   weatherFact,
 } from '../lib/edition';
 import { sitePath } from '../lib/site-path';
@@ -220,10 +221,19 @@ export function EditionPage({ edition }: { edition: Edition }) {
   // Machine-refreshed facts sit alongside the editorial ones. They appear only
   // once a source has actually supplied them, so a missing forecast shows
   // nothing rather than an empty slot.
-  const autoFacts = [predictionFact(edition, publication.schoolName), weatherFact(edition)].filter(
+  const autoFacts = [
+    predictionFact(edition, publication.schoolName),
+    ratingFact(edition, publication.schoolName),
+    weatherFact(edition),
+  ].filter(
     (fact): fact is NonNullable<typeof fact> => fact !== null,
   );
   const scheduledFacts = [...edition.scheduledFacts, ...autoFacts];
+  // A result may come from the captured score or from an authored recap.
+  const result = edition.finalScore
+    ?? (edition.final && edition.final.homeScore !== null
+      ? { home: edition.final.homeScore, away: edition.final.awayScore }
+      : null);
 
   const report = preview && final
     ? (
@@ -285,15 +295,15 @@ export function EditionPage({ edition }: { edition: Edition }) {
           )
           : (
             <MatchupCard
-              status={edition.state === 'final' ? 'final' : 'scheduled'}
-              statusLabel={edition.state === 'final' ? 'Final' : 'Preview'}
-              statusDetail={<span>{edition.state === 'final' ? apDate(edition.date, true) : `${apDate(edition.date)} · ${edition.kickoff}`}</span>}
+              status={result ? 'final' : 'scheduled'}
+              statusLabel={result ? 'Final' : 'Preview'}
+              statusDetail={<span>{result ? apDate(edition.date, true) : `${apDate(edition.date)} · ${edition.kickoff}`}</span>}
               dateShort={edition.dateShort}
               kickoff={edition.kickoff}
               venue={edition.venue}
-              away={{ ...edition.away, score: edition.final?.awayScore ?? null }}
-              home={{ ...edition.home, score: edition.final?.homeScore ?? null }}
-              facts={edition.state === 'final' ? edition.resultFacts : scheduledFacts}
+              away={{ ...edition.away, score: result?.away ?? null }}
+              home={{ ...edition.home, score: result?.home ?? null }}
+              facts={result ? resultFacts : scheduledFacts}
             />
           )}
       </section>

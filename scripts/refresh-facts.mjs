@@ -10,7 +10,8 @@
 
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { fetchDistrictRecords, fetchPick, fetchWeather, recordFor } from './lib/sources.mjs';
+import { fetchDistrictRecords, fetchPick, fetchScoreRows, fetchWeather, recordFor } from './lib/sources.mjs';
+import { buildGames, predict, rate } from './lib/rating.mjs';
 
 const root = process.cwd();
 const dryRun = process.argv.includes('--dry-run');
@@ -47,6 +48,41 @@ if (targets.length === 0) {
 
 const changes = [];
 const problems = [];
+
+/** Every Thursday, Friday and Saturday of the season played so far. */
+function playedDates(games, day) {
+  const first = games[0]?.date;
+  if (!first) return [];
+  const dates = [];
+  const cursor = new Date(`${first}T12:00:00Z`);
+  while (cursor.toISOString().slice(0, 10) <= day) {
+    if ([4, 5, 6].includes(cursor.getUTCDay())) dates.push(cursor.toISOString().slice(0, 10));
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
+  }
+  return dates;
+}
+
+// Our own rating, from every Texas result so far. It publishes nothing until
+// both teams have enough games, so an early-season number is simply withheld.
+let model = null;
+try {
+  const rows = [];
+  for (const date of playedDates(schedule, today)) {
+    try {
+      rows.push(...(await fetchScoreRows(date)));
+    } catch (error) {
+      problems.push(`rating: ${date}: ${error.message}`);
+    }
+  }
+  const played = buildGames(rows);
+  if (played.length > 0) {
+    model = rate(played);
+    console.log(`Rating: ${played.length} games, ${model.ratings.size} teams, home edge ${model.homeEdge.toFixed(2)}.`);
+  }
+} catch (error) {
+  problems.push(`rating: ${error.message}`);
+}
+
 let records = null;
 try {
   records = await fetchDistrictRecords(publication.teamPageUrl);
@@ -84,6 +120,27 @@ for (const { name, edition } of targets) {
     if (pick) edition.prediction = pick;
   } catch (error) {
     problems.push(`${name}: pick: ${error.message}`);
+  }
+
+  // Our own rating for this matchup, when the season supports one.
+  if (model) {
+    const prediction = predict(model, edition.home.name, edition.away.name);
+    if (prediction) {
+      if (Math.round(prediction.margin) !== Math.round(edition.rating?.margin ?? NaN)) {
+        changes.push(`${name}: rating -> ${prediction.margin.toFixed(1)}`);
+      }
+      edition.rating = {
+        home: Number(prediction.home.toFixed(2)),
+        away: Number(prediction.away.toFixed(2)),
+        margin: Number(prediction.margin.toFixed(2)),
+        method: 'Least-squares rating of every Texas result, margins capped at 28',
+        source: 'Cain Game Day',
+        sourceUrl: `https://${publication.schoolHostname}/`,
+        asOf: new Date().toISOString(),
+      };
+    } else if (!edition.rating) {
+      console.log(`${name}: too few games so far to rate; no rating published.`);
+    }
   }
 
   // Forecast for the kickoff hour, when the game is inside the forecast window.

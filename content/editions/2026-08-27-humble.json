@@ -32,6 +32,14 @@
   "ogImage": "",
   "prediction": null,
   "weather": null,
+  "finalScore": {
+    "home": 41,
+    "away": 42,
+    "source": "Dave Campbell’s Texas Football",
+    "sourceUrl": "https://www.texasfootball.com/",
+    "asOf": "2026-09-05T18:02:06.599Z"
+  },
+  "rating": null,
   "scheduledFacts": [],
   "resultFacts": [
     {

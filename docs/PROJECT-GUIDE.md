@@ -66,6 +66,17 @@ The parser requires an unambiguous team/opponent match and valid scores. A sourc
 
 Manual corrections use `POST /api/score/override`, disabled unless the Worker secret `SCORE_ADMIN_TOKEN` is configured. Supply bearer authorization and JSON fields `date`, `status` (`live` or `final`), `homeScore` and `awayScore`. Scores follow venue order, not always Klein Cain first. A live override pauses source updates for 15 minutes; a final stops them. There is no public editing interface.
 
+## Advancing the season
+
+`scripts/promote-edition.mjs` decides which edition the home page shows. The rule: a played game keeps the home page for three days, then the next upcoming edition takes over, so a Friday game is still current through Monday and hands over on Tuesday. `scripts/lib/season.mjs` holds the rule and is unit tested, including the case that matters most, that the edition is already current on its own game day so the live score card is on screen at kickoff.
+
+The script also does two things that used to be manual and easy to forget:
+
+- It rewrites `public/live-score.json` so its slug follows the current edition. The live score card reads that file to know which game to poll. Before this existed, a game night would have collected the score into KV while the home page still showed the previous week's final.
+- It captures a verified `finalScore` once a game has been played, so a game keeps showing its result after it stops being current, without waiting for an authored recap.
+
+`PROMOTE_TODAY=2026-09-18 npm run promote` rehearses a handover or corrects one by hand.
+
 ## Automated facts
 
 `scripts/refresh-facts.mjs` refreshes upcoming editions from public sources on a schedule. No language model runs in it. It may write only four fields: `home.record`, `away.record`, `prediction` and `weather`. Copy, players, headlines, sources and metadata stay editorial and are never touched by automation.
@@ -74,17 +85,20 @@ Sources, all free and unauthenticated:
 
 - **Records** come from the District 15-6A standings table on the school's own Dave Campbell's team page, which is server rendered. One request covers every district opponent. Teams are matched on the exact string `"<name> <mascot>"` so `Klein` cannot match `Klein Cain`.
 - **The pick** comes from the `pick` field of the same Dave Campbell's scores endpoint the live score already uses. It is a signed margin from Klein Cain's point of view, verified against played games: +16 before the one-point win at Humble, +18 before the 25-point win over Oak Ridge. It is published as `Tomball by 3`, attributed and linked, never as our own forecast.
+- **Our rating** is computed in `scripts/lib/rating.mjs` from every Texas result so far, roughly 1,300 games across 1,435 teams by early September. It is the classic Massey least-squares method, which is public: assert `rating(winner) - rating(loser) = margin` for every game and solve the overdetermined system. It is **not** the rating published on masseyratings.com, which is a refined proprietary system, and the validator rejects any attempt to attribute it to Massey. Two modelling choices are ours rather than derived from data: margins are capped at 28 so running up the score earns nothing, and a ridge term keeps the system solvable while the game graph is still in disconnected pieces. Home advantage is measured from the data, not assumed. Nothing is published until both teams have at least four games, so early in a season it correctly shows nothing.
 - **Weather** comes from the National Weather Service (`api.weather.gov`), which needs no key. The hourly feed reaches about six days ahead, so a game further out gets no weather rather than an invented one. A forecast older than three days is dropped at build time instead of shown.
 
 Massey is deliberately not a source. `masseyratings.com` answers automated requests with a Cloudflare bot challenge, and its `robots.txt` disallows `/data/` and `/scores.php`. Getting around either would be bot-detection bypass, so the Dave Campbell's pick replaces it. The Massey numbers on the Week 2 page stay as authored editorial text.
 
-`.github/workflows/refresh-facts.yml` runs the refresh at 6 AM Central daily, and every three hours on Thursday and Friday when the forecast matters. The repository is public, so Actions minutes are free. Each run validates before committing, pushes to `main`, and Cloudflare rebuilds. Every automated fact change is a reviewable diff in git history.
+`.github/workflows/refresh-facts.yml` promotes and then refreshes at 6 AM Central daily, and every three hours on Thursday and Friday when the forecast matters. The repository is public, so Actions minutes are free. Each run validates before committing, pushes to `main`, and Cloudflare rebuilds. Every automated fact change is a reviewable diff in git history.
 
 Failure is quiet by design. A source that is down, changes shape or does not match the scheduled game is reported in the job log and the previous verified value is kept. The job does not fail the build, and nothing unverified reaches the page.
 
 `npm run refresh` runs it locally; `node scripts/refresh-facts.mjs --dry-run` reports what would change without writing.
 
-Two known limits. Statewide rank is not available from these sources (`hsRank` is 99999 for every row), so the rank line stays editorial. And `deploy.yml` ignores `content/**`, so a fact-only commit refreshes Cloudflare but not the GitHub Pages fallback.
+Two known limits. Statewide rank is not available from these sources: `hsRank` is 99999 on every row, and both Klein Cain and Tomball read `DCTF High School Ranking: NR` on their team pages. The Week 3 rank line claiming `Tomball 69 · Cain 132` was contradicted by the source the page cites, so it was removed rather than published unsupported. And `deploy.yml` ignores `content/**`, so a fact-only commit refreshes Cloudflare but not the GitHub Pages fallback.
+
+One parsing trap worth remembering: the scores feed reports every game twice, once from each school, and **the two rows carry different game ids**. Keying on `gameId` silently double-counts every game, which is caught by a test in `scripts/lib/rating.test.mjs`. The stable key is the date plus the sorted team pair.
 
 ## Weekly editions
 
@@ -94,8 +108,8 @@ Before any automated generation is enabled, these have to be settled: how genera
 
 ## Remaining setup
 
-- Verify Week 3 (Tomball at Klein Cain, September 18, 2026) against current public sources. Records and the pick now refresh automatically, but the players, copy and rank line were carried over from the earlier hardcoded page and have not been rechecked.
-- Decide when an edition is promoted to `current`. Nothing does this yet, so the live score card and the home page still point at the previous game until someone flips the flag.
+- Verify Week 3 (Tomball at Klein Cain, September 18, 2026) against current public sources. Records, the pick, the rating and the forecast now refresh automatically, and the unsupported rank line has been removed, but the player capsules and the early-read copy were carried over from the earlier hardcoded page and have not been rechecked.
+- Write the postgame recap. Promotion captures a final score, but the `final` section with a headline and body is still authored, so a played game shows its score above the preview it shipped with.
 - Design the cloud workflow for producing and publishing weekly editions.
 - Approve and enforce a budget before enabling AI API calls.
 - Confirm data-source permissions before commercial expansion.

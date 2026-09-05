@@ -14,12 +14,13 @@
     "score": "node scripts/update-live-score.mjs",
     "build:cloudflare": "npm run validate && DEPLOY_TARGET=cloudflare vinext build && node scripts/check-build.mjs",
     "deploy:cloudflare": "wrangler deploy --config cloudflare/wrangler.jsonc",
-    "test:score": "node --test cloudflare/*.test.mjs",
+    "test:score": "node --test cloudflare/*.test.mjs scripts/lib/*.test.mjs",
     "lint": "oxlint",
     "format": "oxfmt",
     "validate": "node scripts/validate-editions.mjs",
     "check": "node scripts/check-build.mjs",
-    "refresh": "node scripts/refresh-facts.mjs"
+    "refresh": "node scripts/refresh-facts.mjs",
+    "promote": "node scripts/promote-edition.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
