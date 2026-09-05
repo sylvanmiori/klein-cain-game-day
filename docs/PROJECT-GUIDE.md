@@ -51,7 +51,7 @@ The code targets Cloudflare's free Worker and KV allowances. Those quotas are fi
 
 `/` is the Klein Cain program page. It leads with whichever edition is current, using the live score card so the front page carries a live score on game night and the result for three days after, then switches to the next preview. Below that: the schedule with every opponent's record, program history, links to every game report, the season stat leaders and the full roster with the team photo.
 
-Every game report is a subpage at `/games/week-<n>`, including whichever one is current. Nothing on the program page is bespoke: `SeasonHub`, `LiveScoreCard` and the shared `SeasonStats` and `RosterSection` in `components/team-sections.tsx` are the same components the game pages use, so the two cannot drift apart.
+Every game report is a subpage at `/games/week-<n>`, including whichever one is current. The program page and game reports share `SeasonHub`, `LiveScoreCard` and `SeasonStats`. `RosterSection` appears only on the program page.
 
 The roster and team photo live only on the program page now, and the Roster link in a game page's masthead points at `/#roster-heading`. The wordmark in every masthead goes to `/`.
 
@@ -62,7 +62,7 @@ The roster and team photo live only on the program page now, and the Roster link
 One JSON file per game in `content/editions/`, named for its slug. `content/editions/TEMPLATE.md` carries the starting block and the rules. The shape is typed in `lib/edition.ts` (schema v2).
 
 - `config/season-2026.json` is the authority on date, opponent, venue, home/away and kickoff. An edition that disagrees fails validation.
-- Exactly one edition sets `"current": true`. That edition is the home page at `/` and is the only page with the live score card, the roster and the team photo. Every other edition is prerendered at `/games/week-<n>` by `app/games/[week]/page.tsx`.
+- Exactly one edition sets `"current": true`. It supplies the featured matchup on the program page and enables live polling on its own game report. Every edition, including the current one, is prerendered at `/games/week-<n>` by `app/games/[week]/page.tsx`. The roster and team photo appear only on `/`.
 - `config/publication.json` holds the school, wordmark and site-level sources. `config/program.json` holds program history and past seasons. The season record in the schedule card is derived from recorded results.
 - Editions are their own archive. The retired `content/current-edition.json` and `content/archive/` were removed with schema v1.
 
@@ -142,7 +142,7 @@ The script also does two things that used to be manual and easy to forget:
 
 ## Automated facts
 
-`scripts/refresh-facts.mjs` refreshes upcoming editions from public sources on a schedule. No language model runs in it. It may write only four fields: `home.record`, `away.record`, `prediction` and `weather`. Copy, players, headlines, sources and metadata stay editorial and are never touched by automation.
+`scripts/refresh-facts.mjs` refreshes editions from public sources on a schedule. No language model runs in it. On an edition it may write `home.record`, `away.record`, both team ranks, `rankings`, `prediction`, `rating` and `weather`. It also writes results and opponent records to `content/season-data.json`. Copy, players, headlines, sources and metadata stay editorial and are never touched by automation.
 
 Sources, all free and unauthenticated:
 
@@ -166,7 +166,7 @@ Failure is quiet by design. A source that is down, changes shape or does not mat
 
 `npm run refresh` runs it locally; `node scripts/refresh-facts.mjs --dry-run` reports what would change without writing.
 
-Two known limits. Statewide rank is not available from these sources: `hsRank` is 99999 on every row, and both Klein Cain and Tomball read `DCTF High School Ranking: NR` on their team pages. The Week 3 rank line claiming `Tomball 69 · Cain 132` was contradicted by the source the page cites, so it was removed rather than published unsupported. And `deploy.yml` ignores `content/**`, so a fact-only commit refreshes Cloudflare but not the GitHub Pages fallback.
+One publishing limit remains: `deploy.yml` ignores `content/**`, so a fact-only commit refreshes Cloudflare but not the GitHub Pages fallback. The `NR` shown on Dave Campbell's team pages is a different poll from the statewide computer ranking used by this site.
 
 One parsing trap worth remembering: the scores feed reports every game twice, once from each school, and **the two rows carry different game ids**. Keying on `gameId` silently double-counts every game, which is caught by a test in `scripts/lib/rating.test.mjs`. The stable key is the date plus the sorted team pair.
 
