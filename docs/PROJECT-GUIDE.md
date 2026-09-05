@@ -12,7 +12,7 @@ Updated September 5, 2026. Keep this file current when accounts, hosting or auto
 
 ## Current status
 
-Cloudflare deployment completed and was verified September 5, 2026. HTTPS, the parent-domain redirect, Week 1 and Week 3 routes, static assets, the score endpoint and the one-minute schedule all work. The existing Worker is connected to the GitHub repository for cloud builds. GitHub Pages remains a fallback during migration.
+Cloudflare deployment completed and was verified September 5, 2026. HTTPS, the parent-domain redirect, Week 1 and Week 3 routes, static assets, the score endpoint and the one-minute schedule all work. The existing Worker is connected to the GitHub repository, and its first automatic build from a GitHub push succeeded. GitHub Pages remains a fallback during migration.
 
 The site contains Week 1, Week 2 and Week 3 pages. Some matchup content and metadata are still game-specific. The weekly research schedule is disabled until the page can safely render new editions. Email delivery has been removed from the workflow. This is a website-only project for now.
 
@@ -46,7 +46,6 @@ Manual corrections use `POST /api/score/override`, disabled unless the Worker se
 
 ## Remaining setup
 
-- Verify the first automatic Cloudflare build from a GitHub push.
 - Make pages, matchup cards and metadata edition-driven before enabling weekly research.
 - Verify each upcoming game's facts. Do not invent player statistics or recaps.
 - Approve and enforce a budget before enabling AI API calls.
