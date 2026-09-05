@@ -24,6 +24,14 @@ Checkout quoted $19.20 registration and $19.20 annual renewal. The domain requir
 
 The code targets Cloudflare's free Worker and KV allowances. Those quotas are finite; review usage before adding schools or substantial traffic. Optional AI research would have separate API charges and is not enabled. No paid hosting plan or email service has been configured by this migration.
 
+## The team page
+
+`/team` is the program page: everything true all season rather than about one game. It carries the next game as a matchup card, the schedule with every opponent's record, program history, links to all game reports, the season stat leaders and the full roster with the team photo. It is reachable from "Team" in the masthead of every game page.
+
+Nothing on it is bespoke. `SeasonHub`, `MatchupCard` and the shared `SeasonStats` and `RosterSection` in `components/team-sections.tsx` are the same components the game pages use, so the two cannot drift apart. Extracting those two sections out of `components/edition-page.tsx` is the only change the game pages needed.
+
+`/` remains the current edition, because the design leads with the matchup and a reader arriving at the domain on a Friday should get that game. If the program page should become the front door instead, that is a routing change rather than a rewrite: the team page moves to `/` and the current edition takes a `/games/week-N` route like every other edition.
+
 ## Editions
 
 One JSON file per game in `content/editions/`, named for its slug. `content/editions/TEMPLATE.md` carries the starting block and the rules. The shape is typed in `lib/edition.ts` (schema v2).

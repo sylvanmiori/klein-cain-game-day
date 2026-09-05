@@ -195,6 +195,16 @@ export function opponentOf(edition: Edition, schoolName: string) {
   return edition.home.name === schoolName ? edition.away : edition.home;
 }
 
+/** The freshest statistics snapshot we hold, for pages that are not a game. */
+export function latestEditionWithStats(): Edition | null {
+  return [...editions].reverse().find((edition) => edition.stats) ?? null;
+}
+
+/** The next game that has not been played, for a "what's next" card. */
+export function nextEdition(today: string): Edition | null {
+  return editions.find((edition) => edition.date > today && !edition.finalScore) ?? null;
+}
+
 export function editionByWeek(week: number) {
   return editions.find((edition) => edition.week === week);
 }

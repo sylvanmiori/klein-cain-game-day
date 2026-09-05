@@ -1,5 +1,4 @@
 import publication from '../config/publication.json';
-import roster from '../content/roster-2026.json';
 import schedule from '../config/season-2026.json';
 import liveScore from '../public/live-score.json';
 import { GameReportTabs } from './game-report-tabs';
@@ -7,6 +6,7 @@ import { LiveScoreCard, type LiveScore } from './live-score-card';
 import { MatchupCard } from './matchup-card';
 import { PlayerReports } from './player-reports';
 import { SeasonHub } from './season-hub';
+import { RosterSection, SeasonStats } from './team-sections';
 import {
   type Edition,
   type Fact,
@@ -14,7 +14,6 @@ import {
   type PreviewSection,
   disclaimerLine,
   apDate,
-  groupedLeaders,
   editionPath,
   editions,
   opponentOf,
@@ -136,45 +135,6 @@ function PreviewView({ edition, preview }: { edition: Edition; preview: PreviewS
 }
 
 /** Season totals for the covered school, never presented as one game's stats. */
-function SeasonStats({ edition }: { edition: Edition }) {
-  const stats = edition.stats;
-  const groups = groupedLeaders(edition);
-  if (!stats || groups.length === 0) return null;
-
-  return (
-    <section className="stat-leaders" id="stats">
-      <div className="compact-head">
-        <h2>{publication.schoolName} season leaders</h2>
-        <p>
-          Season totals, not this game alone ·{' '}
-          <a href={stats.sourceUrl} target="_blank" rel="noreferrer">
-            {stats.source}
-          </a>{' '}
-          · entered {apDate(stats.updated.slice(0, 10), true)}
-        </p>
-      </div>
-      <div className="stat-grid">
-        {groups.map((group) => (
-          <div className="stat-group" key={group.category}>
-            <h3>{group.category}</h3>
-            <ol>
-              {group.rows.map((row) => (
-                <li key={`${group.category}-${row.name}`}>
-                  <span>
-                    {row.name}
-                    {row.position && <small>{row.position}</small>}
-                  </span>
-                  <b>{row.value}</b>
-                </li>
-              ))}
-            </ol>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function FinalView({ final }: { final: FinalSection }) {
   return (
     <>
@@ -299,6 +259,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
           {preview && preview.players.length > 0 && <a href="#players">Players</a>}
           {final && !(preview && preview.players.length > 0) && <a href="#final">Recap</a>}
           <a href="#schedule">Schedule</a>
+          <a href={sitePath('/team')}>Team</a>
           <a href={rosterHash}>Roster</a>
         </nav>
         {edition.current
@@ -362,43 +323,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
           })}
         </nav>
 
-        {edition.current && (
-          <>
-            <section className="roster" aria-labelledby="roster-heading">
-              <div className="roster-head">
-                <div>
-                  <h2 id="roster-heading">{publication.schoolName} roster</h2>
-                </div>
-                <p>
-                  {roster.players.length} players ·{' '}
-                  <a href={roster.sourceUrl} target="_blank" rel="noreferrer">
-                    {roster.source} roster
-                  </a>{' '}
-                  · updated {roster.updated}
-                </p>
-              </div>
-              <ol className="roster-list">
-                {roster.players.map((player, index) => (
-                  <li key={`${player.number}-${player.name}-${index}`}>
-                    <b>{player.number}</b>
-                    <span>
-                      <strong>{player.name}</strong>
-                      <small>
-                        {player.position} · {player.class}
-                      </small>
-                    </span>
-                  </li>
-                ))}
-              </ol>
-              <p className="roster-note">Shared numbers and missing fields are shown as listed by the source.</p>
-            </section>
-
-            <figure className="team-photo-footer">
-              <img src={sitePath('/team-2026.jpg')} alt={`2026 ${publication.schoolName} ${publication.schoolMascot} varsity football team`} />
-              <figcaption>2026 {publication.schoolName} varsity · Klein Cain Football Booster Club</figcaption>
-            </figure>
-          </>
-        )}
+        {edition.current && <RosterSection />}
       </article>
 
       {edition.current
