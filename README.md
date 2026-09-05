@@ -1,25 +1,29 @@
 # Game Day Report: Klein Cain
 
-A football website with game previews, final scores, player notes and the season schedule. No subscription or email service is configured.
+A football site with a program page, one report per game, live scores and season statistics. No subscription or email service is configured.
 
-Start with the [project guide](docs/PROJECT-GUIDE.md) for accounts, costs, publishing, score updates, recovery and unfinished work.
+Start with the [project guide](docs/PROJECT-GUIDE.md) for architecture, accounts, sources, automation, recovery and open work. It also has a **Traps worth knowing** section that is worth reading before touching the data pipeline.
 
 ## Status
 
-The public site is https://kleincain.gameday.report/. https://gameday.report/ redirects to Klein Cain while it is the only school. GitHub Pages remains available as a migration fallback.
+Live at https://kleincain.gameday.report/. https://gameday.report/ redirects there while Klein Cain is the only school. GitHub Pages remains a migration fallback.
 
-`/` is the Klein Cain program page: the current game, schedule, season leaders, roster and links to every game report. Each game report is a subpage at `/games/week-<n>`, rendered from one JSON file in `content/editions/`. See [content/editions/TEMPLATE.md](content/editions/TEMPLATE.md) to add a game.
+`/` is the Klein Cain program page: the current game, the schedule, season leaders, roster and links to every report. Each game report is a subpage at `/games/week-<n>`, rendered from one JSON file in `content/editions/`.
 
-Weekly AI research is still disabled. The template is data-driven now, but generated facts, citations and costs are not yet controlled.
+The season runs unattended. A scheduled workflow creates missing editions, promotes the current game, refreshes facts from public sources and writes a postgame recap. No language model is involved anywhere, and no AI API is configured.
+
+Analysis is the exception: players to watch, keys and recruiting notes are never generated. Those sections stay empty unless a person writes them.
 
 ## Development
 
 Use Node 24 or newer. Run `npm ci`, then `npm run dev`.
 
-- `npm run validate` checks every edition file against the schedule and the editorial rules.
 - `npm run editions` creates a starter edition for any scheduled game that lacks one.
-- `npm run promote` sets which edition is current, captures final scores and season statistics, and writes the recap (`node scripts/promote-edition.mjs --dry-run` to preview).
-- `npm run refresh` updates records, the published pick, our rating and the forecast from public sources (`node scripts/refresh-facts.mjs --dry-run` to preview).
-- `npm run test:score` tests the score parser, the Cloudflare Worker, the rating and the promotion rule.
-- `npm run build:cloudflare` validates, builds root-relative static assets, then checks the built pages for stale opponents.
-- `npm run deploy:cloudflare` deploys the website and score Worker.
+- `npm run promote` sets which edition is current, captures final scores and season statistics, and writes the recap.
+- `npm run refresh` updates records, ranks, the published prediction, our rating, the forecast and our own results.
+- `npm run validate` checks every edition against the schedule and the editorial rules.
+- `npm run test:score` tests the Worker, score parser, rating, recap, promotion rule and stats parser.
+- `npm run build:cloudflare` validates, builds root-relative assets, then checks the built pages for stale opponents.
+- `npm run deploy:cloudflare` deploys the site and score Worker.
+
+`node scripts/refresh-facts.mjs --dry-run` and `node scripts/promote-edition.mjs --dry-run` report without writing. `PROMOTE_TODAY=2026-09-18 npm run promote` rehearses a given day.

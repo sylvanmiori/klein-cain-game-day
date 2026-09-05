@@ -1,6 +1,6 @@
 # Game Day Report project guide
 
-Updated September 5, 2026. Keep this file current when accounts, hosting or automation change. Never store passwords, tokens or payment details here.
+Updated September 5, 2026. Written to be picked up cold: read **Current status**, **Where things live** and **Traps worth knowing** first. Keep this file current when accounts, hosting or automation change. Never store passwords, tokens or payment details here.
 
 ## Ownership and addresses
 
@@ -12,11 +12,34 @@ Updated September 5, 2026. Keep this file current when accounts, hosting or auto
 
 ## Current status
 
-Cloudflare deployment completed and was verified September 5, 2026. HTTPS, the parent-domain redirect, Week 1 and Week 3 routes, static assets, the score endpoint and the one-minute schedule all work. The existing Worker is connected to the GitHub repository, and its first automatic build from a GitHub push succeeded. GitHub Pages remains a fallback during migration.
+Live at https://kleincain.gameday.report/, deployed by Cloudflare Workers Builds on every push to `main`. GitHub Pages remains a fallback.
 
-The site is edition-driven. Every game page, including the home page, is rendered from one JSON file in `content/editions/` by a single component, `components/edition-page.tsx`. Adding a game means adding a file; no route, component or metadata change is needed. Page titles, share cards, matchup facts, players, recruiting rows, sources and the not-affiliated line all come from that file, so a new edition cannot inherit the previous opponent. Week 1, Week 2 and Week 3 exist today.
+`/` is the Klein Cain program page. Each of the ten games has its own report at `/games/week-<n>`, rendered from one JSON file in `content/editions/` by `components/edition-page.tsx`. All ten editions exist and are validated.
 
-The weekly research schedule is still disabled. The edition template is now data-driven, but the generation and fact-checking workflow has not been designed or costed. Email delivery has been removed from the workflow. This is a website-only project for now.
+The season runs unattended. A scheduled workflow creates missing editions, promotes the current game, refreshes facts from public sources and writes a postgame recap, all without a language model. See **Running unattended**.
+
+What is still not automated is analysis: players to watch, keys, recruiting notes and any written narrative beyond the deterministic recap. No AI API is configured and none is called.
+
+## Where things live
+
+| Path | What it is |
+| --- | --- |
+| `app/page.tsx` | `/`, renders `components/team-page.tsx` |
+| `app/games/[week]/page.tsx` | `/games/week-<n>`, renders `components/edition-page.tsx` |
+| `content/editions/*.json` | one file per game, schema v2, typed in `lib/edition.ts` |
+| `content/season-data.json` | machine-written: our results and every opponent's record |
+| `content/roster-2026.json` | roster, hand-maintained |
+| `config/season-2026.json` | the schedule; authority on date, opponent, venue, home/away, kickoff |
+| `config/publication.json` | school, wordmark, source URLs |
+| `config/program.json` | program history and past seasons |
+| `config/venues.json` | venue coordinates, for the forecast |
+| `scripts/lib/sources.mjs` | every external fetcher and parser |
+| `scripts/lib/rating.mjs` | least-squares rating and team records |
+| `scripts/lib/recap.mjs` | deterministic postgame recap |
+| `scripts/lib/season.mjs` | which edition is current |
+| `cloudflare/worker.mjs` | routes, score API, one-minute cron |
+
+Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore` and `stats`. Everything else is editorial and no script writes it.
 
 ## Costs
 
@@ -64,7 +87,22 @@ Automatic publishing uses Cloudflare Workers Builds connected directly to the Gi
 
 After the connection is tested, pushes to `main` build and deploy without this computer. The old GitHub score schedule is disabled; its manual workflow remains only as a fallback for GitHub Pages.
 
-Local commands use Node 24 or newer: `npm ci`, `npm run validate`, `npm run test:score`, `npm run build:cloudflare` (which validates and then checks the built pages), then `npm run deploy:cloudflare` with Cloudflare authorization.
+Local commands use Node 24 or newer:
+
+```
+npm ci
+npm run editions     # create a starter edition for any scheduled game lacking one
+npm run promote      # set the current edition, capture a final score, write the recap
+npm run refresh      # records, ranks, prediction, rating, forecast, results
+npm run validate     # schema, schedule agreement and editorial rules
+npm run test:score   # worker, score parser, rating, recap, promotion, stats
+npm run build:cloudflare   # validates, builds, then re-checks the rendered pages
+npm run deploy:cloudflare  # only needed for a manual deploy
+```
+
+`promote` and `refresh` both accept `--dry-run` when invoked directly, for example `node scripts/refresh-facts.mjs --dry-run`. `PROMOTE_TODAY=2026-09-18 npm run promote` rehearses a specific day.
+
+There are two build targets and they differ. `build:cloudflare` emits root-relative asset paths; the plain `build` used by GitHub Pages prefixes them with the repository name. A change that touches paths or URLs should be checked under both, since a bug once appeared only on the Pages path.
 
 ## Scores
 
@@ -113,7 +151,7 @@ Sources, all free and unauthenticated:
 - **Our rating** is computed in `scripts/lib/rating.mjs` from every Texas result so far, roughly 1,300 games across 1,435 teams by early September. It is the classic Massey least-squares method, which is public: assert `rating(winner) - rating(loser) = margin` for every game and solve the overdetermined system. It is **not** the rating published on masseyratings.com, which is a refined proprietary system, and the validator rejects any attempt to attribute it to Massey. Two modelling choices are ours rather than derived from data: margins are capped at 28 so running up the score earns nothing, and a ridge term keeps the system solvable while the game graph is still in disconnected pieces. Home advantage is measured from the data, not assumed. Nothing is published until both teams have at least four games, so early in a season it correctly shows nothing.
 - **Statewide rank** comes from Dave Campbell's weekly "Computer Rankings for All 1,500 TXHSFB Teams" article. Team pages link the recent ones, so `findRankingsArticle` picks the newest by the date in its URL rather than guessing a slug, and the parser refuses anything yielding fewer than 500 teams. This is where the original `Cain 132 · Tomball 69` came from: the numbers were right when written and then froze. As of the Week 2 article they are Cain 81 and Tomball 43, which is exactly why they are now refreshed rather than typed in. The `NR` on a team page is the separate AP-style poll, not this ranking.
 - **Our own results** and the season record come from the same scan: `content/season-data.json` holds a result per game date, so the schedule and the record can no longer be hand-typed or drift from the opponent records beside them. `config/season-2026.json` no longer carries a `result` field.
-- **Opponent records** in the schedule are computed from the same complete season scan the rating uses, so they cost no extra requests, and are written to `content/opponent-records.json` rather than into the hand-maintained schedule. Teams are matched on Dave Campbell's exact school name; `config/season-2026.json` carries a `dctfName` where it differs, which today is Oak Ridge, listed there as "Conroe Oak Ridge". Exact matching matters: the feed also contains "Arlington Oakridge", and a substring match on "Klein" would hit five different schools. As a cross-check, all eight district opponents agree exactly with the standings table, which is a separate source.
+- **Opponent records** in the schedule are computed from the same complete season scan the rating uses, so they cost no extra requests, and are written to `content/season-data.json` alongside our own results, rather than into the hand-maintained schedule. Teams are matched on Dave Campbell's exact school name; `config/season-2026.json` carries a `dctfName` where it differs, which today is Oak Ridge, listed there as "Conroe Oak Ridge". Exact matching matters: the feed also contains "Arlington Oakridge", and a substring match on "Klein" would hit five different schools. As a cross-check, all eight district opponents agree exactly with the standings table, which is a separate source.
 - **Weather** comes from the National Weather Service (`api.weather.gov`), which needs no key. The hourly feed reaches about six days ahead, so a game further out gets no weather rather than an invented one. A forecast older than three days is dropped at build time instead of shown.
 
 Predictions follow a fixed order of preference: our own rating first, then Massey, then the Dave Campbell's pick. `predictionFact` picks the best available and labels the fact with the source, so a reader always knows whose number they are seeing, and the validator fails the build if a game before kickoff has none at all. The `massey` field exists and is always null today, for the reason below; the slot keeps the preference order explicit so it can be filled the day a permitted route appears.
@@ -156,21 +194,44 @@ An authored recap is never overwritten: the composer only fills a `final` sectio
 
 A richer written recap would need a language model, and with it the cost, citation and review controls that are still not in place. The deterministic recap exists so that a game night never ends with the site showing a stale preview while those controls are decided.
 
-## Weekly editions
+## Enabling a language model later
 
-`scripts/build-edition.mjs` is disabled. It writes the retired schema v1 and throws if run. Its research prompt is kept as the starting point for a v2 rewrite. `.github/workflows/weekly-edition.yml` still calls it and will fail until it is rewritten; the workflow is manual-only, so nothing runs on a schedule.
+Nothing in this repository calls an AI API. The v1 research script and its
+`weekly-edition.yml` workflow were removed once the deterministic pipeline
+replaced them; the old research prompt is in git history at commit `cf61b8b`
+if it is ever wanted as a starting point.
 
-Before any automated generation is enabled, these have to be settled: how generated facts are verified against a source, how citations are captured per claim, what the page shows when a fact is unavailable, and what the API spend is per edition and per season.
+Before any generated prose ships, four things need settling: how each generated
+fact is verified against a named source, how citations are captured per claim,
+what the page shows when a fact is unavailable, and the API spend per edition
+and per season. The house rules stand regardless: never invent player
+statistics, recruiting status, rankings, star ratings, records, results or
+postgame performance, and never imply a pregame player performed well without
+verified postgame statistics.
 
-## Remaining setup
+## Open items
 
-- Verify Week 3 (Tomball at Klein Cain, September 18, 2026) against current public sources. Records, the pick, the rating and the forecast now refresh automatically, and the unsupported rank line has been removed, but the player capsules and the early-read copy were carried over from the earlier hardcoded page and have not been rechecked.
-- Add real logos for the seven district opponents that currently fall back to `public/team-placeholder.svg`.
-- Consider adding the opponent's season leaders alongside ours; the same parser works against any MaxPreps team stats URL.
-- Decide whether the recap should ever be written by a language model. The deterministic one covers the facts; anything more expressive needs the cost, citation and review controls that are still undecided.
-- Design the cloud workflow for producing and publishing weekly editions.
-- Approve and enforce a budget before enabling AI API calls.
-- Confirm data-source permissions before commercial expansion.
+- Week 3 (Tomball, September 18) still carries player capsules and an early-read paragraph inherited from the original hardcoded page. Records, ranks, the prediction and the forecast refresh themselves; the prose has not been rechecked against a source.
+- Weeks 4 to 10 are generated pages: real facts, no player capsules or keys. They stay that way until someone writes them or the AI path above is approved.
+- Seven district opponents fall back to `public/team-placeholder.svg`. Real artwork would improve the matchup cards.
+- The opponent's season leaders could sit alongside ours; `fetchStatLeaders` works against any MaxPreps team stats URL.
+- `deploy.yml` ignores `content/**`, so a facts-only commit refreshes Cloudflare but not the GitHub Pages fallback.
+- Confirm data-source permissions before any commercial use.
+
+## Traps worth knowing
+
+Each of these cost real debugging time. They are recorded so the next person does not pay twice.
+
+- **The scores feed reports every game twice, once per school, and the two rows carry different game ids.** Keying on `gameId` silently double-counts every game and inflates the whole rating. The stable key is the date plus the sorted team pair. Covered by a test in `scripts/lib/rating.test.mjs`.
+- **Team names must match exactly.** The feed contains `Klein`, `Klein Cain`, `Klein Collins`, `Klein Forest` and `Klein Oak`, plus `Magnolia` and `Magnolia West`, plus `Arlington Oakridge` alongside `Conroe Oak Ridge`. Substring matching is wrong in every one of those cases. Where a schedule name differs from the feed's, the schedule carries a `dctfName`.
+- **Massey is not available.** `masseyratings.com` answers automated requests with a Cloudflare bot challenge, and its `robots.txt` disallows `/data/` and `/scores.php`, which is exactly the CSV endpoint older scrapers used. Working around either would be bot-detection bypass. The `massey` field exists on every edition and stays null.
+- **The model prediction is not on any public page.** It comes from the `pick` field of the scores API and is not rendered anywhere on Dave Campbell's own site, so the fact is deliberately not hyperlinked. Its meaning was verified across 2,236 games: 1,216 paired rows are exact negatives and the sign picks the winner 71 percent of the time.
+- **Statewide rank does not come from the team page.** The `Ranking: NR` shown there is a separate AP-style poll. The number the site uses comes from the weekly "Computer Rankings for All 1,500 TXHSFB Teams" article, discovered by the date in its URL.
+- **MaxPreps serves current season totals with no history.** Only the most recently played game may snapshot statistics; backfilling an older game describes it with games played after it.
+- **Decode HTML entities before collapsing whitespace.** The rankings table separates a team from its record with `&nbsp;`, which is not `\s` until decoded, so keys came out as `Klein Cain&nbsp;`.
+- **A CSS margin is not a space.** Two elements separated only by `margin-left` read as `ThuAug 27` to a screen reader and when copied. Put a real space in the markup.
+- **Measuring a CSS transition in a hidden browser pane gives the start value forever**, because no animation frames run. A `max-height` read as a stuck 60px and looked exactly like a broken cascade. Disable the transition before measuring.
+- **Cloudflare's check-run registers a little after the push.** A wait loop that only counts completed checks can exit before Workers Builds appears and report success too early. Wait for the check by name.
 
 ## Recovery and future schools
 
@@ -182,4 +243,12 @@ To add a school, add its configuration, hostname, schedule and sources, then mak
 
 ## Design decisions
 
-Keep matchup information compact, like Apple Sports or Yahoo Sports. Use sans-serif typography, small facts and expandable player reports. Preserve previews separately after final. Keep the roster and team photo near the bottom. Avoid oversized mastheads, decorative labels and unsupported postgame player claims.
+The visual reference is Apple Sports and Yahoo Sports: compact, useful, information first. Sans-serif throughout, no serif faces, no oversized mastheads, no decorative eyebrow labels, no generic sports hype. Lead with the matchup, records, game facts and players to watch.
+
+- Every band on the page aligns to one column, through the `--pad` custom property. Do not reintroduce `4vw` padding or per-section containers; they drifted apart at wide widths.
+- Player reports are compact. On a phone each shows two clamped lines and expands in place, one at a time.
+- After a game the final view is the default and the original preview stays in its own tab.
+- The roster in small type and the team photo live on the program page, not on each game report.
+- Colour reinforces meaning, never carries it alone: the W or L is always written out, and the school is purple with the opponent in red, matching the player cards.
+- Links stay clean, without decorative arrows, and every interactive element has a visible focus state.
+- Test desktop and mobile before publishing.

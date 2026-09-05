@@ -10,7 +10,6 @@
     "build": "npm run validate && vinext build && node scripts/check-build.mjs",
     "prepare:pages": "node scripts/prepare-pages.mjs",
     "start": "wrangler dev --config dist/server/wrangler.json",
-    "edition": "node scripts/build-edition.mjs",
     "score": "node scripts/update-live-score.mjs",
     "build:cloudflare": "npm run validate && DEPLOY_TARGET=cloudflare vinext build && node scripts/check-build.mjs",
     "deploy:cloudflare": "wrangler deploy --config cloudflare/wrangler.jsonc",
