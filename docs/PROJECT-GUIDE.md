@@ -86,7 +86,10 @@ Sources, all free and unauthenticated:
 - **Records** come from the District 15-6A standings table on the school's own Dave Campbell's team page, which is server rendered. One request covers every district opponent. Teams are matched on the exact string `"<name> <mascot>"` so `Klein` cannot match `Klein Cain`.
 - **The pick** comes from the `pick` field of the same Dave Campbell's scores endpoint the live score already uses. It is a signed margin from Klein Cain's point of view, verified against played games: +16 before the one-point win at Humble, +18 before the 25-point win over Oak Ridge. It is published as `Tomball by 3`, attributed and linked, never as our own forecast.
 - **Our rating** is computed in `scripts/lib/rating.mjs` from every Texas result so far, roughly 1,300 games across 1,435 teams by early September. It is the classic Massey least-squares method, which is public: assert `rating(winner) - rating(loser) = margin` for every game and solve the overdetermined system. It is **not** the rating published on masseyratings.com, which is a refined proprietary system, and the validator rejects any attempt to attribute it to Massey. Two modelling choices are ours rather than derived from data: margins are capped at 28 so running up the score earns nothing, and a ridge term keeps the system solvable while the game graph is still in disconnected pieces. Home advantage is measured from the data, not assumed. Nothing is published until both teams have at least four games, so early in a season it correctly shows nothing.
+- **Statewide rank** comes from Dave Campbell's weekly "Computer Rankings for All 1,500 TXHSFB Teams" article. Team pages link the recent ones, so `findRankingsArticle` picks the newest by the date in its URL rather than guessing a slug, and the parser refuses anything yielding fewer than 500 teams. This is where the original `Cain 132 · Tomball 69` came from: the numbers were right when written and then froze. As of the Week 2 article they are Cain 81 and Tomball 43, which is exactly why they are now refreshed rather than typed in. The `NR` on a team page is the separate AP-style poll, not this ranking.
 - **Weather** comes from the National Weather Service (`api.weather.gov`), which needs no key. The hourly feed reaches about six days ahead, so a game further out gets no weather rather than an invented one. A forecast older than three days is dropped at build time instead of shown.
+
+Predictions follow a fixed order of preference: our own rating first, then Massey, then the Dave Campbell's pick. `predictionFact` picks the best available and labels the fact with the source, so a reader always knows whose number they are seeing, and the validator fails the build if a game before kickoff has none at all. The `massey` field exists and is always null today, for the reason below; the slot keeps the preference order explicit so it can be filled the day a permitted route appears.
 
 Massey is deliberately not a source. `masseyratings.com` answers automated requests with a Cloudflare bot challenge, and its `robots.txt` disallows `/data/` and `/scores.php`. Getting around either would be bot-detection bypass, so the Dave Campbell's pick replaces it. The Massey numbers on the Week 2 page stay as authored editorial text.
 
@@ -102,6 +105,16 @@ Two known limits. Statewide rank is not available from these sources: `hsRank` i
 
 One parsing trap worth remembering: the scores feed reports every game twice, once from each school, and **the two rows carry different game ids**. Keying on `gameId` silently double-counts every game, which is caught by a test in `scripts/lib/rating.test.mjs`. The stable key is the date plus the sorted team pair.
 
+## The postgame recap
+
+`scripts/lib/recap.mjs` composes the `final` section once a game has a captured score, and `promote-edition.mjs` applies it. No language model is involved. Every sentence restates something already verified: the score, the venue and date, the season record derived from captured results, and how the published prediction compared. It also rewrites the page and share titles, because a page still titled "Preview" after kickoff is wrong.
+
+It deliberately produces no `leaders` and no player claims. No verified postgame player statistics are available from the sources this site uses, and the pregame players to watch must never be presented as though they performed.
+
+An authored recap is never overwritten: the composer only fills a `final` section that is null. Rehearsed end to end at `PROMOTE_TODAY=2026-09-19` with a stubbed score, which produced the Final tab as the default view with the original preview preserved in its own tab.
+
+A richer written recap would need a language model, and with it the cost, citation and review controls that are still not in place. The deterministic recap exists so that a game night never ends with the site showing a stale preview while those controls are decided.
+
 ## Weekly editions
 
 `scripts/build-edition.mjs` is disabled. It writes the retired schema v1 and throws if run. Its research prompt is kept as the starting point for a v2 rewrite. `.github/workflows/weekly-edition.yml` still calls it and will fail until it is rewritten; the workflow is manual-only, so nothing runs on a schedule.
@@ -111,7 +124,7 @@ Before any automated generation is enabled, these have to be settled: how genera
 ## Remaining setup
 
 - Verify Week 3 (Tomball at Klein Cain, September 18, 2026) against current public sources. Records, the pick, the rating and the forecast now refresh automatically, and the unsupported rank line has been removed, but the player capsules and the early-read copy were carried over from the earlier hardcoded page and have not been rechecked.
-- Write the postgame recap. Promotion captures a final score, but the `final` section with a headline and body is still authored, so a played game shows its score above the preview it shipped with.
+- Decide whether the recap should ever be written by a language model. The deterministic one covers the facts; anything more expressive needs the cost, citation and review controls that are still undecided.
 - Design the cloud workflow for producing and publishing weekly editions.
 - Approve and enforce a budget before enabling AI API calls.
 - Confirm data-source permissions before commercial expansion.

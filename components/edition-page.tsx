@@ -18,7 +18,7 @@ import {
   editions,
   opponentOf,
   predictionFact,
-  ratingFact,
+  rankFact,
   weatherFact,
 } from '../lib/edition';
 import { sitePath } from '../lib/site-path';
@@ -222,8 +222,8 @@ export function EditionPage({ edition }: { edition: Edition }) {
   // once a source has actually supplied them, so a missing forecast shows
   // nothing rather than an empty slot.
   const autoFacts = [
+    rankFact(edition),
     predictionFact(edition, publication.schoolName),
-    ratingFact(edition, publication.schoolName),
     weatherFact(edition),
   ].filter(
     (fact): fact is NonNullable<typeof fact> => fact !== null,

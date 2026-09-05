@@ -100,6 +100,16 @@ export type Edition = {
     sourceUrl: string;
     asOf: string;
   } | null;
+  /**
+   * Massey's published number. Preferred over the Dave Campbell's pick when we
+   * have it, but masseyratings.com answers automated requests with a bot
+   * challenge and disallows its data paths, so nothing fills this today. The
+   * slot exists so the preference order is explicit and it can be populated the
+   * day a permitted route appears.
+   */
+  massey: { margin: number; source: string; sourceUrl: string; asOf: string } | null;
+  /** Attribution for the statewide ranks held on home.rank and away.rank. */
+  rankings: { source: string; sourceUrl: string; asOf: string } | null;
   /** Verified final score, captured from the score feed once a game is played. */
   finalScore: { home: number; away: number; source: string; sourceUrl: string; asOf: string } | null;
   /** Our own least-squares rating, published only once the season supports it. */
@@ -163,28 +173,39 @@ export function editionByWeek(week: number) {
   return editions.find((edition) => edition.week === week);
 }
 
-/** The published pick, phrased so it never reads as our own forecast. */
+/**
+ * One prediction, chosen in a fixed order of preference: our own rating first,
+ * then Massey, then the Dave Campbell's pick. The label names the source, so a
+ * reader always knows whose number they are looking at. A game should never
+ * show no prediction, which the validator enforces.
+ */
 export function predictionFact(edition: Edition, schoolName: string): Fact | null {
-  const pick = edition.prediction;
-  if (!pick) return null;
+  const candidates: { label: string; margin: number; href?: string }[] = [
+    edition.rating && { label: 'Our rating', margin: edition.rating.margin },
+    edition.massey && { label: 'Massey', margin: edition.massey.margin, href: edition.massey.sourceUrl },
+    edition.prediction && { label: 'DCTF pick', margin: edition.prediction.margin, href: edition.prediction.sourceUrl },
+  ].filter((candidate): candidate is { label: string; margin: number; href?: string } => Boolean(candidate));
+
+  const chosen = candidates[0];
+  if (!chosen) return null;
   const opponent = opponentOf(edition, schoolName);
-  const favorite = pick.margin === 0 ? null : pick.margin > 0 ? schoolName : opponent.name;
+  const rounded = Math.round(chosen.margin);
+  const favorite = rounded === 0 ? null : rounded > 0 ? schoolName : opponent.name;
   return {
-    label: 'Pick',
-    value: favorite ? `${favorite} by ${Math.abs(pick.margin)}` : 'Even',
-    href: pick.sourceUrl,
+    label: chosen.label,
+    value: favorite ? `${favorite} by ${Math.abs(rounded)}` : 'Even',
+    href: chosen.href,
   };
 }
 
-/** Our own rating, always labelled as ours and never as a neutral forecast. */
-export function ratingFact(edition: Edition, schoolName: string): Fact | null {
-  const rating = edition.rating;
-  if (!rating) return null;
-  const opponent = opponentOf(edition, schoolName);
-  const favorite = rating.margin === 0 ? null : rating.margin > 0 ? schoolName : opponent.name;
+/** Statewide computer rank for both teams, when it has been fetched. */
+export function rankFact(edition: Edition): Fact | null {
+  const { home, away, rankings } = edition;
+  if (home.rank === null || away.rank === null || !rankings) return null;
   return {
-    label: 'Our rating',
-    value: favorite ? `${favorite} by ${Math.abs(Math.round(rating.margin))}` : 'Even',
+    label: 'Texas rank',
+    value: `${away.name} ${away.rank} · ${home.name} ${home.rank}`,
+    href: rankings.sourceUrl,
   };
 }
 

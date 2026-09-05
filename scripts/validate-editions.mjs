@@ -29,7 +29,7 @@ for (const file of files) {
     'schemaVersion', 'slug', 'week', 'issue', 'state', 'date', 'dateLong', 'dateShort', 'kickoff',
     'venue', 'event', 'updated', 'home', 'away', 'pageTitle', 'metaTitle', 'metaDescription',
     'socialDescription', 'ogImage', 'prediction', 'weather', 'scheduledFacts', 'resultFacts',
-    'preview', 'final', 'finalScore', 'rating', 'sources', 'footerNote', 'disclaimerEntities', 'current',
+    'preview', 'final', 'finalScore', 'rating', 'massey', 'rankings', 'sources', 'footerNote', 'disclaimerEntities', 'current',
   ];
   for (const key of required) if (!(key in edition)) fail(`is missing "${key}"`);
 
@@ -108,6 +108,11 @@ for (const file of files) {
     if (!Number.isFinite(weather.tempF)) fail('weather.tempF must be a number');
     if (!weather.condition) fail('weather.condition must say what the forecast is');
   });
+
+  // A game must always carry a prediction from some source.
+  if (!edition.finalScore && !(edition.rating || edition.massey || edition.prediction)) {
+    fail('has no prediction; one of rating, massey or prediction is required before kickoff');
+  }
 
   if (edition.state === 'final' && !edition.final) fail('state is "final" but there is no final section');
   if (edition.state === 'preview' && edition.final) fail('state is "preview" but a final section is present');

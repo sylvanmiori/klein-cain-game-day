@@ -13,6 +13,7 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { DCTF_ATTRIBUTION, fetchScoreRows } from './lib/sources.mjs';
 import { pickCurrent } from './lib/season.mjs';
+import { composeRecap } from './lib/recap.mjs';
 
 const root = process.cwd();
 const dryRun = process.argv.includes('--dry-run');
@@ -71,6 +72,25 @@ for (const { name, edition } of editions) {
   }
 }
 
+// Compose a recap for any played game that does not have one. Existing
+// authored recaps are left alone.
+for (const { name, edition } of editions) {
+  if (!edition.finalScore || edition.final) continue;
+  const recap = composeRecap({
+    edition,
+    editions: editions.map((entry) => entry.edition),
+    schoolName: publication.schoolName,
+    desk: publication.desk,
+    siteName: publication.siteName,
+  });
+  if (!recap) continue;
+  const { titles, ...final } = recap;
+  edition.final = final;
+  edition.state = 'final';
+  Object.assign(edition, titles);
+  changes.push(`${name}: wrote recap "${recap.headline}"`);
+}
+
 // Exactly one edition is current.
 for (const { name, edition } of editions) {
   const shouldBeCurrent = edition.slug === target.slug;
@@ -86,13 +106,14 @@ const snapshotPath = path.join(root, 'public/live-score.json');
 const snapshot = JSON.parse(await readFile(snapshotPath, 'utf8'));
 if (snapshot.slug !== target.slug) {
   changes.push(`public/live-score.json: ${snapshot.slug} -> ${target.slug}`);
+  const played = target.finalScore;
   const next = {
     schemaVersion: 1,
     slug: target.slug,
-    status: 'scheduled',
-    statusLabel: target.kickoff,
-    homeScore: null,
-    awayScore: null,
+    status: played ? 'final' : 'scheduled',
+    statusLabel: played ? 'Final' : target.kickoff,
+    homeScore: played ? played.home : null,
+    awayScore: played ? played.away : null,
     homeRecord: target.home.record,
     awayRecord: target.away.record,
     updatedAt: new Date().toISOString(),

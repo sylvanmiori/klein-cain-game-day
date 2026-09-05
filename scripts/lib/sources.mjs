@@ -89,15 +89,26 @@ export const DCTF_ATTRIBUTION = {
   sourceUrl: 'https://www.texasfootball.com/',
 };
 
-const stripTags = (html) => html.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+const ENTITIES = { '&nbsp;': ' ', '&amp;': '&', '&quot;': '"', '&#39;': "'", '&apos;': "'", '&rsquo;': '\u2019' };
+
+/** Entities must be decoded before whitespace is collapsed: the rankings table
+ *  separates a team from its record with &nbsp;, which is not \s until decoded. */
+const stripTags = (html) => html
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/&nbsp;|&amp;|&quot;|&#39;|&apos;|&rsquo;/g, (entity) => ENTITIES[entity])
+  .replace(/\s+/g, ' ')
+  .trim();
 
 /**
  * District standings from the school's own team page, which is server
  * rendered. Returns a map of full team name ("Tomball Cougars") to overall
  * record, covering every district opponent in one request.
  */
-export async function fetchDistrictRecords(teamPageUrl) {
-  const html = await (await get(teamPageUrl)).text();
+export async function fetchTeamPage(teamPageUrl) {
+  return (await get(teamPageUrl)).text();
+}
+
+export function parseDistrictRecords(html) {
   const heading = html.search(/District [^<]*Standings/i);
   if (heading === -1) throw new Error('Standings table not found on the team page.');
   const block = html.slice(heading, html.indexOf('</ul>', heading));
@@ -113,6 +124,38 @@ export async function fetchDistrictRecords(teamPageUrl) {
   }
   if (records.size === 0) throw new Error('Standings table contained no readable records.');
   return records;
+}
+
+/**
+ * Dave Campbell's publishes a weekly computer ranking of every Texas team as an
+ * article. Team pages link the recent ones, so the newest is found by the date
+ * in its URL rather than by guessing a slug.
+ */
+export function findRankingsArticle(html) {
+  const paths = [...new Set(
+    [...html.matchAll(/\/article\/(\d{4}\/\d{2}\/\d{2})\/(exclusive-computer-rankings-for-all-1500-txhsfb-teams-[a-z0-9-]+)/g)]
+      .map(([path]) => path),
+  )];
+  if (paths.length === 0) return null;
+  // The date sits at a fixed position, so lexical order is chronological.
+  paths.sort((a, b) => a.localeCompare(b));
+  return `https://www.texasfootball.com${paths[paths.length - 1]}`;
+}
+
+/** Statewide rank for every team in that article, keyed by the name it uses. */
+export async function fetchStateRankings(articleUrl) {
+  const html = await (await get(articleUrl)).text();
+  const ranks = new Map();
+  for (const [, row] of html.matchAll(/<tr>([\s\S]*?)<\/tr>/g)) {
+    const rank = /<th[^>]*>[\s\S]*?<strong>\s*(\d+)\s*<\/strong>/.exec(row);
+    const cells = [...row.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)];
+    if (!rank || cells.length === 0) continue;
+    const team = stripTags(cells[0][1]).replace(/\s*\(\d+-\d+\)\s*$/, '').trim();
+    if (team) ranks.set(team, Number(rank[1]));
+  }
+  // The table covers roughly 1,500 teams. A handful means the markup changed.
+  if (ranks.size < 500) throw new Error(`Rankings article yielded only ${ranks.size} teams.`);
+  return ranks;
 }
 
 /** Exact match on "<name> <mascot>", so "Klein" cannot match "Klein Cain". */

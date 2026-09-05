@@ -32,6 +32,8 @@
   "ogImage": "/og.png",
   "prediction": null,
   "weather": null,
+  "massey": null,
+  "rankings": null,
   "finalScore": {
     "home": 45,
     "away": 20,

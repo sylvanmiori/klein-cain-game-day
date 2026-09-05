@@ -10,7 +10,16 @@
 
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { fetchDistrictRecords, fetchPick, fetchScoreRows, fetchWeather, recordFor } from './lib/sources.mjs';
+import {
+  fetchPick,
+  fetchScoreRows,
+  fetchStateRankings,
+  fetchTeamPage,
+  fetchWeather,
+  findRankingsArticle,
+  parseDistrictRecords,
+  recordFor,
+} from './lib/sources.mjs';
 import { buildGames, predict, rate } from './lib/rating.mjs';
 
 const root = process.cwd();
@@ -92,11 +101,23 @@ try {
   problems.push(`rating: ${error.message}`);
 }
 
+// One fetch of the team page serves both the standings and the link to the
+// current statewide rankings article.
 let records = null;
+let ranks = null;
+let ranksUrl = null;
 try {
-  records = await fetchDistrictRecords(publication.teamPageUrl);
+  const teamPage = await fetchTeamPage(publication.teamPageUrl);
+  records = parseDistrictRecords(teamPage);
+  ranksUrl = findRankingsArticle(teamPage);
+  if (ranksUrl) {
+    ranks = await fetchStateRankings(ranksUrl);
+    console.log(`Rankings: ${ranks.size} teams from ${ranksUrl.split('/').pop()}.`);
+  } else {
+    problems.push('rankings: no rankings article linked from the team page');
+  }
 } catch (error) {
-  problems.push(`records: ${error.message}`);
+  problems.push(`team page: ${error.message}`);
 }
 
 for (const { name, edition } of targets) {
@@ -117,6 +138,28 @@ for (const { name, edition } of targets) {
         changes.push(`${name}: ${side} record ${edition[side].record || '(none)'} -> ${found}`);
         edition[side].record = found;
       }
+    }
+  }
+
+  // Statewide computer rank for both teams.
+  if (ranks) {
+    let matched = true;
+    for (const side of ['home', 'away']) {
+      const found = ranks.get(edition[side].name) ?? null;
+      if (found === null) {
+        problems.push(`${name}: no statewide rank listed for ${edition[side].name}`);
+        matched = false;
+      } else if (found !== edition[side].rank) {
+        changes.push(`${name}: ${side} rank ${edition[side].rank ?? '(none)'} -> ${found}`);
+        edition[side].rank = found;
+      }
+    }
+    if (matched) {
+      edition.rankings = {
+        source: 'Dave Campbell’s Texas Football computer rankings',
+        sourceUrl: ranksUrl,
+        asOf: new Date().toISOString(),
+      };
     }
   }
 
