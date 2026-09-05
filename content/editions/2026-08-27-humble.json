@@ -34,6 +34,7 @@
   "weather": null,
   "massey": null,
   "rankings": null,
+  "stats": null,
   "finalScore": {
     "home": 41,
     "away": 42,

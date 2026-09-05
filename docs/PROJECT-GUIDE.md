@@ -105,6 +105,20 @@ Two known limits. Statewide rank is not available from these sources: `hsRank` i
 
 One parsing trap worth remembering: the scores feed reports every game twice, once from each school, and **the two rows carry different game ids**. Keying on `gameId` silently double-counts every game, which is caught by a test in `scripts/lib/rating.test.mjs`. The stable key is the date plus the sorted team pair.
 
+## Season statistics
+
+Once a played game is reflected in the source, `promote-edition.mjs` snapshots MaxPreps season stat leaders into that edition and the Final view renders them: 31 leaders across 13 categories as of the Week 2 game, covering passing, rushing, receiving, tackles, sacks, interceptions, turnovers, completion percentage and QB rating.
+
+The source is the team stats page, which ships its data as a `__NEXT_DATA__` JSON block, so `parseStatLeaders` reads structured values rather than scraping rendered markup. MaxPreps `robots.txt` disallows `/school/`, `/team/`, `/scores/` and a long list of minor sports, but not this path; checked with a robots parser rather than by eye. There is no bot challenge.
+
+Three things this deliberately does not do.
+
+- **It never claims to be a box score.** These are season-to-date totals, and the heading says "Season totals, not this game alone" with the date the source entered them. A single game's box score does exist on MaxPreps but only inside the App Router streaming payload, which is far more brittle to parse; that is not attempted.
+- **It never backfills.** MaxPreps serves current totals with no history, so only the most recently played game may take a snapshot. Backfilling Week 1 would describe it with statistics from games played after it, which the first run did until this rule was added.
+- **It never snapshots too early.** The source enters a Friday game the following morning, so a snapshot is taken only when the source's own `lastUpdated` date is after the game date. Otherwise the job says so and tries again the next day.
+
+Every failure mode is covered by tests in `scripts/lib/stats.test.mjs`: a missing data block, malformed JSON, an empty leader list, rows missing a name or value, and missing freshness information all raise rather than publish a thin or silent result. A zero is kept, because zero is a real statistic.
+
 ## The postgame recap
 
 `scripts/lib/recap.mjs` composes the `final` section once a game has a captured score, and `promote-edition.mjs` applies it. No language model is involved. Every sentence restates something already verified: the score, the venue and date, the season record derived from captured results, and how the published prediction compared. It also rewrites the page and share titles, because a page still titled "Preview" after kickoff is wrong.
@@ -124,6 +138,7 @@ Before any automated generation is enabled, these have to be settled: how genera
 ## Remaining setup
 
 - Verify Week 3 (Tomball at Klein Cain, September 18, 2026) against current public sources. Records, the pick, the rating and the forecast now refresh automatically, and the unsupported rank line has been removed, but the player capsules and the early-read copy were carried over from the earlier hardcoded page and have not been rechecked.
+- Consider adding the opponent's season leaders alongside ours; the same parser works against any MaxPreps team stats URL.
 - Decide whether the recap should ever be written by a language model. The deterministic one covers the facts; anything more expressive needs the cost, citation and review controls that are still undecided.
 - Design the cloud workflow for producing and publishing weekly editions.
 - Approve and enforce a budget before enabling AI API calls.

@@ -11,7 +11,7 @@
 
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { DCTF_ATTRIBUTION, fetchScoreRows } from './lib/sources.mjs';
+import { DCTF_ATTRIBUTION, fetchScoreRows, fetchStatLeaders } from './lib/sources.mjs';
 import { pickCurrent } from './lib/season.mjs';
 import { composeRecap } from './lib/recap.mjs';
 
@@ -69,6 +69,32 @@ for (const { name, edition } of editions) {
     changes.push(`${name}: captured final ${edition.finalScore.home}-${edition.finalScore.away}`);
   } catch (error) {
     problems.push(`${name}: final score: ${error.message}`);
+  }
+}
+
+// Snapshot season statistics once a played game is actually reflected in them.
+// The source enters a Friday game the next morning, so a snapshot taken on
+// game night would describe the season before the game and quietly mislead.
+// Only the most recently played game may take a snapshot. The source serves
+// current season totals with no history, so backfilling an older game would
+// describe it with statistics from games played after it.
+const lastPlayed = editions
+  .filter(({ edition }) => edition.finalScore && edition.date <= today)
+  .sort((a, b) => a.edition.date.localeCompare(b.edition.date))
+  .pop();
+
+for (const { name, edition } of lastPlayed ? [lastPlayed] : []) {
+  if (edition.stats) continue;
+  try {
+    const stats = await fetchStatLeaders(publication.statsUrl);
+    if (stats.updated.slice(0, 10) <= edition.date) {
+      console.log(`${name}: statistics not yet updated for this game; leaving them for tomorrow.`);
+      continue;
+    }
+    edition.stats = stats;
+    changes.push(`${name}: captured ${stats.leaders.length} season stat leaders`);
+  } catch (error) {
+    problems.push(`${name}: statistics: ${error.message}`);
   }
 }
 

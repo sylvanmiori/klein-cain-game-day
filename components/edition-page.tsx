@@ -14,6 +14,7 @@ import {
   type PreviewSection,
   disclaimerLine,
   apDate,
+  groupedLeaders,
   editionPath,
   editions,
   opponentOf,
@@ -134,6 +135,46 @@ function PreviewView({ edition, preview }: { edition: Edition; preview: PreviewS
   );
 }
 
+/** Season totals for the covered school, never presented as one game's stats. */
+function SeasonStats({ edition }: { edition: Edition }) {
+  const stats = edition.stats;
+  const groups = groupedLeaders(edition);
+  if (!stats || groups.length === 0) return null;
+
+  return (
+    <section className="stat-leaders" id="stats">
+      <div className="compact-head">
+        <h2>{publication.schoolName} season leaders</h2>
+        <p>
+          Season totals, not this game alone ·{' '}
+          <a href={stats.sourceUrl} target="_blank" rel="noreferrer">
+            {stats.source}
+          </a>{' '}
+          · entered {apDate(stats.updated.slice(0, 10), true)}
+        </p>
+      </div>
+      <div className="stat-grid">
+        {groups.map((group) => (
+          <div className="stat-group" key={group.category}>
+            <h3>{group.category}</h3>
+            <ol>
+              {group.rows.map((row) => (
+                <li key={`${group.category}-${row.name}`}>
+                  <span>
+                    {row.name}
+                    {row.position && <small>{row.position}</small>}
+                  </span>
+                  <b>{row.value}</b>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function FinalView({ final }: { final: FinalSection }) {
   return (
     <>
@@ -238,12 +279,12 @@ export function EditionPage({ edition }: { edition: Edition }) {
     ? (
       <GameReportTabs
         initialStatus={edition.current ? (liveScore as LiveScore).status : 'final'}
-        finalView={<FinalView final={final} />}
+        finalView={<><FinalView final={final} /><SeasonStats edition={edition} /></>}
         previewView={<PreviewView edition={edition} preview={preview} />}
       />
     )
     : final
-      ? <FinalView final={final} />
+      ? <><FinalView final={final} /><SeasonStats edition={edition} /></>
       : preview
         ? <PreviewView edition={edition} preview={preview} />
         : null;

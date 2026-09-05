@@ -17,7 +17,7 @@ Weekly AI research is still disabled. The template is data-driven now, but gener
 Use Node 24 or newer. Run `npm ci`, then `npm run dev`.
 
 - `npm run validate` checks every edition file against the schedule and the editorial rules.
-- `npm run promote` sets which edition is current and captures final scores (`node scripts/promote-edition.mjs --dry-run` to preview).
+- `npm run promote` sets which edition is current, captures final scores and season statistics, and writes the recap (`node scripts/promote-edition.mjs --dry-run` to preview).
 - `npm run refresh` updates records, the published pick, our rating and the forecast from public sources (`node scripts/refresh-facts.mjs --dry-run` to preview).
 - `npm run test:score` tests the score parser, the Cloudflare Worker, the rating and the promotion rule.
 - `npm run build:cloudflare` validates, builds root-relative static assets, then checks the built pages for stale opponents.

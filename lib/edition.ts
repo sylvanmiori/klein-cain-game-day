@@ -116,6 +116,26 @@ export type Edition = {
   massey: { margin: number; source: string; sourceUrl: string; asOf: string } | null;
   /** Attribution for the statewide ranks held on home.rank and away.rank. */
   rankings: { source: string; sourceUrl: string; asOf: string } | null;
+  /**
+   * Season stat leaders for the covered school, snapshotted once a game is
+   * played and the source has been updated to include it. These are
+   * season-to-date figures, never one game's box score, and the page says so.
+   */
+  stats: {
+    leaders: {
+      category: string;
+      header: string;
+      name: string;
+      position: string;
+      value: string;
+      rank: number | null;
+    }[];
+    /** When the source itself last entered statistics. */
+    updated: string;
+    source: string;
+    sourceUrl: string;
+    asOf: string;
+  } | null;
   /** Verified final score, captured from the score feed once a game is played. */
   finalScore: { home: number; away: number; source: string; sourceUrl: string; asOf: string } | null;
   /** Our own least-squares rating, published only once the season supports it. */
@@ -205,6 +225,17 @@ export function predictionFact(edition: Edition, schoolName: string): Fact | nul
     value: favorite ? `${favorite} by ${Math.abs(rounded)}` : 'Even',
     href: chosen.href,
   };
+}
+
+/** Leaders grouped by category, keeping the order the source published. */
+export function groupedLeaders(edition: Edition) {
+  const groups: { category: string; header: string; rows: Edition['stats'] extends null ? never : NonNullable<Edition['stats']>['leaders'] }[] = [];
+  for (const leader of edition.stats?.leaders ?? []) {
+    const existing = groups.find((group) => group.category === leader.category);
+    if (existing) existing.rows.push(leader);
+    else groups.push({ category: leader.category, header: leader.header, rows: [leader] });
+  }
+  return groups;
 }
 
 /** Statewide computer rank for both teams, when it has been fetched. */

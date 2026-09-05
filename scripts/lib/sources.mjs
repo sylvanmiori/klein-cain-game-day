@@ -158,6 +158,64 @@ export async function fetchStateRankings(articleUrl) {
   return ranks;
 }
 
+/* --------------------------------------------------------- season statistics */
+
+export const MAXPREPS_ATTRIBUTION = {
+  source: 'MaxPreps',
+};
+
+/**
+ * Season stat leaders from a MaxPreps team stats page. The page ships its data
+ * as a __NEXT_DATA__ JSON blob, so this reads structured values rather than
+ * scraping rendered markup. robots.txt permits this path for every agent.
+ *
+ * These are season-to-date figures, not one game's box score. The caller must
+ * label them that way. MaxPreps enters a Friday game the following morning, so
+ * a snapshot taken too early would describe the season before the game.
+ */
+export async function fetchStatLeaders(statsUrl) {
+  const html = await (await get(statsUrl)).text();
+  return { ...parseStatLeaders(html), sourceUrl: statsUrl, asOf: new Date().toISOString() };
+}
+
+/** Split out from the fetch so the parsing can be tested without a network. */
+export function parseStatLeaders(html) {
+  const blob = /<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/.exec(html);
+  if (!blob) throw new Error('Stats page did not contain the expected data block.');
+
+  let payload;
+  try {
+    payload = JSON.parse(blob[1]);
+  } catch (error) {
+    throw new Error(`Stats data block is not valid JSON (${error.message})`);
+  }
+
+  const data = payload?.props?.pageProps?.playerStatLeadersData;
+  const rows = data?.leaders;
+  if (!Array.isArray(rows) || rows.length === 0) throw new Error('Stats page listed no leaders.');
+
+  const leaders = [];
+  for (const row of rows) {
+    const stat = row?.stat;
+    const name = `${row?.athleteFirstName ?? ''} ${row?.athleteLastName ?? ''}`.trim();
+    if (!stat?.displayName || !name || stat.value === undefined || stat.value === null) continue;
+    leaders.push({
+      category: String(stat.displayName),
+      header: String(stat.header ?? ''),
+      name,
+      position: String(row.athletePositions ?? '').trim(),
+      value: String(stat.value),
+      rank: Number.isInteger(row.currentRank) ? row.currentRank : null,
+    });
+  }
+  if (leaders.length === 0) throw new Error('No usable stat leaders were found.');
+
+  const updated = data?.lastUpdated?.timeStamp ?? null;
+  if (!updated) throw new Error('Stats page did not say when it was last updated.');
+
+  return { leaders, updated, ...MAXPREPS_ATTRIBUTION };
+}
+
 /** Exact match on "<name> <mascot>", so "Klein" cannot match "Klein Cain". */
 export function recordFor(records, team) {
   return records.get(`${team.name} ${team.mascot}`.trim()) ?? null;

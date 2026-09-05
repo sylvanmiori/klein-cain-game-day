@@ -34,6 +34,262 @@
   "weather": null,
   "massey": null,
   "rankings": null,
+  "stats": {
+    "leaders": [
+      {
+        "category": "Receiving Yards Per Game",
+        "header": "Y/G",
+        "name": "Cooper Karns",
+        "position": "WR",
+        "value": "73.5",
+        "rank": 1
+      },
+      {
+        "category": "Receiving Yards Per Game",
+        "header": "Y/G",
+        "name": "Israel Smith",
+        "position": "",
+        "value": "41.5",
+        "rank": 2
+      },
+      {
+        "category": "Receiving Yards Per Game",
+        "header": "Y/G",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "34.5",
+        "rank": 3
+      },
+      {
+        "category": "Rushing Yards Per Game",
+        "header": "Y/G",
+        "name": "Eyan Johnson",
+        "position": "RB, SB",
+        "value": "94.5",
+        "rank": 1
+      },
+      {
+        "category": "Rushing Yards Per Game",
+        "header": "Y/G",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "80.0",
+        "rank": 2
+      },
+      {
+        "category": "Rushing Yards Per Game",
+        "header": "Y/G",
+        "name": "Earl Oguinn Jr.",
+        "position": "RB, WR",
+        "value": "48.5",
+        "rank": 3
+      },
+      {
+        "category": "Total TDs",
+        "header": "Tot",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "3",
+        "rank": 1
+      },
+      {
+        "category": "Total TDs",
+        "header": "Tot",
+        "name": "Eyan Johnson",
+        "position": "RB, SB",
+        "value": "2",
+        "rank": 2
+      },
+      {
+        "category": "Total TDs",
+        "header": "Tot",
+        "name": "Earl Oguinn Jr.",
+        "position": "RB, WR",
+        "value": "2",
+        "rank": 3
+      },
+      {
+        "category": "Tackles Per Game",
+        "header": "Tckl/G",
+        "name": "Easton Mizell",
+        "position": "DB, FS",
+        "value": "9.0",
+        "rank": 1
+      },
+      {
+        "category": "Tackles Per Game",
+        "header": "Tckl/G",
+        "name": "Jerod Spraberry",
+        "position": "LB",
+        "value": "6.5",
+        "rank": 2
+      },
+      {
+        "category": "Tackles Per Game",
+        "header": "Tckl/G",
+        "name": "Michael Elhindi",
+        "position": "DB",
+        "value": "6.0",
+        "rank": 3
+      },
+      {
+        "category": "Sacks",
+        "header": "Sak",
+        "name": "Colton Johnson",
+        "position": "DL",
+        "value": "1.5",
+        "rank": 1
+      },
+      {
+        "category": "Sacks",
+        "header": "Sak",
+        "name": "Mir Ibragimov",
+        "position": "DL",
+        "value": "1.0",
+        "rank": 2
+      },
+      {
+        "category": "Interceptions",
+        "header": "Int",
+        "name": "Easton Mizell",
+        "position": "DB, FS",
+        "value": "1",
+        "rank": 1
+      },
+      {
+        "category": "Interceptions",
+        "header": "Int",
+        "name": "Daniel Rogers",
+        "position": "CB",
+        "value": "1",
+        "rank": 2
+      },
+      {
+        "category": "Passing TDs",
+        "header": "TD Passes",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "3",
+        "rank": 1
+      },
+      {
+        "category": "Passing TDs",
+        "header": "TD Passes",
+        "name": "Trey Reyes",
+        "position": "QB",
+        "value": "1",
+        "rank": 2
+      },
+      {
+        "category": "Receiving TDs",
+        "header": "Rec",
+        "name": "Earl Oguinn Jr.",
+        "position": "RB, WR",
+        "value": "1",
+        "rank": 1
+      },
+      {
+        "category": "Receiving TDs",
+        "header": "Rec",
+        "name": "Israel Smith",
+        "position": "",
+        "value": "1",
+        "rank": 2
+      },
+      {
+        "category": "Receiving TDs",
+        "header": "Rec",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "1",
+        "rank": 3
+      },
+      {
+        "category": "Rushing TDs",
+        "header": "Run",
+        "name": "Eyan Johnson",
+        "position": "RB, SB",
+        "value": "2",
+        "rank": 1
+      },
+      {
+        "category": "Rushing TDs",
+        "header": "Run",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "2",
+        "rank": 2
+      },
+      {
+        "category": "Rushing TDs",
+        "header": "Run",
+        "name": "Braylon Francis",
+        "position": "RB",
+        "value": "1",
+        "rank": 3
+      },
+      {
+        "category": "Caused Fumbles",
+        "header": "Caus",
+        "name": "Bryson Bucola",
+        "position": "DL",
+        "value": "1",
+        "rank": 1
+      },
+      {
+        "category": "Caused Fumbles",
+        "header": "Caus",
+        "name": "Lovell Christian",
+        "position": "DL",
+        "value": "1",
+        "rank": 2
+      },
+      {
+        "category": "Fumble Recoveries",
+        "header": "Rcv",
+        "name": "Jaiden Pacheco",
+        "position": "DB",
+        "value": "1",
+        "rank": 1
+      },
+      {
+        "category": "Completion Percentage",
+        "header": "Pct",
+        "name": "Trey Reyes",
+        "position": "QB",
+        "value": "0.800",
+        "rank": 1
+      },
+      {
+        "category": "Completion Percentage",
+        "header": "Pct",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "0.541",
+        "rank": 2
+      },
+      {
+        "category": "QB Rating",
+        "header": "Pct",
+        "name": "Trey Reyes",
+        "position": "QB",
+        "value": "154.2",
+        "rank": 1
+      },
+      {
+        "category": "QB Rating",
+        "header": "Pct",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "104.8",
+        "rank": 2
+      }
+    ],
+    "updated": "2026-09-05T11:10:51",
+    "source": "MaxPreps",
+    "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/",
+    "asOf": "2026-09-05T20:01:12.037Z"
+  },
   "finalScore": {
     "home": 45,
     "away": 20,

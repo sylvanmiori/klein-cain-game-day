@@ -29,7 +29,7 @@ for (const file of files) {
     'schemaVersion', 'slug', 'week', 'issue', 'state', 'date', 'dateLong', 'dateShort', 'kickoff',
     'venue', 'event', 'updated', 'home', 'away', 'pageTitle', 'metaTitle', 'metaDescription',
     'socialDescription', 'ogImage', 'prediction', 'weather', 'scheduledFacts', 'resultFacts',
-    'preview', 'final', 'finalScore', 'rating', 'massey', 'rankings', 'sources', 'footerNote', 'disclaimerEntities', 'current',
+    'preview', 'final', 'finalScore', 'rating', 'massey', 'rankings', 'stats', 'sources', 'footerNote', 'disclaimerEntities', 'current',
   ];
   for (const key of required) if (!(key in edition)) fail(`is missing "${key}"`);
 
@@ -103,6 +103,17 @@ for (const file of files) {
     if (rating.source === 'Massey' || /massey/i.test(rating.source || '')) {
       fail('our rating must never be attributed to Massey');
     }
+  });
+  attributed(edition.stats, 'stats', (stats) => {
+    if (!Array.isArray(stats.leaders) || stats.leaders.length === 0) {
+      fail('stats has no leaders; omit the section rather than shipping it empty');
+    }
+    for (const leader of stats.leaders ?? []) {
+      if (!leader.name || !leader.category || leader.value === undefined) {
+        fail(`stat leader ${leader.name || '?'} is missing a name, category or value`);
+      }
+    }
+    if (!Number.isFinite(Date.parse(stats.updated))) fail('stats.updated must say when the source was updated');
   });
   attributed(edition.weather, 'weather', (weather) => {
     if (!Number.isFinite(weather.tempF)) fail('weather.tempF must be a number');
