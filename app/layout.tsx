@@ -11,10 +11,10 @@ export const metadata: Metadata = {
     shortcut: 'favicon-32x32.png',
     apple: [{ url: 'apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
-  title: 'Klein Cain vs Oak Ridge | Cain Game Day',
-  description: 'The Sept. 4, 2026 game-day briefing for Klein Cain vs Oak Ridge.',
+  title: '2026 Week 2: Oak Ridge at Klein Cain | Cain Game Day',
+  description: 'The Sept. 4, 2026 game preview for Oak Ridge at Klein Cain.',
   openGraph: {
-    title: 'Klein Cain vs Oak Ridge | Cain Game Day',
+    title: '2026 Week 2: Oak Ridge at Klein Cain | Cain Game Day',
     description: 'Records, forecast, players to know and recruiting notes for Sept. 4, 2026.',
     url: 'https://sylvanmiori.github.io/klein-cain-game-day/',
     siteName: 'Cain Game Day',
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Klein Cain vs Oak Ridge | Cain Game Day',
-    description: 'The Sept. 4, 2026 game-day briefing.',
+    title: '2026 Week 2: Oak Ridge at Klein Cain | Cain Game Day',
+    description: 'The Sept. 4, 2026 game preview for Oak Ridge at Klein Cain.',
     images: ['https://sylvanmiori.github.io/klein-cain-game-day/og.png'],
   },
 };
