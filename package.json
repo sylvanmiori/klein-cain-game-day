@@ -11,6 +11,7 @@
     "prepare:pages": "node scripts/prepare-pages.mjs",
     "start": "wrangler dev --config dist/server/wrangler.json",
     "edition": "node scripts/build-edition.mjs",
+    "score": "node scripts/update-live-score.mjs",
     "email": "node scripts/send-newsletter.mjs",
     "lint": "oxlint",
     "format": "oxfmt"

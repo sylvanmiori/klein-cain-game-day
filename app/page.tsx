@@ -1,4 +1,7 @@
 import edition from '../content/current-edition.json';
+import schedule from '../config/season-2026.json';
+import liveScore from '../public/live-score.json';
+import { LiveScoreCard, type LiveScore } from '../components/live-score-card';
 import roster from '../content/roster-2026.json';
 import { PlayerReport } from '../components/player-report';
 
@@ -18,45 +21,31 @@ export default function Home() {
     <main>
       <header className="masthead">
         <a className="wordmark" href="#top" aria-label="Cain Game Day home"><img src="./favicon.png" alt="" /> CAIN GAME DAY</a>
+        <nav aria-label="Site navigation"><a href="#players">Players</a><a href="#schedule">Schedule</a><a href="#roster-heading">Roster</a></nav>
         <a className="issue" href="#archive">Issue {edition.issue} · {edition.dateShort}</a>
       </header>
 
       <section className="game-overview" id="top">
         <div className="preview-title">
-          <h1>2026 Week 2 Preview: Oak Ridge at Klein Cain</h1>
+          <h1>2026 Week 2 Final: Oak Ridge at Klein Cain</h1>
           <p>{edition.date} · {edition.event}</p>
         </div>
 
-        <div className="matchup-card" aria-label="Oak Ridge at Klein Cain matchup">
-          <div className="matchup-teams">
-            <div className="team away">
-              <img src="./oak-ridge-logo.png" alt="Oak Ridge War Eagles logo" />
-              <div><h2>Oak Ridge</h2><span>War Eagles</span><strong>{edition.away.record}</strong></div>
-            </div>
-            <div className="game-time">
-              <span>{edition.dateShort}</span>
-              <strong>{edition.kickoff}</strong>
-              <small>{edition.venue}</small>
-            </div>
-            <div className="team home">
-              <div><h2>Klein Cain</h2><span>Hurricanes</span><strong>{edition.home.record}</strong></div>
-              <img src="./favicon.png" alt="Klein Cain Hurricanes logo" />
-            </div>
-          </div>
-
-          <ul className="game-facts">
-            <li><span>Forecast</span><strong>Cain {edition.prediction.home}–{edition.prediction.away}</strong></li>
-            <li><span>Win chance</span><strong>{edition.prediction.winProbability}% Cain</strong></li>
-            <li><span>Texas rank</span><strong>Cain {edition.home.rank} · Oak Ridge {edition.away.rank}</strong></li>
-            <li><span>Weather</span><strong>{edition.weatherLabel} · storms possible earlier</strong></li>
-          </ul>
-        </div>
+        <LiveScoreCard
+          initialScore={liveScore as LiveScore}
+          dateShort={edition.dateShort}
+          kickoff={edition.kickoff}
+          venue={edition.venue}
+          prediction={edition.prediction}
+          ranks={{ home: edition.home.rank, away: edition.away.rank }}
+          weather={`${edition.weatherLabel} · storms possible earlier`}
+        />
       </section>
 
       <article>
         <section className="players" id="players">
           <div className="section-head">
-            <h2>Six players to watch</h2>
+            <h2>Players from the matchup</h2>
           </div>
           <div className="player-grid">
             {edition.players.map((player) => (
@@ -76,9 +65,9 @@ export default function Home() {
 
         <section className="feature-grid">
           <div className="feature-copy">
-            <h2>Why Klein Cain is favored</h2>
-            <p>MaxPreps ranks Cain No. 132 in Texas and Oak Ridge No. 793. Massey projects a 44–20 Cain win with an 80 percent win probability.</p>
-            <p>Cain gave up 41 points in the opener. An early defensive stop would let the Hurricanes control the pace instead of relying on another shootout.</p>
+            <h2>The prediction was close</h2>
+            <p>Massey projected Klein Cain to win 44–20. The Hurricanes won 45–20, one point from the projected score.</p>
+            <p>Klein Cain improved to 2–0 and allowed 21 fewer points than it did in the 42–41 opener against Humble.</p>
           </div>
         </section>
 
@@ -121,6 +110,19 @@ export default function Home() {
             <a href="https://kleinisd.hometownticketing.com/" target="_blank" rel="noreferrer">TICKETS ↗</a>
             <a href="https://www.nfhsnetwork.com/" target="_blank" rel="noreferrer">STREAM INFO ↗</a>
           </div>
+        </section>
+
+        <section className="season" id="schedule" aria-labelledby="schedule-heading">
+          <div className="season-head"><h2 id="schedule-heading">2026 schedule</h2><p>Klein Cain is 2–0</p></div>
+          <ol>
+            {schedule.map((game) => (
+              <li className={game.date === '2026-09-04' ? 'current' : ''} key={game.date}>
+                <time dateTime={game.date}>{new Date(`${game.date}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</time>
+                <span>{game.home ? 'vs' : 'at'} <strong>{game.opponent}</strong></span>
+                <b>{'result' in game && game.result ? game.result : game.kickoff}</b>
+              </li>
+            ))}
+          </ol>
         </section>
 
         <section className="roster" aria-labelledby="roster-heading">

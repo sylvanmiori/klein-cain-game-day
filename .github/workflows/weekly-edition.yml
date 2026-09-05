@@ -48,7 +48,7 @@ jobs:
         run: |
           git config user.name "Cain Game Day Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add content/current-edition.json content/archive/
+          git add content/current-edition.json content/archive/ public/live-score.json
           git diff --cached --quiet || git commit -m "Publish $EDITION_SLUG"
           git push
       - uses: actions/configure-pages@v5

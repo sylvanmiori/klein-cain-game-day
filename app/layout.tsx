@@ -11,11 +11,11 @@ export const metadata: Metadata = {
     shortcut: 'favicon-32x32.png',
     apple: [{ url: 'apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
-  title: '2026 Week 2: Oak Ridge at Klein Cain | Cain Game Day',
-  description: 'The Sept. 4, 2026 game preview for Oak Ridge at Klein Cain.',
+  title: 'Final: Klein Cain 45, Oak Ridge 20 | Cain Game Day',
+  description: 'Final score and game report for Klein Cain’s 45–20 win over Oak Ridge.',
   openGraph: {
-    title: '2026 Week 2: Oak Ridge at Klein Cain | Cain Game Day',
-    description: 'Records, forecast, players to know and recruiting notes for Sept. 4, 2026.',
+    title: 'Final: Klein Cain 45, Oak Ridge 20 | Cain Game Day',
+    description: 'Final score, players to know and recruiting notes from Klein Cain’s Week 2 win.',
     url: 'https://sylvanmiori.github.io/klein-cain-game-day/',
     siteName: 'Cain Game Day',
     images: [{ url: 'https://sylvanmiori.github.io/klein-cain-game-day/og.png', width: 1731, height: 909, alt: 'Klein Cain vs Oak Ridge game-day briefing' }],
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '2026 Week 2: Oak Ridge at Klein Cain | Cain Game Day',
-    description: 'The Sept. 4, 2026 game preview for Oak Ridge at Klein Cain.',
+    title: 'Final: Klein Cain 45, Oak Ridge 20 | Cain Game Day',
+    description: 'Final score and game report for Klein Cain’s 45–20 win over Oak Ridge.',
     images: ['https://sylvanmiori.github.io/klein-cain-game-day/og.png'],
   },
 };

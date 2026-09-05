@@ -1,0 +1,68 @@
+name: Update live score
+
+on:
+  schedule:
+    # 6 PM–midnight Central on Thursday and Friday during football season.
+    - cron: '*/5 23 * 8-11 4,5'
+    - cron: '*/5 0-5 * 8-11 5,6'
+  workflow_dispatch:
+    inputs:
+      game_date:
+        description: 'Game date (YYYY-MM-DD); defaults to today in Central time'
+        required: false
+      status:
+        description: 'Optional manual status, such as Final or Q4 2:14'
+        required: false
+      home_score:
+        description: 'Optional manual Klein Cain score'
+        required: false
+      away_score:
+        description: 'Optional manual opponent score'
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: klein-cain-live-score
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Prepare live data branch
+        run: |
+          git config user.name "Cain Game Day Score Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git fetch origin live-data
+          git worktree add -B live-data ../live-data origin/live-data
+      - name: Check the score once a minute
+        env:
+          GAME_DATE: ${{ inputs.game_date }}
+          GAME_STATUS: ${{ inputs.status }}
+          HOME_SCORE: ${{ inputs.home_score }}
+          AWAY_SCORE: ${{ inputs.away_score }}
+          SCORE_OUTPUT: ${{ runner.temp }}/live-score.json
+        run: |
+          for check in 1 2 3 4 5; do
+            rm -f "$SCORE_OUTPUT"
+            node scripts/update-live-score.mjs
+            test -f "$SCORE_OUTPUT" || break
+            cp "$SCORE_OUTPUT" ../live-data/live-score.json
+            status=$(jq -r '.status' "$SCORE_OUTPUT")
+            (
+              cd ../live-data
+              git add live-score.json
+              git diff --cached --quiet || git commit -m "Update live score"
+              git push origin HEAD:live-data
+            )
+            test "$status" = "final" && break
+            test "$check" = "5" || sleep 55
+          done

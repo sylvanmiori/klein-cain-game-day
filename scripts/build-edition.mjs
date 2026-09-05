@@ -46,5 +46,18 @@ await mkdir(path.join(root, 'content/archive'), { recursive:true });
 const json = `${JSON.stringify(edition, null, 2)}\n`;
 await writeFile(path.join(root, 'content/current-edition.json'), json);
 await writeFile(path.join(root, `content/archive/${edition.slug}.json`), json);
+await writeFile(path.join(root, 'public/live-score.json'), `${JSON.stringify({
+  schemaVersion: 1,
+  slug: edition.slug,
+  status: 'scheduled',
+  statusLabel: edition.kickoff,
+  homeScore: null,
+  awayScore: null,
+  homeRecord: edition.home.record,
+  awayRecord: edition.away.record,
+  updatedAt: new Date().toISOString(),
+  source: 'Dave Campbell’s Texas Football',
+  sourceUrl: 'https://www.texasfootball.com/scores/',
+}, null, 2)}\n`);
 if (process.env.GITHUB_ENV) await writeFile(process.env.GITHUB_ENV, `RUN_EDITION=true\nEDITION_SLUG=${edition.slug}\n`, { flag:'a' });
 console.log(`Built issue ${edition.issue}: Klein Cain vs ${edition.opponent}.`);
