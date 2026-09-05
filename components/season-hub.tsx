@@ -24,6 +24,14 @@ const atNoon = (date: string) => new Date(`${date}T12:00:00`);
 const weekday = (date: string) => atNoon(date).toLocaleDateString('en-US', { weekday: 'short' });
 const monthDay = (date: string) => atNoon(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
+/** Results read "W 42–41". Colour reinforces the letter, it never replaces it. */
+function outcome(game: { result?: string }) {
+  const result = typeof game.result === 'string' ? game.result : '';
+  if (result.startsWith('W')) return 'win';
+  if (result.startsWith('L')) return 'loss';
+  return '';
+}
+
 export function SeasonHub({ activeDate }: { activeDate: string }) {
   return (
     <section className="season-hub" id="schedule" aria-labelledby="schedule-heading">
@@ -46,7 +54,7 @@ export function SeasonHub({ activeDate }: { activeDate: string }) {
                 <span>
                   {game.home ? 'vs' : 'at'} <strong>{game.opponent}</strong>
                 </span>
-                <b>{'result' in game && game.result ? game.result : game.kickoff}</b>
+                <b className={outcome(game)}>{'result' in game && game.result ? game.result : game.kickoff}</b>
               </>
             );
             return (

@@ -15,6 +15,12 @@ export type Fact = {
   label: string;
   value: string;
   href?: string;
+  /**
+   * Which side a fact describes, so it can carry that team's colour. Named by
+   * role rather than by venue, because the school is the away team in a road
+   * game and the colour should not flip with it.
+   */
+  team?: 'school' | 'opponent';
 };
 
 export type EditionPlayer = {

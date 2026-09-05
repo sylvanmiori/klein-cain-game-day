@@ -65,15 +65,18 @@
       "facts": [
         {
           "label": "Cain",
-          "value": "43.5 points per game"
+          "value": "43.5 points per game",
+          "team": "school"
         },
         {
           "label": "Tomball",
-          "value": "277 rush yards in opener"
+          "value": "277 rush yards in opener",
+          "team": "opponent"
         },
         {
           "label": "Tomball defense",
-          "value": "5 sacks · 0 points allowed"
+          "value": "5 sacks · 0 points allowed",
+          "team": "opponent"
         }
       ]
     },

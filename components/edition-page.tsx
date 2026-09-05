@@ -42,7 +42,10 @@ function PreviewView({ edition, preview }: { edition: Edition; preview: PreviewS
           <dl>
             {preview.intro.facts.map((fact) => (
               <div key={fact.label}>
-                <dt>{fact.label}</dt>
+                <dt>
+                  {fact.team && <span className={`team-chip ${fact.team}`} aria-hidden="true" />}
+                  {fact.label}
+                </dt>
                 <dd>{fact.value}</dd>
               </div>
             ))}

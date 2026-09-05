@@ -148,6 +148,12 @@ for (const file of files) {
     if (!player.rating.trim()) fail(`player ${player.name} has an empty rating; label it "Not listed" instead`);
   }
 
+  for (const fact of edition.preview?.intro?.facts ?? []) {
+    if (fact.team !== undefined && !['school', 'opponent'].includes(fact.team)) {
+      fail(`intro fact "${fact.label}" has team "${fact.team}"; use "school" or "opponent"`);
+    }
+  }
+
   for (const row of edition.preview?.recruiting?.rows ?? []) {
     if (!row.href?.startsWith('https://')) fail(`recruiting row ${row.name} needs a public source link`);
   }

@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-:root { --ink:#111114; --paper:#f5f5f7; --purple:#612694; --violet:#9e63d6; --red:#a82730; --line:#d4d4d8;
+:root { --ink:#111114; --paper:#f5f5f7; --purple:#612694; --violet:#9e63d6; --red:#a82730; --win:#12723a; --line:#d4d4d8;
   /* Every band on the page aligns to this one column. --pad is the side
      padding a full-bleed section needs for its content to start on the spine. */
   --page:1140px; --pad:max(20px,calc((100vw - 1140px)/2)); }
@@ -140,6 +140,9 @@ article>section { border-bottom:1px solid var(--line); }
 .season-card li span { color:#696970; }
 .season-card li span strong { color:var(--ink); font-weight:800; }
 .season-card li b { font-size:12px; font-variant-numeric:tabular-nums; }
+/* The W or L already carries the meaning; colour only reinforces it. */
+.season li b.win,.season-card li b.win { color:var(--win); }
+.season li b.loss,.season-card li b.loss { color:var(--red); }
 .district-note { margin:0; padding:13px 24px; color:#77777d; font-size:9px; font-weight:750; }
 .history-card { padding:28px 26px; border-top:5px solid var(--purple); }
 .history-card h2 { margin:0 0 20px; }
@@ -174,7 +177,12 @@ article>section { border-bottom:1px solid var(--line); }
 .early-read { display:grid; grid-template-columns:1fr minmax(340px,.72fr); gap:7vw; padding:52px var(--pad) 58px; border-bottom:1px solid var(--line); }
 .early-read dl { margin:0; border-top:1px solid #99999f; }
 .early-read dl>div { display:flex; justify-content:space-between; gap:20px; padding:13px 0; border-bottom:1px solid var(--line); }
-.early-read dt { color:#6e6e73; font-size:10px; font-weight:750; }
+.early-read dt { display:flex; align-items:center; gap:8px; color:#6e6e73; font-size:10px; font-weight:750; }
+/* Same team colours the player cards use: the school in purple, whoever it
+   is playing in red, so a stat is attributable at a glance. */
+.team-chip { flex:0 0 8px; width:8px; height:8px; border-radius:2px; background:var(--line); }
+.team-chip.school { background:var(--purple); }
+.team-chip.opponent { background:var(--red); }
 .early-read dd { margin:0; text-align:right; font-size:12px; font-weight:850; }
 .edition-switcher { display:flex; justify-content:center; align-items:center; gap:10px; padding:18px var(--pad); border-bottom:1px solid var(--line); background:#fff; }
 .edition-switcher a,.edition-switcher span { padding:9px 14px; border-radius:999px; font-size:10px; font-weight:800; }
