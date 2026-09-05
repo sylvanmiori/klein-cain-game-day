@@ -6,9 +6,9 @@ Start with the [project guide](docs/PROJECT-GUIDE.md) for accounts, costs, publi
 
 ## Status
 
-The working site is https://sylvanmiori.github.io/klein-cain-game-day/. The new address will be https://kleincain.gameday.report/ after Cloudflare deployment is verified.
+The public site is https://kleincain.gameday.report/. https://gameday.report/ redirects to Klein Cain while it is the only school. GitHub Pages remains available as a migration fallback.
 
-Weekly research is disabled until the edition template is fully data-driven. GitHub Pages remains available during the Cloudflare migration.
+Weekly research is disabled until the edition template is fully data-driven.
 
 ## Development
 

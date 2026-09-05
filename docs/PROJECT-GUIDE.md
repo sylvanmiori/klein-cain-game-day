@@ -8,11 +8,11 @@ Updated September 5, 2026. Keep this file current when accounts, hosting or auto
 - Repository: https://github.com/sylvanmiori/klein-cain-game-day
 - Existing site: https://sylvanmiori.github.io/klein-cain-game-day/
 - Domain: `gameday.report`, purchased through Cloudflare September 5, 2026, confirmed by the owner.
-- Planned school address: `kleincain.gameday.report`. The parent domain will redirect here. No other schools are configured.
+- Public school address: https://kleincain.gameday.report/. The parent domain redirects here. No other schools are configured.
 
 ## Current status
 
-Cloudflare code is prepared, score tests pass and the deployment dry run passes. Local Cloudflare authorization is complete. Live deployment and domain verification are still pending. GitHub Pages remains the public site.
+Cloudflare deployment completed and was verified September 5, 2026. HTTPS, the parent-domain redirect, Week 1 and Week 3 routes, static assets, the score endpoint and the one-minute schedule all work. GitHub Pages remains a fallback during migration.
 
 The site contains Week 1, Week 2 and Week 3 pages. Some matchup content and metadata are still game-specific. The weekly research schedule is disabled until the page can safely render new editions. Email delivery has been removed from the workflow. This is a website-only project for now.
 
@@ -52,7 +52,6 @@ Manual corrections use `POST /api/score/override`, disabled unless the Worker se
 
 ## Remaining setup
 
-- Verify deployment, HTTPS, both domain routes, assets and the score endpoint.
 - Configure GitHub deployment credentials and test cloud-only publishing.
 - Make pages, matchup cards and metadata edition-driven before enabling weekly research.
 - Verify each upcoming game's facts. Do not invent player statistics or recaps.
