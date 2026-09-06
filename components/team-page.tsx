@@ -63,6 +63,7 @@ export function TeamPage() {
 
         <LiveScoreCard
           initialScore={liveScore as LiveScore}
+          featuredTeamName={publication.schoolName}
           dateShort={featured.dateShort}
           kickoff={featured.kickoff}
           venue={featured.venue}

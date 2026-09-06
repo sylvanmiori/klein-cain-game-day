@@ -323,6 +323,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
               venue={edition.venue}
               home={edition.home}
               away={edition.away}
+              featuredTeamName={publication.schoolName}
               scheduledFacts={scheduledFacts}
               resultFacts={resultFacts}
             />
@@ -337,6 +338,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
               venue={edition.venue}
               away={{ ...edition.away, score: result?.away ?? null }}
               home={{ ...edition.home, score: result?.home ?? null }}
+              featuredTeamName={publication.schoolName}
               facts={result ? resultFacts : scheduledFacts}
             />
           )}

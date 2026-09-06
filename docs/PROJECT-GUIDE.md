@@ -53,6 +53,8 @@ The code targets Cloudflare's free Worker and KV allowances. Those quotas are fi
 
 Every game report is a subpage at `/games/week-<n>`, including whichever one is current. The program page and game reports share `SeasonHub`, `LiveScoreCard` and `SeasonStats`. `RosterSection` appears only on the program page.
 
+On a final matchup card, the winner stays at full contrast and the losing name and score are muted. Klein Cain's score also receives a small green `W` or red `L` marker. The score itself stays white; result color is intentionally limited to the marker.
+
 The roster and team photo live only on the program page now, and the Roster link in a game page's masthead points at `/#roster-heading`. The wordmark in every masthead goes to `/`.
 
 `/team` served the program page for a single deploy before it moved to `/`. The Worker answers it with a 301 to `/`, covered by a test.

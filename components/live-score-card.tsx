@@ -25,6 +25,7 @@ type Props = {
   venue: string;
   home: Team;
   away: Team;
+  featuredTeamName: string;
   /** Shown before kickoff. */
   scheduledFacts: Fact[];
   /** Shown once the feed reports a live or final score. */
@@ -40,6 +41,7 @@ export function LiveScoreCard({
   venue,
   home,
   away,
+  featuredTeamName,
   scheduledFacts,
   resultFacts,
 }: Props) {
@@ -104,6 +106,7 @@ export function LiveScoreCard({
       venue={venue}
       away={{ ...away, score: score.awayScore }}
       home={{ ...home, score: score.homeScore }}
+      featuredTeamName={featuredTeamName}
       facts={facts}
     />
   );

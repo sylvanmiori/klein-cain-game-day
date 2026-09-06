@@ -14,22 +14,47 @@ type Props = {
   venue: string;
   away: Side;
   home: Side;
+  /** The school this publication follows; receives the explicit W/L marker. */
+  featuredTeamName: string;
   facts: Fact[];
   showLiveDot?: boolean;
 };
 
-function TeamBlock({ team, status, side }: { team: Side; status: Props['status']; side: 'away' | 'home' }) {
+function TeamBlock({
+  team,
+  status,
+  side,
+  result,
+  lost,
+}: {
+  team: Side;
+  status: Props['status'];
+  side: 'away' | 'home';
+  result: 'win' | 'loss' | null;
+  lost: boolean;
+}) {
   const identity = (
     <div>
       <h2>{team.name}</h2>
       <span>{team.mascot}</span>
-      {status === 'scheduled' ? <strong>{team.record}</strong> : <b className="team-score">{team.score}</b>}
+      {status === 'scheduled'
+        ? <strong>{team.record}</strong>
+        : (
+          <div className="score-line">
+            <b className="team-score">{team.score}</b>
+            {result && (
+              <i className={`result-mark ${result}`} aria-label={result === 'win' ? 'Win' : 'Loss'}>
+                {result === 'win' ? 'W' : 'L'}
+              </i>
+            )}
+          </div>
+        )}
     </div>
   );
   const logo = <img src={sitePath(team.logo)} alt={`${team.name} ${team.mascot} logo`} />;
 
   return (
-    <div className={`team ${side}`}>
+    <div className={`team ${side}${lost ? ' is-loser' : ''}`}>
       {side === 'away' ? logo : identity}
       {side === 'away' ? identity : logo}
     </div>
@@ -45,10 +70,19 @@ export function MatchupCard({
   venue,
   away,
   home,
+  featuredTeamName,
   facts,
   showLiveDot,
 }: Props) {
   const isScheduled = status === 'scheduled';
+  const decided = status === 'final' && Number.isFinite(away.score) && Number.isFinite(home.score)
+    && away.score !== home.score;
+  const awayWon = decided && Number(away.score) > Number(home.score);
+  const homeWon = decided && Number(home.score) > Number(away.score);
+  const resultFor = (team: Side, won: boolean): 'win' | 'loss' | null => {
+    if (!decided || team.name !== featuredTeamName) return null;
+    return won ? 'win' : 'loss';
+  };
 
   return (
     <div className={`matchup-card ${status}`} aria-label={`${away.name} at ${home.name} matchup`}>
@@ -59,7 +93,7 @@ export function MatchupCard({
       </div>
 
       <div className="matchup-teams">
-        <TeamBlock team={away} status={status} side="away" />
+        <TeamBlock team={away} status={status} side="away" result={resultFor(away, awayWon)} lost={decided && !awayWon} />
         <div className="game-time">
           {isScheduled ? (
             <>
@@ -71,7 +105,7 @@ export function MatchupCard({
           )}
           <small>{venue}</small>
         </div>
-        <TeamBlock team={home} status={status} side="home" />
+        <TeamBlock team={home} status={status} side="home" result={resultFor(home, homeWon)} lost={decided && !homeWon} />
       </div>
 
       <ul className={`game-facts${isScheduled ? '' : ' final-facts'}`}>
