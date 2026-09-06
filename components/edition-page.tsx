@@ -191,7 +191,7 @@ function PlayerOfGame({ stats }: { stats: GameStats }) {
   );
 }
 
-function FinalView({ final, gameStats }: { final: FinalSection; gameStats?: GameStats | null }) {
+export function FinalView({ final, gameStats }: { final: FinalSection; gameStats?: GameStats | null }) {
   return (
     <>
       {final.quarters ? (

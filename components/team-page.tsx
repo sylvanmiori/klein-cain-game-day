@@ -2,6 +2,7 @@ import publication from '../config/publication.json';
 import schedule from '../config/season-2026.json';
 import liveScore from '../public/live-score.json';
 import { LiveScoreCard, type LiveScore } from './live-score-card';
+import { FinalView } from './edition-page';
 import { SeasonHub, seasonRecord } from './season-hub';
 import { RosterSection, SeasonStats } from './team-sections';
 import {
@@ -45,7 +46,9 @@ export function TeamPage() {
         </a>
         <nav aria-label="Site navigation">
           <a href="#schedule">Schedule</a>
-          {stats && <a href="#stats">Stats</a>}
+          {featured.final && featured.gameStats
+            ? <a href="#game-stats">Stats</a>
+            : stats && <a href="#stats">Stats</a>}
           <a href="#roster-heading">Roster</a>
         </nav>
         <span className="issue">2026 season</span>
@@ -75,6 +78,8 @@ export function TeamPage() {
       </section>
 
       <article>
+        {featured.final && <FinalView final={featured.final} gameStats={featured.gameStats} />}
+
         <SeasonHub activeDate={featured.date} />
 
         <nav className="edition-switcher" aria-label="Game reports">

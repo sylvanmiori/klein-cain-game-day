@@ -49,7 +49,7 @@ The code targets Cloudflare's free Worker and KV allowances. Those quotas are fi
 
 ## The program page
 
-`/` is the Klein Cain program page. It leads with whichever edition is current, using the live score card so the front page carries a live score on game night and the result for three days after, then switches to the next preview. Below that: the schedule with every opponent's record, program history, links to every game report, the season stat leaders and the full roster with the team photo.
+`/` is the Klein Cain program page. It leads with whichever edition is current, using the live score card so the front page carries a live score on game night and the result for three days after, then switches to the next preview. While that featured game is final, its recap, Player of the Game and game statistics appear directly below the score before the season material. Below that: the schedule with every opponent's record, program history, links to every game report, the season stat leaders and the full roster with the team photo.
 
 Every game report is a subpage at `/games/week-<n>`, including whichever one is current. The program page and game reports share `SeasonHub`, `LiveScoreCard` and `SeasonStats`. `RosterSection` appears only on the program page.
 
