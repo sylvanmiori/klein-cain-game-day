@@ -43,9 +43,7 @@ function TeamBlock({
           <div className="score-line">
             <b className="team-score">{team.score}</b>
             {result && (
-              <i className={`result-mark ${result}`} aria-label={result === 'win' ? 'Win' : 'Loss'}>
-                {result === 'win' ? 'W' : 'L'}
-              </i>
+              <i className={`result-mark ${result}`} aria-label={result === 'win' ? 'Win' : 'Loss'} />
             )}
           </div>
         )}

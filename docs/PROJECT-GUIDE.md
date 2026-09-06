@@ -53,7 +53,7 @@ The code targets Cloudflare's free Worker and KV allowances. Those quotas are fi
 
 Every game report is a subpage at `/games/week-<n>`, including whichever one is current. The program page and game reports share `SeasonHub`, `LiveScoreCard` and `SeasonStats`. `RosterSection` appears only on the program page.
 
-On a final matchup card, the winner stays at full contrast and the losing name and score are muted. Klein Cain's score also receives a small green `W` or red `L` marker. The score itself stays white; result color is intentionally limited to the marker.
+On a final matchup card, the winner stays at full contrast and the losing name and score are muted. A small green or red dot sits on the midfield side of Klein Cain's score to show the result without moving the number off-center. The score itself stays white; result color is intentionally limited to the dot.
 
 The roster and team photo live only on the program page now, and the Roster link in a game page's masthead points at `/#roster-heading`. The wordmark in every masthead goes to `/`.
 
