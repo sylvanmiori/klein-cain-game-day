@@ -529,6 +529,7 @@
     "playerOfGame": {
       "name": "Jace Hanks",
       "number": "9",
+      "image": "/players/jace-hanks.jpg",
       "headline": "175 yards of offense · 2 TDs",
       "rationale": "Hanks finished with 71 passing yards and 1 passing touchdown, 104 rushing yards, and 41 receiving yards and 1 receiving touchdown.",
       "model": "Cain Impact v1"

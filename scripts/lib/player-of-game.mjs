@@ -94,6 +94,7 @@ export function selectPlayerOfGame(players) {
   return {
     name: winner.name,
     number: String(winner.number),
+    ...(winner.image ? { image: winner.image } : {}),
     headline: headline(winner),
     rationale: rationale(winner),
     model: PLAYER_OF_GAME_MODEL,

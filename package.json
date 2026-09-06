@@ -21,7 +21,8 @@
     "refresh": "node scripts/refresh-facts.mjs",
     "promote": "node scripts/promote-edition.mjs",
     "postgame": "node scripts/promote-edition.mjs",
-    "editions": "node scripts/build-editions.mjs"
+    "editions": "node scripts/build-editions.mjs",
+    "photos": "node scripts/sync-player-photos.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

@@ -121,6 +121,9 @@ for (const file of files) {
       || !stats.playerOfGame?.rationale || !stats.playerOfGame?.model) {
       fail('gameStats has an incomplete player-of-the-game selection');
     }
+    if (stats.playerOfGame?.image && !/^\/players\/[a-z0-9-]+\.jpg$/.test(stats.playerOfGame.image)) {
+      fail('gameStats.playerOfGame.image must be a local player portrait');
+    }
     if (!Array.isArray(stats.totals) || stats.totals.length === 0) fail('gameStats has no team totals');
     if (!Array.isArray(stats.leaders) || stats.leaders.length === 0) fail('gameStats has no leaders');
     if (!Number.isFinite(Date.parse(stats.updated))) fail('gameStats.updated must be a valid source timestamp');

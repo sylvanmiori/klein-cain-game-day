@@ -179,7 +179,14 @@ function PlayerOfGame({ stats }: { stats: GameStats }) {
   const player = stats.playerOfGame;
   return (
     <section className="player-of-game" aria-labelledby="player-of-game-heading">
-      <div className="player-of-game-number" aria-hidden="true">#{player.number}</div>
+      <div className="player-of-game-visual">
+        {player.image ? (
+          <img className="player-of-game-photo" src={sitePath(player.image)} alt={`${player.name}, Klein Cain football`} />
+        ) : (
+          <div className="player-of-game-number" aria-hidden="true">#{player.number}</div>
+        )}
+        {player.image && <span className="player-of-game-jersey" aria-hidden="true">#{player.number}</span>}
+      </div>
       <div>
         <span>Cain Player of the Game</span>
         <h2 id="player-of-game-heading">{player.name}</h2>

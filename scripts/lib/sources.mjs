@@ -366,7 +366,13 @@ export function parseGameStats(html, { teamId, teamName, roster = [] }) {
       const name = playerName(row, roster);
       if (!name || !row.Jersey) continue;
       const key = `${row.Jersey}:${name.toLowerCase()}`;
-      const player = players.get(key) ?? { name, number: String(row.Jersey) };
+      const rosterMatch = roster.find((candidate) => String(candidate.number) === String(row.Jersey)
+        && String(candidate.name).toLowerCase() === name.toLowerCase());
+      const player = players.get(key) ?? {
+        name,
+        number: String(row.Jersey),
+        ...(rosterMatch?.image ? { image: rosterMatch.image } : {}),
+      };
       for (const [target, sourceKey] of Object.entries(fields)) player[target] = number(row[sourceKey]);
       players.set(key, player);
     }

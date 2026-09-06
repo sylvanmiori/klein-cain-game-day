@@ -4,13 +4,14 @@ import { PLAYER_OF_GAME_MODEL, selectPlayerOfGame } from './player-of-game.mjs';
 
 test('combines a two-way offensive line before choosing the player', () => {
   const result = selectPlayerOfGame([
-    { name: 'Jace Hanks', number: '9', passingYards: 71, passingTouchdowns: 1, rushingYards: 104 },
+    { name: 'Jace Hanks', number: '9', image: '/players/jace-hanks.jpg', passingYards: 71, passingTouchdowns: 1, rushingYards: 104 },
     { name: 'Israel Smith', number: '8', receivingYards: 46, receivingTouchdowns: 1 },
     { name: 'Easton Mizell', number: '47', totalTackles: 12 },
   ]);
   assert.deepEqual(result, {
     name: 'Jace Hanks',
     number: '9',
+    image: '/players/jace-hanks.jpg',
     headline: '175 yards of offense · 1 TD',
     rationale: 'Hanks finished with 71 passing yards and 1 passing touchdown, and 104 rushing yards.',
     model: PLAYER_OF_GAME_MODEL,

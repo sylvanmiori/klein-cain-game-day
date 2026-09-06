@@ -3,86 +3,550 @@
   "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/roster/",
   "updated": "August 30, 2026",
   "players": [
-    { "number": 1, "name": "Earl Oguinn Jr.", "position": "RB / WR", "class": "Jr." },
-    { "number": 2, "name": "Michael Elhindi", "position": "DB", "class": "Sr." },
-    { "number": 3, "name": "Wes Young", "position": "TE / LS", "class": "Sr." },
-    { "number": 4, "name": "Sage DesAutels", "position": "K / P", "class": "Sr." },
-    { "number": 4, "name": "Jackson Bonin", "position": "QB", "class": "Fr." },
-    { "number": 5, "name": "Trey Reyes", "position": "QB", "class": "Sr." },
-    { "number": 6, "name": "Jerod Spraberry", "position": "LB", "class": "Sr." },
-    { "number": 7, "name": "Christian Redeo", "position": "DB", "class": "Sr." },
-    { "number": 8, "name": "Michael Anthony Rhodes Jr.", "position": "MLB / LS", "class": "Jr." },
-    { "number": 8, "name": "Israel Smith", "position": "—", "class": "—" },
-    { "number": 9, "name": "Jace Hanks", "position": "QB", "class": "Jr." },
-    { "number": 10, "name": "Daen Hernandez", "position": "WR", "class": "So." },
-    { "number": 10, "name": "Cooper Karns", "position": "WR", "class": "Sr." },
-    { "number": 10, "name": "Hector Ron", "position": "WR / FS", "class": "Jr." },
-    { "number": 11, "name": "AJ Carroll", "position": "DB", "class": "Jr." },
-    { "number": 12, "name": "Talon Burkland", "position": "QB", "class": "So." },
-    { "number": 13, "name": "Hank Aguirre", "position": "—", "class": "—" },
-    { "number": 14, "name": "Matthew Eiermann", "position": "DB", "class": "Sr." },
-    { "number": 15, "name": "Reggie Yarbough", "position": "DB", "class": "Jr." },
-    { "number": 16, "name": "Eyan Johnson", "position": "RB / SB", "class": "Sr." },
-    { "number": 17, "name": "Tyson Freeman", "position": "WR", "class": "Sr." },
-    { "number": 18, "name": "Deaunte Barr", "position": "TE", "class": "Sr." },
-    { "number": 19, "name": "Londen Jacobs", "position": "WR / CB", "class": "Jr." },
-    { "number": 20, "name": "Braylon Francis", "position": "RB", "class": "Jr." },
-    { "number": 21, "name": "Duke Gilbert", "position": "DB", "class": "Sr." },
-    { "number": 22, "name": "Jalon Abston", "position": "DB", "class": "Jr." },
-    { "number": 24, "name": "Jayson Rheiner", "position": "RB", "class": "Jr." },
-    { "number": 24, "name": "Kayden Graham", "position": "RB", "class": "So." },
-    { "number": 25, "name": "Daniel Rogers", "position": "CB", "class": "Jr." },
-    { "number": 26, "name": "Thomas Howe", "position": "K / P", "class": "Fr." },
-    { "number": 26, "name": "Aj Carroll", "position": "CB / WR", "class": "Jr." },
-    { "number": 27, "name": "Miles Gongora", "position": "DB", "class": "Sr." },
-    { "number": 28, "name": "Jaiden Pacheco", "position": "DB", "class": "Sr." },
-    { "number": 30, "name": "Jhonny Vilchez", "position": "LB", "class": "Jr." },
-    { "number": 31, "name": "Colby Braxton", "position": "DB", "class": "Jr." },
-    { "number": 32, "name": "James Rice", "position": "DB", "class": "Jr." },
-    { "number": 34, "name": "Gage Hansberger", "position": "LB", "class": "Sr." },
-    { "number": 35, "name": "Joseph Villarreal", "position": "DB", "class": "Sr." },
-    { "number": 36, "name": "Amaan Cheema", "position": "DB", "class": "Sr." },
-    { "number": 37, "name": "Amir Rashid", "position": "DB", "class": "Sr." },
-    { "number": 38, "name": "Ryker Mashburn", "position": "LB", "class": "Jr." },
-    { "number": 39, "name": "Cayden Strong", "position": "DB", "class": "Sr." },
-    { "number": 40, "name": "Colton Johnson", "position": "DL", "class": "So." },
-    { "number": 42, "name": "Jaemin Gilstrap", "position": "DL", "class": "Sr." },
-    { "number": 43, "name": "Issac Rock", "position": "LB", "class": "Sr." },
-    { "number": 44, "name": "Bryson Bucola", "position": "DL", "class": "Jr." },
-    { "number": 45, "name": "Lovell Christian", "position": "DL", "class": "Sr." },
-    { "number": 46, "name": "Ethan Fox", "position": "MLB / RB", "class": "Jr." },
-    { "number": 47, "name": "Easton Mizell", "position": "DB / FS", "class": "Jr." },
-    { "number": 48, "name": "Preston Kretch", "position": "TE", "class": "Jr." },
-    { "number": 49, "name": "Michael Rhodes Jr.", "position": "DE / DT", "class": "Jr." },
-    { "number": 52, "name": "Joseph Cole", "position": "OL", "class": "Sr." },
-    { "number": 53, "name": "Leonel Ochoa", "position": "G / C", "class": "Sr." },
-    { "number": 54, "name": "Ashton Pendleton-jones", "position": "DT", "class": "Jr." },
-    { "number": 55, "name": "Eduardo Olvera", "position": "G", "class": "Jr." },
-    { "number": 56, "name": "Jason Milligan", "position": "G", "class": "Jr." },
-    { "number": 56, "name": "LaKeldrick Webb", "position": "OL", "class": "Sr." },
-    { "number": 57, "name": "Mir Ibragimov", "position": "DE", "class": "Jr." },
-    { "number": 59, "name": "Diego Gonzalez", "position": "DT", "class": "Jr." },
-    { "number": 61, "name": "Dominic Trevino", "position": "G / T", "class": "Jr." },
-    { "number": 61, "name": "Ian Camacho", "position": "OL", "class": "Sr." },
-    { "number": 62, "name": "Wyatt Mackey", "position": "OL", "class": "Jr." },
-    { "number": 63, "name": "Joseph Cole", "position": "C", "class": "Sr." },
-    { "number": 63, "name": "Clayton Rightmer", "position": "OL", "class": "Sr." },
-    { "number": 69, "name": "Gavin Chaloupka", "position": "OL", "class": "Jr." },
-    { "number": 74, "name": "Austin Cook", "position": "T", "class": "Jr." },
-    { "number": 74, "name": "Ryan Worrell", "position": "OL", "class": "Sr." },
-    { "number": 76, "name": "Matthew Carter", "position": "OL", "class": "Sr." },
-    { "number": 77, "name": "Austin Corson", "position": "OL", "class": "So." },
-    { "number": 80, "name": "Dillion Dotson", "position": "TE", "class": "Jr." },
-    { "number": 81, "name": "Nicholas Flores", "position": "WR", "class": "Sr." },
-    { "number": 83, "name": "Dylan Ross", "position": "WR", "class": "Sr." },
-    { "number": 88, "name": "Ethan LaRoe", "position": "TE", "class": "So." },
-    { "number": 90, "name": "Micah Jelks", "position": "DT", "class": "Jr." },
-    { "number": 90, "name": "Kenyon White", "position": "DL", "class": "Sr." },
-    { "number": 91, "name": "Mason Stovall", "position": "DL", "class": "Sr." },
-    { "number": 92, "name": "Ayden Munro", "position": "DL", "class": "Sr." },
-    { "number": 93, "name": "Mir Ibragimov", "position": "DL", "class": "Jr." },
-    { "number": 94, "name": "Kenneth Crowell", "position": "DL", "class": "Sr." },
-    { "number": 95, "name": "Griffin Pierce", "position": "DL", "class": "Sr." },
-    { "number": 96, "name": "Jackson Luark", "position": "DL", "class": "Sr." }
+    {
+      "number": 1,
+      "name": "Earl Oguinn Jr.",
+      "position": "RB / WR",
+      "class": "Jr.",
+      "image": "/players/earl-oguinn.jpg"
+    },
+    {
+      "number": 2,
+      "name": "Michael Elhindi",
+      "position": "DB",
+      "class": "Sr.",
+      "image": "/players/michael-elhindi.jpg"
+    },
+    {
+      "number": 3,
+      "name": "Wes Young",
+      "position": "TE / LS",
+      "class": "Sr.",
+      "image": "/players/wes-young.jpg"
+    },
+    {
+      "number": 4,
+      "name": "Sage DesAutels",
+      "position": "K / P",
+      "class": "Sr.",
+      "image": "/players/sage-desautels.jpg"
+    },
+    {
+      "number": 4,
+      "name": "Jackson Bonin",
+      "position": "QB",
+      "class": "Fr."
+    },
+    {
+      "number": 5,
+      "name": "Trey Reyes",
+      "position": "QB",
+      "class": "Sr.",
+      "image": "/players/trey-reyes.jpg"
+    },
+    {
+      "number": 6,
+      "name": "Jerod Spraberry",
+      "position": "LB",
+      "class": "Sr.",
+      "image": "/players/jerod-spraberry.jpg"
+    },
+    {
+      "number": 7,
+      "name": "Christian Redeo",
+      "position": "DB",
+      "class": "Sr.",
+      "image": "/players/christian-redeo.jpg"
+    },
+    {
+      "number": 8,
+      "name": "Michael Anthony Rhodes Jr.",
+      "position": "MLB / LS",
+      "class": "Jr."
+    },
+    {
+      "number": 8,
+      "name": "Israel Smith",
+      "position": "—",
+      "class": "—",
+      "image": "/players/israel-smith.jpg"
+    },
+    {
+      "number": 9,
+      "name": "Jace Hanks",
+      "position": "QB",
+      "class": "Jr.",
+      "image": "/players/jace-hanks.jpg"
+    },
+    {
+      "number": 10,
+      "name": "Daen Hernandez",
+      "position": "WR",
+      "class": "So."
+    },
+    {
+      "number": 10,
+      "name": "Cooper Karns",
+      "position": "WR",
+      "class": "Sr.",
+      "image": "/players/cooper-karns.jpg"
+    },
+    {
+      "number": 10,
+      "name": "Hector Ron",
+      "position": "WR / FS",
+      "class": "Jr."
+    },
+    {
+      "number": 11,
+      "name": "AJ Carroll",
+      "position": "DB",
+      "class": "Jr.",
+      "image": "/players/aj-carroll.jpg"
+    },
+    {
+      "number": 12,
+      "name": "Talon Burkland",
+      "position": "QB",
+      "class": "So.",
+      "image": "/players/talon-burkland.jpg"
+    },
+    {
+      "number": 13,
+      "name": "Hank Aguirre",
+      "position": "—",
+      "class": "—",
+      "image": "/players/hank-aguirre.jpg"
+    },
+    {
+      "number": 14,
+      "name": "Matthew Eiermann",
+      "position": "DB",
+      "class": "Sr.",
+      "image": "/players/matthew-eiermann.jpg"
+    },
+    {
+      "number": 15,
+      "name": "Reggie Yarbough",
+      "position": "DB",
+      "class": "Jr.",
+      "image": "/players/reggie-yarbough.jpg"
+    },
+    {
+      "number": 16,
+      "name": "Eyan Johnson",
+      "position": "RB / SB",
+      "class": "Sr.",
+      "image": "/players/eyan-johnson.jpg"
+    },
+    {
+      "number": 17,
+      "name": "Tyson Freeman",
+      "position": "WR",
+      "class": "Sr.",
+      "image": "/players/tyson-freeman.jpg"
+    },
+    {
+      "number": 18,
+      "name": "Deaunte Barr",
+      "position": "TE",
+      "class": "Sr.",
+      "image": "/players/deaunte-barr.jpg"
+    },
+    {
+      "number": 19,
+      "name": "Londen Jacobs",
+      "position": "WR / CB",
+      "class": "Jr.",
+      "image": "/players/londen-jacobs.jpg"
+    },
+    {
+      "number": 20,
+      "name": "Braylon Francis",
+      "position": "RB",
+      "class": "Jr.",
+      "image": "/players/braylon-francis.jpg"
+    },
+    {
+      "number": 21,
+      "name": "Duke Gilbert",
+      "position": "DB",
+      "class": "Sr.",
+      "image": "/players/duke-gilbert.jpg"
+    },
+    {
+      "number": 22,
+      "name": "Jalon Abston",
+      "position": "DB",
+      "class": "Jr.",
+      "image": "/players/jalon-abston.jpg"
+    },
+    {
+      "number": 24,
+      "name": "Jayson Rheiner",
+      "position": "RB",
+      "class": "Jr."
+    },
+    {
+      "number": 24,
+      "name": "Kayden Graham",
+      "position": "RB",
+      "class": "So.",
+      "image": "/players/kayden-graham.jpg"
+    },
+    {
+      "number": 25,
+      "name": "Daniel Rogers",
+      "position": "CB",
+      "class": "Jr.",
+      "image": "/players/daniel-rogers.jpg"
+    },
+    {
+      "number": 26,
+      "name": "Thomas Howe",
+      "position": "K / P",
+      "class": "Fr.",
+      "image": "/players/thomas-howe.jpg"
+    },
+    {
+      "number": 26,
+      "name": "Aj Carroll",
+      "position": "CB / WR",
+      "class": "Jr.",
+      "image": "/players/aj-carroll.jpg"
+    },
+    {
+      "number": 27,
+      "name": "Miles Gongora",
+      "position": "DB",
+      "class": "Sr.",
+      "image": "/players/miles-gongora.jpg"
+    },
+    {
+      "number": 28,
+      "name": "Jaiden Pacheco",
+      "position": "DB",
+      "class": "Sr.",
+      "image": "/players/jaiden-pacheco.jpg"
+    },
+    {
+      "number": 30,
+      "name": "Jhonny Vilchez",
+      "position": "LB",
+      "class": "Jr."
+    },
+    {
+      "number": 31,
+      "name": "Colby Braxton",
+      "position": "DB",
+      "class": "Jr.",
+      "image": "/players/colby-braxton.jpg"
+    },
+    {
+      "number": 32,
+      "name": "James Rice",
+      "position": "DB",
+      "class": "Jr.",
+      "image": "/players/james-rice.jpg"
+    },
+    {
+      "number": 34,
+      "name": "Gage Hansberger",
+      "position": "LB",
+      "class": "Sr.",
+      "image": "/players/gage-hansberger.jpg"
+    },
+    {
+      "number": 35,
+      "name": "Joseph Villarreal",
+      "position": "DB",
+      "class": "Sr.",
+      "image": "/players/joseph-villarreal.jpg"
+    },
+    {
+      "number": 36,
+      "name": "Amaan Cheema",
+      "position": "DB",
+      "class": "Sr."
+    },
+    {
+      "number": 37,
+      "name": "Amir Rashid",
+      "position": "DB",
+      "class": "Sr."
+    },
+    {
+      "number": 38,
+      "name": "Ryker Mashburn",
+      "position": "LB",
+      "class": "Jr.",
+      "image": "/players/ryker-mashburn.jpg"
+    },
+    {
+      "number": 39,
+      "name": "Cayden Strong",
+      "position": "DB",
+      "class": "Sr."
+    },
+    {
+      "number": 40,
+      "name": "Colton Johnson",
+      "position": "DL",
+      "class": "So.",
+      "image": "/players/colton-johnson.jpg"
+    },
+    {
+      "number": 42,
+      "name": "Jaemin Gilstrap",
+      "position": "DL",
+      "class": "Sr.",
+      "image": "/players/jaemin-gilstrap.jpg"
+    },
+    {
+      "number": 43,
+      "name": "Issac Rock",
+      "position": "LB",
+      "class": "Sr.",
+      "image": "/players/issac-rock.jpg"
+    },
+    {
+      "number": 44,
+      "name": "Bryson Bucola",
+      "position": "DL",
+      "class": "Jr.",
+      "image": "/players/bryson-bucola.jpg"
+    },
+    {
+      "number": 45,
+      "name": "Lovell Christian",
+      "position": "DL",
+      "class": "Sr.",
+      "image": "/players/lovell-christian.jpg"
+    },
+    {
+      "number": 46,
+      "name": "Ethan Fox",
+      "position": "MLB / RB",
+      "class": "Jr.",
+      "image": "/players/ethan-fox.jpg"
+    },
+    {
+      "number": 47,
+      "name": "Easton Mizell",
+      "position": "DB / FS",
+      "class": "Jr.",
+      "image": "/players/easton-mizell.jpg"
+    },
+    {
+      "number": 48,
+      "name": "Preston Kretch",
+      "position": "TE",
+      "class": "Jr."
+    },
+    {
+      "number": 49,
+      "name": "Michael Rhodes Jr.",
+      "position": "DE / DT",
+      "class": "Jr.",
+      "image": "/players/michael-rhodes.jpg"
+    },
+    {
+      "number": 52,
+      "name": "Joseph Cole",
+      "position": "OL",
+      "class": "Sr."
+    },
+    {
+      "number": 53,
+      "name": "Leonel Ochoa",
+      "position": "G / C",
+      "class": "Sr."
+    },
+    {
+      "number": 54,
+      "name": "Ashton Pendleton-jones",
+      "position": "DT",
+      "class": "Jr."
+    },
+    {
+      "number": 55,
+      "name": "Eduardo Olvera",
+      "position": "G",
+      "class": "Jr."
+    },
+    {
+      "number": 56,
+      "name": "Jason Milligan",
+      "position": "G",
+      "class": "Jr."
+    },
+    {
+      "number": 56,
+      "name": "LaKeldrick Webb",
+      "position": "OL",
+      "class": "Sr."
+    },
+    {
+      "number": 57,
+      "name": "Mir Ibragimov",
+      "position": "DE",
+      "class": "Jr.",
+      "image": "/players/mir-ibragimov.jpg"
+    },
+    {
+      "number": 59,
+      "name": "Diego Gonzalez",
+      "position": "DT",
+      "class": "Jr."
+    },
+    {
+      "number": 61,
+      "name": "Dominic Trevino",
+      "position": "G / T",
+      "class": "Jr."
+    },
+    {
+      "number": 61,
+      "name": "Ian Camacho",
+      "position": "OL",
+      "class": "Sr.",
+      "image": "/players/ian-camacho.jpg"
+    },
+    {
+      "number": 62,
+      "name": "Wyatt Mackey",
+      "position": "OL",
+      "class": "Jr.",
+      "image": "/players/wyatt-mackey.jpg"
+    },
+    {
+      "number": 63,
+      "name": "Joseph Cole",
+      "position": "C",
+      "class": "Sr."
+    },
+    {
+      "number": 63,
+      "name": "Clayton Rightmer",
+      "position": "OL",
+      "class": "Sr.",
+      "image": "/players/clayton-rightmer.jpg"
+    },
+    {
+      "number": 69,
+      "name": "Gavin Chaloupka",
+      "position": "OL",
+      "class": "Jr.",
+      "image": "/players/gavin-chaloupka.jpg"
+    },
+    {
+      "number": 74,
+      "name": "Austin Cook",
+      "position": "T",
+      "class": "Jr."
+    },
+    {
+      "number": 74,
+      "name": "Ryan Worrell",
+      "position": "OL",
+      "class": "Sr.",
+      "image": "/players/ryan-worrell.jpg"
+    },
+    {
+      "number": 76,
+      "name": "Matthew Carter",
+      "position": "OL",
+      "class": "Sr.",
+      "image": "/players/matthew-carter.jpg"
+    },
+    {
+      "number": 77,
+      "name": "Austin Corson",
+      "position": "OL",
+      "class": "So.",
+      "image": "/players/austin-corson.jpg"
+    },
+    {
+      "number": 80,
+      "name": "Dillion Dotson",
+      "position": "TE",
+      "class": "Jr.",
+      "image": "/players/dillion-dotson.jpg"
+    },
+    {
+      "number": 81,
+      "name": "Nicholas Flores",
+      "position": "WR",
+      "class": "Sr.",
+      "image": "/players/nicholas-flores.jpg"
+    },
+    {
+      "number": 83,
+      "name": "Dylan Ross",
+      "position": "WR",
+      "class": "Sr.",
+      "image": "/players/dylan-ross.jpg"
+    },
+    {
+      "number": 88,
+      "name": "Ethan LaRoe",
+      "position": "TE",
+      "class": "So.",
+      "image": "/players/ethan-laroe.jpg"
+    },
+    {
+      "number": 90,
+      "name": "Micah Jelks",
+      "position": "DT",
+      "class": "Jr."
+    },
+    {
+      "number": 90,
+      "name": "Kenyon White",
+      "position": "DL",
+      "class": "Sr.",
+      "image": "/players/kenyon-white.jpg"
+    },
+    {
+      "number": 91,
+      "name": "Mason Stovall",
+      "position": "DL",
+      "class": "Sr.",
+      "image": "/players/mason-stovall.jpg"
+    },
+    {
+      "number": 92,
+      "name": "Ayden Munro",
+      "position": "DL",
+      "class": "Sr.",
+      "image": "/players/ayden-munro.jpg"
+    },
+    {
+      "number": 93,
+      "name": "Mir Ibragimov",
+      "position": "DL",
+      "class": "Jr.",
+      "image": "/players/mir-ibragimov.jpg"
+    },
+    {
+      "number": 94,
+      "name": "Kenneth Crowell",
+      "position": "DL",
+      "class": "Sr."
+    },
+    {
+      "number": 95,
+      "name": "Griffin Pierce",
+      "position": "DL",
+      "class": "Sr.",
+      "image": "/players/griffin-pierce.jpg"
+    },
+    {
+      "number": 96,
+      "name": "Jackson Luark",
+      "position": "DL",
+      "class": "Sr.",
+      "image": "/players/jackson-luark.jpg"
+    }
   ]
 }

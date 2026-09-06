@@ -79,6 +79,7 @@ export type GameStats = {
   playerOfGame: {
     name: string;
     number: string;
+    image?: string;
     headline: string;
     rationale: string;
     model: string;

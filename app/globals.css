@@ -186,7 +186,11 @@ article>section { border-bottom:1px solid var(--line); }
 .stat-group li>b { flex:0 0 auto; font-size:13px; font-variant-numeric:tabular-nums; }
 .game-leaders { padding:52px var(--pad) 60px; border-bottom:1px solid var(--line); }
 .player-of-game { display:grid; grid-template-columns:112px minmax(0,620px); gap:28px; align-items:center; padding:42px var(--pad); border-bottom:1px solid #30313a; background:#17181e; color:#fff; }
-.player-of-game-number { display:grid; place-items:center; width:112px; height:112px; border-radius:24px; background:var(--purple); font-size:34px; font-weight:900; letter-spacing:-.055em; }
+.player-of-game-visual { position:relative; width:112px; height:112px; }
+.player-of-game-photo,.player-of-game-number { width:112px; height:112px; }
+.player-of-game-photo { display:block; border:3px solid #8b4bb8; border-radius:50%; object-fit:cover; object-position:center top; }
+.player-of-game-number { display:grid; place-items:center; border-radius:50%; background:var(--purple); font-size:34px; font-weight:900; letter-spacing:-.055em; }
+.player-of-game .player-of-game-jersey { position:absolute; right:-2px; bottom:-2px; display:grid; place-items:center; width:32px; height:32px; border:3px solid #17181e; border-radius:50%; background:var(--purple); color:#fff; font-size:10px; font-weight:900; letter-spacing:-.02em; text-transform:none; }
 .player-of-game span { color:#c8a7de; font-size:9px; font-weight:850; letter-spacing:.12em; text-transform:uppercase; }
 .player-of-game h2 { margin:5px 0 7px; font-size:28px; line-height:1; letter-spacing:-.045em; }
 .player-of-game strong { display:block; font-size:14px; }
@@ -266,6 +270,6 @@ footer>div:first-child p { font:italic 13px "Helvetica Neue", Helvetica, Arial, 
 @media(max-width:900px){.score-line,.team.home .score-line{margin:6px auto 0}.result-mark{width:8px;height:8px}}
 @media(max-width:480px){.roster{padding-top:48px;padding-bottom:54px}.roster-list li{grid-template-columns:28px 1fr;gap:7px;padding:8px 7px}.roster-list li>b{font-size:16px}.roster-list strong{font-size:9.5px}.roster-list small{font-size:7px}}
 
-@media(max-width:900px){.player-of-game{grid-template-columns:74px 1fr;gap:18px;padding:30px var(--pad)}.player-of-game-number{width:74px;height:74px;border-radius:18px;font-size:24px}.player-of-game h2{font-size:23px}.player-of-game p{font-size:12px}.game-statistics{padding:38px var(--pad) 44px}.game-stat-layout{grid-template-columns:1fr;gap:28px}.game-total-grid{grid-template-columns:1fr 1fr}.game-leader-list article{grid-template-columns:64px minmax(0,1fr);gap:3px 10px}.game-leader-list article>span{grid-row:auto}.game-leader-list article b,.game-leader-list article p{grid-column:2;text-align:left}.game-statistics .compact-head>a{display:inline-block;margin-top:10px}}
+@media(max-width:900px){.player-of-game{grid-template-columns:74px 1fr;gap:18px;padding:30px var(--pad)}.player-of-game-visual,.player-of-game-photo,.player-of-game-number{width:74px;height:74px}.player-of-game-number{font-size:24px}.player-of-game .player-of-game-jersey{width:26px;height:26px;border-width:2px;font-size:8px}.player-of-game h2{font-size:23px}.player-of-game p{font-size:12px}.game-statistics{padding:38px var(--pad) 44px}.game-stat-layout{grid-template-columns:1fr;gap:28px}.game-total-grid{grid-template-columns:1fr 1fr}.game-leader-list article{grid-template-columns:64px minmax(0,1fr);gap:3px 10px}.game-leader-list article>span{grid-row:auto}.game-leader-list article b,.game-leader-list article p{grid-column:2;text-align:left}.game-statistics .compact-head>a{display:inline-block;margin-top:10px}}
 
 @media (prefers-reduced-motion:reduce){.mobile-copy,.player-toggle svg{transition:none}}

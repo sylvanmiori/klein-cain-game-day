@@ -28,7 +28,7 @@ What is still not automated is analysis: players to watch, keys, recruiting note
 | `app/games/[week]/page.tsx` | `/games/week-<n>`, renders `components/edition-page.tsx` |
 | `content/editions/*.json` | one file per game, schema v2, typed in `lib/edition.ts` |
 | `content/season-data.json` | machine-written: our results and every opponent's record |
-| `content/roster-2026.json` | roster, hand-maintained |
+| `content/roster-2026.json` | roster, hand-maintained; local MaxPreps portrait paths are synced with `npm run photos` |
 | `config/season-2026.json` | the schedule; authority on date, opponent, venue, home/away, kickoff |
 | `config/publication.json` | school, wordmark, source URLs |
 | `config/program.json` | program history and past seasons |
@@ -40,6 +40,8 @@ What is still not automated is analysis: players to watch, keys, recruiting note
 | `cloudflare/worker.mjs` | routes, score API, one-minute cron |
 
 Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore`, `stats` and `gameStats` (including `gameStats.playerOfGame`). Everything else is editorial and no script writes it.
+
+`npm run photos` reads the public 2026 MaxPreps roster, downloads available player mugshots into `public/players/`, and records each exact-name match on the roster. Player-of-the-Game selections inherit that local image automatically; players without a verified portrait retain the jersey-number fallback. Photos are never matched by jersey number alone because the combined roster contains duplicate numbers.
 
 ## Costs
 
