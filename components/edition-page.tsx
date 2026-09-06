@@ -185,7 +185,6 @@ function PlayerOfGame({ stats }: { stats: GameStats }) {
         <h2 id="player-of-game-heading">{player.name}</h2>
         <strong>{player.headline}</strong>
         <p>{player.rationale}</p>
-        <small>Selected from verified game statistics · {player.model}</small>
       </div>
     </section>
   );

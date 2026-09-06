@@ -189,7 +189,6 @@ article>section { border-bottom:1px solid var(--line); }
 .player-of-game h2 { margin:5px 0 7px; font-size:28px; line-height:1; letter-spacing:-.045em; }
 .player-of-game strong { display:block; font-size:14px; }
 .player-of-game p { margin:8px 0 0; color:#d1d2d8; font-size:13px; line-height:1.45; }
-.player-of-game small { display:block; margin-top:12px; color:#8f919b; font-size:9px; font-weight:700; }
 .game-statistics { padding:52px var(--pad) 60px; border-bottom:1px solid var(--line); }
 .game-statistics .compact-head>div p { margin-top:6px; }
 .game-statistics .compact-head>a { color:var(--purple); font-size:10px; font-weight:800; transition:color .15s ease; }

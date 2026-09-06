@@ -185,7 +185,7 @@ Game-specific statistics are separate from the season snapshot. `promote-edition
 
 `scripts/lib/player-of-game.mjs` owns the deterministic `Cain Impact v1` selection. It considers only Klein Cain's verified, game-only MaxPreps rows. Season totals, opponent statistics and recruiting ratings never enter the choice. The weights are 0.04 per passing yard, 4 per passing touchdown, minus 2 per interception thrown, 0.1 per rushing or receiving yard, 6 per rushing or receiving touchdown, 0.75 per tackle, 1.5 per tackle for loss, 3 per sack, 5 per defensive interception, 4 per forced fumble or recovery, and 0.8 per kicking point. Ties break on touchdowns, scrimmage yards, tackles, then jersey number.
 
-The same Saturday retries that collect Friday game statistics make the selection, usually the morning after the game. Thursday games are covered by Friday's three-hour refreshes. When MaxPreps corrects a box score during the three-day retry window, the model runs again and can change the choice. The page labels the model and links the statistics immediately below to the source box score. No language model or paid API is involved.
+The same Saturday retries that collect Friday game statistics make the selection, usually the morning after the game. Thursday games are covered by Friday's three-hour refreshes. When MaxPreps corrects a box score during the three-day retry window, the model runs again and can change the choice. The model name and implementation details stay internal; the public block shows only the player and the supporting stat line. The statistics immediately below link to the source box score. No language model or paid API is involved.
 
 Three rules protect the season snapshot.
 
