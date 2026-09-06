@@ -10,6 +10,8 @@ Live at https://kleincain.gameday.report/. https://gameday.report/ redirects the
 
 `/` is the Klein Cain program page: the current game, the schedule, season leaders, roster and links to every report. Each game report is a subpage at `/games/week-<n>`, rendered from one JSON file in `content/editions/`.
 
+Between games, the homepage keeps the latest Final and its verified recap. On the first scheduled automation run one day before the next game, it switches to that game's Preview; game day therefore always opens on the current matchup and live card.
+
 The in-season data pipeline runs unattended in GitHub Actions. A scheduled workflow creates missing editions, promotes the current game, refreshes facts from public sources and writes a postgame recap. No language model is involved anywhere, and no AI API is configured.
 
 Analysis is the exception: players to watch, keys and recruiting notes are never generated. Those sections stay empty unless a person writes them.

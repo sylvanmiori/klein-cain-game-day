@@ -5,9 +5,8 @@
 //   node scripts/promote-edition.mjs            apply
 //   node scripts/promote-edition.mjs --dry-run  report only
 //
-// The rule: the edition for the most recent game stays current for three days
-// after kickoff, then the next upcoming edition takes over. A Friday game is
-// therefore still on the home page through Monday and hands over on Tuesday.
+// The rule: the edition for the most recent game stays current until the day
+// before the next game. The upcoming preview then owns that day and game day.
 
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
