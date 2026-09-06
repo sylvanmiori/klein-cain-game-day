@@ -22,7 +22,8 @@
     "promote": "node scripts/promote-edition.mjs",
     "postgame": "node scripts/promote-edition.mjs",
     "editions": "node scripts/build-editions.mjs",
-    "photos": "node scripts/sync-player-photos.mjs"
+    "photos": "node scripts/sync-player-photos.mjs",
+    "logos": "node scripts/sync-opponent-logos.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

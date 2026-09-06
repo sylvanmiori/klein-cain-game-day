@@ -30,6 +30,7 @@ What is still not automated is analysis: players to watch, keys, recruiting note
 | `content/season-data.json` | machine-written: our results and every opponent's record |
 | `content/roster-2026.json` | roster, hand-maintained; local MaxPreps portrait paths are synced with `npm run photos` |
 | `config/season-2026.json` | the schedule; authority on date, opponent, venue, home/away, kickoff |
+| `config/opponent-logos.json` | exact MaxPreps profile used for each scheduled opponent's logo |
 | `config/publication.json` | school, wordmark, source URLs |
 | `config/program.json` | program history and past seasons |
 | `config/venues.json` | venue coordinates, for the forecast |
@@ -42,6 +43,8 @@ What is still not automated is analysis: players to watch, keys, recruiting note
 Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore`, `stats` and `gameStats` (including `gameStats.playerOfGame`). Everything else is editorial and no script writes it.
 
 `npm run photos` reads the public 2026 MaxPreps roster, downloads available player mugshots into `public/players/`, and records each exact-name match on the roster. Player-of-the-Game selections inherit that local image automatically; players without a verified portrait retain the jersey-number fallback. Photos are never matched by jersey number alone because the combined roster contains duplicate numbers.
+
+`npm run logos` downloads any missing scheduled-opponent marks from the exact MaxPreps profiles in `config/opponent-logos.json`, stores them locally in `public/`, and replaces placeholder paths in the edition files. Every scheduled opponent must have a configured profile, so a new opponent cannot silently ship with the wrong school's similarly named logo.
 
 ## Costs
 
@@ -226,7 +229,6 @@ verified postgame statistics.
 
 - Week 3 (Tomball, September 18) still carries player capsules and an early-read paragraph inherited from the original hardcoded page. Records, ranks, the prediction and the forecast refresh themselves; the prose has not been rechecked against a source.
 - Weeks 4 to 10 are generated pages: real facts, no player capsules or keys. They stay that way until someone writes them or the AI path above is approved.
-- Seven district opponents fall back to `public/team-placeholder.svg`. Real artwork would improve the matchup cards.
 - The opponent's season leaders could sit alongside ours; `fetchStatLeaders` works against any MaxPreps team stats URL.
 - `deploy.yml` ignores `content/**`, so a facts-only commit refreshes Cloudflare but not the GitHub Pages fallback.
 - Confirm data-source permissions before any commercial use.

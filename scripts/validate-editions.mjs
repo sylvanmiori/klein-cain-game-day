@@ -53,6 +53,19 @@ for (const file of files) {
 
   // No opponent from another week may survive anywhere in this file.
   const opponent = edition.home?.name === publication.schoolName ? edition.away?.name : edition.home?.name;
+  const opponentTeam = edition.home?.name === opponent ? edition.home : edition.away;
+  if (opponentTeam?.logo?.includes('placeholder')) fail(`${opponent} still uses a placeholder logo`);
+  for (const team of [edition.home, edition.away]) {
+    if (!String(team?.logo || '').startsWith('/')) {
+      fail(`${team?.name || 'team'} logo must be a local public path`);
+      continue;
+    }
+    try {
+      await readFile(path.join(root, 'public', team.logo.slice(1)));
+    } catch {
+      fail(`${team.name} logo does not exist at public${team.logo}`);
+    }
+  }
   const body = JSON.stringify(edition);
   for (const other of schedule) {
     if (other.opponent === opponent || other.date === edition.date) continue;

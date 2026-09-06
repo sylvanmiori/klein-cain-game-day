@@ -1,0 +1,12 @@
+[
+  { "name": "Humble", "sourceUrl": "https://www.maxpreps.com/tx/humble/humble-wildcats/football/" },
+  { "name": "Oak Ridge", "sourceUrl": "https://www.maxpreps.com/tx/conroe/oak-ridge-war-eagles/football/" },
+  { "name": "Tomball", "sourceUrl": "https://www.maxpreps.com/tx/tomball/tomball-cougars/football/" },
+  { "name": "Magnolia West", "sourceUrl": "https://www.maxpreps.com/tx/magnolia/magnolia-west-mustangs/football/" },
+  { "name": "Klein Collins", "sourceUrl": "https://www.maxpreps.com/tx/spring/klein-collins-tigers/football/" },
+  { "name": "Klein", "sourceUrl": "https://www.maxpreps.com/tx/klein/klein-bearkats/football/" },
+  { "name": "Klein Oak", "sourceUrl": "https://www.maxpreps.com/tx/spring/klein-oak-panthers/football/" },
+  { "name": "Tomball Memorial", "sourceUrl": "https://www.maxpreps.com/tx/tomball/tomball-memorial-wildcats/football/" },
+  { "name": "Magnolia", "sourceUrl": "https://www.maxpreps.com/tx/magnolia/magnolia-bulldogs/football/" },
+  { "name": "Klein Forest", "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-forest-eagles/football/" }
+]
