@@ -115,6 +115,15 @@ for (const file of files) {
     }
     if (!Number.isFinite(Date.parse(stats.updated))) fail('stats.updated must say when the source was updated');
   });
+  attributed(edition.gameStats, 'gameStats', (stats) => {
+    if (!stats.team) fail('gameStats must name the team');
+    if (!Array.isArray(stats.totals) || stats.totals.length === 0) fail('gameStats has no team totals');
+    if (!Array.isArray(stats.leaders) || stats.leaders.length === 0) fail('gameStats has no leaders');
+    if (!Number.isFinite(Date.parse(stats.updated))) fail('gameStats.updated must be a valid source timestamp');
+    for (const leader of stats.leaders ?? []) {
+      if (!leader.category || !leader.name || !leader.stat) fail('gameStats has an incomplete leader');
+    }
+  });
   attributed(edition.weather, 'weather', (weather) => {
     if (!Number.isFinite(weather.tempF)) fail('weather.tempF must be a number');
     if (!weather.condition) fail('weather.condition must say what the forecast is');

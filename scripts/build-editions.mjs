@@ -111,6 +111,7 @@ for (const [index, game] of schedule.entries()) {
     massey: null,
     rankings: null,
     stats: null,
+    gameStats: null,
     finalScore: null,
     rating: null,
     weather: null,

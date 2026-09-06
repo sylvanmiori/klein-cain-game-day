@@ -523,5 +523,81 @@
     "MaxPreps",
     "Rivals"
   ],
-  "current": true
+  "current": true,
+  "gameStats": {
+    "team": "Klein Cain",
+    "totals": [
+      {
+        "label": "Total offense",
+        "value": "454 yards",
+        "detail": "151 passing · 303 rushing"
+      },
+      {
+        "label": "Passing",
+        "value": "151 yards",
+        "detail": "10 of 18 · 2 TD"
+      },
+      {
+        "label": "Rushing",
+        "value": "303 yards",
+        "detail": "36 carries · 4 TD"
+      },
+      {
+        "label": "Defense",
+        "value": "79 tackles",
+        "detail": "47 solo · 7 TFL"
+      },
+      {
+        "label": "Punting",
+        "value": "38.0 average",
+        "detail": "3 punts · long 42"
+      },
+      {
+        "label": "Kicking",
+        "value": "9 points",
+        "detail": "6/6 PAT · 1/1 FG"
+      }
+    ],
+    "leaders": [
+      {
+        "category": "Passing",
+        "name": "Trey Reyes",
+        "number": "5",
+        "stat": "80 passing yards",
+        "detail": "5 of 5 · 1 TD"
+      },
+      {
+        "category": "Rushing",
+        "name": "Jace Hanks",
+        "number": "9",
+        "stat": "104 rushing yards",
+        "detail": "12 carries · 0 TD"
+      },
+      {
+        "category": "Receiving",
+        "name": "Israel Smith",
+        "number": "8",
+        "stat": "46 receiving yards",
+        "detail": "4 catches · 1 TD"
+      },
+      {
+        "category": "Tackles",
+        "name": "Easton Mizell",
+        "number": "47",
+        "stat": "12 total tackles",
+        "detail": "8 solo · 0 TFL"
+      },
+      {
+        "category": "Kicking",
+        "name": "Sage DesAutels",
+        "number": "4",
+        "stat": "9 kicking points",
+        "detail": "6/6 PAT · 1/1 FG"
+      }
+    ],
+    "updated": "2026-09-05T10:59:41",
+    "source": "MaxPreps",
+    "sourceUrl": "https://www.maxpreps.com/tx/football/game/klein-cain-houston-vs-oak-ridge-conroe/9-4-2026/?c=9f94fa9e-e2cf-495a-ac53-cee1f510ee70&tab=Stats",
+    "asOf": "2026-09-06T00:19:00.038Z"
+  }
 }

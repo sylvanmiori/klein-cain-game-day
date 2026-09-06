@@ -39,7 +39,7 @@ What is still not automated is analysis: players to watch, keys, recruiting note
 | `scripts/lib/season.mjs` | which edition is current |
 | `cloudflare/worker.mjs` | routes, score API, one-minute cron |
 
-Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore` and `stats`. Everything else is editorial and no script writes it.
+Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore`, `stats` and `gameStats`. Everything else is editorial and no script writes it.
 
 ## Costs
 
@@ -116,10 +116,10 @@ Manual corrections use `POST /api/score/override`, disabled unless the Worker se
 
 ## Running unattended
 
-The season now advances without anyone opening an editor. Every weekday at 6 AM Central, and every three hours on Thursday and Friday, one workflow runs four steps in order:
+The season now advances without anyone opening an editor. At 6 AM Central daily, every three hours on Thursday and Friday, and three times on Saturday while postgame statistics are being entered, one workflow runs four steps in order:
 
 1. `build-editions.mjs` creates a starter page for any scheduled game that does not have one.
-2. `promote-edition.mjs` moves the front page to the right game, captures a final score, writes the recap and snapshots the season statistics.
+2. `promote-edition.mjs` moves the front page to the right game, captures a final score, writes the recap, snapshots the season statistics and adds game-only statistics when MaxPreps posts them.
 3. `refresh-facts.mjs` fills records, ranks, the prediction, our rating, the forecast, every opponent's record and our own results.
 4. `validate-editions.mjs` gates the commit, and the build re-checks the rendered pages.
 
@@ -142,7 +142,7 @@ The script also does two things that used to be manual and easy to forget:
 
 ## Automated facts
 
-`scripts/refresh-facts.mjs` refreshes editions from public sources on a schedule. No language model runs in it. On an edition it may write `home.record`, `away.record`, both team ranks, `rankings`, `prediction`, `rating` and `weather`. It also writes results and opponent records to `content/season-data.json`. Copy, players, headlines, sources and metadata stay editorial and are never touched by automation.
+`scripts/refresh-facts.mjs` refreshes editions from public sources on a schedule. No language model runs in it. On an edition it may write `home.record`, `away.record`, both team ranks, `rankings`, `prediction`, `rating` and `weather`. `promote-edition.mjs` owns `finalScore`, `stats` and `gameStats`. The refresh also writes results and opponent records to `content/season-data.json`. Copy, preview players, headlines, sources and metadata stay editorial and are never touched by automation.
 
 Sources, all free and unauthenticated:
 
@@ -158,7 +158,7 @@ Predictions follow a fixed order of preference: our own rating first, then Masse
 
 Massey is deliberately not a source. `masseyratings.com` answers automated requests with a Cloudflare bot challenge, and its `robots.txt` disallows `/data/` and `/scores.php`. Getting around either would be bot-detection bypass, so the Dave Campbell's pick replaces it. The Massey numbers on the Week 2 page stay as authored editorial text.
 
-`.github/workflows/refresh-facts.yml` promotes and then refreshes at 6 AM Central daily, and every three hours on Thursday and Friday when the forecast matters. The repository is public, so Actions minutes are free. Each run validates before committing, pushes to `main`, and Cloudflare rebuilds. Every automated fact change is a reviewable diff in git history.
+`.github/workflows/refresh-facts.yml` promotes and then refreshes at 6 AM Central daily, every three hours on Thursday and Friday when the forecast matters, and at 9 AM, noon and 3 PM Central on Saturday while Friday game statistics are usually being posted. The repository is public, so Actions minutes are free. Each run validates before committing, pushes to `main`, and Cloudflare rebuilds. Every automated fact change is a reviewable diff in git history. None of this requires a local computer to be running.
 
 The rating is all-or-nothing. A statewide scores response is around a megabyte and timed out from GitHub's runners on the first cloud run, which produced a rating from 758 of 1,315 games without stopping anything. Requests now allow 60 seconds and retry three times, and if any date is still unavailable the rating is skipped entirely rather than computed from a partial season.
 
@@ -176,9 +176,11 @@ Once a played game is reflected in the source, `promote-edition.mjs` snapshots M
 
 The source is the team stats page, which ships its data as a `__NEXT_DATA__` JSON block, so `parseStatLeaders` reads structured values rather than scraping rendered markup. MaxPreps `robots.txt` disallows `/school/`, `/team/`, `/scores/` and a long list of minor sports, but not this path; checked with a robots parser rather than by eye. There is no bot challenge.
 
-Three things this deliberately does not do.
+Game-specific statistics are separate from the season snapshot. `promote-edition.mjs` finds the historical matchup through the MaxPreps schedule, opens that game's Stats tab, and reads the covered team's structured App Router data. Once MaxPreps reports a source update after the game date, the Final view receives up to six compact team totals and category leaders for passing, rushing, receiving, tackles and kicking. A null team block means the coaches have not posted statistics; it never becomes a page of zeroes. The job retries for three days after capture so a corrected upload can replace the first one.
 
-- **It never claims to be a box score.** These are season-to-date totals, and the heading says "Season totals, not this game alone" with the date the source entered them. A single game's box score does exist on MaxPreps but only inside the App Router streaming payload, which is far more brittle to parse; that is not attempted.
+Three rules protect the season snapshot.
+
+- **It never claims to be a box score.** These are season-to-date totals, and the heading says "Season totals, not this game alone" with the date the source entered them. The game-specific section is separately labeled and links directly to its MaxPreps box score.
 - **It never backfills.** MaxPreps serves current totals with no history, so only the most recently played game may take a snapshot. Backfilling Week 1 would describe it with statistics from games played after it, which the first run did until this rule was added.
 - **It never snapshots too early.** The source enters a Friday game the following morning, so a snapshot is taken only when the source's own `lastUpdated` date is after the game date. Otherwise the job says so and tries again the next day.
 
@@ -188,7 +190,7 @@ Every failure mode is covered by tests in `scripts/lib/stats.test.mjs`: a missin
 
 `scripts/lib/recap.mjs` composes the `final` section once a game has a captured score, and `promote-edition.mjs` applies it. No language model is involved. Every sentence restates something already verified: the score, the venue and date, the season record derived from captured results, and how the published prediction compared. It also rewrites the page and share titles, because a page still titled "Preview" after kickoff is wrong.
 
-It deliberately produces no `leaders` and no player claims. No verified postgame player statistics are available from the sources this site uses, and the pregame players to watch must never be presented as though they performed.
+It deliberately produces no unverified player claims. Verified game leaders come from the separate MaxPreps game-statistics capture; the pregame players to watch are never presented as though they performed.
 
 An authored recap is never overwritten: the composer only fills a `final` section that is null. Rehearsed end to end at `PROMOTE_TODAY=2026-09-19` with a stubbed score, which produced the Final tab as the default view with the original preview preserved in its own tab.
 

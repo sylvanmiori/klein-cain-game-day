@@ -140,5 +140,81 @@
     "Humble High School",
     "MaxPreps"
   ],
-  "current": false
+  "current": false,
+  "gameStats": {
+    "team": "Klein Cain",
+    "totals": [
+      {
+        "label": "Total offense",
+        "value": "469 yards",
+        "detail": "255 passing · 214 rushing"
+      },
+      {
+        "label": "Passing",
+        "value": "255 yards",
+        "detail": "18 of 29 · 2 TD"
+      },
+      {
+        "label": "Rushing",
+        "value": "214 yards",
+        "detail": "36 carries · 3 TD"
+      },
+      {
+        "label": "Defense",
+        "value": "66 tackles",
+        "detail": "35 solo · 12.5 TFL"
+      },
+      {
+        "label": "Punting",
+        "value": "30.0 average",
+        "detail": "3 punts · long 35"
+      },
+      {
+        "label": "Kicking",
+        "value": "6 points",
+        "detail": "6/6 PAT · no field-goal attempts"
+      }
+    ],
+    "leaders": [
+      {
+        "category": "Passing",
+        "name": "Jace Hanks",
+        "number": "9",
+        "stat": "201 passing yards",
+        "detail": "15 of 24 · 2 TD"
+      },
+      {
+        "category": "Rushing",
+        "name": "Eyan Johnson",
+        "number": "16",
+        "stat": "110 rushing yards",
+        "detail": "11 carries · 1 TD"
+      },
+      {
+        "category": "Receiving",
+        "name": "Cooper Karns",
+        "number": "10",
+        "stat": "110 receiving yards",
+        "detail": "6 catches · 1 TD"
+      },
+      {
+        "category": "Tackles",
+        "name": "Jerod Spraberry",
+        "number": "6",
+        "stat": "8 total tackles",
+        "detail": "5 solo · 1 TFL"
+      },
+      {
+        "category": "Kicking",
+        "name": "Sage DesAutels",
+        "number": "4",
+        "stat": "6 kicking points",
+        "detail": "6/6 PAT · no field-goal attempts"
+      }
+    ],
+    "updated": "2026-08-30T12:06:09",
+    "source": "MaxPreps",
+    "sourceUrl": "https://www.maxpreps.com/tx/football/game/humble-vs-klein-cain-houston/8-27-2026/?c=6cacfe2c-0c45-46ec-ae5a-27bec2c1411a&tab=Stats",
+    "asOf": "2026-09-06T00:18:59.997Z"
+  }
 }

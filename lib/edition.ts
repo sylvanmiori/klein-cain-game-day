@@ -74,6 +74,17 @@ export type FinalSection = {
   leaders: { heading: string; source: string; items: Leader[] } | null;
 };
 
+export type GameStats = {
+  team: string;
+  totals: { label: string; value: string; detail: string }[];
+  leaders: { category: string; name: string; number: string; stat: string; detail: string }[];
+  /** When MaxPreps says the game statistics were last updated. */
+  updated: string;
+  source: string;
+  sourceUrl: string;
+  asOf: string;
+};
+
 export type Edition = {
   schemaVersion: 2;
   slug: string;
@@ -136,6 +147,8 @@ export type Edition = {
     sourceUrl: string;
     asOf: string;
   } | null;
+  /** Verified statistics for this game alone. Filled after MaxPreps posts them. */
+  gameStats?: GameStats | null;
   /** Verified final score, captured from the score feed once a game is played. */
   finalScore: { home: number; away: number; source: string; sourceUrl: string; asOf: string } | null;
   /** Our own least-squares rating, published only once the season supports it. */

@@ -216,6 +216,161 @@ export function parseStatLeaders(html) {
   return { leaders, updated, ...MAXPREPS_ATTRIBUTION };
 }
 
+/* ----------------------------------------------------------- game statistics */
+
+/** MaxPreps links every game from the team schedule. Matching the date avoids
+ * opponent-name collisions such as Klein, Klein Cain and Klein Collins. */
+export function findMaxPrepsGameUrl(html, isoDate) {
+  const [, month, day] = isoDate.split('-').map(Number);
+  const datePath = `/${month}-${day}-${isoDate.slice(0, 4)}/`;
+  const urls = [...html.matchAll(/https:\/\/www\.maxpreps\.com\/[^"<\\]+\/football\/game\/[^"<\\]+\?c=[a-f0-9-]+/gi)]
+    .map(([url]) => url.replaceAll('\\u0026', '&'));
+  const found = urls.find((url) => url.includes(datePath));
+  return found ? found.replace(/&tab=[^&]+/i, '') : null;
+}
+
+function rscText(html) {
+  const chunks = [...html.matchAll(/self\.__next_f\.push\(\[1,(.*?)\]\)<\/script>/gs)];
+  if (chunks.length === 0) throw new Error('Game stats page did not contain its data stream.');
+  try {
+    return chunks.map((match) => JSON.parse(match[1])).join('');
+  } catch (error) {
+    throw new Error(`Game stats data stream could not be decoded (${error.message})`);
+  }
+}
+
+function objectAfter(text, label) {
+  const at = text.indexOf(label);
+  if (at === -1) throw new Error(`Game stats data did not contain ${label}.`);
+  const start = text.indexOf('{', at + label.length);
+  let depth = 0;
+  let quoted = false;
+  let escaped = false;
+  for (let index = start; index < text.length; index += 1) {
+    const char = text[index];
+    if (quoted) {
+      if (escaped) escaped = false;
+      else if (char === '\\') escaped = true;
+      else if (char === '"') quoted = false;
+      continue;
+    }
+    if (char === '"') quoted = true;
+    else if (char === '{') depth += 1;
+    else if (char === '}' && --depth === 0) {
+      try {
+        return JSON.parse(text.slice(start, index + 1));
+      } catch (error) {
+        throw new Error(`Game stats data was not valid JSON (${error.message})`);
+      }
+    }
+  }
+  throw new Error('Game stats data ended unexpectedly.');
+}
+
+function number(value) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function playerName(row, roster = []) {
+  const jersey = String(row.Jersey ?? '');
+  const href = String(row._href ?? '');
+  const slug = /\/athletes\/([^/?]+)/.exec(href)?.[1] ?? '';
+  const normalizedSlug = slug.replace(/-/g, '');
+  const rosterMatch = roster.find((player) => String(player.number) === jersey
+    && normalizedSlug && String(player.name).toLowerCase().replace(/[^a-z0-9]/g, '') === normalizedSlug);
+  if (rosterMatch) return rosterMatch.name;
+  if (!slug) return String(row.Name ?? '').trim();
+  return slug.split('-').map((part) => {
+    if (part === 'jr') return 'Jr.';
+    if (part === 'sr') return 'Sr.';
+    if (part === 'aj') return 'AJ';
+    return part.charAt(0).toUpperCase() + part.slice(1);
+  }).join(' ');
+}
+
+/** Parse the covered school's game-only totals and leaders from a MaxPreps
+ * matchup Stats tab. A null team entry means the coaches have not posted data;
+ * that is an unavailable result, never a page full of zeroes. */
+export function parseGameStats(html, { teamId, teamName, roster = [] }) {
+  const stream = rscText(html);
+  const byTeam = objectAfter(stream, '"statsByTeamId":');
+  const team = byTeam?.[teamId];
+  if (!team) return null;
+  if (!Array.isArray(team.groups) || team.groups.length === 0) throw new Error('Game stats contained no stat groups.');
+
+  const subgroups = team.groups.flatMap((group) => group.subgroups ?? []);
+  const table = (name) => {
+    const subgroup = subgroups.find((item) => item.name === name);
+    if (!subgroup?.stats?.columns || !subgroup?.stats?.rows) return null;
+    const columns = subgroup.stats.columns;
+    const rows = subgroup.stats.rows.map((row) => {
+      const values = Object.fromEntries(columns.map((column, index) => [column.name, String(row.columns?.[index]?.value ?? '')]));
+      values._href = row.columns?.[1]?.href ?? '';
+      return values;
+    });
+    const overall = Object.fromEntries(columns.map((column) => [column.name, String(column.overallValue ?? '')]));
+    return { rows, overall };
+  };
+  const passing = table('Passing');
+  const rushing = table('Rushing');
+  const receiving = table('Receiving');
+  const tackles = table('Tackles');
+  const punts = table('Punts');
+  const kicking = table('PATs and Field Goals');
+  if (!passing || !rushing || !receiving) throw new Error('Game stats were missing core offensive tables.');
+
+  const totals = [];
+  const passYards = number(passing.overall.PassingYards);
+  const rushYards = number(rushing.overall.RushingYards);
+  totals.push({ label: 'Total offense', value: `${passYards + rushYards} yards`, detail: `${passYards} passing · ${rushYards} rushing` });
+  totals.push({ label: 'Passing', value: `${passYards} yards`, detail: `${number(passing.overall.PassingComp)} of ${number(passing.overall.PassingAtt)} · ${number(passing.overall.PassingTD)} TD` });
+  totals.push({ label: 'Rushing', value: `${rushYards} yards`, detail: `${number(rushing.overall.RushingNum)} carries · ${number(rushing.overall.RushingTDNum)} TD` });
+  if (tackles && number(tackles.overall.TotalTackles) > 0) {
+    totals.push({ label: 'Defense', value: `${number(tackles.overall.TotalTackles)} tackles`, detail: `${number(tackles.overall.Tackles)} solo · ${number(tackles.overall.TacklesForLoss)} TFL` });
+  }
+  if (punts && number(punts.overall.PuntNum) > 0) {
+    totals.push({ label: 'Punting', value: `${punts.overall.PuntAverage} average`, detail: `${punts.overall.PuntNum} punts · long ${punts.overall.PuntLong}` });
+  }
+  if (kicking && (number(kicking.overall.PATKickingMade) > 0 || number(kicking.overall.FGMade) > 0)) {
+    const fieldGoals = number(kicking.overall.FGAttempted) > 0
+      ? `${number(kicking.overall.FGMade)}/${number(kicking.overall.FGAttempted)} FG`
+      : 'no field-goal attempts';
+    totals.push({ label: 'Kicking', value: `${number(kicking.overall.TotalKickingPoints)} points`, detail: `${number(kicking.overall.PATKickingMade)}/${number(kicking.overall.PATKickingAtt)} PAT · ${fieldGoals}` });
+  }
+
+  const leader = (category, source, statKey, statLabel, detail) => {
+    const row = [...(source?.rows ?? [])].sort((a, b) => number(b[statKey]) - number(a[statKey]))[0];
+    if (!row || !row[statKey]) return null;
+    return { category, name: playerName(row, roster), number: row.Jersey, stat: `${row[statKey]} ${statLabel}`, detail: detail(row) };
+  };
+  const leaders = [
+    leader('Passing', passing, 'PassingYards', 'passing yards', (row) => `${row.PassingComp} of ${row.PassingAtt} · ${number(row.PassingTD)} TD`),
+    leader('Rushing', rushing, 'RushingYards', 'rushing yards', (row) => `${row.RushingNum} carries · ${number(row.RushingTDNum)} TD`),
+    leader('Receiving', receiving, 'ReceivingYards', 'receiving yards', (row) => `${row.ReceivingNum} catches · ${number(row.ReceivingTDNum)} TD`),
+    leader('Tackles', tackles, 'TotalTackles', 'total tackles', (row) => `${number(row.Tackles)} solo · ${number(row.TacklesForLoss)} TFL`),
+    leader('Kicking', kicking, 'TotalKickingPoints', 'kicking points', (row) => {
+      const fieldGoals = number(row.FGAttempted) > 0 ? `${number(row.FGMade)}/${number(row.FGAttempted)} FG` : 'no field-goal attempts';
+      return `${number(row.PATKickingMade)}/${number(row.PATKickingAtt)} PAT · ${fieldGoals}`;
+    }),
+  ].filter(Boolean);
+
+  const updated = team.lastUpdated?.timeStamp;
+  if (!updated) throw new Error('Game stats did not say when they were last updated.');
+  if (totals.length === 0 || leaders.length === 0) throw new Error('Game stats contained no usable figures.');
+  return { team: teamName, totals, leaders, updated, ...MAXPREPS_ATTRIBUTION };
+}
+
+export async function fetchGameStats({ scheduleUrl, date, teamId, teamName, roster = [] }) {
+  const scheduleHtml = await (await get(scheduleUrl)).text();
+  const gameUrl = findMaxPrepsGameUrl(scheduleHtml, date);
+  if (!gameUrl) throw new Error(`No MaxPreps game page was linked for ${date}.`);
+  const sourceUrl = `${gameUrl}&tab=Stats`;
+  const html = await (await get(sourceUrl)).text();
+  const parsed = parseGameStats(html, { teamId, teamName, roster });
+  return parsed ? { ...parsed, sourceUrl, asOf: new Date().toISOString() } : null;
+}
+
 /** Exact match on "<name> <mascot>", so "Klein" cannot match "Klein Cain". */
 export function recordFor(records, team) {
   return records.get(`${team.name} ${team.mascot}`.trim()) ?? null;

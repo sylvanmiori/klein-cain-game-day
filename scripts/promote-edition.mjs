@@ -11,7 +11,7 @@
 
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { DCTF_ATTRIBUTION, fetchScoreRows, fetchStatLeaders } from './lib/sources.mjs';
+import { DCTF_ATTRIBUTION, fetchGameStats, fetchScoreRows, fetchStatLeaders } from './lib/sources.mjs';
 import { pickCurrent } from './lib/season.mjs';
 import { composeRecap } from './lib/recap.mjs';
 
@@ -21,6 +21,7 @@ const readJson = async (file) => JSON.parse(await readFile(path.join(root, file)
 
 const publication = await readJson('config/publication.json');
 const schedule = await readJson('config/season-2026.json');
+const roster = await readJson('content/roster-2026.json');
 
 // PROMOTE_TODAY overrides the date, for rehearsing a handover or correcting one.
 const today = process.env.PROMOTE_TODAY ?? new Intl.DateTimeFormat('en-CA', {
@@ -95,6 +96,39 @@ for (const { name, edition } of lastPlayed ? [lastPlayed] : []) {
     changes.push(`${name}: captured ${stats.leaders.length} season stat leaders`);
   } catch (error) {
     problems.push(`${name}: statistics: ${error.message}`);
+  }
+}
+
+// Game-only statistics have their own historical page, so unlike the season
+// totals above they can safely be captured for every completed game. A missing
+// team block means the coaches have not entered stats yet; keep retrying rather
+// than publishing zeroes. Once captured, retry for three days so corrections
+// made shortly after the first upload are picked up.
+for (const { name, edition } of editions) {
+  if (!edition.finalScore || edition.date > today) continue;
+  const ageDays = Math.floor((Date.parse(`${today}T12:00:00Z`) - Date.parse(`${edition.date}T12:00:00Z`)) / 86400000);
+  if (edition.gameStats && ageDays > 3) continue;
+  try {
+    const gameStats = await fetchGameStats({
+      scheduleUrl: publication.maxPrepsScheduleUrl,
+      date: edition.date,
+      teamId: publication.maxPrepsTeamId,
+      teamName: publication.schoolName,
+      roster: roster.players,
+    });
+    if (!gameStats) {
+      console.log(`${name}: game statistics not posted yet; leaving them for the next run.`);
+      continue;
+    }
+    if (gameStats.updated.slice(0, 10) <= edition.date) {
+      console.log(`${name}: game statistics predate the final; leaving them for the next run.`);
+      continue;
+    }
+    if (edition.gameStats?.updated === gameStats.updated) continue;
+    edition.gameStats = gameStats;
+    changes.push(`${name}: captured ${gameStats.totals.length} game totals and ${gameStats.leaders.length} leaders`);
+  } catch (error) {
+    problems.push(`${name}: game statistics: ${error.message}`);
   }
 }
 

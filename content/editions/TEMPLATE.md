@@ -37,7 +37,7 @@ recruiting notes, keys and game information are never generated.
 
 ## Fields
 
-`preview`, `final`, `prediction`, `weather`, `intro`, `recruiting`, `keys` and
+`preview`, `final`, `prediction`, `weather`, `gameStats`, `intro`, `recruiting`, `keys` and
 `gameInfo` accept `null` when the information does not exist yet. A null
 section is omitted from the page rather than rendered empty. `updated`,
 `event`, `ogImage` and `footerNote` accept an empty string.
@@ -65,6 +65,7 @@ section is omitted from the page rather than rendered empty. `updated`,
   "ogImage": "",
   "prediction": null,
   "weather": null,
+  "gameStats": null,
   "scheduledFacts": [],
   "resultFacts": [],
   "preview": {

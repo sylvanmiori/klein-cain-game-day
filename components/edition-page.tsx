@@ -11,6 +11,7 @@ import {
   type Edition,
   type Fact,
   type FinalSection,
+  type GameStats,
   type PreviewSection,
   disclaimerLine,
   apDate,
@@ -136,8 +137,45 @@ function PreviewView({ edition, preview }: { edition: Edition; preview: PreviewS
   );
 }
 
-/** Season totals for the covered school, never presented as one game's stats. */
-function FinalView({ final }: { final: FinalSection }) {
+function GameStatistics({ stats }: { stats: GameStats }) {
+  return (
+    <section className="game-statistics" id="game-stats">
+      <div className="compact-head">
+        <div>
+          <h2>Game statistics</h2>
+          <p>{stats.team} · game totals</p>
+        </div>
+        <a href={stats.sourceUrl} target="_blank" rel="noreferrer">MaxPreps box score</a>
+      </div>
+      <div className="game-stat-layout">
+        <dl className="game-total-grid">
+          {stats.totals.map((total) => (
+            <div key={total.label}>
+              <dt>{total.label}</dt>
+              <dd>{total.value}</dd>
+              <small>{total.detail}</small>
+            </div>
+          ))}
+        </dl>
+        <div className="game-leader-list">
+          {stats.leaders.map((leader) => (
+            <article key={leader.category}>
+              <span>{leader.category}</span>
+              <div>
+                <strong>{leader.name}</strong>
+                <small>#{leader.number}</small>
+              </div>
+              <b>{leader.stat}</b>
+              <p>{leader.detail}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FinalView({ final, gameStats }: { final: FinalSection; gameStats?: GameStats | null }) {
   return (
     <>
       {final.quarters ? (
@@ -176,7 +214,9 @@ function FinalView({ final }: { final: FinalSection }) {
         </section>
       )}
 
-      {final.leaders && (
+      {gameStats && <GameStatistics stats={gameStats} />}
+
+      {final.leaders && !gameStats && (
         <section className="game-leaders">
           <div className="compact-head">
             <h2>{final.leaders.heading}</h2>
@@ -241,12 +281,12 @@ export function EditionPage({ edition }: { edition: Edition }) {
     ? (
       <GameReportTabs
         initialStatus={edition.current ? (liveScore as LiveScore).status : 'final'}
-        finalView={<><FinalView final={final} /><SeasonStats edition={edition} /></>}
+        finalView={<><FinalView final={final} gameStats={edition.gameStats} /><SeasonStats edition={edition} /></>}
         previewView={<PreviewView edition={edition} preview={preview} />}
       />
     )
     : final
-      ? <><FinalView final={final} /><SeasonStats edition={edition} /></>
+      ? <><FinalView final={final} gameStats={edition.gameStats} /><SeasonStats edition={edition} /></>
       : preview
         ? <PreviewView edition={edition} preview={preview} />
         : null;

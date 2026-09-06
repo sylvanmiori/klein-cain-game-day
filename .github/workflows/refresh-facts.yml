@@ -4,9 +4,10 @@ name: Advance the season
 # build-editions.mjs creates a starter page for any scheduled game that has
 # none. promote-edition.mjs decides which edition the home page shows, keeps the live
 # score card pointed at that game, and captures a final score once one exists.
-# refresh-facts.mjs may only write home.record, away.record, prediction, rating
-# and weather. Each carries its own source and timestamp, and a source outage
-# keeps the previous verified value.
+# refresh-facts.mjs updates records, predictions, ratings, ranks and weather.
+# promote-edition.mjs also captures final scores, season totals and verified
+# game-only statistics. Each carries its own source and timestamp, and a source
+# outage keeps the previous verified value.
 #
 # A commit here pushes to main, which Cloudflare Workers Builds deploys.
 # Every automated fact change is therefore a reviewable diff in git history.
@@ -17,6 +18,8 @@ on:
     - cron: '0 11 * * *'
     # Every three hours on Thursday and Friday, when the forecast matters.
     - cron: '0 */3 * * 4,5'
+    # Saturday morning and afternoon: retry while coaches post Friday stats.
+    - cron: '0 14,17,20 * * 6'
   workflow_dispatch:
 
 permissions:
