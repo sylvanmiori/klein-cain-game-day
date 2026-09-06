@@ -39,7 +39,7 @@ What is still not automated is analysis: players to watch, keys, recruiting note
 | `scripts/lib/season.mjs` | which edition is current |
 | `cloudflare/worker.mjs` | routes, score API, one-minute cron |
 
-Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore`, `stats` and `gameStats`. Everything else is editorial and no script writes it.
+Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore`, `stats` and `gameStats` (including `gameStats.playerOfGame`). Everything else is editorial and no script writes it.
 
 ## Costs
 
@@ -95,6 +95,7 @@ Local commands use Node 24 or newer:
 npm ci
 npm run editions     # create a starter edition for any scheduled game lacking one
 npm run promote      # set the current edition, capture a final score, write the recap
+npm run postgame     # manual alias for postgame stats + Player of the Game
 npm run refresh      # records, ranks, prediction, rating, forecast, results
 npm run validate     # schema, schedule agreement and editorial rules
 npm run test:score   # worker, score parser, rating, recap, promotion, stats
@@ -178,7 +179,13 @@ Once a played game is reflected in the source, `promote-edition.mjs` snapshots M
 
 The source is the team stats page, which ships its data as a `__NEXT_DATA__` JSON block, so `parseStatLeaders` reads structured values rather than scraping rendered markup. MaxPreps `robots.txt` disallows `/school/`, `/team/`, `/scores/` and a long list of minor sports, but not this path; checked with a robots parser rather than by eye. There is no bot challenge.
 
-Game-specific statistics are separate from the season snapshot. `promote-edition.mjs` finds the historical matchup through the MaxPreps schedule, opens that game's Stats tab, and reads the covered team's structured App Router data. Once MaxPreps reports a source update after the game date, the Final view receives up to six compact team totals and category leaders for passing, rushing, receiving, tackles and kicking. A null team block means the coaches have not posted statistics; it never becomes a page of zeroes. The job retries for three days after capture so a corrected upload can replace the first one.
+Game-specific statistics are separate from the season snapshot. `promote-edition.mjs` finds the historical matchup through the MaxPreps schedule, opens that game's Stats tab, and reads the covered team's structured App Router data. Once MaxPreps reports a source update after the game date, the Final view receives a Player of the Game, up to six compact team totals, and category leaders for passing, rushing, receiving, tackles and kicking. A null team block means the coaches have not posted statistics; it never becomes a page of zeroes. The job retries for three days after capture so a corrected upload can replace the first one.
+
+### Player of the Game model
+
+`scripts/lib/player-of-game.mjs` owns the deterministic `Cain Impact v1` selection. It considers only Klein Cain's verified, game-only MaxPreps rows. Season totals, opponent statistics and recruiting ratings never enter the choice. The weights are 0.04 per passing yard, 4 per passing touchdown, minus 2 per interception thrown, 0.1 per rushing or receiving yard, 6 per rushing or receiving touchdown, 0.75 per tackle, 1.5 per tackle for loss, 3 per sack, 5 per defensive interception, 4 per forced fumble or recovery, and 0.8 per kicking point. Ties break on touchdowns, scrimmage yards, tackles, then jersey number.
+
+The same Saturday retries that collect Friday game statistics make the selection, usually the morning after the game. Thursday games are covered by Friday's three-hour refreshes. When MaxPreps corrects a box score during the three-day retry window, the model runs again and can change the choice. The page labels the model and links the statistics immediately below to the source box score. No language model or paid API is involved.
 
 Three rules protect the season snapshot.
 

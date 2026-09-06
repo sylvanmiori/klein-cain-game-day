@@ -1,3 +1,5 @@
+import { selectPlayerOfGame } from './player-of-game.mjs';
+
 // Deterministic public-data fetchers. No language model is involved: every
 // value here is read from a named source, validated, and attributed. A source
 // that fails or returns something unexpected throws, and the caller keeps the
@@ -355,10 +357,45 @@ export function parseGameStats(html, { teamId, teamName, roster = [] }) {
     }),
   ].filter(Boolean);
 
+  // Preserve every player's contributions long enough to make the weekly
+  // selection. Only the winning summary is published; raw rows remain source
+  // data and are not added to the edition JSON.
+  const players = new Map();
+  const collect = (source, fields) => {
+    for (const row of source?.rows ?? []) {
+      const name = playerName(row, roster);
+      if (!name || !row.Jersey) continue;
+      const key = `${row.Jersey}:${name.toLowerCase()}`;
+      const player = players.get(key) ?? { name, number: String(row.Jersey) };
+      for (const [target, sourceKey] of Object.entries(fields)) player[target] = number(row[sourceKey]);
+      players.set(key, player);
+    }
+  };
+  collect(passing, {
+    passingYards: 'PassingYards',
+    passingTouchdowns: 'PassingTD',
+    passingInterceptions: 'PassingInt',
+  });
+  collect(rushing, { rushingYards: 'RushingYards', rushingTouchdowns: 'RushingTDNum' });
+  collect(receiving, { receivingYards: 'ReceivingYards', receivingTouchdowns: 'ReceivingTDNum' });
+  collect(tackles, {
+    totalTackles: 'TotalTackles',
+    tacklesForLoss: 'TacklesForLoss',
+  });
+  collect(table('Defensive Statistics'), {
+    defensiveInterceptions: 'INTs',
+    forcedFumbles: 'CausedFumbles',
+    fumbleRecoveries: 'FumbleRecoveries',
+  });
+  collect(table('Sacks'), { sacks: 'Sacks' });
+  collect(kicking, { kickingPoints: 'TotalKickingPoints' });
+  const playerOfGame = selectPlayerOfGame([...players.values()]);
+
   const updated = team.lastUpdated?.timeStamp;
   if (!updated) throw new Error('Game stats did not say when they were last updated.');
   if (totals.length === 0 || leaders.length === 0) throw new Error('Game stats contained no usable figures.');
-  return { team: teamName, totals, leaders, updated, ...MAXPREPS_ATTRIBUTION };
+  if (!playerOfGame) throw new Error('Game stats did not support a player-of-the-game selection.');
+  return { team: teamName, playerOfGame, totals, leaders, updated, ...MAXPREPS_ATTRIBUTION };
 }
 
 export async function fetchGameStats({ scheduleUrl, date, teamId, teamName, roster = [] }) {

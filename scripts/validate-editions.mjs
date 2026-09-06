@@ -117,6 +117,10 @@ for (const file of files) {
   });
   attributed(edition.gameStats, 'gameStats', (stats) => {
     if (!stats.team) fail('gameStats must name the team');
+    if (!stats.playerOfGame?.name || !stats.playerOfGame?.number || !stats.playerOfGame?.headline
+      || !stats.playerOfGame?.rationale || !stats.playerOfGame?.model) {
+      fail('gameStats has an incomplete player-of-the-game selection');
+    }
     if (!Array.isArray(stats.totals) || stats.totals.length === 0) fail('gameStats has no team totals');
     if (!Array.isArray(stats.leaders) || stats.leaders.length === 0) fail('gameStats has no leaders');
     if (!Number.isFinite(Date.parse(stats.updated))) fail('gameStats.updated must be a valid source timestamp');

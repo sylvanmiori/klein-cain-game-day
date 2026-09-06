@@ -107,7 +107,7 @@ for (const { name, edition } of lastPlayed ? [lastPlayed] : []) {
 for (const { name, edition } of editions) {
   if (!edition.finalScore || edition.date > today) continue;
   const ageDays = Math.floor((Date.parse(`${today}T12:00:00Z`) - Date.parse(`${edition.date}T12:00:00Z`)) / 86400000);
-  if (edition.gameStats && ageDays > 3) continue;
+  if (edition.gameStats?.playerOfGame && ageDays > 3) continue;
   try {
     const gameStats = await fetchGameStats({
       scheduleUrl: publication.maxPrepsScheduleUrl,
@@ -124,9 +124,11 @@ for (const { name, edition } of editions) {
       console.log(`${name}: game statistics predate the final; leaving them for the next run.`);
       continue;
     }
-    if (edition.gameStats?.updated === gameStats.updated) continue;
+    const sameSourceVersion = edition.gameStats?.updated === gameStats.updated;
+    const sameSelection = JSON.stringify(edition.gameStats?.playerOfGame) === JSON.stringify(gameStats.playerOfGame);
+    if (sameSourceVersion && sameSelection) continue;
     edition.gameStats = gameStats;
-    changes.push(`${name}: captured ${gameStats.totals.length} game totals and ${gameStats.leaders.length} leaders`);
+    changes.push(`${name}: captured game statistics and selected ${gameStats.playerOfGame.name}`);
   } catch (error) {
     problems.push(`${name}: game statistics: ${error.message}`);
   }

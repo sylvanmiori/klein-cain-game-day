@@ -162,6 +162,13 @@ test('parses game-only team totals and category leaders', () => {
     parsed.leaders.find((leader) => leader.category === 'Tackles').name,
     'Easton Mizell',
   );
+  assert.deepEqual(parsed.playerOfGame, {
+    name: 'Jace Hanks',
+    number: '9',
+    headline: '175 yards of offense · 1 TD',
+    rationale: 'Hanks finished with 71 passing yards and 1 passing touchdown, and 104 rushing yards.',
+    model: 'Cain Impact v1',
+  });
 });
 
 test('treats a missing team stat block as unavailable, not zero', () => {

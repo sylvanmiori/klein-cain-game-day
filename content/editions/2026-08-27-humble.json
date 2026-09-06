@@ -143,6 +143,13 @@
   "current": false,
   "gameStats": {
     "team": "Klein Cain",
+    "playerOfGame": {
+      "name": "Jace Hanks",
+      "number": "9",
+      "headline": "257 yards of offense · 4 TDs",
+      "rationale": "Hanks finished with 201 passing yards and 2 passing touchdowns, 56 rushing yards and 2 rushing touchdowns, and 28 receiving yards.",
+      "model": "Cain Impact v1"
+    },
     "totals": [
       {
         "label": "Total offense",
@@ -215,6 +222,6 @@
     "updated": "2026-08-30T12:06:09",
     "source": "MaxPreps",
     "sourceUrl": "https://www.maxpreps.com/tx/football/game/humble-vs-klein-cain-houston/8-27-2026/?c=6cacfe2c-0c45-46ec-ae5a-27bec2c1411a&tab=Stats",
-    "asOf": "2026-09-06T00:18:59.997Z"
+    "asOf": "2026-09-06T00:41:24.736Z"
   }
 }

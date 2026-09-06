@@ -20,6 +20,7 @@
     "check": "node scripts/check-build.mjs",
     "refresh": "node scripts/refresh-facts.mjs",
     "promote": "node scripts/promote-edition.mjs",
+    "postgame": "node scripts/promote-edition.mjs",
     "editions": "node scripts/build-editions.mjs"
   },
   "dependencies": {

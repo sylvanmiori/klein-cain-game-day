@@ -175,6 +175,22 @@ function GameStatistics({ stats }: { stats: GameStats }) {
   );
 }
 
+function PlayerOfGame({ stats }: { stats: GameStats }) {
+  const player = stats.playerOfGame;
+  return (
+    <section className="player-of-game" aria-labelledby="player-of-game-heading">
+      <div className="player-of-game-number" aria-hidden="true">#{player.number}</div>
+      <div>
+        <span>Cain Player of the Game</span>
+        <h2 id="player-of-game-heading">{player.name}</h2>
+        <strong>{player.headline}</strong>
+        <p>{player.rationale}</p>
+        <small>Selected from verified game statistics · {player.model}</small>
+      </div>
+    </section>
+  );
+}
+
 function FinalView({ final, gameStats }: { final: FinalSection; gameStats?: GameStats | null }) {
   return (
     <>
@@ -214,6 +230,7 @@ function FinalView({ final, gameStats }: { final: FinalSection; gameStats?: Game
         </section>
       )}
 
+      {gameStats && <PlayerOfGame stats={gameStats} />}
       {gameStats && <GameStatistics stats={gameStats} />}
 
       {final.leaders && !gameStats && (

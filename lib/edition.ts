@@ -76,6 +76,13 @@ export type FinalSection = {
 
 export type GameStats = {
   team: string;
+  playerOfGame: {
+    name: string;
+    number: string;
+    headline: string;
+    rationale: string;
+    model: string;
+  };
   totals: { label: string; value: string; detail: string }[];
   leaders: { category: string; name: string; number: string; stat: string; detail: string }[];
   /** When MaxPreps says the game statistics were last updated. */

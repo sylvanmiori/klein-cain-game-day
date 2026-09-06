@@ -6,8 +6,9 @@ name: Advance the season
 # score card pointed at that game, and captures a final score once one exists.
 # refresh-facts.mjs updates records, predictions, ratings, ranks and weather.
 # promote-edition.mjs also captures final scores, season totals and verified
-# game-only statistics. Each carries its own source and timestamp, and a source
-# outage keeps the previous verified value.
+# game-only statistics, then selects the Player of the Game from those rows.
+# Each carries its own source and timestamp, and a source outage keeps the
+# previous verified value.
 #
 # A commit here pushes to main, which Cloudflare Workers Builds deploys.
 # Every automated fact change is therefore a reviewable diff in git history.
@@ -47,7 +48,7 @@ jobs:
         run: npm run editions
 
       # Then promote: it decides which edition is current and captures a final
-      # score, a recap and the season statistics.
+      # score, a recap, game statistics and Player of the Game.
       - name: Promote the current edition
         id: promote
         run: npm run promote
