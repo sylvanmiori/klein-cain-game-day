@@ -1,6 +1,6 @@
 # Game Day Report project guide
 
-Updated September 5, 2026. Written to be picked up cold: read **Current status**, **Where things live** and **Traps worth knowing** first. Keep this file current when accounts, hosting or automation change. Never store passwords, tokens or payment details here.
+Updated September 5, 2026. Written to be picked up cold: an AI developer should read repository-root `AGENTS.md`, then **Current status**, **Where things live** and **Traps worth knowing** here. Keep this file current when accounts, hosting, automation, sources, commands or data ownership change. Never store passwords, tokens or payment details here.
 
 ## Ownership and addresses
 
@@ -19,6 +19,8 @@ Live at https://kleincain.gameday.report/, deployed by Cloudflare Workers Builds
 The season runs unattended. A scheduled workflow creates missing editions, promotes the current game, refreshes facts from public sources and writes a postgame recap, all without a language model. See **Running unattended**.
 
 What is still not automated is analysis: players to watch, keys, recruiting notes and any written narrative beyond the deterministic recap. No AI API is configured and none is called.
+
+All ten scheduled opponents now have local logo files. As checked September 5, 2026, MaxPreps exposed 57 portraits on its 66-player varsity roster; those exact-name matches are stored locally and available to Player of the Game. The combined site roster has additional entries from earlier source reconciliation, so a portrait is not assumed for every listed player.
 
 ## Where things live
 
@@ -39,12 +41,16 @@ What is still not automated is analysis: players to watch, keys, recruiting note
 | `scripts/lib/recap.mjs` | deterministic postgame recap |
 | `scripts/lib/season.mjs` | which edition is current |
 | `cloudflare/worker.mjs` | routes, score API, one-minute cron |
+| `AGENTS.md` | short, mandatory handoff rules for an AI developer |
+| `scripts/check-docs.mjs` | build gate for stale documented paths and npm commands |
 
 Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore`, `stats` and `gameStats` (including `gameStats.playerOfGame`). Everything else is editorial and no script writes it.
 
 `npm run photos` reads the public 2026 MaxPreps roster, downloads available player mugshots into `public/players/`, and records each exact-name match on the roster. Player-of-the-Game selections inherit that local image automatically; players without a verified portrait retain the jersey-number fallback. Photos are never matched by jersey number alone because the combined roster contains duplicate numbers.
 
 `npm run logos` downloads any missing scheduled-opponent marks from the exact MaxPreps profiles in `config/opponent-logos.json`, stores them locally in `public/`, and replaces placeholder paths in the edition files. Every scheduled opponent must have a configured profile, so a new opponent cannot silently ship with the wrong school's similarly named logo.
+
+The recurring facts workflow does not run `photos` or `logos`. Those are intentional setup commands: run `logos` after adding a schedule opponent or changing its exact source profile, and run `photos` when the Klein Cain roster portraits have changed. Production validation rejects placeholder and missing team logos.
 
 ## Costs
 
@@ -79,8 +85,9 @@ To publish a new game: add the file, set `current` on the right edition, run `np
 
 Two scripts run automatically as part of `npm run build` and `npm run build:cloudflare`. Both exit non-zero and stop the build.
 
-- `scripts/validate-editions.mjs` checks structure against the schedule and enforces the editorial rules: a preview player must carry a rating or say plainly that none is listed, a recruiting row must carry an https source, postgame leaders need a stat and a named box score, the disclaimer must name the opponent, and a preview must have content.
+- `scripts/validate-editions.mjs` checks structure against the schedule and enforces the editorial rules: a preview player must carry a rating or say plainly that none is listed, a recruiting row must carry an https source, postgame leaders need a stat and a named box score, the disclaimer must name the opponent, a preview must have content, and every team logo must be a real local file rather than a placeholder.
 - `scripts/check-build.mjs` reads the built HTML and fails if a page's title, meta tags, heading or disclaimer names an opponent from a different week. Both checks account for schedule names that are prefixes of others, such as Klein and Klein Cain, or Magnolia and Magnolia West.
+- `scripts/check-docs.mjs` reads the README, `AGENTS.md` and this guide and fails if a referenced repository path or `npm run` command no longer exists. It also parses the edition template's JSON example against the current top-level schema and verifies that every scheduled opponent has exactly one MaxPreps logo source.
 
 These are the reason weekly research can be enabled later without a person rereading every page. They check shape and staleness, not truth. Nothing verifies that a statistic is real, so generated facts still need a human or a cited source.
 
@@ -94,7 +101,7 @@ Automatic publishing uses Cloudflare Workers Builds connected directly to the Gi
 
 After the connection is tested, pushes to `main` build and deploy without this computer. The old GitHub score schedule is disabled; its manual workflow remains only as a fallback for GitHub Pages.
 
-Local commands use Node 24 or newer:
+CI uses Node 24. Node 24 is recommended locally; `package.json` declares Node 22.13 as the minimum:
 
 ```
 npm ci
@@ -102,6 +109,9 @@ npm run editions     # create a starter edition for any scheduled game lacking o
 npm run promote      # set the current edition, capture a final score, write the recap
 npm run postgame     # manual alias for postgame stats + Player of the Game
 npm run refresh      # records, ranks, prediction, rating, forecast, results
+npm run photos       # sync available Klein Cain portraits from the configured roster source
+npm run logos        # sync all configured scheduled-opponent logos and edition paths
+npm run docs:check   # catch stale paths and npm commands in the handoff docs
 npm run validate     # schema, schedule agreement and editorial rules
 npm run test:score   # worker, score parser, rating, recap, promotion, stats
 npm run build:cloudflare   # validates, builds, then re-checks the rendered pages
@@ -174,7 +184,7 @@ Failure is quiet by design. A source that is down, changes shape or does not mat
 
 `npm run refresh` runs it locally; `node scripts/refresh-facts.mjs --dry-run` reports what would change without writing.
 
-One publishing limit remains: `deploy.yml` ignores `content/**`, so a fact-only commit refreshes Cloudflare but not the GitHub Pages fallback. The `NR` shown on Dave Campbell's team pages is a different poll from the statewide computer ranking used by this site.
+One publishing limit remains: `.github/workflows/deploy.yml` ignores `content/**`, so a fact-only commit refreshes Cloudflare but not the GitHub Pages fallback. The `NR` shown on Dave Campbell's team pages is a different poll from the statewide computer ranking used by this site.
 
 One parsing trap worth remembering: the scores feed reports every game twice, once from each school, and **the two rows carry different game ids**. Keying on `gameId` silently double-counts every game, which is caught by a test in `scripts/lib/rating.test.mjs`. The stable key is the date plus the sorted team pair.
 
@@ -230,7 +240,7 @@ verified postgame statistics.
 - Week 3 (Tomball, September 18) still carries player capsules and an early-read paragraph inherited from the original hardcoded page. Records, ranks, the prediction and the forecast refresh themselves; the prose has not been rechecked against a source.
 - Weeks 4 to 10 are generated pages: real facts, no player capsules or keys. They stay that way until someone writes them or the AI path above is approved.
 - The opponent's season leaders could sit alongside ours; `fetchStatLeaders` works against any MaxPreps team stats URL.
-- `deploy.yml` ignores `content/**`, so a facts-only commit refreshes Cloudflare but not the GitHub Pages fallback.
+- `.github/workflows/deploy.yml` ignores `content/**`, so a facts-only commit refreshes Cloudflare but not the GitHub Pages fallback.
 - Confirm data-source permissions before any commercial use.
 
 ## Traps worth knowing
@@ -247,6 +257,7 @@ Each of these cost real debugging time. They are recorded so the next person doe
 - **A CSS margin is not a space.** Two elements separated only by `margin-left` read as `ThuAug 27` to a screen reader and when copied. Put a real space in the markup.
 - **Measuring a CSS transition in a hidden browser pane gives the start value forever**, because no animation frames run. A `max-height` read as a stuck 60px and looked exactly like a broken cascade. Disable the transition before measuring.
 - **Cloudflare's check-run registers a little after the push.** A wait loop that only counts completed checks can exit before Workers Builds appears and report success too early. Wait for the check by name.
+- **Asset sync is setup, not recurring automation.** The facts workflow does not run `npm run photos` or `npm run logos`. Add an exact opponent profile and run the logo sync before a new edition can pass validation; refresh portraits manually when the MaxPreps roster changes.
 
 ## Recovery and future schools
 

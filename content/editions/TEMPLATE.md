@@ -30,6 +30,7 @@ recruiting notes, keys and game information are never generated.
 - Every recruiting row needs an `https` source link.
 - `disclaimerEntities` must name this game's opponent.
 - `slug` must be `<date>-<opponent slug>`, the same key the score Worker uses.
+- Both teams need local logo files. Placeholder or missing logo paths fail validation.
 - A `preview` must carry at least one filled section. The template below is
   deliberately empty, so it fails validation until real content is added.
 - Postgame leaders need a stat, a detail and a named box score. Do not list a
@@ -56,7 +57,7 @@ section is omitted from the page rather than rendered empty. `updated`,
   "venue": "Magnolia West High School",
   "event": "",
   "updated": "",
-  "home": { "name": "Magnolia West", "mascot": "", "logo": "/player-placeholder.svg", "record": "", "rank": null },
+  "home": { "name": "Magnolia West", "mascot": "Mustangs", "logo": "/magnolia-west-logo.png", "record": "", "rank": null },
   "away": { "name": "Klein Cain", "mascot": "Hurricanes", "logo": "/favicon.png", "record": "", "rank": null },
   "pageTitle": "2026 Week 4 Preview: Klein Cain at Magnolia West",
   "metaTitle": "Week 4 Preview: Klein Cain at Magnolia West | Cain Game Day",
@@ -64,6 +65,10 @@ section is omitted from the page rather than rendered empty. `updated`,
   "socialDescription": "",
   "ogImage": "",
   "prediction": null,
+  "massey": null,
+  "rankings": null,
+  "stats": null,
+  "rating": null,
   "weather": null,
   "gameStats": null,
   "scheduledFacts": [],
@@ -78,6 +83,7 @@ section is omitted from the page rather than rendered empty. `updated`,
     "gameInfo": null
   },
   "final": null,
+  "finalScore": null,
   "sources": [],
   "footerNote": "Independent fan publication · Information will be rechecked before kickoff.",
   "disclaimerEntities": ["Klein ISD", "Klein Cain High School", "Magnolia West High School"],
