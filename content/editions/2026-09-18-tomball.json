@@ -128,9 +128,9 @@
         "name": "Ian Thomas",
         "image": "/players/ian-thomas.jpg",
         "role": "RB · Junior",
-        "tag": "Rivals Industry 91.83",
-        "rating": "No. 106 national · No. 6 RB",
-        "copy": "Thomas had 207 total yards in Tomball’s opener, including 80 receiving. Rivals lists the 2028 back among the top players in his class."
+        "tag": "247Sports’ No. 1 RB · 2028",
+        "rating": "No. 39 nationally · 24 offers",
+        "copy": "Thomas is the centerpiece of this matchup. The four-star junior ran for 1,528 yards and 20 touchdowns as a sophomore, and 247Sports now ranks him the nation’s No. 1 running back and No. 39 overall prospect in the 2028 class. His father, Rodney Thomas, was an all-time Texas high-school great, a two-time first-team All-SWC back at Texas A&M and a six-year NFL player."
       },
       {
         "team": "TOMBALL",
@@ -151,9 +151,9 @@
           "number": "22",
           "name": "Ian Thomas",
           "team": "Tomball",
-          "note": "Rivals Industry rating 91.83 · 2028 running back · No. 106 nationally and No. 6 at the position as of Sept. 5.",
-          "href": "https://www.on3.com/high-school/tomball-tomball-tx-18178/football/roster/",
-          "linkLabel": "View Rivals"
+          "note": "Four-star 2028 running back · 247Sports No. 1 at the position and No. 39 nationally · 24 reported offers · uncommitted as of Sept. 7.",
+          "href": "https://247sports.com/player/ian-thomas-46160563/",
+          "linkLabel": "View 247Sports"
         },
         {
           "number": "38",
@@ -175,6 +175,24 @@
           "school": "Texas A&M",
           "sourceUrl": "https://www.on3.com/rivals/andres-von-der-meden-284900/"
         }
+      ],
+      "eliteProspects": [
+        {
+          "name": "Ian Thomas",
+          "source": "247Sports",
+          "sourceUrl": "https://247sports.com/player/ian-thomas-46160563/",
+          "classYear": 2028,
+          "nationalRank": 39,
+          "positionRank": 1
+        },
+        {
+          "name": "Andres von der Meden",
+          "source": "Rivals",
+          "sourceUrl": "https://www.on3.com/rivals/andres-von-der-meden-284900/",
+          "classYear": 2027,
+          "nationalRank": 2157,
+          "positionRank": 5
+        }
       ]
     },
     "keys": null,
@@ -188,7 +206,8 @@
     "Klein Cain High School",
     "Tomball High School",
     "MaxPreps",
-    "Rivals"
+    "Rivals",
+    "247Sports"
   ],
   "current": false
 }

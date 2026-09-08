@@ -68,6 +68,14 @@ export type PreviewSection = {
     sourceUrl: string;
     asOf: string;
     committedPlayers: { name: string; school: string; sourceUrl: string }[];
+    eliteProspects: {
+      name: string;
+      source: string;
+      sourceUrl: string;
+      classYear: number;
+      nationalRank: number | null;
+      positionRank: number;
+    }[];
   } | null;
   keys: { heading: string; items: { title: string; body: string }[] } | null;
   gameInfo: { heading: string; facts: Fact[]; links: { label: string; href: string }[] } | null;

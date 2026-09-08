@@ -33,6 +33,13 @@ recruiting notes, keys and game information are never generated.
   Every verified college commit in that audit must be included in **Players to
   watch**, with the college commitment stated in both the capsule and the
   linked recruiting note. Offers and interest are not commitments.
+- The same audit must record every opponent ranked in a named service's top 10
+  at his position or top 100 nationally. Those elite prospects must appear in
+  **Players to watch**, and the card must foreground the source-specific rank
+  and class. Give exceptional players proportionate context: verified recent
+  production, major honors, offer count and relevant family football pedigree.
+  Never turn an offer into a commitment or blend rankings from different
+  services into one number.
 - `disclaimerEntities` must name this game's opponent.
 - `slug` must be `<date>-<opponent slug>`, the same key the score Worker uses.
 - Both teams need local logo files. Placeholder or missing logo paths fail validation.

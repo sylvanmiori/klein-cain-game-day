@@ -220,6 +220,9 @@ for (const file of files) {
     if (!Array.isArray(recruitingAudit.committedPlayers)) {
       fail('opponentRecruitingAudit.committedPlayers must be an array');
     }
+    if (!Array.isArray(recruitingAudit.eliteProspects)) {
+      fail('opponentRecruitingAudit.eliteProspects must be an array');
+    }
     for (const commitment of recruitingAudit.committedPlayers ?? []) {
       if (!commitment.name || !commitment.school || !commitment.sourceUrl?.startsWith('https://')) {
         fail('every audited opponent commitment needs a player, college and https source');
@@ -241,6 +244,37 @@ for (const file of files) {
       );
       if (!row || !/commit/i.test(row.note) || !row.note.toLowerCase().includes(commitment.school.toLowerCase())) {
         fail(`${commitment.name}'s recruiting note must say ${commitment.school} commit`);
+      }
+    }
+    for (const prospect of recruitingAudit.eliteProspects ?? []) {
+      if (!prospect.name || !prospect.source || !prospect.sourceUrl?.startsWith('https://')
+        || !Number.isInteger(prospect.classYear) || !Number.isInteger(prospect.positionRank)
+        || (prospect.nationalRank !== null && !Number.isInteger(prospect.nationalRank))) {
+        fail('every audited elite prospect needs a player, source, class, position rank and https source');
+        continue;
+      }
+      if (prospect.positionRank > 10 && (prospect.nationalRank === null || prospect.nationalRank > 100)) {
+        fail(`${prospect.name} is not top 10 at a position or top 100 nationally; do not label the player elite`);
+      }
+      const player = opponentPlayers.find(
+        (candidate) => candidate.name.toLowerCase() === prospect.name.toLowerCase(),
+      );
+      if (!player) {
+        fail(`${prospect.name}, an audited elite prospect, is missing from Players to watch`);
+        continue;
+      }
+      const capsule = `${player.tag} ${player.rating} ${player.copy}`.toLowerCase();
+      const rankPattern = new RegExp(`(?:no\\.\\s*|#)${prospect.positionRank}\\b`, 'i');
+      if (!capsule.includes(prospect.source.toLowerCase()) || !rankPattern.test(capsule)
+        || !capsule.includes(String(prospect.classYear))) {
+        fail(`${prospect.name}'s player capsule must foreground the ${prospect.source} position rank and class`);
+      }
+      const row = (edition.preview?.recruiting?.rows ?? []).find(
+        (candidate) => candidate.name.toLowerCase() === prospect.name.toLowerCase(),
+      );
+      if (!row || !row.note.toLowerCase().includes(prospect.source.toLowerCase())
+        || !rankPattern.test(row.note) || !row.note.includes(String(prospect.classYear))) {
+        fail(`${prospect.name}'s recruiting note must state the ${prospect.source} position rank and class`);
       }
     }
   }

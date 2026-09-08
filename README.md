@@ -14,7 +14,7 @@ Between games, the homepage keeps the latest Final and its verified recap. On th
 
 The in-season data pipeline runs unattended in GitHub Actions. A scheduled workflow creates missing editions, promotes the current game, refreshes facts from public sources and writes a postgame recap. No language model is involved anywhere, and no AI API is configured.
 
-Analysis is the exception: players to watch, keys and recruiting notes are never generated. Those sections stay empty unless a person writes them. A full opponent-player section must include a dated, roster-wide recruiting audit; every verified college commit found in that audit is required in Players to watch.
+Analysis is the exception: players to watch, keys and recruiting notes are never generated. Those sections stay empty unless a person writes them. A full opponent-player section must include a dated, roster-wide recruiting audit; every verified college commit and every source-specific top-10 position or top-100 national prospect found in that audit is required in Players to watch.
 
 New schedule opponents require one setup pass: add their exact MaxPreps profile to `config/opponent-logos.json` and run `npm run logos`. Player portraits are refreshed manually with `npm run photos`. Neither asset import runs on the recurring facts workflow.
 
