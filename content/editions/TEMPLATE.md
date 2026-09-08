@@ -28,6 +28,11 @@ recruiting notes, keys and game information are never generated.
   exists, write what is true, such as `Not listed by Rivals`, rather than
   leaving it blank or inventing a number.
 - Every recruiting row needs an `https` source link.
+- A preview with opponent player capsules needs an `opponentRecruitingAudit`
+  covering the full current roster, not only the players already selected.
+  Every verified college commit in that audit must be included in **Players to
+  watch**, with the college commitment stated in both the capsule and the
+  linked recruiting note. Offers and interest are not commitments.
 - `disclaimerEntities` must name this game's opponent.
 - `slug` must be `<date>-<opponent slug>`, the same key the score Worker uses.
 - Both teams need local logo files. Placeholder or missing logo paths fail validation.
@@ -79,6 +84,7 @@ section is omitted from the page rather than rendered empty. `updated`,
     "intro": null,
     "players": [],
     "recruiting": null,
+    "opponentRecruitingAudit": null,
     "keys": null,
     "gameInfo": null
   },

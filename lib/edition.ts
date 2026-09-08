@@ -58,6 +58,17 @@ export type PreviewSection = {
   playersNote: string;
   intro: { heading: string; body: string; facts: Fact[] } | null;
   recruiting: { heading: string; rows: RecruitRow[]; note: string } | null;
+  /**
+   * Editorial record of the opponent-roster commitment check. When opponent
+   * player capsules are published, validation requires this audit and requires
+   * every committed player found here to appear in Players to watch.
+   */
+  opponentRecruitingAudit?: {
+    source: string;
+    sourceUrl: string;
+    asOf: string;
+    committedPlayers: { name: string; school: string; sourceUrl: string }[];
+  } | null;
   keys: { heading: string; items: { title: string; body: string }[] } | null;
   gameInfo: { heading: string; facts: Fact[]; links: { label: string; href: string }[] } | null;
 };

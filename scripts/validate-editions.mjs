@@ -198,6 +198,53 @@ for (const file of files) {
     if (!row.href?.startsWith('https://')) fail(`recruiting row ${row.name} needs a public source link`);
   }
 
+  // A full opponent-player section must be based on a roster-wide recruiting
+  // check, not just searches for the players an editor already happened to
+  // select. Every commitment found in that check is prime matchup context and
+  // must appear in Players to watch with the school named prominently.
+  const opponentPlayers = (edition.preview?.players ?? []).filter(
+    (player) => player.team.toLowerCase() !== 'cain',
+  );
+  const recruitingAudit = edition.preview?.opponentRecruitingAudit;
+  if (opponentPlayers.length > 0 && !recruitingAudit) {
+    fail('opponent players require an opponentRecruitingAudit covering the full roster');
+  }
+  if (recruitingAudit) {
+    if (!recruitingAudit.source) fail('opponentRecruitingAudit needs a source name');
+    if (!recruitingAudit.sourceUrl?.startsWith('https://')) {
+      fail('opponentRecruitingAudit needs an https sourceUrl');
+    }
+    if (!Number.isFinite(Date.parse(recruitingAudit.asOf))) {
+      fail('opponentRecruitingAudit needs a valid asOf timestamp');
+    }
+    if (!Array.isArray(recruitingAudit.committedPlayers)) {
+      fail('opponentRecruitingAudit.committedPlayers must be an array');
+    }
+    for (const commitment of recruitingAudit.committedPlayers ?? []) {
+      if (!commitment.name || !commitment.school || !commitment.sourceUrl?.startsWith('https://')) {
+        fail('every audited opponent commitment needs a player, college and https source');
+        continue;
+      }
+      const player = opponentPlayers.find(
+        (candidate) => candidate.name.toLowerCase() === commitment.name.toLowerCase(),
+      );
+      if (!player) {
+        fail(`${commitment.name}, a verified ${commitment.school} commit, is missing from Players to watch`);
+        continue;
+      }
+      const capsule = `${player.tag} ${player.rating} ${player.copy}`;
+      if (!/commit/i.test(capsule) || !capsule.toLowerCase().includes(commitment.school.toLowerCase())) {
+        fail(`${commitment.name}'s player capsule must prominently say ${commitment.school} commit`);
+      }
+      const row = (edition.preview?.recruiting?.rows ?? []).find(
+        (candidate) => candidate.name.toLowerCase() === commitment.name.toLowerCase(),
+      );
+      if (!row || !/commit/i.test(row.note) || !row.note.toLowerCase().includes(commitment.school.toLowerCase())) {
+        fail(`${commitment.name}'s recruiting note must say ${commitment.school} commit`);
+      }
+    }
+  }
+
   for (const source of edition.sources ?? []) {
     if (!source.href?.startsWith('https://')) fail(`source "${source.label}" needs an https URL`);
   }

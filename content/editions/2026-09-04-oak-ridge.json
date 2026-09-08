@@ -414,6 +414,18 @@
         }
       ]
     },
+    "opponentRecruitingAudit": {
+      "source": "Rivals/On3 Oak Ridge roster and player profiles",
+      "sourceUrl": "https://www.on3.com/high-school/oak-ridge-conroe-tx-3906/football/roster/",
+      "asOf": "2026-09-07",
+      "committedPlayers": [
+        {
+          "name": "Finn Walker",
+          "school": "Kansas State",
+          "sourceUrl": "https://www.on3.com/rivals/finn-walker-285232/"
+        }
+      ]
+    },
     "keys": {
       "heading": "Three keys for Klein Cain",
       "items": [

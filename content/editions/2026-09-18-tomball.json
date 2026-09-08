@@ -138,9 +138,9 @@
         "name": "Andres von der Meden",
         "image": "/player-placeholder.svg",
         "role": "K · Senior",
-        "tag": "Rivals Industry 80.33",
+        "tag": "Texas A&M commit",
         "rating": "No. 5 kicker · 2027",
-        "copy": "The specialist has a public Rivals rating and gives Tomball another way to turn field position into points. His listed number comes from the 2026 Dave Campbell’s roster."
+        "copy": "Von der Meden committed to Texas A&M on June 8. Rivals lists him as the No. 5 kicker in the 2027 class, giving Tomball a nationally recruited specialist who can turn field position into points."
       }
     ],
     "recruiting": {
@@ -159,9 +159,21 @@
           "number": "38",
           "name": "Andres von der Meden",
           "team": "Tomball",
-          "note": "Rivals Industry rating 80.33 · 2027 kicker · listed No. 5 at the position.",
-          "href": "https://www.on3.com/high-school/tomball-tomball-tx-18178/football/roster/",
+          "note": "Texas A&M commit · committed June 8, 2026 · Rivals Industry rating 80.33 · No. 5 kicker in the 2027 class.",
+          "href": "https://www.on3.com/rivals/andres-von-der-meden-284900/",
           "linkLabel": "View Rivals"
+        }
+      ]
+    },
+    "opponentRecruitingAudit": {
+      "source": "Rivals/On3 Tomball roster and player profiles",
+      "sourceUrl": "https://www.on3.com/high-school/tomball-tomball-tx-18178/football/roster/",
+      "asOf": "2026-09-07",
+      "committedPlayers": [
+        {
+          "name": "Andres von der Meden",
+          "school": "Texas A&M",
+          "sourceUrl": "https://www.on3.com/rivals/andres-von-der-meden-284900/"
         }
       ]
     },
