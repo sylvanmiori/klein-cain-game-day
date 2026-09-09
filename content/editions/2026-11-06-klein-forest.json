@@ -16,7 +16,7 @@
     "mascot": "Eagles",
     "logo": "/klein-forest-logo.png",
     "record": "0–2",
-    "rank": 192
+    "rank": 206
   },
   "away": {
     "name": "Klein Cain",
@@ -34,13 +34,13 @@
     "margin": 23,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-06T13:55:33.961Z"
+    "asOf": "2026-09-09T15:01:16.134Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
-    "sourceUrl": "https://www.texasfootball.com/article/2026/09/01/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-2",
-    "asOf": "2026-09-06T13:55:33.720Z"
+    "sourceUrl": "https://www.texasfootball.com/article/2026/09/08/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-3",
+    "asOf": "2026-09-09T15:01:15.818Z"
   },
   "stats": null,
   "finalScore": null,
