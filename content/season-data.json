@@ -12,18 +12,18 @@
     }
   },
   "records": {
-    "Humble": "1–1",
-    "Oak Ridge": "0–2",
-    "Tomball": "2–0",
-    "Magnolia West": "2–0",
+    "Humble": "1–2",
+    "Oak Ridge": "0–3",
+    "Tomball": "3–0",
+    "Magnolia West": "2–1",
     "Klein Collins": "2–1",
-    "Klein": "2–0",
-    "Klein Oak": "0–2",
+    "Klein": "3–0",
+    "Klein Oak": "0–3",
     "Tomball Memorial": "1–2",
-    "Magnolia": "0–2",
-    "Klein Forest": "0–2"
+    "Magnolia": "1–2",
+    "Klein Forest": "0–3"
   },
   "source": "Dave Campbell’s Texas Football",
   "sourceUrl": "https://www.texasfootball.com/scores/",
-  "asOf": "2026-09-11T07:40:08.166Z"
+  "asOf": "2026-09-12T13:51:39.877Z"
 }

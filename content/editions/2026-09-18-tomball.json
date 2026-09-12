@@ -22,7 +22,7 @@
     "name": "Tomball",
     "mascot": "Cougars",
     "logo": "/tomball-logo.png",
-    "record": "2–0",
+    "record": "3–0",
     "rank": 40
   },
   "pageTitle": "2026 Week 3 Preview: Tomball at Klein Cain",
@@ -34,14 +34,23 @@
     "margin": -3,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-11T07:40:09.372Z"
+    "asOf": "2026-09-12T13:51:40.929Z"
   },
-  "weather": null,
+  "weather": {
+    "tempF": 87,
+    "condition": "Partly Cloudy",
+    "precipPct": 3,
+    "humidityPct": 61,
+    "wind": "5 mph E",
+    "source": "National Weather Service",
+    "sourceUrl": "https://www.weather.gov/",
+    "asOf": "2026-09-12T13:51:42.297Z"
+  },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/08/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-3",
-    "asOf": "2026-09-11T07:40:09.064Z"
+    "asOf": "2026-09-12T13:51:40.644Z"
   },
   "stats": null,
   "finalScore": null,

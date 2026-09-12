@@ -15,7 +15,7 @@
     "name": "Klein Forest",
     "mascot": "Eagles",
     "logo": "/klein-forest-logo.png",
-    "record": "0–2",
+    "record": "0–3",
     "rank": 206
   },
   "away": {
@@ -34,13 +34,13 @@
     "margin": 23,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-11T07:40:13.346Z"
+    "asOf": "2026-09-12T13:51:46.016Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/08/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-3",
-    "asOf": "2026-09-11T07:40:13.037Z"
+    "asOf": "2026-09-12T13:51:45.771Z"
   },
   "stats": null,
   "finalScore": null,
