@@ -34,23 +34,23 @@
     "margin": -3,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-12T13:51:40.929Z"
+    "asOf": "2026-09-12T18:51:26.488Z"
   },
   "weather": {
     "tempF": 87,
-    "condition": "Partly Cloudy",
-    "precipPct": 3,
-    "humidityPct": 61,
+    "condition": "Mostly Clear",
+    "precipPct": 4,
+    "humidityPct": 59,
     "wind": "5 mph E",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-09-12T13:51:42.297Z"
+    "asOf": "2026-09-12T18:51:27.076Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/08/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-3",
-    "asOf": "2026-09-12T13:51:40.644Z"
+    "asOf": "2026-09-12T18:51:26.187Z"
   },
   "stats": null,
   "finalScore": null,
