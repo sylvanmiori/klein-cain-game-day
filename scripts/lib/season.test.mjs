@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { pickCurrent } from './season.mjs';
+import { mondayOfGameWeek, pickCurrent } from './season.mjs';
 
 const editions = [
   { slug: 'humble', date: '2026-08-27' },
@@ -10,17 +10,22 @@ const editions = [
 ];
 const on = (day) => pickCurrent(editions, day).slug;
 
-test('a final holds the home page until the day before the next game', () => {
-  assert.equal(on('2026-09-04'), 'oak-ridge', 'game day');
-  assert.equal(on('2026-09-16'), 'oak-ridge', 'latest final stays useful through the open week');
-  assert.equal(on('2026-09-17'), 'tomball', 'next preview takes over one day before kickoff');
+test('Monday of game week anchors promotion', () => {
+  assert.equal(mondayOfGameWeek('2026-09-18'), '2026-09-14');
+  assert.equal(mondayOfGameWeek('2026-09-25'), '2026-09-21');
 });
 
-test('the upcoming game owns both preview day and game day', () => {
-  assert.equal(on('2026-09-17'), 'tomball');
+test('a final holds the home page until Monday of the next game week', () => {
+  assert.equal(on('2026-09-04'), 'oak-ridge', 'game day');
+  assert.equal(on('2026-09-13'), 'oak-ridge', 'latest final stays useful through the open week');
+  assert.equal(on('2026-09-14'), 'tomball', 'next preview takes over Monday of game week');
+});
+
+test('the upcoming game owns promotion Monday through game day', () => {
+  assert.equal(on('2026-09-14'), 'tomball');
   assert.equal(on('2026-09-18'), 'tomball', 'game day must show the live card');
-  assert.equal(on('2026-09-23'), 'tomball', 'result remains until the next preview window');
-  assert.equal(on('2026-09-24'), 'magnolia-west');
+  assert.equal(on('2026-09-20'), 'tomball', 'result remains until the next promotion Monday');
+  assert.equal(on('2026-09-21'), 'magnolia-west');
 });
 
 test('today\'s game wins over tomorrow\'s preview for consecutive games', () => {

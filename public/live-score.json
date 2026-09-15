@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "slug": "2026-09-04-oak-ridge",
-  "status": "final",
-  "statusLabel": "Final",
-  "homeScore": 45,
-  "awayScore": 20,
+  "slug": "2026-09-18-tomball",
+  "status": "scheduled",
+  "statusLabel": "7:00 PM",
+  "homeScore": null,
+  "awayScore": null,
   "homeRecord": "2–0",
-  "awayRecord": "0–2",
-  "updatedAt": "2026-09-04T23:20:00-05:00",
+  "awayRecord": "3–0",
+  "updatedAt": "2026-09-15T00:42:21.308Z",
   "source": "Dave Campbell’s Texas Football",
-  "sourceUrl": "https://www.texasfootball.com/team/klein-cain-hurricanes"
+  "sourceUrl": "https://www.texasfootball.com/scores/"
 }

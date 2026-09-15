@@ -1,8 +1,8 @@
 import publication from '../config/publication.json';
 import schedule from '../config/season-2026.json';
 import liveScore from '../public/live-score.json';
+import { FinalView, PreviewView } from './edition-page';
 import { LiveScoreCard, type LiveScore } from './live-score-card';
-import { FinalView } from './edition-page';
 import { SeasonHub, seasonRecord } from './season-hub';
 import { RosterSection, SeasonStats } from './team-sections';
 import {
@@ -24,11 +24,13 @@ import { sitePath } from '../lib/site-path';
  * leaders and the roster live together.
  */
 export function TeamPage() {
-  // The featured game is whichever edition is current: promotion keeps that on
-  // the most recent game for three days, then moves it to the next one. Using
-  // the live card means the front page carries a live score on game night.
+  // The featured game is whichever edition is current: promotion keeps the
+  // latest final through the open week, then moves to the next preview on the
+  // Monday of that game's week. Using the live card means the front page
+  // carries a live score on game night.
   const featured = currentEdition;
   const stats = latestEditionWithStats();
+  const isPreview = Boolean(featured.preview && !featured.final);
   const autoFacts = [rankFact(featured), predictionFact(featured, publication.schoolName), weatherFact(featured)]
     .filter((fact): fact is NonNullable<typeof fact> => fact !== null);
   const facts = [...featured.scheduledFacts, ...autoFacts].slice(0, 4);
@@ -45,6 +47,7 @@ export function TeamPage() {
           <img src={sitePath(publication.schoolLogo)} alt="" /> {publication.wordmark}
         </a>
         <nav aria-label="Site navigation">
+          {isPreview && featured.preview!.players.length > 0 && <a href="#players">Players</a>}
           <a href="#schedule">Schedule</a>
           {featured.final && featured.gameStats
             ? <a href="#game-stats">Stats</a>
@@ -57,10 +60,14 @@ export function TeamPage() {
       <section className="game-overview" id="top">
         <div className="preview-title">
           <h1>
-            {publication.schoolName} {publication.schoolMascot}
+            {isPreview
+              ? featured.pageTitle.replace(/^2026 /, '')
+              : `${publication.schoolName} ${publication.schoolMascot}`}
           </h1>
           <p>
-            {seasonRecord()} · District 15-6A · {publication.schoolName} High School
+            {isPreview
+              ? `${featured.dateLong} · ${featured.event || featured.venue}`
+              : `${seasonRecord()} · District 15-6A · ${publication.schoolName} High School`}
           </p>
         </div>
 
@@ -77,17 +84,19 @@ export function TeamPage() {
         />
       </section>
 
-      <article>
+      <article className="program-hub">
         {featured.final && <FinalView final={featured.final} gameStats={featured.gameStats} />}
+        {isPreview && <PreviewView edition={featured} preview={featured.preview!} />}
 
         <SeasonHub activeDate={featured.date} />
 
         <nav className="edition-switcher" aria-label="Game reports">
-          {editions.map((edition) => (
-            <a key={edition.slug} href={sitePath(editionPath(edition))}>
-              Week {edition.week}: {opponentOf(edition, publication.schoolName).name}
-            </a>
-          ))}
+          {editions.map((edition) => {
+            const label = `Week ${edition.week}: ${opponentOf(edition, publication.schoolName).name}`;
+            return edition.date === featured.date
+              ? <span key={edition.slug}>{label}</span>
+              : <a key={edition.slug} href={sitePath(editionPath(edition))}>{label}</a>;
+          })}
         </nav>
 
         {stats && <SeasonStats edition={stats} note="Season totals" />}

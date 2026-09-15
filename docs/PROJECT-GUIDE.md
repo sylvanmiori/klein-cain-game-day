@@ -1,6 +1,6 @@
 # Game Day Report project guide
 
-Updated September 5, 2026. Written to be picked up cold: an AI developer should read repository-root `AGENTS.md`, then **Current status**, **Where things live** and **Traps worth knowing** here. Keep this file current when accounts, hosting, automation, sources, commands or data ownership change. Never store passwords, tokens or payment details here.
+Updated September 15, 2026. Written to be picked up cold: an AI developer should read repository-root `AGENTS.md`, then **Current status**, **Where things live** and **Traps worth knowing** here. Keep this file current when accounts, hosting, automation, sources, commands or data ownership change. Never store passwords, tokens or payment details here.
 
 ## Ownership and addresses
 
@@ -60,7 +60,7 @@ The code targets Cloudflare's free Worker and KV allowances. Those quotas are fi
 
 ## The program page
 
-`/` is the Klein Cain program page. It leads with whichever edition is current, using the live score card so the front page carries a live score on game night. Between games, the latest Final and its verified recap remain featured until the first scheduled automation run one day before the next game; the upcoming Preview then owns both preview day and game day. While a featured game is final, its recap, Player of the Game and game statistics appear directly below the score before the season material. Below that: the schedule with every opponent's record, program history, links to every game report, the season stat leaders and the full roster with the team photo.
+`/` is the Klein Cain program page. It leads with whichever edition is current, using the live score card so the front page carries a live score on game night. Between games, the latest Final and its verified recap remain featured until the first scheduled automation run on the Monday of the next game's week; the upcoming Preview then owns that week and game day, including its early-read, players and recruiting sections on the program page. While a featured game is final, its recap, Player of the Game and game statistics appear directly below the score before the season material. Below that: the schedule with every opponent's record, program history, links to every game report, the season stat leaders and the full roster with the team photo.
 
 Every game report is a subpage at `/games/week-<n>`, including whichever one is current. The program page and game reports share `SeasonHub`, `LiveScoreCard` and `SeasonStats`. `RosterSection` appears only on the program page.
 
@@ -141,7 +141,7 @@ The season now advances without anyone opening an editor. At 6 AM Central daily,
 3. `refresh-facts.mjs` fills records, ranks, the prediction, our rating, the forecast, every opponent's record and our own results.
 4. `validate-editions.mjs` gates the commit, and the build re-checks the rendered pages.
 
-Simulated across the season, promotion lands on the right game every week: Sept. 17 moves to Tomball, Sept. 24 to Magnolia West, Oct. 7 to Klein, Nov. 5 to Klein Forest, and after the last game it stays there rather than falling off the end.
+Simulated across the season, promotion lands on the right game every week: Sept. 14 moves to Tomball, Sept. 21 to Magnolia West, Sept. 28 to Klein Collins, Oct. 5 to Klein, Oct. 12 to Klein Oak, Oct. 19 to Tomball Memorial, Oct. 26 to Magnolia, Nov. 2 to Klein Forest, and after the last game it stays there rather than falling off the end.
 
 Two invariants keep it honest. The validator fails if any scheduled game has no edition, so the season cannot quietly stop producing pages. And it fails if a game before kickoff has no prediction from any source.
 
@@ -149,7 +149,7 @@ What automation still does not write is analysis. A generated edition has no pla
 
 ## Advancing the season
 
-`scripts/promote-edition.mjs` decides which edition the home page shows. The rule: the latest played game keeps the home page until one calendar day before the next game; the next Preview then takes over. `scripts/lib/season.mjs` holds the rule and is unit tested for long open weeks, preview day, game day, the end of the season and even consecutive-day games, where today's live game must not be displaced by tomorrow's preview.
+`scripts/promote-edition.mjs` decides which edition the home page shows. The rule: the latest played game keeps the home page until the Monday of the next game's week; the next Preview then takes over. `scripts/lib/season.mjs` holds the rule and is unit tested for long open weeks, promotion Monday, game day, the end of the season and even consecutive-day games, where today's live game must not be displaced by tomorrow's preview.
 
 The script also does two things that used to be manual and easy to forget:
 

@@ -536,7 +536,7 @@
     "MaxPreps",
     "Rivals"
   ],
-  "current": true,
+  "current": false,
   "gameStats": {
     "team": "Klein Cain",
     "playerOfGame": {
