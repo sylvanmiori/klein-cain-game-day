@@ -9,7 +9,7 @@
   "dateShort": "SEP 18, 2026",
   "kickoff": "7:00 PM",
   "venue": "Klein Memorial Stadium",
-  "event": "District opener",
+  "event": "District opener · Homecoming",
   "updated": "",
   "home": {
     "name": "Klein Cain",
@@ -27,8 +27,8 @@
   },
   "pageTitle": "2026 Week 3 Preview: Tomball at Klein Cain",
   "metaTitle": "Week 3 Preview: Tomball at Klein Cain | Cain Game Day",
-  "metaDescription": "An early look at Klein Cain’s Sept. 18 district opener and homecoming game against Tomball.",
-  "socialDescription": "Early matchup facts and players to watch for the Sept. 18 district opener.",
+  "metaDescription": "Preview of Klein Cain’s Sept. 18 district opener and homecoming game against Tomball.",
+  "socialDescription": "Matchup facts and players to watch for the Sept. 18 district opener.",
   "ogImage": "",
   "prediction": {
     "margin": -3,
@@ -67,26 +67,31 @@
   ],
   "resultFacts": [],
   "preview": {
-    "playersHeading": "Early players to watch",
-    "playersNote": "Opening-week statistics from MaxPreps. Recruiting ratings from Rivals/On3. This list will be rechecked on game day.",
+    "playersHeading": "Players to watch",
+    "playersNote": "Statistics through Week 2 from MaxPreps. Recruiting ratings from Rivals/On3.",
     "intro": {
-      "heading": "Early read",
-      "body": "This matchup is two weeks away, and Tomball still plays Cinco Ranch and Klein Forest before coming to Klein Memorial. The numbers below are a starting point. The full forecast, current records and final player list will update on game day.",
+      "heading": "The read",
+      "body": "Tomball arrives 3–0 and ranked No. 40 in Dave Campbell’s computer ratings for Cain’s district opener and homecoming game Friday at Klein Memorial. The Cougars feature 247Sports’ No. 1 running-back prospect in the 2028 class and a Texas A&M commit at kicker.",
       "facts": [
         {
           "label": "Cain",
-          "value": "43.5 points per game",
+          "value": "2–0 · No. 81",
           "team": "school"
         },
         {
           "label": "Tomball",
-          "value": "277 rush yards in opener",
+          "value": "3–0 · No. 40",
           "team": "opponent"
         },
         {
-          "label": "Tomball defense",
-          "value": "5 sacks · 0 points allowed",
+          "label": "Pick",
+          "value": "Tomball by 3",
           "team": "opponent"
+        },
+        {
+          "label": "Setting",
+          "value": "District opener · Homecoming",
+          "team": "school"
         }
       ]
     },
@@ -209,7 +214,7 @@
   },
   "final": null,
   "sources": [],
-  "footerNote": "Independent fan publication · Early information will be rechecked before kickoff.",
+  "footerNote": "Independent fan publication · Information will be rechecked before kickoff.",
   "disclaimerEntities": [
     "Klein ISD",
     "Klein Cain High School",
@@ -218,5 +223,5 @@
     "Rivals",
     "247Sports"
   ],
-  "current": false
+  "current": true
 }

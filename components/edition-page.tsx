@@ -31,7 +31,7 @@ function nextGameFact(edition: Edition): Fact | null {
   return { label: 'Next', value: `${next.opponent} · ${apDate(next.date)}` };
 }
 
-function PreviewView({ edition, preview }: { edition: Edition; preview: PreviewSection }) {
+export function PreviewView({ edition, preview }: { edition: Edition; preview: PreviewSection }) {
   return (
     <>
       {preview.intro && (

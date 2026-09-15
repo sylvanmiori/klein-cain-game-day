@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import snapshot from '../public/live-score.json' with { type: 'json' };
 import { activeGame, parseScore, gameSlug } from './score.mjs';
 import worker from './worker.mjs';
 
@@ -44,12 +45,12 @@ void test('root redirects to Cain; unknown schools fail closed', async () => {
   assert.equal((await worker.fetch(new Request('https://other.gameday.report/'), {})).status, 404);
 });
 
-void test('API falls back to checked-in final during storage failure', async () => {
-  const response = await worker.fetch(new Request(`https://kleincain.gameday.report/api/score?game=${gameSlug(game)}`), {
+void test('API falls back to the checked-in snapshot during storage failure', async () => {
+  const response = await worker.fetch(new Request(`https://kleincain.gameday.report/api/score?game=${snapshot.slug}`), {
     SCORES: { get: async () => { throw new Error('Storage offline'); } },
   });
   assert.equal(response.status, 200);
-  assert.equal((await response.json()).homeScore, 45);
+  assert.equal((await response.json()).slug, snapshot.slug);
 });
 
 void test('manual correction requires authorization and scheduled date', async () => {

@@ -56,6 +56,7 @@ a { color:inherit; text-decoration:none; }
 .game-facts a { color:#8cc8ff; font-size:12px; font-weight:750; }
 .game-facts a:hover { color:#c8e7ff; }
 article>section { border-bottom:1px solid var(--line); }
+.program-hub>section { border-bottom:1px solid var(--line); }
 .game-report section { border-bottom:1px solid var(--line); }
 .report-tabs { display:flex; justify-content:center; gap:4px; padding:10px 20px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--paper); }
 .report-tabs button { min-width:132px; padding:8px 16px; border:0; border-radius:999px; background:transparent; color:#6e6e73; font:750 12px/1 "Helvetica Neue",Helvetica,Arial,sans-serif; cursor:pointer; }
