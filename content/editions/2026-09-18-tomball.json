@@ -16,14 +16,14 @@
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
     "record": "2–0",
-    "rank": 81
+    "rank": 83
   },
   "away": {
     "name": "Tomball",
     "mascot": "Cougars",
     "logo": "/tomball-logo.png",
     "record": "3–0",
-    "rank": 40
+    "rank": 45
   },
   "pageTitle": "2026 Week 3 Preview: Tomball at Klein Cain",
   "metaTitle": "Week 3 Preview: Tomball at Klein Cain | Cain Game Day",
@@ -34,23 +34,23 @@
     "margin": -3,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-14T16:46:10.996Z"
+    "asOf": "2026-09-16T15:19:49.607Z"
   },
   "weather": {
-    "tempF": 87,
-    "condition": "Mostly Clear",
+    "tempF": 89,
+    "condition": "Clear",
     "precipPct": 0,
-    "humidityPct": 55,
+    "humidityPct": 50,
     "wind": "5 mph E",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-09-14T16:46:12.681Z"
+    "asOf": "2026-09-16T15:19:50.708Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
-    "sourceUrl": "https://www.texasfootball.com/article/2026/09/08/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-3",
-    "asOf": "2026-09-14T16:46:10.681Z"
+    "sourceUrl": "https://www.texasfootball.com/article/2026/09/15/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-4",
+    "asOf": "2026-09-16T15:19:49.318Z"
   },
   "stats": null,
   "finalScore": null,
