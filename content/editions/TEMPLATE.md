@@ -88,6 +88,7 @@ section is omitted from the page rather than rendered empty. `updated`,
   "preview": {
     "playersHeading": "Players to watch",
     "playersNote": "",
+    "playerStatsAudit": null,
     "intro": null,
     "players": [],
     "recruiting": null,

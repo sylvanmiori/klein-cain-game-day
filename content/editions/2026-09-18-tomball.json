@@ -61,26 +61,45 @@
       "value": "District opener · Homecoming"
     },
     {
-      "label": "Tomball opener",
-      "value": "W 38–0 vs Stratford"
+      "label": "Tomball start",
+      "value": "3–0 · 122–26 scoring margin"
     }
   ],
   "resultFacts": [],
   "preview": {
     "playersHeading": "Players to watch",
-    "playersNote": "Statistics through Week 2 from MaxPreps. Recruiting ratings from Rivals/On3.",
+    "playersNote": "Season statistics through two Klein Cain games and three Tomball games from MaxPreps. Recruiting information rechecked Sept. 17.",
+    "playerStatsAudit": {
+      "asOf": "2026-09-17",
+      "sources": [
+        {
+          "team": "Klein Cain",
+          "games": 2,
+          "source": "MaxPreps",
+          "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/",
+          "sourceUpdated": "2026-09-05T11:10:51"
+        },
+        {
+          "team": "Tomball",
+          "games": 3,
+          "source": "MaxPreps",
+          "sourceUrl": "https://www.maxpreps.com/tx/tomball/tomball-cougars/football/stats/",
+          "sourceUpdated": "2026-09-15T13:44:42"
+        }
+      ]
+    },
     "intro": {
       "heading": "The read",
-      "body": "Tomball arrives 3–0 and ranked No. 40 in Dave Campbell’s computer ratings for Cain’s district opener and homecoming game Friday at Klein Memorial. The Cougars feature 247Sports’ No. 1 running-back prospect in the 2028 class and a Texas A&M commit at kicker.",
+      "body": "Tomball arrives 3–0 with a 122–26 scoring margin and a ground game averaging 290 yards. Ian Thomas has 641 yards from scrimmage and nine touchdowns in three games; Klein Cain is 2–0 after an open week and averaging 43.5 points. Dave Campbell’s latest computer rankings place Tomball No. 45 and Cain No. 83, with the model favoring Tomball by three.",
       "facts": [
         {
           "label": "Cain",
-          "value": "2–0 · No. 81",
+          "value": "2–0 · 43.5 points/game",
           "team": "school"
         },
         {
           "label": "Tomball",
-          "value": "3–0 · No. 40",
+          "value": "3–0 · 40.7 points/game",
           "team": "opponent"
         },
         {
@@ -89,9 +108,9 @@
           "team": "opponent"
         },
         {
-          "label": "Setting",
-          "value": "District opener · Homecoming",
-          "team": "school"
+          "label": "Tomball ground game",
+          "value": "290 rushing yards/game",
+          "team": "opponent"
         }
       ]
     },
@@ -102,9 +121,9 @@
         "name": "Jace Hanks",
         "image": "/players/jace-hanks.jpg",
         "role": "QB · Junior",
-        "tag": "Week 1 passing leader",
-        "rating": "201 yards · 2 TD",
-        "copy": "Hanks completed 15 of 24 passes in the opener and accounted for 285 total yards. His early efficiency gives Cain a useful counter to Tomball’s run-heavy approach."
+        "tag": "Six-TD utility threat",
+        "rating": "432 offensive yards · 5 pass/rush TD",
+        "copy": "Through two wins, Hanks has 272 passing yards and three passing touchdowns plus 160 rushing yards and two scores. He also has 69 receiving yards and a touchdown, giving Cain a quarterback who can change roles without leaving the field."
       },
       {
         "team": "CAIN",
@@ -112,9 +131,9 @@
         "name": "Eyan Johnson",
         "image": "/players/eyan-johnson.jpg",
         "role": "RB / SB · Senior",
-        "tag": "10.0 yards per carry",
-        "rating": "110 yards · 1 TD",
-        "copy": "Johnson needed 11 carries to reach 110 yards against Humble. Tomball opened with five sacks, so Cain’s ability to stay ahead of the chains will matter."
+        "tag": "Cain rushing leader",
+        "rating": "189 yards · 2 TD",
+        "copy": "Johnson leads Cain at 94.5 rushing yards per game through two wins. His 110-yard opener established the senior as the steady backfield complement to Hanks’ multi-position production."
       },
       {
         "team": "CAIN",
@@ -122,9 +141,9 @@
         "name": "Cooper Karns",
         "image": "/players/cooper-karns.jpg",
         "role": "WR · Senior",
-        "tag": "Week 1 receiving leader",
-        "rating": "6 catches · 110 yards",
-        "copy": "Karns produced 110 yards and a touchdown in the opener. He gives Hanks an established target when Tomball commits extra bodies to the run."
+        "tag": "Cain receiving leader",
+        "rating": "147 yards · 73.5 per game",
+        "copy": "Karns has 147 receiving yards through two wins, including 110 yards and a touchdown at Humble. He gives Hanks an established target when Tomball commits extra bodies to the run."
       },
       {
         "team": "TOMBALL",
@@ -132,9 +151,9 @@
         "name": "Trevon Johnson",
         "image": "/players/trevon-johnson.jpg",
         "role": "RB / MLB · Senior",
-        "tag": "Opening-week producer",
-        "rating": "142 rushing yards",
-        "copy": "Johnson led Tomball’s ground game in the 38–0 win over Stratford. The 6-foot, 205-pound senior is the first test for a Cain defense that gave up 41 in Week 1."
+        "tag": "Five rushing touchdowns",
+        "rating": "316 yards · 105.3 per game",
+        "copy": "Johnson has 316 rushing yards and five touchdowns through Tomball’s 3–0 start. The 6-foot, 205-pound senior gives the Cougars a second back averaging more than 100 yards per game beside Ian Thomas."
       },
       {
         "team": "TOMBALL",
@@ -143,18 +162,18 @@
         "image": "/players/ian-thomas.jpg",
         "role": "RB · Junior",
         "tag": "247Sports’ No. 1 RB · 2028",
-        "rating": "No. 39 nationally · 24 offers",
-        "copy": "Thomas is the centerpiece of this matchup. The four-star junior ran for 1,528 yards and 20 touchdowns as a sophomore, and 247Sports now ranks him the nation’s No. 1 running back and No. 39 overall prospect in the 2028 class. His father, Rodney Thomas, was an all-time Texas high-school great, a two-time first-team All-SWC back at Texas A&M and a six-year NFL player."
+        "rating": "641 scrimmage yards · 9 TD",
+        "copy": "Thomas is the centerpiece of this matchup: 505 rushing yards, 136 receiving yards and nine touchdowns in three games. He erupted for 240 yards from scrimmage and four scores against Klein Forest. The four-star junior is 247Sports’ No. 1 running back and No. 39 overall prospect in the 2028 class; his father, Rodney Thomas, starred at Texas A&M before a six-year NFL career."
       },
       {
         "team": "TOMBALL",
-        "number": "38",
+        "number": "3",
         "name": "Andres von der Meden",
         "image": "/player-placeholder.svg",
         "role": "K · Senior",
         "tag": "Texas A&M commit",
         "rating": "No. 5 kicker · 2027",
-        "copy": "Von der Meden committed to Texas A&M on June 8. Rivals lists him as the No. 5 kicker in the 2027 class, giving Tomball a nationally recruited specialist who can turn field position into points."
+        "copy": "Von der Meden committed to Texas A&M on June 8, and Rivals lists him as the No. 5 kicker in the 2027 class. Against Cinco Ranch he averaged 65 yards on six kickoffs and 44.5 yards on four punts; all five of his recorded kickoffs against Klein Forest went for touchbacks."
       }
     ],
     "recruiting": {
@@ -165,12 +184,12 @@
           "number": "22",
           "name": "Ian Thomas",
           "team": "Tomball",
-          "note": "Four-star 2028 running back · 247Sports No. 1 at the position and No. 39 nationally · 24 reported offers · uncommitted as of Sept. 7.",
+          "note": "Four-star 2028 running back · 247Sports No. 1 at the position and No. 39 nationally · 24 reported offers · uncommitted as of Sept. 17.",
           "href": "https://247sports.com/player/ian-thomas-46160563/",
           "linkLabel": "View 247Sports"
         },
         {
-          "number": "38",
+          "number": "3",
           "name": "Andres von der Meden",
           "team": "Tomball",
           "note": "Texas A&M commit · committed June 8, 2026 · Rivals Industry rating 80.33 · No. 5 kicker in the 2027 class.",
@@ -182,7 +201,7 @@
     "opponentRecruitingAudit": {
       "source": "Rivals/On3 Tomball roster and player profiles",
       "sourceUrl": "https://www.on3.com/high-school/tomball-tomball-tx-18178/football/roster/",
-      "asOf": "2026-09-07",
+      "asOf": "2026-09-17",
       "committedPlayers": [
         {
           "name": "Andres von der Meden",
@@ -204,7 +223,7 @@
           "source": "Rivals",
           "sourceUrl": "https://www.on3.com/rivals/andres-von-der-meden-284900/",
           "classYear": 2027,
-          "nationalRank": 2157,
+          "nationalRank": 2659,
           "positionRank": 5
         }
       ]
@@ -213,8 +232,21 @@
     "gameInfo": null
   },
   "final": null,
-  "sources": [],
-  "footerNote": "Independent fan publication · Information will be rechecked before kickoff.",
+  "sources": [
+    {
+      "label": "MaxPreps — Klein Cain statistics",
+      "href": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/"
+    },
+    {
+      "label": "MaxPreps — Tomball statistics",
+      "href": "https://www.maxpreps.com/tx/tomball/tomball-cougars/football/stats/"
+    },
+    {
+      "label": "MaxPreps — Tomball schedule and results",
+      "href": "https://www.maxpreps.com/tx/tomball/tomball-cougars/football/schedule/"
+    }
+  ],
+  "footerNote": "Independent fan publication · Player statistics and recruiting information rechecked Sept. 17.",
   "disclaimerEntities": [
     "Klein ISD",
     "Klein Cain High School",

@@ -188,6 +188,37 @@ for (const file of files) {
     if (!player.rating.trim()) fail(`player ${player.name} has an empty rating; label it "Not listed" instead`);
   }
 
+  // Current preview capsules are editorial rather than machine-owned. Require
+  // a recent, team-by-team audit so automated records/ranks cannot make an old
+  // player section look current. Two days covers the normal pregame workflow.
+  const playerStatsAudit = edition.preview?.playerStatsAudit;
+  if (edition.state === 'preview' && edition.current && (edition.preview?.players?.length ?? 0) > 0) {
+    if (!playerStatsAudit) {
+      fail('current preview players require a playerStatsAudit');
+    } else {
+      const auditDate = new Date(`${playerStatsAudit.asOf}T00:00:00Z`);
+      const gameDate = new Date(`${edition.date}T00:00:00Z`);
+      if (!Number.isFinite(auditDate.valueOf())) fail('playerStatsAudit needs a valid asOf date');
+      if ((gameDate - auditDate) / 86_400_000 > 2) {
+        fail('playerStatsAudit must be completed within two days of kickoff');
+      }
+      if (!Array.isArray(playerStatsAudit.sources) || playerStatsAudit.sources.length < 2) {
+        fail('playerStatsAudit must include a source for both teams');
+      }
+      for (const source of playerStatsAudit.sources ?? []) {
+        if (!source.team || !Number.isInteger(source.games) || source.games < 1 || !source.source
+          || !source.sourceUrl?.startsWith('https://') || !Number.isFinite(Date.parse(source.sourceUpdated))) {
+          fail('each playerStatsAudit source needs a team, games count, source, https URL and sourceUpdated timestamp');
+        }
+      }
+      for (const team of [edition.home?.name, edition.away?.name]) {
+        if (!playerStatsAudit.sources?.some((source) => source.team === team)) {
+          fail(`playerStatsAudit has no source for ${team}`);
+        }
+      }
+    }
+  }
+
   for (const fact of edition.preview?.intro?.facts ?? []) {
     if (fact.team !== undefined && !['school', 'opponent'].includes(fact.team)) {
       fail(`intro fact "${fact.label}" has team "${fact.team}"; use "school" or "opponent"`);

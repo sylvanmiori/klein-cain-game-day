@@ -120,6 +120,7 @@ for (const [index, game] of schedule.entries()) {
     preview: {
       playersHeading: 'Players to watch',
       playersNote: '',
+      playerStatsAudit: null,
       intro: {
         heading: 'The matchup',
         // Deliberately factual and free of analysis: it states what is known
