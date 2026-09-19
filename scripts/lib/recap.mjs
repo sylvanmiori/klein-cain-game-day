@@ -7,9 +7,9 @@
 // postgame player statistics are available from the sources this site uses.
 
 const MONTHS = ['Jan.', 'Feb.', 'March', 'April', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'];
-export const RECAP_NOTES_HEADING = 'Notes';
+export const RECAP_NOTES_HEADING = 'Extra';
 
-/** Turn optional editorial recap notes into the `final.notes` shape. */
+/** Turn optional editorial filler into the `final.notes` shape. */
 export function recapNoteSections(recapNotes) {
   const paragraphs = (recapNotes ?? []).map((note) => String(note || '').trim()).filter(Boolean);
   if (!paragraphs.length) return [];

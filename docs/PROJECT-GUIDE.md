@@ -218,7 +218,7 @@ It deliberately produces no unverified player claims. Verified game leaders come
 
 An authored recap is never overwritten: the composer only fills a `final` section that is null. Rehearsed end to end at `PROMOTE_TODAY=2026-09-19` with a stubbed score, which produced the Final tab as the default view with the original preview preserved in its own tab.
 
-Optional `recapNotes` on an edition hold editorial paragraphs to fold into the recap. Add them any week you have something worth saying beyond the verified score and forecast; leave the field out when you do not. Promotion merges them into `final.notes` under a **Notes** heading and leaves other authored note sections alone.
+Optional `recapNotes` hold extra editorial color — sideline context, a quote, something from the stands. The deterministic recap stands on its own; these are filler when they help and are omitted most weeks. Promotion merges them into `final.notes` under **Extra** and leaves other authored note sections alone.
 
 A richer written recap would need a language model, and with it the cost, citation and review controls that are still not in place. The deterministic recap exists so that a game night never ends with the site showing a stale preview while those controls are decided.
 

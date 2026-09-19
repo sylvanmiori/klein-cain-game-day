@@ -86,27 +86,27 @@ test('no player claims are ever produced', () => {
   assert.deepEqual(recap.notes, []);
 });
 
-test('optional recap notes become a Notes section', () => {
+test('optional recap notes become an Extra section', () => {
   const game = edition({
     finalScore: { home: 55, away: 38 },
     recapNotes: ['Homecoming night at Memorial Stadium.', 'The defense forced three turnovers.'],
   });
   const recap = composeRecap({ edition: game, editions: [game], schoolName: school, desk, now: at });
   assert.deepEqual(recap.notes, [{
-    heading: 'Notes',
+    heading: 'Extra',
     paragraphs: ['Homecoming night at Memorial Stadium.', 'The defense forced three turnovers.'],
   }]);
 });
 
-test('mergeRecapNotes replaces the Notes block without touching other sections', () => {
+test('mergeRecapNotes replaces the Extra block without touching other sections', () => {
   const existing = [
     { heading: 'The prediction was close', paragraphs: ['Massey called it.'] },
-    { heading: 'Notes', paragraphs: ['Old note.'] },
+    { heading: 'Extra', paragraphs: ['Old note.'] },
   ];
   const merged = mergeRecapNotes(existing, ['Updated sideline note.']);
   assert.deepEqual(merged, [
     { heading: 'The prediction was close', paragraphs: ['Massey called it.'] },
-    { heading: 'Notes', paragraphs: ['Updated sideline note.'] },
+    { heading: 'Extra', paragraphs: ['Updated sideline note.'] },
   ]);
   assert.deepEqual(recapNoteSections(null), []);
 });

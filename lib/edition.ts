@@ -206,8 +206,9 @@ export type Edition = {
   /** Null for a game archived without a preserved preview. */
   preview: PreviewSection | null;
   /**
-   * Optional editorial notes to fold into the postgame recap. Add these any
-   * time before or after the game; promotion merges them into `final.notes`.
+   * Optional extra editorial color for the postgame recap — sideline notes, a
+   * quote, something from the stands. The verified recap stands on its own;
+   * promotion merges these into `final.notes` when present.
    */
   recapNotes?: string[] | null;
   final: FinalSection | null;
