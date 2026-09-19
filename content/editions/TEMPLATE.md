@@ -55,6 +55,11 @@ recruiting notes, keys and game information are never generated.
 section is omitted from the page rather than rendered empty. `updated`,
 `event`, `ogImage` and `footerNote` accept an empty string.
 
+`recapNotes` is optional. When present, each string becomes a paragraph in the
+postgame recap's **Notes** section. Add them any week you have something worth
+saying beyond the verified score and forecast; leave the field out or set it to
+`null` when you do not.
+
 ```json
 {
   "schemaVersion": 2,
@@ -97,6 +102,7 @@ section is omitted from the page rather than rendered empty. `updated`,
     "gameInfo": null
   },
   "final": null,
+  "recapNotes": null,
   "finalScore": null,
   "sources": [],
   "footerNote": "Independent fan publication · Information will be rechecked before kickoff.",

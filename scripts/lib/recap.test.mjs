@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { composeRecap, recordThrough } from './recap.mjs';
+import { composeRecap, mergeRecapNotes, recapNoteSections, recordThrough } from './recap.mjs';
 
 const school = 'Klein Cain';
 const desk = 'Cain Game Day desk';
@@ -84,4 +84,29 @@ test('no player claims are ever produced', () => {
   const recap = composeRecap({ edition: game, editions: [game], schoolName: school, desk, now: at });
   assert.equal(recap.leaders, null, 'no verified postgame player statistics exist');
   assert.deepEqual(recap.notes, []);
+});
+
+test('optional recap notes become a Notes section', () => {
+  const game = edition({
+    finalScore: { home: 55, away: 38 },
+    recapNotes: ['Homecoming night at Memorial Stadium.', 'The defense forced three turnovers.'],
+  });
+  const recap = composeRecap({ edition: game, editions: [game], schoolName: school, desk, now: at });
+  assert.deepEqual(recap.notes, [{
+    heading: 'Notes',
+    paragraphs: ['Homecoming night at Memorial Stadium.', 'The defense forced three turnovers.'],
+  }]);
+});
+
+test('mergeRecapNotes replaces the Notes block without touching other sections', () => {
+  const existing = [
+    { heading: 'The prediction was close', paragraphs: ['Massey called it.'] },
+    { heading: 'Notes', paragraphs: ['Old note.'] },
+  ];
+  const merged = mergeRecapNotes(existing, ['Updated sideline note.']);
+  assert.deepEqual(merged, [
+    { heading: 'The prediction was close', paragraphs: ['Massey called it.'] },
+    { heading: 'Notes', paragraphs: ['Updated sideline note.'] },
+  ]);
+  assert.deepEqual(recapNoteSections(null), []);
 });
