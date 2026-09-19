@@ -12,7 +12,7 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { DCTF_ATTRIBUTION, fetchGameStats, fetchScoreRows, fetchStatLeaders } from './lib/sources.mjs';
 import { pickCurrent } from './lib/season.mjs';
-import { composeRecap } from './lib/recap.mjs';
+import { composeRecap, mergeRecapNotes } from './lib/recap.mjs';
 
 const root = process.cwd();
 const dryRun = process.argv.includes('--dry-run');
@@ -150,6 +150,16 @@ for (const { name, edition } of editions) {
   edition.state = 'final';
   Object.assign(edition, titles);
   changes.push(`${name}: wrote recap "${recap.headline}"`);
+}
+
+// Fold optional editorial recap notes into the final section whenever they
+// change, including after an authored recap already exists.
+for (const { name, edition } of editions) {
+  if (!edition.final || !edition.recapNotes?.length) continue;
+  const merged = mergeRecapNotes(edition.final.notes, edition.recapNotes);
+  if (JSON.stringify(merged) === JSON.stringify(edition.final.notes)) continue;
+  edition.final.notes = merged;
+  changes.push(`${name}: merged recap notes`);
 }
 
 // Exactly one edition is current.

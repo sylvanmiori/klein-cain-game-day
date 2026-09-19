@@ -44,7 +44,7 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `AGENTS.md` | short, mandatory handoff rules for an AI developer |
 | `scripts/check-docs.mjs` | build gate for stale documented paths and npm commands |
 
-Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore`, `stats` and `gameStats` (including `gameStats.playerOfGame`). Everything else is editorial and no script writes it.
+Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore`, `stats` and `gameStats` (including `gameStats.playerOfGame`). Everything else is editorial and no script writes it. `recapNotes` is editorial input: scripts read it when composing or updating the recap but never fill it.
 
 `npm run photos` reads the public 2026 MaxPreps roster, downloads available player mugshots into `public/players/`, and records each exact-name match on the roster. Player-of-the-Game selections inherit that local image automatically; players without a verified portrait retain the jersey-number fallback. Photos are never matched by jersey number alone because the combined roster contains duplicate numbers.
 
@@ -217,6 +217,8 @@ Every failure mode is covered by tests in `scripts/lib/stats.test.mjs`: a missin
 It deliberately produces no unverified player claims. Verified game leaders come from the separate MaxPreps game-statistics capture; the pregame players to watch are never presented as though they performed.
 
 An authored recap is never overwritten: the composer only fills a `final` section that is null. Rehearsed end to end at `PROMOTE_TODAY=2026-09-19` with a stubbed score, which produced the Final tab as the default view with the original preview preserved in its own tab.
+
+Optional `recapNotes` hold extra editorial color — sideline context, a quote, something from the stands. The deterministic recap stands on its own; these are filler when they help and are omitted most weeks. Promotion merges them into `final.notes` under **Extra** and leaves other authored note sections alone.
 
 A richer written recap would need a language model, and with it the cost, citation and review controls that are still not in place. The deterministic recap exists so that a game night never ends with the site showing a stale preview while those controls are decided.
 

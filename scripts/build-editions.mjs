@@ -134,6 +134,7 @@ for (const [index, game] of schedule.entries()) {
       gameInfo: null,
     },
     final: null,
+    recapNotes: null,
     sources: [],
     footerNote: 'Independent fan publication · Facts on this page refresh from public sources.',
     disclaimerEntities: [

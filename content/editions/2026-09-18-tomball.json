@@ -3,7 +3,7 @@
   "slug": "2026-09-18-tomball",
   "week": 3,
   "issue": "02",
-  "state": "preview",
+  "state": "final",
   "date": "2026-09-18",
   "dateLong": "September 18, 2026",
   "dateShort": "SEP 18, 2026",
@@ -25,10 +25,10 @@
     "record": "3–0",
     "rank": 45
   },
-  "pageTitle": "2026 Week 3 Preview: Tomball at Klein Cain",
-  "metaTitle": "Week 3 Preview: Tomball at Klein Cain | Cain Game Day",
-  "metaDescription": "Preview of Klein Cain’s Sept. 18 district opener and homecoming game against Tomball.",
-  "socialDescription": "Matchup facts and players to watch for the Sept. 18 district opener.",
+  "pageTitle": "2026 Week 3 Final: Tomball at Klein Cain",
+  "metaTitle": "Final: Klein Cain 55, Tomball 38 | Cain Game Day",
+  "metaDescription": "Final score and game report for Klein Cain beats Tomball, 55–38.",
+  "socialDescription": "Final score and verified game facts from Klein Cain's Week 3 game against Tomball.",
   "ogImage": "",
   "prediction": {
     "margin": -3,
@@ -53,7 +53,13 @@
     "asOf": "2026-09-18T18:00:29.656Z"
   },
   "stats": null,
-  "finalScore": null,
+  "finalScore": {
+    "home": 55,
+    "away": 38,
+    "source": "Dave Campbell’s Texas Football",
+    "sourceUrl": "https://www.texasfootball.com/",
+    "asOf": "2026-09-19T03:35:56.546Z"
+  },
   "rating": null,
   "scheduledFacts": [
     {
@@ -231,7 +237,28 @@
     "keys": null,
     "gameInfo": null
   },
-  "final": null,
+  "recapNotes": [
+    "Homecoming at Memorial Stadium. Quarterbacks coach Aiden Upchurch had said execution would decide it against a respected Tomball team — Cain delivered.",
+    "Jace Hanks (#9) ran the offense. The game got chippy late; Earl Oguinn Jr. (#1) was ejected in the fourth after a scuffle."
+  ],
+  "final": {
+    "headline": "Klein Cain beats Tomball, 55–38",
+    "byline": "Cain Game Day desk · Updated 10:35 PM CT",
+    "body": "Klein Cain beat Tomball 55–38 at Klein Memorial Stadium on Sept. 18, a 17-point win. Klein Cain is 3–0. Dave Campbell’s Texas Football had Tomball by 3; Klein Cain won by 17.",
+    "homeScore": 55,
+    "awayScore": 38,
+    "quarters": null,
+    "notes": [
+      {
+        "heading": "Extra",
+        "paragraphs": [
+          "Homecoming at Memorial Stadium. Quarterbacks coach Aiden Upchurch had said execution would decide it against a respected Tomball team — Cain delivered.",
+          "Jace Hanks (#9) ran the offense. The game got chippy late; Earl Oguinn Jr. (#1) was ejected in the fourth after a scuffle."
+        ]
+      }
+    ],
+    "leaders": null
+  },
   "sources": [
     {
       "label": "MaxPreps — Klein Cain statistics",

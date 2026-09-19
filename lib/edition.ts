@@ -205,6 +205,12 @@ export type Edition = {
   resultFacts: Fact[];
   /** Null for a game archived without a preserved preview. */
   preview: PreviewSection | null;
+  /**
+   * Optional extra editorial color for the postgame recap — sideline notes, a
+   * quote, something from the stands. The verified recap stands on its own;
+   * promotion merges these into `final.notes` when present.
+   */
+  recapNotes?: string[] | null;
   final: FinalSection | null;
   sources: { label: string; href: string }[];
   /** One line in the footer of a non-current edition page. */

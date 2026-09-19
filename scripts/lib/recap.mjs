@@ -7,6 +7,20 @@
 // postgame player statistics are available from the sources this site uses.
 
 const MONTHS = ['Jan.', 'Feb.', 'March', 'April', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'];
+export const RECAP_NOTES_HEADING = 'Extra';
+
+/** Turn optional editorial filler into the `final.notes` shape. */
+export function recapNoteSections(recapNotes) {
+  const paragraphs = (recapNotes ?? []).map((note) => String(note || '').trim()).filter(Boolean);
+  if (!paragraphs.length) return [];
+  return [{ heading: RECAP_NOTES_HEADING, paragraphs }];
+}
+
+/** Keep authored note sections and replace the editorial notes block. */
+export function mergeRecapNotes(existingNotes, recapNotes) {
+  const rest = (existingNotes ?? []).filter((note) => note.heading !== RECAP_NOTES_HEADING);
+  return [...rest, ...recapNoteSections(recapNotes)];
+}
 
 function apDate(isoDate) {
   const [, month, day] = isoDate.split('-');
@@ -32,7 +46,15 @@ export function recordThrough(editions, schoolName, date) {
  * Build the `final` section for a played game. Returns null when the game has
  * no captured score, so a recap can never precede a verified result.
  */
-export function composeRecap({ edition, editions, schoolName, desk, siteName = 'Cain Game Day', now = new Date() }) {
+export function composeRecap({
+  edition,
+  editions,
+  schoolName,
+  desk,
+  siteName = 'Cain Game Day',
+  recapNotes = edition.recapNotes,
+  now = new Date(),
+}) {
   const score = edition.finalScore;
   if (!score) return null;
 
@@ -98,7 +120,7 @@ export function composeRecap({ edition, editions, schoolName, desk, siteName = '
     homeScore: score.home,
     awayScore: score.away,
     quarters: null,
-    notes: [],
+    notes: recapNoteSections(recapNotes),
     // Left empty on purpose: no verified postgame player statistics exist in
     // the sources this site uses, and pregame players to watch must never be
     // presented as though they performed.

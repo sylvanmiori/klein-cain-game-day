@@ -34,6 +34,12 @@ for (const file of files) {
   for (const key of required) if (!(key in edition)) fail(`is missing "${key}"`);
 
   if (edition.schemaVersion !== 2) fail('must use schemaVersion 2');
+  if ('recapNotes' in edition && edition.recapNotes !== null) {
+    if (!Array.isArray(edition.recapNotes)) fail('recapNotes must be an array of strings or null');
+    for (const [index, note] of edition.recapNotes.entries()) {
+      if (typeof note !== 'string' || !note.trim()) fail(`recapNotes[${index}] must be a non-empty string`);
+    }
+  }
   if (!['preview', 'final'].includes(edition.state)) fail('state must be "preview" or "final"');
   if (file !== `${edition.slug}.json`) fail(`filename must match the slug (${edition.slug}.json)`);
 
