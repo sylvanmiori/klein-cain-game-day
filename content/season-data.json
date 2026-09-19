@@ -9,21 +9,26 @@
       "outcome": "W",
       "us": 45,
       "them": 20
+    },
+    "2026-09-18": {
+      "outcome": "W",
+      "us": 55,
+      "them": 38
     }
   },
   "records": {
-    "Humble": "1–2",
+    "Humble": "1–3",
     "Oak Ridge": "0–3",
-    "Tomball": "3–0",
+    "Tomball": "3–1",
     "Magnolia West": "2–2",
-    "Klein Collins": "2–1",
-    "Klein": "3–0",
+    "Klein Collins": "3–1",
+    "Klein": "4–0",
     "Klein Oak": "0–3",
-    "Tomball Memorial": "1–2",
-    "Magnolia": "1–2",
+    "Tomball Memorial": "1–3",
+    "Magnolia": "1–3",
     "Klein Forest": "1–3"
   },
   "source": "Dave Campbell’s Texas Football",
   "sourceUrl": "https://www.texasfootball.com/scores/",
-  "asOf": "2026-09-18T18:00:28.868Z"
+  "asOf": "2026-09-19T14:09:40.548Z"
 }

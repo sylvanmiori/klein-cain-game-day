@@ -282,5 +282,72 @@
     "Rivals",
     "247Sports"
   ],
-  "current": true
+  "current": true,
+  "gameStats": {
+    "team": "Klein Cain",
+    "playerOfGame": {
+      "name": "Eyan Johnson",
+      "number": "16",
+      "image": "/players/eyan-johnson.jpg",
+      "headline": "197 yards from scrimmage · 5 TDs",
+      "rationale": "Johnson finished with 190 rushing yards and 4 rushing touchdowns, and 7 receiving yards and 1 receiving touchdown.",
+      "model": "Cain Impact v1"
+    },
+    "totals": [
+      {
+        "label": "Total offense",
+        "value": "658 yards",
+        "detail": "348 passing · 310 rushing"
+      },
+      {
+        "label": "Passing",
+        "value": "348 yards",
+        "detail": "21 of 26 · 4 TD"
+      },
+      {
+        "label": "Rushing",
+        "value": "310 yards",
+        "detail": "46 carries · 4 TD"
+      },
+      {
+        "label": "Kicking",
+        "value": "7 points",
+        "detail": "7/8 PAT · no field-goal attempts"
+      }
+    ],
+    "leaders": [
+      {
+        "category": "Passing",
+        "name": "Jace Hanks",
+        "number": "9",
+        "stat": "348 passing yards",
+        "detail": "21 of 26 · 4 TD"
+      },
+      {
+        "category": "Rushing",
+        "name": "Eyan Johnson",
+        "number": "16",
+        "stat": "190 rushing yards",
+        "detail": "22 carries · 4 TD"
+      },
+      {
+        "category": "Receiving",
+        "name": "Israel Smith",
+        "number": "8",
+        "stat": "117 receiving yards",
+        "detail": "7 catches · 1 TD"
+      },
+      {
+        "category": "Kicking",
+        "name": "Sage DesAutels",
+        "number": "4",
+        "stat": "7 kicking points",
+        "detail": "7/8 PAT · no field-goal attempts"
+      }
+    ],
+    "updated": "2026-09-19T06:41:15",
+    "source": "MaxPreps",
+    "sourceUrl": "https://www.maxpreps.com/tx/football/game/klein-cain-houston-vs-tomball/9-18-2026/?c=984ab3a8-1912-4da5-b192-1709eec5585b&tab=Stats",
+    "asOf": "2026-09-19T14:09:38.185Z"
+  }
 }
