@@ -549,6 +549,16 @@
         "detail": "46 carries · 4 TD"
       },
       {
+        "label": "Defense",
+        "value": "57 tackles",
+        "detail": "37 solo · 3 TFL"
+      },
+      {
+        "label": "Punting",
+        "value": "32.0 average",
+        "detail": "1 punts · long 32"
+      },
+      {
         "label": "Kicking",
         "value": "7 points",
         "detail": "7/8 PAT · no field-goal attempts"
@@ -577,6 +587,13 @@
         "detail": "7 catches · 1 TD"
       },
       {
+        "category": "Tackles",
+        "name": "Jaemin Gilstrap",
+        "number": "42",
+        "stat": "11 total tackles",
+        "detail": "8 solo · 0 TFL"
+      },
+      {
         "category": "Kicking",
         "name": "Sage DesAutels",
         "number": "4",
@@ -584,9 +601,9 @@
         "detail": "7/8 PAT · no field-goal attempts"
       }
     ],
-    "updated": "2026-09-19T06:41:15",
+    "updated": "2026-09-19T11:27:09",
     "source": "MaxPreps",
     "sourceUrl": "https://www.maxpreps.com/tx/football/game/klein-cain-houston-vs-tomball/9-18-2026/?c=984ab3a8-1912-4da5-b192-1709eec5585b&tab=Stats",
-    "asOf": "2026-09-19T14:09:38.185Z"
+    "asOf": "2026-09-19T19:01:37.825Z"
   }
 }
