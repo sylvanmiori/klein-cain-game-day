@@ -73,10 +73,13 @@ export function MatchupCard({
   showLiveDot,
 }: Props) {
   const isScheduled = status === 'scheduled';
-  const decided = status === 'final' && Number.isFinite(away.score) && Number.isFinite(home.score)
-    && away.score !== home.score;
-  const awayWon = decided && Number(away.score) > Number(home.score);
-  const homeWon = decided && Number(home.score) > Number(away.score);
+  // The followed school stays on the left whether the game is home or away.
+  const featured = home.name === featuredTeamName ? home : away;
+  const opponent = home.name === featuredTeamName ? away : home;
+  const decided = status === 'final' && Number.isFinite(featured.score) && Number.isFinite(opponent.score)
+    && featured.score !== opponent.score;
+  const featuredWon = decided && Number(featured.score) > Number(opponent.score);
+  const opponentWon = decided && Number(opponent.score) > Number(featured.score);
   const resultFor = (team: Side, won: boolean): 'win' | 'loss' | null => {
     if (!decided || team.name !== featuredTeamName) return null;
     return won ? 'win' : 'loss';
@@ -91,7 +94,7 @@ export function MatchupCard({
       </div>
 
       <div className="matchup-teams">
-        <TeamBlock team={away} status={status} side="away" result={resultFor(away, awayWon)} lost={decided && !awayWon} />
+        <TeamBlock team={featured} status={status} side="away" result={resultFor(featured, featuredWon)} lost={decided && !featuredWon} />
         <div className="game-time">
           {isScheduled ? (
             <>
@@ -103,7 +106,7 @@ export function MatchupCard({
           )}
           <small>{venue}</small>
         </div>
-        <TeamBlock team={home} status={status} side="home" result={resultFor(home, homeWon)} lost={decided && !homeWon} />
+        <TeamBlock team={opponent} status={status} side="home" result={resultFor(opponent, opponentWon)} lost={decided && !opponentWon} />
       </div>
 
       <ul className={`game-facts${isScheduled ? '' : ' final-facts'}`}>
