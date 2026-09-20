@@ -55,11 +55,14 @@ renders a **Head coaches** section on every preview and final game page from
 that file, and the program page shows Klein Cain’s coach between games.
 
 When writing a preview intro, name each head coach once in the body — enough
-for readers to connect the matchup section to the story. Use the coach’s last
-name on second reference if needed. Do not duplicate the full bio from
-`coaches.json`; the rendered cards carry tenure and background. A fact row
-such as `Head coaches · James Clancy · Ben McGehee` in **Game information** is
-optional but helpful.
+for readers to connect the matchup section to the story. A sentence of
+game-specific context on the opposing coach is appropriate when it is verified
+(for example tenure or recent program history from Dave Campbell’s preview).
+Use the coach’s last name on second reference if needed. Do not paste the full
+bio from `coaches.json` into the intro; the **Head coaches** section renders
+an **On the other sideline** note from that file automatically on every
+preview. A fact row such as `Head coaches · James Clancy · Ben McGehee` in
+**Game information** is optional but helpful.
 
 Update `config/coaches.json` when a school changes head coaches. Every
 scheduled opponent must have an entry; `npm run docs:check` fails if one is
