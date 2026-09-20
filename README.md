@@ -16,7 +16,7 @@ The in-season data pipeline runs unattended in GitHub Actions. A scheduled workf
 
 Analysis is the exception: players to watch, keys and recruiting notes are never generated. Those sections stay empty unless a person writes them. A current preview with player capsules must include a team-by-team statistics audit completed within two days of kickoff. A full opponent-player section must also include a dated, roster-wide recruiting audit; every verified college commit and every source-specific top-10 position or top-100 national prospect found in that audit is required in Players to watch.
 
-New schedule opponents require one setup pass: add their exact MaxPreps profile to `config/opponent-logos.json` and run `npm run logos`. Player portraits are refreshed manually with `npm run photos`. Neither asset import runs on the recurring facts workflow.
+New schedule opponents require one setup pass: add their exact MaxPreps profile to `config/opponent-logos.json` and run `npm run logos`. Player portraits are refreshed manually with `npm run photos`. The varsity roster is refreshed from MaxPreps with `npm run roster`. Neither asset import runs on the recurring facts workflow.
 
 ## Development
 
@@ -27,6 +27,7 @@ Node 24 is used in CI and recommended locally; the declared minimum is Node 22.1
 - `npm run postgame` is the manual alias for promotion, game statistics and Player of the Game capture.
 - `npm run refresh` updates records, ranks, the published prediction, our rating, the forecast and our own results.
 - `npm run photos` stores available Klein Cain roster portraits locally and maps them by player identity.
+- `npm run roster` refreshes the varsity roster from MaxPreps and keeps existing local portraits by name.
 - `npm run logos` stores every configured opponent logo locally and updates its edition.
 - `npm run validate` checks every edition against the schedule and the editorial rules.
 - `npm run docs:check` verifies documented paths and npm commands still exist.

@@ -76,7 +76,7 @@ export function RosterSection() {
             </li>
           ))}
         </ol>
-        <p className="roster-note">Shared numbers and missing fields are shown as listed by the source.</p>
+        <p className="roster-note">Varsity roster only · missing fields are shown as listed by MaxPreps.</p>
       </section>
 
       <figure className="team-photo-footer">

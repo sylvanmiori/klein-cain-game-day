@@ -20,7 +20,7 @@ The season runs unattended. A scheduled workflow creates missing editions, promo
 
 What is still not automated is analysis: players to watch, keys, recruiting notes and any written narrative beyond the deterministic recap. No AI API is configured and none is called.
 
-All ten scheduled opponents now have local logo files. As checked September 5, 2026, MaxPreps exposed 57 portraits on its 66-player varsity roster; those exact-name matches are stored locally and available to Player of the Game. The combined site roster has additional entries from earlier source reconciliation, so a portrait is not assumed for every listed player.
+All ten scheduled opponents now have local logo files. As checked September 5, 2026, MaxPreps exposed 57 portraits on its 66-player varsity roster; those exact-name matches are stored locally and available to Player of the Game. The site roster tracks that same varsity list; run `npm run roster` when MaxPreps changes numbers or names.
 
 ## Where things live
 
@@ -30,7 +30,7 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `app/games/[week]/page.tsx` | `/games/week-<n>`, renders `components/edition-page.tsx` |
 | `content/editions/*.json` | one file per game, schema v2, typed in `lib/edition.ts` |
 | `content/season-data.json` | machine-written: our results and every opponent's record |
-| `content/roster-2026.json` | roster, hand-maintained; local MaxPreps portrait paths are synced with `npm run photos` |
+| `content/roster-2026.json` | varsity roster synced from MaxPreps with `npm run roster`; local portrait paths are synced with `npm run photos` |
 | `config/season-2026.json` | the schedule; authority on date, opponent, venue, home/away, kickoff |
 | `config/opponent-logos.json` | exact MaxPreps profile used for each scheduled opponent's logo |
 | `config/publication.json` | school, wordmark, source URLs |
@@ -46,7 +46,7 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 
 Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore`, `stats` and `gameStats` (including `gameStats.playerOfGame`). Everything else is editorial and no script writes it. `recapNotes` is editorial input: scripts read it when composing or updating the recap but never fill it.
 
-`npm run photos` reads the public 2026 MaxPreps roster, downloads available player mugshots into `public/players/`, and records each exact-name match on the roster. Player-of-the-Game selections inherit that local image automatically; players without a verified portrait retain the jersey-number fallback. Photos are never matched by jersey number alone because the combined roster contains duplicate numbers.
+`npm run roster` reads the public MaxPreps varsity roster and rewrites `content/roster-2026.json`, keeping any existing local portrait paths when the name still matches. `npm run photos` downloads available mugshots into `public/players/` and records each exact-name match on the roster. Player-of-the-Game selections inherit that local image automatically; players without a verified portrait retain the jersey-number fallback.
 
 `npm run logos` downloads any missing scheduled-opponent marks from the exact MaxPreps profiles in `config/opponent-logos.json`, stores them locally in `public/`, and replaces placeholder paths in the edition files. Every scheduled opponent must have a configured profile, so a new opponent cannot silently ship with the wrong school's similarly named logo.
 
@@ -109,6 +109,7 @@ npm run editions     # create a starter edition for any scheduled game lacking o
 npm run promote      # set the current edition, capture a final score, write the recap
 npm run postgame     # manual alias for postgame stats + Player of the Game
 npm run refresh      # records, ranks, prediction, rating, forecast, results
+npm run roster       # sync the varsity roster from MaxPreps and keep local portraits
 npm run photos       # sync available Klein Cain portraits from the configured roster source
 npm run logos        # sync all configured scheduled-opponent logos and edition paths
 npm run docs:check   # catch stale paths and npm commands in the handoff docs
@@ -259,7 +260,7 @@ Each of these cost real debugging time. They are recorded so the next person doe
 - **A CSS margin is not a space.** Two elements separated only by `margin-left` read as `ThuAug 27` to a screen reader and when copied. Put a real space in the markup.
 - **Measuring a CSS transition in a hidden browser pane gives the start value forever**, because no animation frames run. A `max-height` read as a stuck 60px and looked exactly like a broken cascade. Disable the transition before measuring.
 - **Cloudflare's check-run registers a little after the push.** A wait loop that only counts completed checks can exit before Workers Builds appears and report success too early. Wait for the check by name.
-- **Asset sync is setup, not recurring automation.** The facts workflow does not run `npm run photos` or `npm run logos`. Add an exact opponent profile and run the logo sync before a new edition can pass validation; refresh portraits manually when the MaxPreps roster changes.
+- **Asset sync is setup, not recurring automation.** The facts workflow does not run `npm run roster`, `npm run photos` or `npm run logos`. Add an exact opponent profile and run the logo sync before a new edition can pass validation; refresh the roster and portraits manually when MaxPreps changes.
 
 ## Recovery and future schools
 

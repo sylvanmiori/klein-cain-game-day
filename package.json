@@ -13,7 +13,7 @@
     "score": "node scripts/update-live-score.mjs",
     "build:cloudflare": "npm run docs:check && npm run validate && DEPLOY_TARGET=cloudflare vinext build && node scripts/check-build.mjs",
     "deploy:cloudflare": "wrangler deploy --config cloudflare/wrangler.jsonc",
-    "test:score": "node --test cloudflare/*.test.mjs scripts/lib/*.test.mjs",
+    "test:score": "node --test cloudflare/*.test.mjs scripts/lib/*.test.mjs scripts/sync-roster.test.mjs",
     "lint": "oxlint",
     "format": "oxfmt",
     "validate": "node scripts/validate-editions.mjs",
@@ -23,6 +23,7 @@
     "postgame": "node scripts/promote-edition.mjs",
     "editions": "node scripts/build-editions.mjs",
     "photos": "node scripts/sync-player-photos.mjs",
+    "roster": "node scripts/sync-roster.mjs",
     "logos": "node scripts/sync-opponent-logos.mjs",
     "docs:check": "node scripts/check-docs.mjs"
   },
