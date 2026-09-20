@@ -2,6 +2,7 @@ import publication from '../config/publication.json';
 import schedule from '../config/season-2026.json';
 import liveScore from '../public/live-score.json';
 import { GameReportTabs } from './game-report-tabs';
+import { CoachingMatchupSection } from './coaching-section';
 import { LiveScoreCard, type LiveScore } from './live-score-card';
 import { MatchupCard } from './matchup-card';
 import { PlayerReports } from './player-reports';
@@ -22,6 +23,7 @@ import {
   rankFact,
   weatherFact,
 } from '../lib/edition';
+import { type CoachingMatchup, coachingMatchup } from '../lib/coaches';
 import { sitePath } from '../lib/site-path';
 
 /** The next unplayed game after this one, so "Next" can never go stale. */
@@ -32,6 +34,9 @@ function nextGameFact(edition: Edition): Fact | null {
 }
 
 export function PreviewView({ edition, preview }: { edition: Edition; preview: PreviewSection }) {
+  const opponent = opponentOf(edition, publication.schoolName);
+  const matchup = coachingMatchup(opponent.name, opponent.mascot);
+
   return (
     <>
       {preview.intro && (
@@ -55,6 +60,8 @@ export function PreviewView({ edition, preview }: { edition: Edition; preview: P
           )}
         </section>
       )}
+
+      {matchup && <CoachingMatchupSection matchup={matchup} />}
 
       {preview.players.length > 0 && (
         <section className="players" id="players">
@@ -197,7 +204,15 @@ function PlayerOfGame({ stats }: { stats: GameStats }) {
   );
 }
 
-export function FinalView({ final, gameStats }: { final: FinalSection; gameStats?: GameStats | null }) {
+export function FinalView({
+  final,
+  gameStats,
+  matchup,
+}: {
+  final: FinalSection;
+  gameStats?: GameStats | null;
+  matchup?: CoachingMatchup | null;
+}) {
   return (
     <>
       {final.quarters ? (
@@ -273,12 +288,16 @@ export function FinalView({ final, gameStats }: { final: FinalSection; gameStats
           </div>
         </section>
       ))}
+
+      {matchup && <CoachingMatchupSection matchup={matchup} />}
     </>
   );
 }
 
 export function EditionPage({ edition }: { edition: Edition }) {
   const { preview, final } = edition;
+  const opponent = opponentOf(edition, publication.schoolName);
+  const matchup = coachingMatchup(opponent.name, opponent.mascot);
   const home = sitePath('/');
   const rosterHash = sitePath('/#roster-heading');
   const nextFact = nextGameFact(edition);
@@ -304,12 +323,12 @@ export function EditionPage({ edition }: { edition: Edition }) {
     ? (
       <GameReportTabs
         initialStatus={edition.current ? (liveScore as LiveScore).status : 'final'}
-        finalView={<><FinalView final={final} gameStats={edition.gameStats} /><SeasonStats edition={edition} /></>}
+        finalView={<><FinalView final={final} gameStats={edition.gameStats} matchup={matchup} /><SeasonStats edition={edition} /></>}
         previewView={<PreviewView edition={edition} preview={preview} />}
       />
     )
     : final
-      ? <><FinalView final={final} gameStats={edition.gameStats} /><SeasonStats edition={edition} /></>
+      ? <><FinalView final={final} gameStats={edition.gameStats} matchup={matchup} /><SeasonStats edition={edition} /></>
       : preview
         ? <PreviewView edition={edition} preview={preview} />
         : null;
@@ -322,6 +341,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
         </a>
         <nav aria-label="Site navigation">
           {preview && preview.players.length > 0 && <a href="#players">Players</a>}
+          {matchup && <a href="#coaching">Coaches</a>}
           {final && !(preview && preview.players.length > 0) && <a href="#final">Recap</a>}
           <a href="#schedule">Schedule</a>
           <a href={rosterHash}>Roster</a>
@@ -391,7 +411,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
             {publication.wordmarkParts[0]} <span>/</span> {publication.wordmarkParts[1]}
           </a>
           <p>
-            Week {edition.week} · {opponentOf(edition, publication.schoolName).name} · {apDate(edition.date, true)}
+            Week {edition.week} · {opponent.name} · {apDate(edition.date, true)}
           </p>
         </div>
         <div className="sources">

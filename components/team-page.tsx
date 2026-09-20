@@ -5,6 +5,7 @@ import { FinalView, PreviewView } from './edition-page';
 import { LiveScoreCard, type LiveScore } from './live-score-card';
 import { SeasonHub, seasonRecord } from './season-hub';
 import { RosterSection, SeasonStats } from './team-sections';
+import { SchoolCoachSection } from './coaching-section';
 import {
   apDate,
   currentEdition,
@@ -16,6 +17,7 @@ import {
   rankFact,
   weatherFact,
 } from '../lib/edition';
+import { coachingMatchup } from '../lib/coaches';
 import { sitePath } from '../lib/site-path';
 
 /**
@@ -31,6 +33,8 @@ export function TeamPage() {
   const featured = currentEdition;
   const stats = latestEditionWithStats();
   const isPreview = Boolean(featured.preview && !featured.final);
+  const featuredOpponent = opponentOf(featured, publication.schoolName);
+  const featuredMatchup = coachingMatchup(featuredOpponent.name, featuredOpponent.mascot);
   const autoFacts = [rankFact(featured), predictionFact(featured, publication.schoolName), weatherFact(featured)]
     .filter((fact): fact is NonNullable<typeof fact> => fact !== null);
   const facts = [...featured.scheduledFacts, ...autoFacts].slice(0, 4);
@@ -48,6 +52,7 @@ export function TeamPage() {
         </a>
         <nav aria-label="Site navigation">
           {isPreview && featured.preview!.players.length > 0 && <a href="#players">Players</a>}
+          {featuredMatchup && <a href="#coaching">Coaches</a>}
           <a href="#schedule">Schedule</a>
           {featured.final && featured.gameStats
             ? <a href="#game-stats">Stats</a>
@@ -85,7 +90,9 @@ export function TeamPage() {
       </section>
 
       <article className="program-hub">
-        {featured.final && <FinalView final={featured.final} gameStats={featured.gameStats} />}
+        {featured.final && (
+          <FinalView final={featured.final} gameStats={featured.gameStats} matchup={featuredMatchup} />
+        )}
         {isPreview && <PreviewView edition={featured} preview={featured.preview!} />}
 
         <SeasonHub activeDate={featured.date} />
@@ -100,6 +107,8 @@ export function TeamPage() {
         </nav>
 
         {stats && <SeasonStats edition={stats} note="Season totals" />}
+
+        {!isPreview && <SchoolCoachSection />}
 
         <RosterSection />
       </article>

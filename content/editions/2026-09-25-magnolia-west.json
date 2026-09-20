@@ -94,7 +94,7 @@
     },
     "intro": {
       "heading": "The read",
-      "body": "Klein Cain rides a 55–38 homecoming win into its first road district game of 2026. Magnolia West is 0–2 in District 15-6A after a 55–7 loss to Magnolia and a 43–42 heartbreaker at Klein Forest, and the Mustangs need their first league win at home. Cain is 3–0 and averaging 47.3 points; Dave Campbell’s latest computer rankings place Cain No. 83 and Magnolia West No. 196, with the model favoring Cain by 22 — the widest margin on Cain’s schedule so far.",
+      "body": "Klein Cain rides a 55–38 homecoming win into its first road district game of 2026 under head coach James Clancy. Magnolia West is 0–2 in District 15-6A after a 55–7 loss to Magnolia and a 43–42 heartbreaker at Klein Forest, and Ben McGehee’s Mustangs need their first league win at home. Cain is 3–0 and averaging 47.3 points; Dave Campbell’s latest computer rankings place Cain No. 83 and Magnolia West No. 196, with the model favoring Cain by 22 — the widest margin on Cain’s schedule so far.",
       "facts": [
         {
           "label": "Cain",
@@ -110,6 +110,11 @@
           "label": "Pick",
           "value": "Cain by 22",
           "team": "school"
+        },
+        {
+          "label": "Magnolia West coach",
+          "value": "Ben McGehee · 6th season",
+          "team": "opponent"
         },
         {
           "label": "Series",
@@ -227,6 +232,10 @@
         {
           "label": "Series",
           "value": "Cain leads 2–0 · 62–34 in 2025 · 42–21 in 2024"
+        },
+        {
+          "label": "Head coaches",
+          "value": "James Clancy · Ben McGehee"
         },
         {
           "label": "Conditions",

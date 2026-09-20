@@ -59,6 +59,14 @@ for (const game of schedule) {
   }
 }
 
+const coaches = JSON.parse(await readFile(path.join(root, 'config/coaches.json'), 'utf8'));
+for (const game of schedule) {
+  if (!coaches.opponents?.[game.opponent]) {
+    problems.push(`config/coaches.json: ${game.opponent} is missing a head coach profile`);
+  }
+}
+if (!coaches.school?.name) problems.push('config/coaches.json: school head coach is missing');
+
 if (problems.length) {
   console.error(problems.join('\n'));
   process.exit(1);

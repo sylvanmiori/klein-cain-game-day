@@ -1,0 +1,104 @@
+{
+  "school": {
+    "name": "James Clancy",
+    "title": "Head Coach · Campus Athletic Director",
+    "image": "/coaches/james-clancy.png",
+    "season": 9,
+    "record": "56–33",
+    "bio": "Clancy has led Klein Cain since the program opened in 2017, with district titles in 2022 and 2024 and six straight playoff berths through 2025.",
+    "source": "Klein Cain Athletics",
+    "sourceUrl": "https://www.kleincainathletics.com/Staff/Bio/38148"
+  },
+  "opponents": {
+    "Humble": {
+      "name": "Robert Murphy",
+      "title": "Head Coach",
+      "season": 4,
+      "record": "12–18",
+      "bio": "Murphy is in his fourth season at Humble and is trying to lift the Wildcats back into the playoffs for the first time since 2019.",
+      "source": "Dave Campbell’s Texas Football",
+      "sourceUrl": "https://texashsfootball.com/humble-wildcats-2026-season-preview/"
+    },
+    "Oak Ridge": {
+      "name": "Tyler Blackshire",
+      "title": "Head Coach · Campus Athletic Director",
+      "season": 2,
+      "record": "4–6",
+      "bio": "Blackshire took over at Oak Ridge in 2025 and returns 13 starters while trying to end back-to-back playoff misses.",
+      "source": "Dave Campbell’s Texas Football",
+      "sourceUrl": "https://texashsfootball.com/oak-ridge-war-eagles-2026-season-preview/"
+    },
+    "Tomball": {
+      "name": "Dave Handal",
+      "title": "Head Coach",
+      "season": 5,
+      "record": "35–15",
+      "bio": "Handal has won a playoff game in all four of his full seasons at Tomball and is working through heavy turnover on this year’s roster.",
+      "source": "Dave Campbell’s Texas Football",
+      "sourceUrl": "https://texashsfootball.com/tomball-cougars-2026-season-preview/"
+    },
+    "Magnolia West": {
+      "name": "Ben McGehee",
+      "title": "Head Coach",
+      "season": 6,
+      "record": "28–28",
+      "bio": "McGehee is in his sixth season at Magnolia West and has spent this fall rebuilding culture after three total wins across the last two 6A seasons.",
+      "source": "Dave Campbell’s Texas Football",
+      "sourceUrl": "https://texashsfootball.com/magnolia-west-mustangs-2026-season-preview/"
+    },
+    "Klein Collins": {
+      "name": "Adrian Mitchell",
+      "title": "Head Coach",
+      "season": 9,
+      "record": "69–26",
+      "bio": "Mitchell has taken Klein Collins to the playoffs in all eight of his seasons and reached the regional semifinals in each of the last two years.",
+      "source": "Dave Campbell’s Texas Football",
+      "sourceUrl": "https://texashsfootball.com/klein-collins-tigers-2026-season-preview/"
+    },
+    "Klein": {
+      "name": "Nick Codutti",
+      "title": "Head Coach",
+      "season": 2,
+      "record": "6–5",
+      "bio": "Codutti returned Klein to the playoffs in his first season and gets quarterback Carter Lattelle back from an ACL injury this fall.",
+      "source": "Dave Campbell’s Texas Football",
+      "sourceUrl": "https://texashsfootball.com/klein-bearkats-2026-season-preview/"
+    },
+    "Klein Oak": {
+      "name": "Brandon Carpenter",
+      "title": "Head Coach",
+      "season": 6,
+      "record": "24–28",
+      "bio": "Carpenter’s Panthers lost three one-score district games last year and missed the playoffs for the third time in four seasons.",
+      "source": "Dave Campbell’s Texas Football",
+      "sourceUrl": "https://texashsfootball.com/klein-oak-panthers-2026-season-preview/"
+    },
+    "Tomball Memorial": {
+      "name": "Joe Dale Cary",
+      "title": "Head Coach",
+      "season": 3,
+      "record": "8–12",
+      "bio": "Cary is in his third season at Tomball Memorial, where the defense allowed 42 or more in seven district games a year ago.",
+      "source": "Dave Campbell’s Texas Football",
+      "sourceUrl": "https://texashsfootball.com/tomball-memorial-wildcats-2026-season-preview/"
+    },
+    "Magnolia": {
+      "name": "Craig Martin",
+      "title": "Head Coach",
+      "season": 8,
+      "record": "51–27",
+      "bio": "Martin has won nine games in two of the last three seasons at Magnolia and has reached the playoffs in five of his seven years there.",
+      "source": "Dave Campbell’s Texas Football",
+      "sourceUrl": "https://texashsfootball.com/magnolia-bulldogs-2026-season-preview/"
+    },
+    "Klein Forest": {
+      "name": "Darrick Vaughn",
+      "title": "Head Coach",
+      "season": 4,
+      "record": "8–22",
+      "bio": "Vaughn’s Eagles finished 2–8 for the second straight year and must replace most of an offense that scored well in 2025.",
+      "source": "Dave Campbell’s Texas Football",
+      "sourceUrl": "https://texashsfootball.com/klein-forest-eagles-2026-season-preview/"
+    }
+  }
+}

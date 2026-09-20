@@ -223,6 +223,23 @@ article>section { border-bottom:1px solid var(--line); }
 .leader-card h3 { margin:6px 0 10px; font-size:19px; letter-spacing:-.035em; }
 .leader-card strong { display:block; font-size:13px; }
 .leader-card p { margin:3px 0 0; color:#66666d; font-size:10px; }
+.coaching { padding:52px var(--pad) 58px; border-bottom:1px solid var(--line); background:#fff; }
+.coaching-school .coach-card { display:grid; grid-template-columns:140px 1fr; gap:28px; align-items:start; max-width:920px; }
+.coaching-matchup .coach-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; }
+.coach-card { min-width:0; padding:24px; border:1px solid var(--line); border-radius:18px; background:#faf8f5; }
+.coach-card.opponent { background:#fff; }
+.coach-photo { width:120px; height:120px; border-radius:50%; object-fit:cover; object-position:center top; border:3px solid #ded7e0; }
+.coach-photo-placeholder { display:grid; place-items:center; background:#ece8e0; color:#6e6e73; font-size:28px; font-weight:850; letter-spacing:-.04em; }
+.coach-card.school .coach-photo { border-color:#cdb8de; }
+.coach-card.opponent .coach-photo { border-color:#efb8b8; }
+.coaching-matchup .coach-card { display:grid; grid-template-columns:1fr; gap:18px; justify-items:start; }
+.coach-kicker { margin:0; color:#6e6e73; font-size:9px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+.coach-card h3 { margin:8px 0 0; font-size:24px; line-height:1.05; letter-spacing:-.04em; }
+.coach-title,.coach-tenure { margin:6px 0 0; font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
+.coach-tenure { color:var(--purple); }
+.coach-card.opponent .coach-tenure { color:var(--red); }
+.coach-bio { margin:14px 0 0; max-width:36em; font-size:14px; line-height:1.55; color:#44444a; }
+.coach-copy a { display:inline-block; margin-top:14px; font-size:10px; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
 .early-read { display:grid; grid-template-columns:1fr minmax(340px,.72fr); gap:7vw; padding:52px var(--pad) 58px; border-bottom:1px solid var(--line); }
 .early-read dl { margin:0; border-top:1px solid #99999f; }
 .early-read dl>div { display:flex; justify-content:space-between; gap:20px; padding:13px 0; border-bottom:1px solid var(--line); }
@@ -271,6 +288,6 @@ footer>div:first-child p { font:italic 13px "Helvetica Neue", Helvetica, Arial, 
 @media(max-width:900px){.score-line,.team.home .score-line{margin:6px auto 0}.result-mark{width:8px;height:8px}}
 @media(max-width:480px){.roster{padding-top:48px;padding-bottom:54px}.roster-list li{grid-template-columns:28px 1fr;gap:7px;padding:8px 7px}.roster-list li>b{font-size:16px}.roster-list strong{font-size:9.5px}.roster-list small{font-size:7px}}
 
-@media(max-width:900px){.player-of-game{grid-template-columns:74px 1fr;gap:18px;padding:30px var(--pad)}.player-of-game-visual,.player-of-game-photo,.player-of-game-number{width:74px;height:74px}.player-of-game-number{font-size:24px}.player-of-game .player-of-game-jersey{width:26px;height:26px;border-width:2px;font-size:8px}.player-of-game h2{font-size:23px}.player-of-game p{font-size:12px}.game-statistics{padding:38px var(--pad) 44px}.game-stat-layout{grid-template-columns:1fr;gap:28px}.game-total-grid{grid-template-columns:1fr 1fr}.game-leader-list article{grid-template-columns:64px minmax(0,1fr);gap:3px 10px}.game-leader-list article>span{grid-row:auto}.game-leader-list article b,.game-leader-list article p{grid-column:2;text-align:left}.game-statistics .compact-head>a{display:inline-block;margin-top:10px}}
+@media(max-width:900px){.player-of-game{grid-template-columns:74px 1fr;gap:18px;padding:30px var(--pad)}.player-of-game-visual,.player-of-game-photo,.player-of-game-number{width:74px;height:74px}.player-of-game-number{font-size:24px}.player-of-game .player-of-game-jersey{width:26px;height:26px;border-width:2px;font-size:8px}.player-of-game h2{font-size:23px}.player-of-game p{font-size:12px}.game-statistics{padding:38px var(--pad) 44px}.game-stat-layout{grid-template-columns:1fr;gap:28px}.game-total-grid{grid-template-columns:1fr 1fr}.game-leader-list article{grid-template-columns:64px minmax(0,1fr);gap:3px 10px}.game-leader-list article>span{grid-row:auto}.game-leader-list article b,.game-leader-list article p{grid-column:2;text-align:left}.game-statistics .compact-head>a{display:inline-block;margin-top:10px}.coaching{padding:38px var(--pad) 44px}.coaching-school .coach-card{grid-template-columns:1fr;gap:18px}.coaching-matchup .coach-grid{grid-template-columns:1fr;gap:18px}.coach-photo{width:100px;height:100px}}
 
 @media (prefers-reduced-motion:reduce){.mobile-copy,.player-toggle svg{transition:none}}
