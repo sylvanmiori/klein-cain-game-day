@@ -3,6 +3,7 @@ import publication from '../../config/publication.json';
 import { seasonGalleries } from '../../lib/galleries';
 import { apDate, editionPath, opponentOf } from '../../lib/edition';
 import { sitePath } from '../../lib/site-path';
+import { PhotoGalleryGrid } from '../../components/game-photos';
 
 export const dynamic = 'force-static';
 
@@ -49,14 +50,7 @@ export default function PhotosPage() {
                   </p>
                 )}
               </div>
-              <div className="photo-gallery-grid">
-                {gallery.photos.map((photo) => (
-                  <figure key={photo.src}>
-                    <img src={sitePath(photo.src)} alt={photo.alt} />
-                    <figcaption>{photo.caption}</figcaption>
-                  </figure>
-                ))}
-              </div>
+              <PhotoGalleryGrid photos={gallery.photos} />
               <p className="photo-credit">
                 Photo:{' '}
                 <a href={gallery.galleryUrl} target="_blank" rel="noreferrer">
