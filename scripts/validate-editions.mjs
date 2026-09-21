@@ -193,6 +193,10 @@ for (const file of files) {
         fail('do not publish notes under "Extra"; weave commentary directly into the recap body (final.body)');
       }
     }
+    // Quotes and commentary must be attributed as statements to reporters / Game Day desk, never assumed to be speeches to the team.
+    if (edition.final.body && /\btold\s+the\s+(?:team|players|squad|locker\s*room)\b/i.test(edition.final.body)) {
+      fail('recap body must not assume quotes were delivered to the team ("told the team"); attribute quotes as statements to reporters or Game Day (e.g. "[Name] said" or "[Name] said before kickoff")');
+    }
   }
 
   for (const player of edition.preview?.players ?? []) {

@@ -12,6 +12,7 @@ Read `README.md`, then `docs/PROJECT-GUIDE.md`, before changing this repository.
 - Store public assets locally; do not make page rendering depend on third-party image hotlinks.
 - Keep the compact Apple Sports/Yahoo Sports design direction. Test desktop and mobile.
 - Never use generic "Jersey <number>" placeholders in photo captions or alt text. Resolve player names, numbers and positions using `content/roster-2026.json` (and opponent rosters when available) in high-caliber sports journalism style.
+- Attribute quotes and commentary as statements to reporters or Game Day (e.g., "[Name] said before kickoff" or "[Name] said"), never assuming or inventing internal team speech context like "told the team" or "addressed the locker room".
 - Never commit passwords, access tokens, payment details or Cloudflare secrets.
 
 ## Before handing work back
