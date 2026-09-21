@@ -1,6 +1,6 @@
 # Game Day Report project guide
 
-Updated September 15, 2026. Written to be picked up cold: an AI developer should read repository-root `AGENTS.md`, then **Current status**, **Where things live** and **Traps worth knowing** here. Keep this file current when accounts, hosting, automation, sources, commands or data ownership change. Never store passwords, tokens or payment details here.
+Updated September 21, 2026. Written to be picked up cold: an AI developer should read repository-root `AGENTS.md`, then **Current status**, **Where things live** and **Traps worth knowing** here. Keep this file current when accounts, hosting, automation, sources, commands or data ownership change. Never store passwords, tokens or payment details here.
 
 ## Ownership and addresses
 
@@ -14,7 +14,7 @@ Updated September 15, 2026. Written to be picked up cold: an AI developer should
 
 Live at https://kleincain.gameday.report/, deployed by Cloudflare Workers Builds on every push to `main`. GitHub Pages remains a fallback.
 
-`/` is the Klein Cain program page. Each of the ten games has its own report at `/games/week-<n>`, rendered from one JSON file in `content/editions/` by `components/edition-page.tsx`. All ten editions exist and are validated.
+`/` is the Klein Cain program page with a unified Next Game card (hero + matchup strip) for the current edition, then latest recap, schedule and the rest of the program hub. Each of the ten games has its own report at `/games/week-<n>`, rendered from one JSON file in `content/editions/` by `components/edition-page.tsx`. All ten editions exist and are validated.
 
 The season runs unattended. A scheduled workflow creates missing editions, promotes the current game, refreshes facts from public sources and writes a postgame recap, all without a language model. See **Running unattended**.
 
@@ -28,15 +28,19 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | --- | --- |
 | `app/page.tsx` | `/`, renders `components/team-page.tsx` |
 | `app/games/[week]/page.tsx` | `/games/week-<n>`, renders `components/edition-page.tsx` |
+| `components/program-home-spotlight.tsx` | homepage stack: Next Game card + latest recap link |
+| `components/home-next-game-card.tsx` | unified Next Game module (feature hero + matchup strip + live score poll) |
 | `content/editions/*.json` | one file per game, schema v2, typed in `lib/edition.ts` |
 | `content/season-data.json` | machine-written: our results and every opponent's record |
 | `content/roster-2026.json` | varsity roster synced from MaxPreps with `npm run roster`; local portrait paths are synced with `npm run photos` |
 | `config/season-2026.json` | the schedule; authority on date, opponent, venue, home/away, kickoff |
 | `config/opponent-logos.json` | exact MaxPreps profile used for each scheduled opponent's logo |
-| `config/publication.json` | school, wordmark, source URLs |
+| `config/publication.json` | school, wordmark, source URLs, homepage hero asset paths |
 | `config/coaches.json` | head coaches for Klein Cain and every scheduled opponent, with bios and verified career stops; rendered on previews and the program page |
 | `config/program.json` | program history and past seasons |
 | `config/venues.json` | venue coordinates, for the forecast |
+| `public/hero-next-game.jpg` | photographic Next Game hero (smoke helmet); swap via `publication.heroNextGameImage` |
+| `public/silver_cain_football_helmet_cutout.png` | optional cutout asset; path on `publication.heroHelmetCutout` |
 | `scripts/lib/sources.mjs` | every external fetcher and parser |
 | `scripts/lib/rating.mjs` | least-squares rating and team records |
 | `scripts/lib/recap.mjs` | deterministic postgame recap |
@@ -61,13 +65,22 @@ The code targets Cloudflare's free Worker and KV allowances. Those quotas are fi
 
 ## The program page
 
-`/` is the Klein Cain program homepage. It leads with the season record, primary links to the next preview and latest recap, and a live score card for whichever edition promotion marks current. The full schedule, program history, links to every game report, season stat leaders, head coach and roster follow on the same page. Previews and recaps render only on `/games/week-<n>`.
+`/` is the Klein Cain program homepage. Above the fold it shows the season record, then one unified **Next Game** card for whichever edition promotion marks current, then the latest recap link. The full schedule, program history, links to every game report, season stat leaders, head coach and roster follow on the same page. Previews and recaps render only on `/games/week-<n>`.
 
-Between games, the secondary link points at the most recent final. On the Monday of the next game's week, the primary link switches to that preview and the live card moves with promotion. While a featured game is final, its recap, Player of the Game and game statistics appear on that game's report page, not on `/`.
+### Next Game card
 
-Every game report is a subpage at `/games/week-<n>`, including whichever one is current. The program page and game reports share `SeasonHub`, `LiveScoreCard` and `SeasonStats`. `RosterSection` appears only on the program page.
+`components/home-next-game-card.tsx` is one outer card with two zones, not two stacked widgets:
 
-On a final matchup card, Klein Cain stays on the left whether the game is home or away; the opponent is on the right. The winner stays at full contrast and the losing name and score are muted. A small green or red dot sits on the midfield side of Klein Cain's score to show the result without moving the number off-center. The score itself stays white; result color is intentionally limited to the dot.
+1. **Feature zone** — dark editorial hero. Left column: Next game kicker, matchup headline, week/district, date/time/venue with icons, single Game Preview CTA. Right side: local photographic hero (`publication.heroNextGameImage` → `public/hero-next-game.jpg`) framed with `object-fit: cover` and a left-to-right black edge gradient so the photo never shows a hard rectangular seam into the text. Live/final games add a compact status line in this zone; scheduled games do not repeat date, kickoff or district in a second header.
+2. **Matchup strip** — same card, separated by a 1px translucent divider. Team logos, names and records (or live scores), then a compact Last meeting / Texas rank row. No second preview button.
+
+`ProgramHomeSpotlight` wires that card plus the latest-recap teaser. Hierarchy on `/` is: program intro → Next Game → Latest Recap → schedule / reports / stats / coach / roster.
+
+Between games, the recap teaser points at the most recent final. On the Monday of the next game's week, promotion moves the Next Game card to that preview. While a featured game is final, its recap, Player of the Game and game statistics appear on that game's report page, not on `/`.
+
+Every game report is a subpage at `/games/week-<n>`, including whichever one is current. The program page and game reports share `SeasonHub` and `SeasonStats`. Live polling for the featured game lives inside `HomeNextGameCard` (not a separate homepage score widget). `RosterSection` appears only on the program page.
+
+On a final matchup layout (game report cards and the Next Game strip), Klein Cain stays on the left whether the game is home or away; the opponent is on the right. The winner stays at full contrast and the losing name and score are muted. A small green or red dot sits on the midfield side of Klein Cain's score to show the result without moving the number off-center. The score itself stays white; result color is intentionally limited to the dot.
 
 The roster and team photo live only on the program page now, and the Roster link in a game page's masthead points at `/#roster-heading`. The wordmark in every masthead goes to `/`.
 
@@ -78,8 +91,8 @@ The roster and team photo live only on the program page now, and the Roster link
 One JSON file per game in `content/editions/`, named for its slug. `content/editions/TEMPLATE.md` carries the starting block and the rules. The shape is typed in `lib/edition.ts` (schema v2).
 
 - `config/season-2026.json` is the authority on date, opponent, venue, home/away and kickoff. An edition that disagrees fails validation.
-- Exactly one edition sets `"current": true`. It drives the homepage live score card and enables live polling on that game's report. Every edition, including the current one, is prerendered at `/games/week-<n>` by `app/games/[week]/page.tsx`. The roster and team photo appear only on `/`.
-- `config/publication.json` holds the school, wordmark and site-level sources. `config/program.json` holds program history and past seasons. The season record in the schedule card is derived from recorded results.
+- Exactly one edition sets `"current": true`. It drives the homepage Next Game card (including live polling) and enables live polling on that game's report. Every edition, including the current one, is prerendered at `/games/week-<n>` by `app/games/[week]/page.tsx`. The roster and team photo appear only on `/`.
+- `config/publication.json` holds the school, wordmark, site-level sources and homepage hero asset paths (`heroNextGameImage`, `heroHelmetCutout`). `config/program.json` holds program history and past seasons. The season record in the schedule card is derived from recorded results.
 - Editions are their own archive. The retired `content/current-edition.json` and `content/archive/` were removed with schema v1.
 
 To publish a new game: add the file, set `current` on the right edition, run `npm run validate`, `npm run build:cloudflare`, then push to `main`.
@@ -157,7 +170,7 @@ What automation still does not write is analysis. A generated edition has no pla
 
 The script also does two things that used to be manual and easy to forget:
 
-- It rewrites `public/live-score.json` so its slug follows the current edition. The live score card reads that file to know which game to poll. Before this existed, a game night would have collected the score into KV while the home page still showed the previous week's final.
+- It rewrites `public/live-score.json` so its slug follows the current edition. The Next Game card reads that file to know which game to poll. Before this existed, a game night would have collected the score into KV while the home page still showed the previous week's final.
 - It captures a verified `finalScore` once a game has been played, so a game keeps showing its result after it stops being current, without waiting for an authored recap.
 
 `PROMOTE_TODAY=2026-09-18 npm run promote` rehearses a handover or corrects one by hand.
@@ -264,6 +277,7 @@ Each of these cost real debugging time. They are recorded so the next person doe
 - **Measuring a CSS transition in a hidden browser pane gives the start value forever**, because no animation frames run. A `max-height` read as a stuck 60px and looked exactly like a broken cascade. Disable the transition before measuring.
 - **Cloudflare's check-run registers a little after the push.** A wait loop that only counts completed checks can exit before Workers Builds appears and report success too early. Wait for the check by name.
 - **Asset sync is setup, not recurring automation.** The facts workflow does not run `npm run roster`, `npm run photos` or `npm run logos`. Add an exact opponent profile and run the logo sync before a new edition can pass validation; refresh the roster and portraits manually when MaxPreps changes.
+- **Homepage hero readability is a gradient problem, not a shrink-the-photo problem.** The Next Game feature photo should stay large and editorial. Solve hard edges and text contrast with crop, `object-position`, and a left-to-right black edge gradient over the image — not by anchoring a small corner sticker or lowering opacity until the subject disappears. Swap the asset through `publication.heroNextGameImage`; keep the file local under `public/`.
 
 ## Recovery and future schools
 
@@ -278,6 +292,7 @@ To add a school, add its configuration, hostname, schedule and sources, then mak
 The visual reference is Apple Sports and Yahoo Sports: compact, useful, information first. Sans-serif throughout, no serif faces, no oversized mastheads, no decorative eyebrow labels, no generic sports hype. Lead with the matchup, records, game facts and players to watch.
 
 - Every band on the page aligns to one column, through the `--pad` custom property. Do not reintroduce `4vw` padding or per-section containers; they drifted apart at wide widths.
+- The homepage Next Game module is one premium editorial card: photographic hero + integrated matchup strip. Do not split it back into a separate dark score dashboard under the hero; do not duplicate date, kickoff, district or a second preview CTA in the strip.
 - Player reports are compact. On a phone each shows two clamped lines and expands in place, one at a time.
 - After a game the final view is the default and the original preview stays in its own tab.
 - The roster in small type and the team photo live on the program page, not on each game report.

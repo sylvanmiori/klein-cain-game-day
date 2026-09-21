@@ -8,9 +8,9 @@ Start with [AGENTS.md](AGENTS.md) when handing the repository to an AI developer
 
 Live at https://kleincain.gameday.report/. https://gameday.report/ redirects there while Klein Cain is the only school. GitHub Pages remains a migration fallback.
 
-`/` is the Klein Cain program homepage: season record, schedule, links to the latest recap and next preview, season leaders, roster and paths to every game report. Each game keeps its own page at `/games/week-<n>`. Promotion still sets which game the live score card follows; previews and recaps are never embedded on `/`.
+`/` is the Klein Cain program homepage: season record, one unified Next Game card (preview CTA, live polling and matchup strip), latest recap, schedule, season leaders, roster and paths to every game report. Each game keeps its own page at `/games/week-<n>`. Promotion still sets which game the Next Game card follows; full preview and recap copy are never embedded on `/`.
 
-Between games, the homepage links to the latest final recap. On the first scheduled automation run on the Monday of the next game's week, the primary link switches to that game's preview; game day therefore always opens on the current matchup and live card.
+Between games, the homepage links to the latest final recap. On the first scheduled automation run on the Monday of the next game's week, the Next Game card switches to that game's preview; game day therefore always opens on the current matchup.
 
 The in-season data pipeline runs unattended in GitHub Actions. A scheduled workflow creates missing editions, promotes the current game, refreshes facts from public sources and writes a postgame recap. No language model is involved anywhere, and no AI API is configured.
 
