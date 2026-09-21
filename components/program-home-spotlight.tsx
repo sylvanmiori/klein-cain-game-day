@@ -66,6 +66,12 @@ export function ProgramHomeSpotlight({
   return (
     <div className="home-stack">
       <article className="home-spotlight">
+        <div
+          className="home-spotlight-art"
+          style={{ backgroundImage: `url(${sitePath('/hero-helmet.jpg')})` }}
+          aria-hidden="true"
+        />
+        <div className="home-spotlight-scrim" aria-hidden="true" />
         <div className="home-spotlight-copy">
           <p className="home-kicker">Next game</p>
           <h2>
@@ -94,7 +100,6 @@ export function ProgramHomeSpotlight({
             </a>
           )}
         </div>
-        <img className="home-spotlight-helmet" src={sitePath('/hero-helmet.jpg')} alt="" />
       </article>
 
       <HomeMatchupCard
