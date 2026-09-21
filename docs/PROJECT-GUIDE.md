@@ -39,7 +39,9 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `config/coaches.json` | head coaches for Klein Cain and every scheduled opponent, with bios and verified career stops; rendered on previews and the program page |
 | `config/program.json` | program history and past seasons |
 | `config/venues.json` | venue coordinates, for the forecast |
-| `public/hero-next-game.jpg` | photographic Next Game hero (smoke helmet); swap via `publication.heroNextGameImage` |
+| `content/galleries/*.json` | editorial game photography, one file per game slug; not written by score or facts automation |
+| `app/photos/page.tsx` | `/photos`, season gallery grouped by game |
+| `public/photos/` | local game photos; do not hotlink SmugMug |
 | `public/silver_cain_football_helmet_cutout.png` | optional cutout asset; path on `publication.heroHelmetCutout` |
 | `scripts/lib/sources.mjs` | every external fetcher and parser |
 | `scripts/lib/rating.mjs` | least-squares rating and team records |
@@ -74,7 +76,9 @@ The code targets Cloudflare's free Worker and KV allowances. Those quotas are fi
 1. **Feature zone** — dark editorial hero. Left column: Next game kicker, matchup headline, week/district, date/time/venue with icons, single Game Preview CTA. Right side: local photographic hero (`publication.heroNextGameImage` → `public/hero-next-game.jpg`) framed with `object-fit: cover` and a left-to-right black edge gradient so the photo never shows a hard rectangular seam into the text. Live/final games add a compact status line in this zone; scheduled games do not repeat date, kickoff or district in a second header.
 2. **Matchup strip** — same card, separated by a 1px translucent divider. Team logos, names and records (or live scores), then a compact Last meeting / Texas rank row. No second preview button.
 
-`ProgramHomeSpotlight` wires that card plus the latest-recap teaser. Hierarchy on `/` is: program intro → Next Game → Latest Recap → schedule / reports / stats / coach / roster.
+`ProgramHomeSpotlight` wires that card, one editorial frame from the latest final when a gallery marks a `home` photo, plus the latest-recap teaser. Hierarchy on `/` is: program intro → Next Game → latest-game photo → Latest Recap → schedule / reports / stats / coach / roster.
+
+Game photography is editorial and lives in `content/galleries/`, one JSON file per game slug, separate from the edition file so promotion and fact refresh cannot overwrite it. Each photo is a local file under `public/photos/`. A gallery names one `lead` frame for the recap opening, additional `recap` frames in the story, one `home` frame for the homepage, and one `thumb` for the recap card. Every frame also appears in the game's photo section and on `/photos`. The purchase credit is one link per gallery — `Photo: Spencer Hutton Photography` — not a link on every image. Watermarks stay in the files.
 
 Between games, the recap teaser points at the most recent final. On the Monday of the next game's week, promotion moves the Next Game card to that preview. While a featured game is final, its recap, Player of the Game and game statistics appear on that game's report page, not on `/`.
 
@@ -101,7 +105,7 @@ To publish a new game: add the file, set `current` on the right edition, run `np
 
 Two scripts run automatically as part of `npm run build` and `npm run build:cloudflare`. Both exit non-zero and stop the build.
 
-- `scripts/validate-editions.mjs` checks structure against the schedule and enforces the editorial rules: a preview player must carry a rating or say plainly that none is listed, and a current preview with player capsules must record a team-by-team MaxPreps audit completed within two days of kickoff. A recruiting row must carry an https source, and a full opponent-player section must record a dated roster-wide recruiting audit. Every verified college commit and every player ranked by a named service in the top 10 at his position or top 100 nationally must be included and clearly identified. Postgame leaders need a stat and a named box score, the disclaimer must name the opponent, a preview must have content, and every team logo must be a real local file rather than a placeholder.
+- `scripts/validate-editions.mjs` checks structure against the schedule and enforces the editorial rules: a preview player must carry a rating or say plainly that none is listed, and a current preview with player capsules must record a team-by-team MaxPreps audit completed within two days of kickoff. A recruiting row must carry an https source, and a full opponent-player section must record a dated roster-wide recruiting audit. Every verified college commit and every player ranked by a named service in the top 10 at his position or top 100 nationally must be included and clearly identified. Postgame leaders need a stat and a named box score, the disclaimer must name the opponent, a preview must have content, and every team logo must be a real local file rather than a placeholder. A game gallery, when present, must match an edition slug, use local photo files, and mark exactly one `lead`, one `home` and one `thumb`.
 - `scripts/check-build.mjs` reads the built HTML and fails if a page's title, meta tags, heading or disclaimer names an opponent from a different week. Both checks account for schedule names that are prefixes of others, such as Klein and Klein Cain, or Magnolia and Magnolia West.
 - `scripts/check-docs.mjs` reads the README, `AGENTS.md` and this guide and fails if a referenced repository path or `npm run` command no longer exists. It also parses the edition template's JSON example against the current top-level schema and verifies that every scheduled opponent has exactly one MaxPreps logo source.
 

@@ -1,3 +1,5 @@
+import { galleryForSlug } from '../lib/galleries';
+import { GamePhotoGallery, RecapPhotoStory } from './game-photos';
 import publication from '../config/publication.json';
 import schedule from '../config/season-2026.json';
 import liveScore from '../public/live-score.json';
@@ -208,10 +210,12 @@ export function FinalView({
   final,
   gameStats,
   matchup,
+  gallery,
 }: {
   final: FinalSection;
   gameStats?: GameStats | null;
   matchup?: CoachingMatchup | null;
+  gallery?: ReturnType<typeof galleryForSlug>;
 }) {
   return (
     <>
@@ -250,6 +254,8 @@ export function FinalView({
           <p>{final.body}</p>
         </section>
       )}
+
+      <RecapPhotoStory gallery={gallery ?? null} />
 
       {gameStats && <PlayerOfGame stats={gameStats} />}
       {gameStats && <GameStatistics stats={gameStats} />}
@@ -290,6 +296,7 @@ export function FinalView({
       ))}
 
       {matchup && <CoachingMatchupSection matchup={matchup} />}
+      <GamePhotoGallery gallery={gallery ?? null} />
     </>
   );
 }
@@ -323,12 +330,12 @@ export function EditionPage({ edition }: { edition: Edition }) {
     ? (
       <GameReportTabs
         initialStatus={edition.current ? (liveScore as LiveScore).status : 'final'}
-        finalView={<><FinalView final={final} gameStats={edition.gameStats} matchup={matchup} /><SeasonStats edition={edition} /></>}
+        finalView={<><FinalView final={final} gameStats={edition.gameStats} matchup={matchup} gallery={galleryForSlug(edition.slug)} /><SeasonStats edition={edition} /></>}
         previewView={<PreviewView edition={edition} preview={preview} />}
       />
     )
     : final
-      ? <><FinalView final={final} gameStats={edition.gameStats} matchup={matchup} /><SeasonStats edition={edition} /></>
+      ? <><FinalView final={final} gameStats={edition.gameStats} matchup={matchup} gallery={galleryForSlug(edition.slug)} /><SeasonStats edition={edition} /></>
       : preview
         ? <PreviewView edition={edition} preview={preview} />
         : null;
@@ -343,6 +350,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
           {preview && preview.players.length > 0 && <a href="#players">Players</a>}
           {matchup && <a href="#coaching">Coaches</a>}
           {final && !(preview && preview.players.length > 0) && <a href="#final">Recap</a>}
+          {galleryForSlug(edition.slug) && <a href="#photos">Photos</a>}
           <a href="#schedule">Schedule</a>
           <a href={rosterHash}>Roster</a>
         </nav>

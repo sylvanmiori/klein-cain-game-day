@@ -12,13 +12,16 @@ import {
   rankFact,
   weatherFact,
 } from '../lib/edition';
+import { galleryForSlug, photoWithUse } from '../lib/galleries';
 import { sitePath } from '../lib/site-path';
 
 type RecapLink = {
   href: string;
   headline: string;
   dateLabel: string;
-  imageSrc?: string;
+  thumbSrc: string;
+  thumbAlt: string;
+  homePhoto: { src: string; alt: string; caption: string } | null;
 };
 
 export function ProgramHomeSpotlight({
@@ -52,6 +55,13 @@ export function ProgramHomeSpotlight({
         heroImageSrc={heroImageSrc}
       />
 
+      {recap?.homePhoto && (
+        <a className="home-photo" href={recap.href}>
+          <img src={sitePath(recap.homePhoto.src)} alt={recap.homePhoto.alt} />
+          <span>{recap.homePhoto.caption}</span>
+        </a>
+      )}
+
       {recap && (
         <article className="home-recap">
           <div className="home-recap-head">
@@ -63,7 +73,7 @@ export function ProgramHomeSpotlight({
               <h3>{recap.headline}</h3>
               <a href={recap.href}>Read the full report →</a>
             </div>
-            <img src={sitePath(recap.imageSrc || '/hero-helmet.jpg')} alt="" />
+            <img src={sitePath(recap.thumbSrc)} alt={recap.thumbAlt} />
           </div>
         </article>
       )}
@@ -73,13 +83,18 @@ export function ProgramHomeSpotlight({
 
 export function buildRecapLink(edition: Edition | null): RecapLink | null {
   if (!edition?.final) return null;
-  const imageSrc = edition.gameStats?.playerOfGame?.image
+  const gallery = galleryForSlug(edition.slug);
+  const thumb = photoWithUse(gallery, 'thumb');
+  const home = photoWithUse(gallery, 'home');
+  const fallbackThumb = edition.gameStats?.playerOfGame?.image
     || (edition.ogImage && edition.ogImage.length > 0 && !edition.ogImage.includes('og.png') ? edition.ogImage : null)
     || '/hero-helmet.jpg';
   return {
     href: sitePath(editionPath(edition)),
     headline: edition.final.headline,
     dateLabel: apDate(edition.date, true),
-    imageSrc,
+    thumbSrc: thumb?.src ?? fallbackThumb,
+    thumbAlt: thumb?.alt ?? '',
+    homePhoto: home ? { src: home.src, alt: home.alt, caption: home.caption } : null,
   };
 }
