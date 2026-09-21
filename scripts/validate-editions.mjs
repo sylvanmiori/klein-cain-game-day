@@ -360,4 +360,52 @@ if (problems.length) {
   console.error(`Edition validation failed:\n${problems.map((line) => `  - ${line}`).join('\n')}`);
   process.exit(1);
 }
-console.log(`Validated ${files.length} edition file(s).`);
+
+const galleryDir = path.join(root, 'content/galleries');
+let galleryFiles = [];
+try {
+  galleryFiles = (await readdir(galleryDir)).filter((name) => name.endsWith('.json'));
+} catch {
+  galleryFiles = [];
+}
+const uses = ['lead', 'recap', 'home', 'thumb'];
+for (const file of galleryFiles) {
+  const where = `content/galleries/${file}`;
+  const fail = (message) => problems.push(`${where}: ${message}`);
+  let gallery;
+  try {
+    gallery = JSON.parse(await readFile(path.join(galleryDir, file), 'utf8'));
+  } catch (error) {
+    fail(`is not valid JSON (${error.message})`);
+    continue;
+  }
+  if (file !== `${gallery.slug}.json`) fail(`filename must match the slug (${gallery.slug}.json)`);
+  if (!editions.some(({ edition }) => edition.slug === gallery.slug)) fail(`slug ${gallery.slug} does not match an edition`);
+  if (!gallery.credit || !String(gallery.galleryUrl || '').startsWith('https://')) fail('needs a credit and an https gallery URL');
+  if (!Array.isArray(gallery.photos) || gallery.photos.length === 0) fail('needs at least one photo');
+  const seen = { home: 0, thumb: 0, lead: 0 };
+  for (const [index, photo] of gallery.photos.entries()) {
+    if (!photo.alt || !photo.caption) fail(`photos[${index}] needs alt text and a caption`);
+    if (!String(photo.src || '').startsWith('/photos/')) fail(`photos[${index}] must use a local /photos/ path`);
+    else {
+      try {
+        await readFile(path.join(root, 'public', photo.src.slice(1)));
+      } catch {
+        fail(`photos[${index}] is missing at public${photo.src}`);
+      }
+    }
+    for (const use of photo.use ?? []) {
+      if (!uses.includes(use)) fail(`photos[${index}] has unknown use "${use}"`);
+      if (use in seen) seen[use] += 1;
+    }
+  }
+  if (seen.home !== 1) fail(`needs exactly one photo marked "home" (found ${seen.home})`);
+  if (seen.thumb !== 1) fail(`needs exactly one photo marked "thumb" (found ${seen.thumb})`);
+  if (seen.lead !== 1) fail(`needs exactly one photo marked "lead" (found ${seen.lead})`);
+}
+
+if (problems.length) {
+  console.error(`Edition validation failed:\n${problems.map((line) => `  - ${line}`).join('\n')}`);
+  process.exit(1);
+}
+console.log(`Validated ${files.length} edition file(s) and ${galleryFiles.length} photo gallery file(s).`);

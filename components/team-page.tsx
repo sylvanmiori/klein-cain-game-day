@@ -37,6 +37,7 @@ export function TeamPage() {
         </a>
         <nav aria-label="Site navigation">
           <a href="#reports">Reports</a>
+          <a href={sitePath('/photos')}>Photos</a>
           <a href="#schedule">Schedule</a>
           {stats && <a href="#stats">Stats</a>}
           <a href="#roster-heading">Roster</a>
