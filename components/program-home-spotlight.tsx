@@ -2,6 +2,7 @@ import publication from '../config/publication.json';
 import liveScore from '../public/live-score.json';
 import { HomeNextGameCard } from './home-next-game-card';
 import { type LiveScore } from './live-score-card';
+import { CameraIcon } from './game-photos';
 import {
   type Edition,
   apDate,
@@ -14,13 +15,20 @@ import {
 import { galleryForSlug, photoWithUse } from '../lib/galleries';
 import { sitePath } from '../lib/site-path';
 
-type RecapLink = {
+export type RecapFeature = {
   href: string;
   headline: string;
   dateLabel: string;
-  thumbSrc: string;
-  thumbAlt: string;
-  homePhoto: { src: string; alt: string; caption: string } | null;
+  weekLabel: string;
+  finalScore: string;
+  isWin: boolean;
+  leadExcerpt: string;
+  playerOfGame: {
+    name: string;
+    headline: string;
+  } | null;
+  photoCount: number;
+  photo: { src: string; alt: string; caption: string } | null;
 };
 
 export function ProgramHomeSpotlight({
@@ -30,7 +38,7 @@ export function ProgramHomeSpotlight({
 }: {
   featured: Edition;
   previewHref: string;
-  recap: RecapLink | null;
+  recap: RecapFeature | null;
 }) {
   const autoFacts = [rankFact(featured), predictionFact(featured, publication.schoolName), weatherFact(featured)]
     .filter((fact): fact is NonNullable<typeof fact> => fact !== null);
@@ -54,25 +62,68 @@ export function ProgramHomeSpotlight({
         heroImageSrc={heroImageSrc}
       />
 
-      {recap?.homePhoto && (
-        <a className="home-photo" href={recap.href}>
-          <img src={sitePath(recap.homePhoto.src)} alt={recap.homePhoto.alt} />
-          <span>{recap.homePhoto.caption}</span>
-        </a>
-      )}
-
       {recap && (
-        <article className="home-recap">
-          <div className="home-recap-head">
-            <p className="home-kicker">Latest recap</p>
-            <time dateTime={recap.dateLabel}>{recap.dateLabel}</time>
-          </div>
+        <article className="home-recap" aria-labelledby="home-recap-title">
+          {recap.photo && (
+            <div className="home-recap-visual">
+              <a href={recap.href} className="home-recap-visual-link" tabIndex={-1} aria-hidden="true">
+                <img src={sitePath(recap.photo.src)} alt={recap.photo.alt} />
+                <div className="home-recap-visual-scrim" />
+              </a>
+              {recap.photo.caption && (
+                <p className="home-recap-caption">
+                  <CameraIcon />
+                  <span>{recap.photo.caption}</span>
+                </p>
+              )}
+            </div>
+          )}
+
           <div className="home-recap-body">
             <div>
-              <h3>{recap.headline}</h3>
-              <a href={recap.href}>Read the full report →</a>
+              <div className="home-recap-head">
+                <div className="home-recap-badges">
+                  <span className="home-kicker">Latest Recap</span>
+                  <span className="home-recap-bullet" aria-hidden="true">·</span>
+                  <span className="home-recap-week">{recap.weekLabel}</span>
+                  {recap.finalScore && (
+                    <span className={`home-recap-result ${recap.isWin ? 'win' : 'loss'}`}>
+                      {recap.isWin ? 'W' : 'L'} {recap.finalScore}
+                    </span>
+                  )}
+                </div>
+                <time dateTime={recap.dateLabel}>{recap.dateLabel}</time>
+              </div>
+
+              <h3 className="home-recap-headline" id="home-recap-title">
+                <a href={recap.href}>{recap.headline}</a>
+              </h3>
+
+              {recap.leadExcerpt && (
+                <p className="home-recap-excerpt">{recap.leadExcerpt}</p>
+              )}
+
+              {recap.playerOfGame && (
+                <div className="home-recap-performer">
+                  <span className="performer-badge">Player of the Game</span>
+                  <div className="performer-info">
+                    <strong className="performer-name">{recap.playerOfGame.name}</strong>
+                    <span className="performer-stat">{recap.playerOfGame.headline}</span>
+                  </div>
+                </div>
+              )}
             </div>
-            <img src={sitePath(recap.thumbSrc)} alt={recap.thumbAlt} />
+
+            <div className="home-recap-actions">
+              <a href={recap.href} className="home-recap-cta">
+                Read full game recap →
+              </a>
+              {recap.photoCount > 0 && (
+                <a href={sitePath('/photos')} className="home-recap-photos-link">
+                  View {recap.photoCount} photos →
+                </a>
+              )}
+            </div>
           </div>
         </article>
       )}
@@ -80,20 +131,49 @@ export function ProgramHomeSpotlight({
   );
 }
 
-export function buildRecapLink(edition: Edition | null): RecapLink | null {
+export function buildRecapLink(edition: Edition | null): RecapFeature | null {
   if (!edition?.final) return null;
   const gallery = galleryForSlug(edition.slug);
-  const thumb = photoWithUse(gallery, 'thumb');
-  const home = photoWithUse(gallery, 'home');
+  const homePhoto = photoWithUse(gallery, 'home');
+  const leadPhoto = photoWithUse(gallery, 'lead');
+  const thumbPhoto = photoWithUse(gallery, 'thumb');
+  const chosenPhoto = homePhoto || leadPhoto || thumbPhoto;
   const fallbackThumb = edition.gameStats?.playerOfGame?.image
     || (edition.ogImage && edition.ogImage.length > 0 && !edition.ogImage.includes('og.png') ? edition.ogImage : null)
     || '/hero-helmet.jpg';
+
+  const isCainHome = edition.home.name === publication.schoolName;
+  const cainScore = isCainHome ? edition.final.homeScore : edition.final.awayScore;
+  const oppScore = isCainHome ? edition.final.awayScore : edition.final.homeScore;
+  const isWin = (cainScore ?? 0) > (oppScore ?? 0);
+  const finalScore = cainScore != null && oppScore != null ? `${cainScore}–${oppScore}` : '';
+
+  let leadExcerpt = '';
+  if (edition.final.body) {
+    const firstPara = edition.final.body.split('\n\n')[0].trim();
+    const sentences = firstPara.match(/[^.!?]+[.!?]+/g) || [firstPara];
+    if (sentences.length > 0) {
+      leadExcerpt = sentences[0].trim();
+      if (leadExcerpt.length < 120 && sentences[1]) {
+        leadExcerpt += ' ' + sentences[1].trim();
+      }
+    }
+  }
+
+  const pog = edition.gameStats?.playerOfGame;
+
   return {
     href: sitePath(editionPath(edition)),
     headline: edition.final.headline,
     dateLabel: apDate(edition.date, true),
-    thumbSrc: thumb?.src ?? fallbackThumb,
-    thumbAlt: thumb?.alt ?? '',
-    homePhoto: home ? { src: home.src, alt: home.alt, caption: home.caption } : null,
+    weekLabel: `Week ${edition.week}`,
+    finalScore,
+    isWin,
+    leadExcerpt,
+    playerOfGame: pog ? { name: pog.name, headline: pog.headline } : null,
+    photoCount: gallery?.photos.length ?? 0,
+    photo: chosenPhoto
+      ? { src: chosenPhoto.src, alt: chosenPhoto.alt, caption: chosenPhoto.caption }
+      : { src: fallbackThumb, alt: edition.final.headline, caption: '' },
   };
 }
