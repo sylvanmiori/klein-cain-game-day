@@ -63,7 +63,7 @@ export function PreviewView({ edition, preview }: { edition: Edition; preview: P
         </section>
       )}
 
-      {matchup && <CoachingMatchupSection matchup={matchup} spotlightOpponent />}
+      {matchup && <CoachingMatchupSection matchup={matchup} />}
 
       {preview.players.length > 0 && (
         <section className="players" id="players">

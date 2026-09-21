@@ -60,11 +60,11 @@ Dave Campbell’s season preview.
 When writing a preview intro, name each head coach once in the body — enough
 for readers to connect the matchup section to the story. A sentence of
 game-specific context on the opposing coach is appropriate when it is verified
-(for example tenure or recent program history from Dave Campbell’s preview).
-Use the coach’s last name on second reference if needed. Do not paste the full
-bio from `coaches.json` into the intro; the **Head coaches** section renders
-an **On the other sideline** note from that file automatically on every
-preview. A fact row such as `Head coaches · James Clancy · Ben McGehee` in
+(for example recent streak or game stakes). Use the coach’s last name on second
+reference if needed. Do not paste the bio or career stops from `coaches.json`
+into the intro; the **Head coaches** section already presents both head coaches
+side-by-side with their full bios, career stops, tenure, and verified source links.
+A fact row such as `Head coaches · James Clancy · Ben McGehee` in
 **Game information** is optional but helpful.
 
 Update `config/coaches.json` when a school changes head coaches. Every

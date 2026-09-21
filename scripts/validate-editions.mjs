@@ -8,6 +8,11 @@ const root = process.cwd();
 const dir = path.join(root, 'content/editions');
 const schedule = JSON.parse(await readFile(path.join(root, 'config/season-2026.json'), 'utf8'));
 const publication = JSON.parse(await readFile(path.join(root, 'config/publication.json'), 'utf8'));
+const coaches = JSON.parse(await readFile(path.join(root, 'config/coaches.json'), 'utf8'));
+const coachBios = [
+  coaches.school?.bio,
+  ...Object.values(coaches.opponents ?? {}).map((c) => c.bio),
+].filter(Boolean);
 
 const problems = [];
 const files = (await readdir(dir)).filter((name) => name.endsWith('.json')).sort();
@@ -230,6 +235,19 @@ for (const file of files) {
       for (const team of [edition.home?.name, edition.away?.name]) {
         if (!playerStatsAudit.sources?.some((source) => source.team === team)) {
           fail(`playerStatsAudit has no source for ${team}`);
+        }
+      }
+    }
+  }
+
+  // Preview intro body must not copy coach bio sentences verbatim from coaches.json.
+  // The Head coaches section already presents each coach's bio, record and career stops.
+  if (edition.preview?.intro?.body) {
+    for (const bio of coachBios) {
+      const sentences = bio.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter((s) => s.length > 25);
+      for (const sentence of sentences) {
+        if (edition.preview.intro.body.includes(sentence)) {
+          fail(`preview.intro.body duplicates coach bio sentence verbatim: "${sentence}"`);
         }
       }
     }
