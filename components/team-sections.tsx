@@ -83,6 +83,8 @@ export function RosterSection() {
         <img
           src={sitePath('/team-2026.jpg')}
           alt={`2026 ${publication.schoolName} ${publication.schoolMascot} varsity football team`}
+          loading="lazy"
+          decoding="async"
         />
         <figcaption>2026 {publication.schoolName} varsity · Klein Cain Football Booster Club</figcaption>
       </figure>

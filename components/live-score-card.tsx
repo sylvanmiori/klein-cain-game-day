@@ -66,12 +66,17 @@ export function LiveScoreCard({
   }, [initialScore.slug]);
 
   useEffect(() => {
-    void refresh();
-    if (score.status === 'final') return;
+    const handle = requestAnimationFrame(() => {
+      void refresh();
+    });
+    if (score.status === 'final') return () => cancelAnimationFrame(handle);
     const timer = window.setInterval(() => {
       if (document.visibilityState === 'visible') void refresh();
     }, 60_000);
-    return () => window.clearInterval(timer);
+    return () => {
+      cancelAnimationFrame(handle);
+      window.clearInterval(timer);
+    };
   }, [refresh, score.status]);
 
   useEffect(() => {

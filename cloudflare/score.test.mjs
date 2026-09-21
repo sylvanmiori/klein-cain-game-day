@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import snapshot from '../public/live-score.json' with { type: 'json' };
-import { activeGame, parseScore, gameSlug } from './score.mjs';
+import { activeGame, parseScore } from './score.mjs';
 import worker from './worker.mjs';
 
 const game = { date: '2026-09-04', opponent: 'Oak Ridge', home: true, kickoff: '7:00 PM' };

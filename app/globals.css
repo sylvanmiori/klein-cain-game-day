@@ -257,7 +257,7 @@ article>section { border-bottom:1px solid var(--line); }
 .season li>span { color:#6e6e73; }
 .season li>span strong { color:var(--ink); font-weight:800; }
 .season li>b { font-size:12px; font-variant-numeric:tabular-nums; }
-.season-hub { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr); gap:24px; padding:58px var(--pad) 68px; background:#eceef2; }
+.season-hub { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr); gap:24px; padding:58px var(--pad) 68px; background:#eceef2; content-visibility:auto; contain-intrinsic-size:0 600px; }
 .season-card,.history-card { background:#fff; border:1px solid #d8dae0; border-radius:16px; box-shadow:0 8px 24px rgba(24,24,30,.05); }
 .season-card { overflow:hidden; }
 .season-card .season-head { max-width:none; margin:0; padding:24px 26px 20px; border-top:5px solid var(--purple); border-bottom:1px solid var(--line); }
@@ -385,7 +385,7 @@ article>section { border-bottom:1px solid var(--line); }
 .edition-switcher span { color:#fff; background:#1c1d22; }
 .compact-footer { display:flex; justify-content:space-between; align-items:center; gap:30px; padding:28px var(--pad); background:#e1ddd5; }
 .compact-footer p { margin:0; color:#686259; font-size:10px; }
-.roster { padding:60px var(--pad) 68px; background:#ece8e0; }
+.roster { padding:60px var(--pad) 68px; background:#ece8e0; content-visibility:auto; contain-intrinsic-size:0 600px; }
 .roster-head { display:flex; justify-content:space-between; align-items:end; gap:40px; margin-bottom:30px; }
 .roster-head h2 { margin:0; font-size:clamp(30px,3.4vw,44px); line-height:1; font-weight:900; letter-spacing:-.045em; }
 .roster-head>p { margin:0; font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#706a61; text-align:right; }

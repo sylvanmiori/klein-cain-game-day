@@ -150,12 +150,16 @@ export function PhotoLightbox({
   };
 
   return (
+    /* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */
     <dialog
       ref={dialogRef}
       className="photo-modal"
       closedby="any"
       aria-label="Photo preview"
       onClick={handleBackdropClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') onClose();
+      }}
       onClose={onClose}
     >
       {currentPhoto && (

@@ -97,12 +97,17 @@ export function HomeNextGameCard({
   }, [initialScore.slug]);
 
   useEffect(() => {
-    void refresh();
-    if (score.status === 'final') return;
+    const handle = requestAnimationFrame(() => {
+      void refresh();
+    });
+    if (score.status === 'final') return () => cancelAnimationFrame(handle);
     const timer = window.setInterval(() => {
       if (document.visibilityState === 'visible') void refresh();
     }, 60_000);
-    return () => window.clearInterval(timer);
+    return () => {
+      cancelAnimationFrame(handle);
+      window.clearInterval(timer);
+    };
   }, [refresh, score.status]);
 
   useEffect(() => {
@@ -119,7 +124,14 @@ export function HomeNextGameCard({
     <article className={`home-next-game ${score.status}`} aria-label={`Next game: ${featured.name} vs. ${opponent.name}`}>
       <div className="home-next-game-feature">
         <div className="home-next-game-glow" aria-hidden="true" />
-        <img className="home-next-game-hero" src={heroImageSrc} alt="" decoding="async" />
+        <img
+          className="home-next-game-hero"
+          src={heroImageSrc}
+          alt=""
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
+        />
         <div className="home-next-game-edge" aria-hidden="true" />
         <div className="home-next-game-scrim" aria-hidden="true" />
         <div className="home-next-game-copy">
@@ -166,7 +178,7 @@ export function HomeNextGameCard({
       <div className="home-next-game-strip">
         <div className="home-next-game-teams">
           <div className="home-next-game-team">
-            <img src={sitePath(featured.logo)} alt="" />
+            <img src={sitePath(featured.logo)} alt="" width="40" height="40" />
             <div>
               <strong>{featured.name}</strong>
               <span>{isScheduled ? featured.record : featuredScore}</span>
@@ -174,7 +186,7 @@ export function HomeNextGameCard({
           </div>
           <div className="home-next-game-vs" aria-hidden="true">VS</div>
           <div className="home-next-game-team away">
-            <img src={sitePath(opponent.logo)} alt="" />
+            <img src={sitePath(opponent.logo)} alt="" width="40" height="40" />
             <div>
               <strong>{opponent.name}</strong>
               <span>{isScheduled ? opponent.record : opponentScore}</span>

@@ -1,5 +1,4 @@
 import publication from '../config/publication.json';
-import liveScore from '../public/live-score.json';
 import { SeasonHub, seasonRecord } from './season-hub';
 import { RosterSection, SeasonStats } from './team-sections';
 import { SchoolCoachSection } from './coaching-section';

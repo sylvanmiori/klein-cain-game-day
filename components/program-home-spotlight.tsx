@@ -7,7 +7,6 @@ import {
   apDate,
   editionPath,
   hasPreviewContent,
-  opponentOf,
   predictionFact,
   rankFact,
   weatherFact,

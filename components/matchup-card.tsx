@@ -49,7 +49,16 @@ function TeamBlock({
         )}
     </div>
   );
-  const logo = <img src={sitePath(team.logo)} alt={`${team.name} ${team.mascot} logo`} />;
+  const logo = (
+    <img
+      src={sitePath(team.logo)}
+      alt={`${team.name} ${team.mascot} logo`}
+      width="86"
+      height="86"
+      loading="eager"
+      decoding="async"
+    />
+  );
 
   return (
     <div className={`team ${side}${lost ? ' is-loser' : ''}`}>
