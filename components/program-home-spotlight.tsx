@@ -33,7 +33,7 @@ export function ProgramHomeSpotlight({
     .filter((fact): fact is NonNullable<typeof fact> => fact !== null);
   const facts = [...featured.scheduledFacts, ...autoFacts].slice(0, 4);
   const showPreview = hasPreviewContent(featured) && !featured.finalScore;
-  const helmetSrc = sitePath(publication.heroHelmetCutout ?? '/silver_cain_football_helmet_cutout.png');
+  const heroImageSrc = sitePath(publication.heroNextGameImage ?? '/hero-next-game.jpg');
 
   return (
     <div className="home-stack">
@@ -48,7 +48,7 @@ export function ProgramHomeSpotlight({
         scheduledFacts={facts}
         previewHref={previewHref}
         showPreview={showPreview}
-        helmetSrc={helmetSrc}
+        heroImageSrc={heroImageSrc}
       />
 
       {recap && (

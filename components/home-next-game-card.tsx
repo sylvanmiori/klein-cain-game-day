@@ -17,13 +17,40 @@ type Props = {
   scheduledFacts: Fact[];
   previewHref: string;
   showPreview: boolean;
-  helmetSrc: string;
+  heroImageSrc: string;
 };
 
 const liveDataUrl = 'https://raw.githubusercontent.com/sylvanmiori/klein-cain-game-day/live-data/live-score.json';
 
 function factValue(facts: Fact[], label: string): Fact | undefined {
   return facts.find((fact) => fact.label.toLowerCase() === label.toLowerCase());
+}
+
+function IconCalendar() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M8 3v4M16 3v4M3 10h18" />
+    </svg>
+  );
+}
+
+function IconClock() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="8" />
+      <path d="M12 8v4l3 2" />
+    </svg>
+  );
+}
+
+function IconPin() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10Z" />
+      <circle cx="12" cy="11" r="2.2" />
+    </svg>
+  );
 }
 
 export function HomeNextGameCard({
@@ -37,7 +64,7 @@ export function HomeNextGameCard({
   scheduledFacts,
   previewHref,
   showPreview,
-  helmetSrc,
+  heroImageSrc,
 }: Props) {
   const [score, setScore] = useState(initialScore);
   const [refreshing, setRefreshing] = useState(false);
@@ -91,22 +118,31 @@ export function HomeNextGameCard({
   return (
     <article className={`home-next-game ${score.status}`} aria-label={`Next game: ${featured.name} vs. ${opponent.name}`}>
       <div className="home-next-game-feature">
-        <div className="home-next-game-bg" aria-hidden="true" />
+        <img className="home-next-game-hero" src={heroImageSrc} alt="" decoding="async" />
+        <div className="home-next-game-scrim" aria-hidden="true" />
         <div className="home-next-game-glow" aria-hidden="true" />
-        <img className="home-next-game-helmet" src={helmetSrc} alt="" decoding="async" />
         <div className="home-next-game-copy">
           <p className="home-kicker">Next game</p>
           <h2>
-            <span>{publication.schoolName} vs.</span>
-            <span>{opponent.name}</span>
+            <span>{publication.schoolName}</span>
+            <span>vs. {opponent.name}</span>
           </h2>
           <p className="home-next-game-meta">
             Week {week} · District 15-6A
           </p>
           <ul className="home-next-game-details">
-            <li>{gameDayLong(editionDate, publication.timezone)}</li>
-            <li>{kickoff}</li>
-            <li>{venue}</li>
+            <li>
+              <IconCalendar />
+              {gameDayLong(editionDate, publication.timezone)}
+            </li>
+            <li>
+              <IconClock />
+              {kickoff}
+            </li>
+            <li>
+              <IconPin />
+              {venue}
+            </li>
           </ul>
           {!isScheduled && statusLine && (
             <p className="home-next-game-status">
