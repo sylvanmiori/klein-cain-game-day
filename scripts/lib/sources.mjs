@@ -103,28 +103,50 @@ const stripTags = (html) => html
 
 /**
  * District standings from the school's own team page, which is server
- * rendered. Returns a map of full team name ("Tomball Cougars") to overall
- * record, covering every district opponent in one request.
+ * rendered. One request covers every district team, in the source's order.
  */
 export async function fetchTeamPage(teamPageUrl) {
   return (await get(teamPageUrl)).text();
 }
 
-export function parseDistrictRecords(html) {
-  const heading = html.search(/District [^<]*Standings/i);
-  if (heading === -1) throw new Error('Standings table not found on the team page.');
-  const block = html.slice(heading, html.indexOf('</ul>', heading));
+const STANDING_RECORD = /^(\d+)\s*-\s*(\d+)(?:\s*-\s*(\d+))?$/;
 
-  const records = new Map();
+function standingRecord(value) {
+  const match = STANDING_RECORD.exec(value || '');
+  if (!match) return null;
+  return match[3] ? `${match[1]}–${match[2]}–${match[3]}` : `${match[1]}–${match[2]}`;
+}
+
+/**
+ * Ordered district table: full team name ("Klein Cain Hurricanes"), district
+ * record, overall record, and next opponent. The header row is skipped because
+ * its cells are labels, not records.
+ */
+export function parseDistrictStandings(html) {
+  const heading = /District [^<]*Standings/i.exec(html);
+  if (!heading) throw new Error('Standings table not found on the team page.');
+  const blockEnd = html.indexOf('</ul>', heading.index);
+  if (blockEnd === -1) throw new Error('Standings table not found on the team page.');
+  const block = html.slice(heading.index, blockEnd);
+
+  const rows = [];
   for (const [, row] of block.matchAll(/<li class="[^"]*">([\s\S]*?)<\/li>/g)) {
     const cells = [...row.matchAll(/<span[^>]*>([\s\S]*?)<\/span>/g)].map(([, cell]) => stripTags(cell));
     if (cells.length < 3) continue;
-    const [team, , overall] = cells;
-    const match = /^(\d+)\s*-\s*(\d+)$/.exec(overall || '');
-    if (!team || !match) continue;
-    records.set(team, `${match[1]}–${match[2]}`);
+    const [team, district, overall, next = ''] = cells;
+    const districtRecord = standingRecord(district);
+    const overallRecord = standingRecord(overall);
+    if (!team || !districtRecord || !overallRecord) continue;
+    rows.push({ team, district: districtRecord, overall: overallRecord, next });
   }
-  if (records.size === 0) throw new Error('Standings table contained no readable records.');
+  if (rows.length === 0) throw new Error('Standings table contained no readable records.');
+  return { district: heading[0].replace(/\s+/g, ' ').replace(/ standings$/i, '').trim(), rows };
+}
+
+/** Overall record keyed by full team name, for edition record updates. */
+export function parseDistrictRecords(html) {
+  const records = new Map();
+  for (const row of parseDistrictStandings(html).rows) records.set(row.team, row.overall);
   return records;
 }
 

@@ -294,7 +294,7 @@ article>section { border-bottom:1px solid var(--line); }
 .season-card,.history-card { background:#fff; border:1px solid #d8dae0; border-radius:16px; box-shadow:0 8px 24px rgba(24,24,30,.05); }
 .season-card { overflow:hidden; }
 .season-card .season-head { max-width:none; margin:0; padding:24px 26px 20px; border-top:5px solid var(--purple); border-bottom:1px solid var(--line); }
-.season-card .season-head h2,.history-card h2 { font-size:27px; font-weight:850; letter-spacing:-.04em; }
+.season-card .season-head h2,.history-card h2,.standings-card h2 { font-size:27px; font-weight:850; letter-spacing:-.04em; }
 .season-card .season-head p { color:var(--ink); font-size:23px; font-variant-numeric:tabular-nums; }
 .season-card ol { margin:0; padding:0; list-style:none; }
 .season-card li { border-bottom:1px solid #e6e6e9; }
@@ -441,7 +441,25 @@ footer>div:first-child p { font:italic 13px "Helvetica Neue", Helvetica, Arial, 
 .sources strong { grid-column:1/-1; font-size:9px; letter-spacing:.15em; }
 .sources a { padding:4px 0; transition:color .15s ease; }
 .sources a:hover { color:var(--purple); }
-.history-source a:focus-visible,.edition-switcher a:focus-visible,.recruit-row a:focus-visible,.gameday-links a:focus-visible,.roster-head a:focus-visible,.sources a:focus-visible { outline:2px solid var(--purple); outline-offset:3px; }
+.season-side { display:flex; flex-direction:column; gap:24px; min-width:0; }
+.standings-card { overflow:hidden; background:#fff; border:1px solid #d8dae0; border-top:5px solid var(--purple); border-radius:16px; box-shadow:0 8px 24px rgba(24,24,30,.05); }
+.standings-card h2 { margin:0; padding:22px 18px 12px; }
+.standings-table { width:100%; border-collapse:collapse; }
+.standings-table th { padding:0 12px 8px; color:#77777d; font-size:9px; font-weight:800; letter-spacing:.08em; text-align:left; text-transform:uppercase; }
+.standings-table th.team { color:var(--ink); font-size:12px; font-weight:800; letter-spacing:0; text-align:left; text-transform:none; }
+.standings-table th.num,.standings-table td.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.standings-table td { padding:9px 12px; border-top:1px solid #e6e6e9; font-size:12px; font-weight:750; }
+.standings-table tbody th { padding:9px 12px; border-top:1px solid #e6e6e9; }
+.standings-table tr.school th,.standings-table tr.school td { background:#eee6f4; }
+.standings-table .next { color:#696970; font-weight:700; }
+.standings-source { margin:0; padding:12px 18px 16px; color:#77777d; font-size:9px; font-weight:750; }
+.standings-source a { color:var(--purple); }
+@media(max-width:900px){
+  .standings-table .next { display:none; }
+  .standings-card h2 { padding:20px 14px 10px; }
+  .standings-table th,.standings-table td { padding-left:14px; padding-right:14px; }
+}
+.history-source a:focus-visible,.standings-source a:focus-visible,.edition-switcher a:focus-visible,.recruit-row a:focus-visible,.gameday-links a:focus-visible,.roster-head a:focus-visible,.sources a:focus-visible { outline:2px solid var(--purple); outline-offset:3px; }
 .disclaimer { grid-column:1/-1; margin:30px 0 0; padding-top:25px; border-top:1px solid #bbb5aa; font:11px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#6a645b; }
 .game-video-section { padding:52px var(--pad) 60px; border-bottom:1px solid #30313a; background:#17181e; color:#fff; }
 .game-video-header { display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:24px; }

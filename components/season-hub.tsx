@@ -1,5 +1,6 @@
 import schedule from '../config/season-2026.json';
 import program from '../config/program.json';
+import publication from '../config/publication.json';
 import seasonData from '../content/season-data.json';
 import { editions, editionPath } from '../lib/edition';
 import { sitePath } from '../lib/site-path';
@@ -43,6 +44,20 @@ const monthDay = (date: string) => atNoon(date).toLocaleDateString('en-US', { mo
 /** Opponent records refresh with the rest of the season data. */
 const records: Record<string, string> = seasonData.records;
 const record = (opponent: string) => records[opponent] ?? '';
+
+const knownNames = [publication.schoolName, ...schedule.map((game) => game.opponent)].sort(
+  (a, b) => b.length - a.length,
+);
+
+/** Dave Campbell's names end in a mascot. Match the longest schedule name so
+ *  Klein cannot absorb Klein Cain or Klein Collins. */
+function shortTeam(team: string) {
+  return knownNames.find((name) => team === name || team.startsWith(`${name} `)) ?? team;
+}
+
+function isSchool(team: string) {
+  return team === publication.schoolName || team.startsWith(`${publication.schoolName} `);
+}
 
 /** Colour reinforces the W or L, it never replaces it. */
 function outcomeClass(result: GameResult | null) {
@@ -93,33 +108,75 @@ export function SeasonHub({ activeDate }: { activeDate: string }) {
         <p className="district-note">{program.districtNote}</p>
       </div>
 
-      <div className="history-card">
-        <h2>Program history</h2>
-        <dl className="history-facts">
-          {program.facts.map((fact) => (
-            <div key={fact.label}>
-              <dt>{fact.label}</dt>
-              <dd>{fact.value}</dd>
-            </div>
-          ))}
-        </dl>
-        <h3>Past seasons</h3>
-        <ul className="past-seasons">
-          {program.pastSeasons.map((season) => (
-            <li key={season.year}>
-              <span>{season.year}</span>
-              <strong>{season.record}</strong>
-            </li>
-          ))}
-        </ul>
-        <p className="history-source">
-          {program.links.map((link) => (
-            <a key={link.label} href={link.href} target="_blank" rel="noreferrer">
-              {link.label}
-            </a>
-          ))}
-        </p>
+      <div className="season-side">
+        <StandingsCard />
+        <div className="history-card">
+          <h2>Program history</h2>
+          <dl className="history-facts">
+            {program.facts.map((fact) => (
+              <div key={fact.label}>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <h3>Past seasons</h3>
+          <ul className="past-seasons">
+            {program.pastSeasons.map((season) => (
+              <li key={season.year}>
+                <span>{season.year}</span>
+                <strong>{season.record}</strong>
+              </li>
+            ))}
+          </ul>
+          <p className="history-source">
+            {program.links.map((link) => (
+              <a key={link.label} href={link.href} target="_blank" rel="noreferrer">
+                {link.label}
+              </a>
+            ))}
+          </p>
+        </div>
       </div>
+    </section>
+  );
+}
+
+function StandingsCard() {
+  const table = seasonData.standings;
+  if (!table?.rows.length) return null;
+  const updated = new Date(table.asOf);
+  const updatedLabel = Number.isFinite(updated.valueOf())
+    ? updated.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: publication.timezone })
+    : '';
+
+  return (
+    <section className="standings-card" id="standings" aria-labelledby="standings-heading">
+      <h2 id="standings-heading">{table.district}</h2>
+      <table className="standings-table">
+        <thead>
+          <tr>
+            <th scope="col">Team</th>
+            <th className="num" scope="col">Dist</th>
+            <th className="num" scope="col">Overall</th>
+            <th className="next" scope="col">Next</th>
+          </tr>
+        </thead>
+        <tbody>
+          {table.rows.map((row) => (
+            <tr className={isSchool(row.team) ? 'school' : undefined} key={row.team}>
+              <th className="team" scope="row">{shortTeam(row.team)}</th>
+              <td className="num">{row.district}</td>
+              <td className="num">{row.overall}</td>
+              <td className="next">{row.next ? shortTeam(row.next) : '—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p className="standings-source">
+        <a href={table.sourceUrl}>{table.source}</a>
+        {updatedLabel ? ` · Updated ${updatedLabel}` : ''}
+      </p>
     </section>
   );
 }

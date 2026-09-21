@@ -30,5 +30,67 @@
   },
   "source": "Dave Campbell’s Texas Football",
   "sourceUrl": "https://www.texasfootball.com/scores/",
-  "asOf": "2026-09-21T16:46:50.520Z"
+  "asOf": "2026-09-21T16:46:50.520Z",
+  "standings": {
+    "district": "District 15-6A",
+    "rows": [
+      {
+        "team": "Klein Bearkats",
+        "district": "2–0",
+        "overall": "4–0",
+        "next": "Magnolia Bulldogs"
+      },
+      {
+        "team": "Klein Collins Tigers",
+        "district": "2–0",
+        "overall": "3–1",
+        "next": "Klein Forest Eagles"
+      },
+      {
+        "team": "Klein Cain Hurricanes",
+        "district": "1–0",
+        "overall": "3–0",
+        "next": "Magnolia West Mustangs"
+      },
+      {
+        "team": "Klein Forest Eagles",
+        "district": "1–1",
+        "overall": "1–3",
+        "next": "Klein Collins Tigers"
+      },
+      {
+        "team": "Magnolia Bulldogs",
+        "district": "1–1",
+        "overall": "1–3",
+        "next": "Klein Bearkats"
+      },
+      {
+        "team": "Tomball Cougars",
+        "district": "1–1",
+        "overall": "3–1",
+        "next": "Idle"
+      },
+      {
+        "team": "Klein Oak Panthers",
+        "district": "0–1",
+        "overall": "0–3",
+        "next": "Tomball Memorial Wildcats"
+      },
+      {
+        "team": "Magnolia West Mustangs",
+        "district": "0–2",
+        "overall": "2–2",
+        "next": "Klein Cain Hurricanes"
+      },
+      {
+        "team": "Tomball Memorial Wildcats",
+        "district": "0–2",
+        "overall": "1–3",
+        "next": "Klein Oak Panthers"
+      }
+    ],
+    "source": "Dave Campbell’s Texas Football",
+    "sourceUrl": "https://www.texasfootball.com/team/klein-cain-hurricanes",
+    "asOf": "2026-09-21T21:49:46.331Z"
+  }
 }

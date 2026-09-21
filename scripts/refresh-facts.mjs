@@ -17,7 +17,7 @@ import {
   fetchTeamPage,
   fetchWeather,
   findRankingsArticle,
-  parseDistrictRecords,
+  parseDistrictStandings,
   recordFor,
 } from './lib/sources.mjs';
 import { buildGames, formatRecord, predict, rate, teamRecords } from './lib/rating.mjs';
@@ -57,6 +57,21 @@ if (targets.length === 0) {
 
 const changes = [];
 const problems = [];
+
+/** Replace the standings table only. Unchanged rows keep the previous asOf so
+ *  a quiet refresh does not commit the same table again. */
+async function writeStandings(standings) {
+  const file = 'content/season-data.json';
+  const before = await readFile(path.join(root, file), 'utf8').catch(() => '');
+  const previous = before ? JSON.parse(before) : { results: {}, records: {} };
+  const sameRows = JSON.stringify(previous.standings?.rows ?? null) === JSON.stringify(standings.rows);
+  const sameDistrict = previous.standings?.district === standings.district;
+  if (sameRows && sameDistrict) return;
+  changes.push(`${file}: district standings -> ${standings.rows.length} teams`);
+  if (dryRun) return;
+  const next = { ...previous, standings };
+  await writeFile(path.join(root, file), `${JSON.stringify(next, null, 2)}\n`);
+}
 
 /** Every Thursday, Friday and Saturday of the season played so far. */
 function playedDates(games, day) {
@@ -121,15 +136,16 @@ try {
       }
 
       const file = 'content/season-data.json';
+      const before = await readFile(path.join(root, file), 'utf8').catch(() => '');
+      const previous = before ? JSON.parse(before) : { records: {}, results: {} };
       const next = {
         results,
         records: table,
+        ...(previous.standings ? { standings: previous.standings } : {}),
         source: 'Dave Campbell’s Texas Football',
         sourceUrl: 'https://www.texasfootball.com/scores/',
         asOf: new Date().toISOString(),
       };
-      const before = await readFile(path.join(root, file), 'utf8').catch(() => '');
-      const previous = before ? JSON.parse(before) : { records: {}, results: {} };
       for (const [team, value] of Object.entries(table)) {
         if (previous.records?.[team] !== value) changes.push(`${file}: ${team} ${previous.records?.[team] ?? '(none)'} -> ${value}`);
       }
@@ -146,14 +162,22 @@ try {
   problems.push(`rating: ${error.message}`);
 }
 
-// One fetch of the team page serves both the standings and the link to the
-// current statewide rankings article.
+// One fetch of the team page serves the standings table, edition records, and
+// the link to the current statewide rankings article.
 let records = null;
 let ranks = null;
 let ranksUrl = null;
 try {
   const teamPage = await fetchTeamPage(publication.teamPageUrl);
-  records = parseDistrictRecords(teamPage);
+  const standings = parseDistrictStandings(teamPage);
+  records = new Map(standings.rows.map((row) => [row.team, row.overall]));
+  await writeStandings({
+    district: standings.district,
+    rows: standings.rows,
+    source: 'Dave Campbell’s Texas Football',
+    sourceUrl: publication.teamPageUrl,
+    asOf: new Date().toISOString(),
+  });
   ranksUrl = findRankingsArticle(teamPage);
   if (ranksUrl) {
     ranks = await fetchStateRankings(ranksUrl);

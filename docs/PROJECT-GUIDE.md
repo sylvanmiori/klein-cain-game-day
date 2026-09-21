@@ -33,7 +33,7 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `components/game-photos.tsx` | accessible photo gallery grid, native `<dialog>` lightbox modal with keyboard navigation, photographer credits |
 | `components/game-video.tsx` | game highlight video player with poster, duration, and credit |
 | `content/editions/*.json` | one file per game, schema v2, typed in `lib/edition.ts` |
-| `content/season-data.json` | machine-written: our results and every opponent's record |
+| `content/season-data.json` | machine-written: our results, every opponent's record, and district standings |
 | `content/roster-2026.json` | varsity roster synced from MaxPreps with `npm run roster`; local portrait paths are synced with `npm run photos` |
 | `config/season-2026.json` | the schedule; authority on date, opponent, venue, home/away, kickoff |
 | `config/opponent-logos.json` | exact MaxPreps profile used for each scheduled opponent's logo |
@@ -73,7 +73,7 @@ The code targets Cloudflare's free Worker and KV allowances. Those quotas are fi
 
 ## The program page
 
-`/` is the Klein Cain program homepage. Above the fold it shows the season record, then one unified **Next Game** card for whichever edition promotion marks current, followed by a unified **Latest Recap** feature card for the most recent final. The full schedule, program history, links to every game report, season stat leaders, head coach bio and roster follow on the same page. Full previews and recaps render on `/games/week-<n>`.
+`/` is the Klein Cain program homepage. Above the fold it shows the season record, then one unified **Next Game** card for whichever edition promotion marks current, followed by a unified **Latest Recap** feature card for the most recent final. The full schedule, district standings, program history, links to every game report, season stat leaders, head coach bio and roster follow on the same page. Full previews and recaps render on `/games/week-<n>`.
 
 ### Next Game card and Latest Recap feature
 
@@ -97,7 +97,7 @@ Game recap pages support local MP4 video highlights embedded via `components/gam
 
 Between games, the recap card points at the most recent final. On the Monday of the next game's week, promotion moves the Next Game card to that preview. While a featured game is final, its recap, Player of the Game and game statistics appear on that game's report page, not on `/`.
 
-Every game report is a subpage at `/games/week-<n>`, including whichever one is current. The program page and game reports share `SeasonHub` and `SeasonStats`. Live polling for the featured game lives inside `HomeNextGameCard` (not a separate homepage score widget). `RosterSection` appears only on the program page.
+Every game report is a subpage at `/games/week-<n>`, including whichever one is current. The program page and game reports share `SeasonHub`, including the district standings card, and `SeasonStats`. Live polling for the featured game lives inside `HomeNextGameCard` (not a separate homepage score widget). `RosterSection` appears only on the program page.
 
 On a final matchup layout (game report cards and the Next Game strip), Klein Cain stays on the left whether the game is home or away; the opponent is on the right. The winner stays at full contrast and the losing name and score are muted. A small green or red dot sits on the midfield side of Klein Cain's score to show the result without moving the number off-center. The score itself stays white; result color is intentionally limited to the dot.
 
@@ -196,11 +196,12 @@ The script also does two things that used to be manual and easy to forget:
 
 ## Automated facts
 
-`scripts/refresh-facts.mjs` refreshes editions from public sources on a schedule. No language model runs in it. On an edition it may write `home.record`, `away.record`, both team ranks, `rankings`, `prediction`, `rating` and `weather`. `promote-edition.mjs` owns `finalScore`, `stats` and `gameStats`. The refresh also writes results and opponent records to `content/season-data.json`. Copy, preview players, headlines, sources and metadata stay editorial and are never touched by automation.
+`scripts/refresh-facts.mjs` refreshes editions from public sources on a schedule. No language model runs in it. On an edition it may write `home.record`, `away.record`, both team ranks, `rankings`, `prediction`, `rating` and `weather`. `promote-edition.mjs` owns `finalScore`, `stats` and `gameStats`. The refresh also writes results, opponent records and the district standings table to `content/season-data.json`. Copy, preview players, headlines, sources and metadata stay editorial and are never touched by automation.
 
 Sources, all free and unauthenticated:
 
 - **Records** come from the District 15-6A standings table on the school's own Dave Campbell's team page, which is server rendered. One request covers every district opponent. Teams are matched on the exact string `"<name> <mascot>"` so `Klein` cannot match `Klein Cain`.
+- **District standings** on the program page and every game report are that same table. `parseDistrictStandings` keeps the source order, district record, overall record and next opponent. `refresh-facts.mjs` stores them on `content/season-data.json` under `standings`. A failed parse leaves the previous table in place. The page shortens each name by the longest matching schedule or school name, so Klein stays distinct from Klein Cain. The next-opponent column is hidden on a phone.
 - **The model prediction** comes from the `pick` field of the same Dave Campbell's scores endpoint the live score already uses: `POST /api/schools/scoresGetJson` with the game date, then the row matching the school and opponent. It is shown on the page as **Model Prediction** and is deliberately **not hyperlinked**, because the field is not rendered on any public Dave Campbell's page. Their scores UI shows only status, teams and scores, and their own markup for a game omits it; it appears to feed the Pick'Em contest instead. Linking it would send a reader somewhere the number is not shown. It is a signed margin from Klein Cain's point of view. Verified across 2,236 completed games rather than assumed: 1,216 paired rows are exact negatives with no exceptions, which rules out a poll or a count, and the sign predicts the winner 71.0 percent of the time. The median absolute pick is 11 and the range is -71 to 71, a plausible margin scale.
 - **Our rating** is computed in `scripts/lib/rating.mjs` from every Texas result so far, roughly 1,300 games across 1,435 teams by early September. It is the classic Massey least-squares method, which is public: assert `rating(winner) - rating(loser) = margin` for every game and solve the overdetermined system. It is **not** the rating published on masseyratings.com, which is a refined proprietary system, and the validator rejects any attempt to attribute it to Massey. Two modelling choices are ours rather than derived from data: margins are capped at 28 so running up the score earns nothing, and a ridge term keeps the system solvable while the game graph is still in disconnected pieces. Home advantage is measured from the data, not assumed. Nothing is published until both teams have at least four games, so early in a season it correctly shows nothing.
 - **Statewide rank** comes from Dave Campbell's weekly "Computer Rankings for All 1,500 TXHSFB Teams" article. Team pages link the recent ones, so `findRankingsArticle` picks the newest by the date in its URL rather than guessing a slug, and the parser refuses anything yielding fewer than 500 teams. This is where the original `Cain 132 · Tomball 69` came from: the numbers were right when written and then froze. As of the Week 2 article they are Cain 81 and Tomball 43, which is exactly why they are now refreshed rather than typed in. The `NR` on a team page is the separate AP-style poll, not this ranking.
