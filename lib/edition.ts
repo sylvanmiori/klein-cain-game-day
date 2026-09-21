@@ -354,3 +354,25 @@ export function apDate(isoDate: string, withYear = false) {
   const base = `${apMonths[Number(month) - 1]} ${Number(day)}`;
   return withYear ? `${base}, ${year}` : base;
 }
+
+/** Long kickoff line for homepage cards, e.g. Friday, Sept. 25, 2026. */
+export function gameDayLong(isoDate: string, timeZone = 'America/Chicago') {
+  return new Date(`${isoDate}T12:00:00`).toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone,
+  });
+}
+
+/** Compact kickoff line for matchup headers, e.g. Fri, Sept. 25, 2026. */
+export function gameDayShort(isoDate: string, timeZone = 'America/Chicago') {
+  return new Date(`${isoDate}T12:00:00`).toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone,
+  });
+}
