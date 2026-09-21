@@ -350,18 +350,19 @@ article>section { border-bottom:1px solid var(--line); }
 .player-of-game h2 { margin:5px 0 7px; font-size:28px; line-height:1; letter-spacing:-.045em; }
 .player-of-game strong { display:block; font-size:14px; }
 .player-of-game p { margin:8px 0 0; color:#d1d2d8; font-size:13px; line-height:1.45; }
-.game-statistics { padding:52px var(--pad) 60px; border-bottom:1px solid var(--line); }
+.game-statistics { padding:52px var(--pad) 60px; border-bottom:none; }
+.game-report .game-statistics { border-bottom:none; }
 .game-statistics .compact-head>div p { margin-top:6px; }
 .game-statistics .compact-head>a { color:var(--purple); font-size:10px; font-weight:800; transition:color .15s ease; }
 .game-statistics .compact-head>a:hover { color:#32104e; }
 .game-stat-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(320px,.8fr); gap:42px; }
-.game-total-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-self:start; margin:0; border-top:1px solid #aaa6a0; }
-.game-total-grid>div { min-width:0; padding:14px 16px 14px 0; border-bottom:1px solid #ded9d1; }
+.game-total-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-self:start; margin:0; border-top:none; }
+.game-total-grid>div { min-width:0; padding:14px 16px 14px 0; border-bottom:none; }
 .game-total-grid dt,.game-leader-list article>span { color:#77777d; font-size:9px; font-weight:850; letter-spacing:.06em; text-transform:uppercase; }
 .game-total-grid dd { margin:5px 0 2px; font-size:16px; font-weight:850; font-variant-numeric:tabular-nums; }
 .game-total-grid small,.game-leader-list small,.game-leader-list p { color:#77736d; font-size:9px; }
-.game-leader-list { border-top:1px solid #aaa6a0; }
-.game-leader-list article { display:grid; grid-template-columns:76px minmax(110px,1fr) auto; gap:4px 14px; align-items:baseline; padding:10px 0; border-bottom:1px solid #ded9d1; }
+.game-leader-list { border-top:none; }
+.game-leader-list article { display:grid; grid-template-columns:76px minmax(110px,1fr) auto; gap:4px 14px; align-items:baseline; padding:10px 0; border-bottom:none; }
 .game-leader-list article>span { grid-row:1 / span 2; }
 .game-leader-list article div { min-width:0; }
 .game-leader-list article strong { font-size:12px; }
