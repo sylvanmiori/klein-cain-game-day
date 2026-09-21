@@ -18,6 +18,7 @@ type RecapLink = {
   href: string;
   headline: string;
   dateLabel: string;
+  imageSrc?: string;
 };
 
 export function ProgramHomeSpotlight({
@@ -62,7 +63,7 @@ export function ProgramHomeSpotlight({
               <h3>{recap.headline}</h3>
               <a href={recap.href}>Read the full report →</a>
             </div>
-            <img src={sitePath('/og.png')} alt="" />
+            <img src={sitePath(recap.imageSrc || '/hero-helmet.jpg')} alt="" />
           </div>
         </article>
       )}
@@ -72,9 +73,13 @@ export function ProgramHomeSpotlight({
 
 export function buildRecapLink(edition: Edition | null): RecapLink | null {
   if (!edition?.final) return null;
+  const imageSrc = edition.gameStats?.playerOfGame?.image
+    || (edition.ogImage && edition.ogImage.length > 0 && !edition.ogImage.includes('og.png') ? edition.ogImage : null)
+    || '/hero-helmet.jpg';
   return {
     href: sitePath(editionPath(edition)),
     headline: edition.final.headline,
     dateLabel: apDate(edition.date, true),
+    imageSrc,
   };
 }
