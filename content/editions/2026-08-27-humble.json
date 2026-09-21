@@ -65,9 +65,9 @@
   ],
   "preview": null,
   "final": {
-    "headline": "Cain survives the opener, 42–41",
-    "byline": "",
-    "body": "Klein Cain scored in every quarter and carried a 35–28 lead into the fourth. Humble closed with 13 points, but the Hurricanes held the one-point margin.",
+    "headline": "Klein Cain outlasts Humble, 42–41, in season-opening road shootout",
+    "byline": "Cain Game Day desk · Updated 11:30 PM CT",
+    "body": "Klein Cain kicked off its 2026 campaign in heart-stopping fashion, surviving a relentless, four-quarter offensive shootout at Turner Stadium to edge Humble 42–41. In a game featuring 83 combined points and continuous lead changes, the Hurricanes leaned on offensive execution and clutch fourth-quarter grit to leave with a season-opening road victory.\n\nThe catalyst for Cain was junior quarterback Jace Hanks, who delivered a scintillating 257-yard, four-touchdown performance to earn Cain Player of the Game honors. Operating with poise in his first start of the season, Hanks struck through the air (15 of 24 for 201 yards, 2 touchdowns) and inflicted severe damage on the ground, scrambling for 56 rushing yards and two scores while even chipping in a 28-yard reception. Hanks found his primary target in senior wide receiver Cooper Karns, who torched the Wildcats secondary for 110 receiving yards on six catches, including an acrobatic scoring strike that kept the Hurricanes ahead of the chains.\n\nWhen Cain needed to grind down clock and soften the Humble interior, senior running back Eyan Johnson provided the hammer. Johnson powered through tackles for 110 rushing yards and a touchdown on 11 carries—an explosive 10.0 yards-per-carry clip—consistently breaking into the second level behind an offensive line anchored by center Gavin Chaloupka and tackle Austin Corson.\n\nThe Wildcats refused to go quietly in front of their home crowd, rallying for 13 fourth-quarter points to cut Cain’s lead to 42–41 in the final minutes. But with the outcome on the line, senior linebacker Jerod Spraberry (team-high 8 tackles, 1 TFL), junior safety Easton Mizell, and the Hurricanes defense stood tall on Humble’s late possession to preserve the margin. Coupled with senior kicker Sage DesAutels remaining flawless—drilling all six PAT attempts on a night where every point proved vital—Klein Cain boarded the buses with a dramatic 1–0 start.",
     "homeScore": 41,
     "awayScore": 42,
     "quarters": {
@@ -100,7 +100,29 @@
         }
       ]
     },
-    "notes": [],
+    "notes": [
+      {
+        "heading": "Opening night offensive fireworks",
+        "paragraphs": [
+          "Klein Cain generated 469 yards of total offense (255 passing, 214 rushing) and scored in every quarter, putting up 14 points in the first, 7 in the second, 14 in the third, and 7 in the fourth.",
+          "The Hurricanes converted at a blistering 10.0 yards per carry on Eyan Johnson's carries, demonstrating balance across pass and ground schemes."
+        ]
+      },
+      {
+        "heading": "Hanks & Karns establish early chemistry",
+        "paragraphs": [
+          "Quarterback Jace Hanks accounted for four touchdowns in total—two through the air and two on the ground—showing why he is one of the district's premier dual-threat weapons.",
+          "Senior wideout Cooper Karns posted game-high numbers across the board with six receptions for 110 yards and a score, serving as Hanks' go-to target in key third-down conversions."
+        ]
+      },
+      {
+        "heading": "Flawless kicking makes the difference",
+        "paragraphs": [
+          "In a contest decided by a single point, special teams precision swung the outcome. Senior kicker Sage DesAutels was perfect on the night, connecting on all six PAT attempts under intense road pressure.",
+          "Humble missed a crucial extra point try during their second-half rally, creating the one-point gap that ultimately decided the contest."
+        ]
+      }
+    ],
     "video": {
       "title": "Game Highlights: Klein Cain vs. Humble",
       "caption": "Texan Live broadcast highlights from Klein Cain’s thrilling 42–41 season-opening victory over Humble at Turner Stadium.",

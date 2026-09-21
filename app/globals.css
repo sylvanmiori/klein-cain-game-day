@@ -183,11 +183,11 @@ article>section { border-bottom:1px solid var(--line); }
 .opening h2,.section-head h2,.feature-copy h2,.recruiting h2,.gameday h2 { margin:0; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; font-weight:850; letter-spacing:-.055em; }
 .opening h2 { font-size:clamp(30px,3.5vw,48px); line-height:1; }
 .opening>p:last-child { margin:0; font:16px/1.6 "Helvetica Neue", Helvetica, Arial, sans-serif; }
-.opening.final-recap { display:block; }
-.opening.final-recap>div { max-width:900px; margin:0; }
-.opening.final-recap>p:last-child { max-width:900px; margin:24px 0 0; }
-.recap-copy { max-width:900px; margin:24px 0 0; }
-.recap-copy p { max-width:900px; margin:0 0 18px; font:16px/1.68 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#222; }
+.opening.final-recap { display:block; max-width:780px; margin:0 auto; }
+.opening.final-recap>div { max-width:780px; margin:0; }
+.opening.final-recap>p:last-child { max-width:780px; margin:24px 0 0; }
+.recap-copy { max-width:780px; margin:24px 0 0; }
+.recap-copy p { max-width:780px; margin:0 0 18px; font:16.5px/1.72 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#222; }
 .recap-copy p:last-child { margin-bottom:0; }
 .week-recap .recap-copy { max-width:680px; margin:18px 0 0; }
 .week-recap .recap-copy p { max-width:680px; margin:0 0 16px; font-size:15px; line-height:1.58; color:inherit; }
