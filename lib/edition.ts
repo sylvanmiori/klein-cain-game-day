@@ -81,6 +81,17 @@ export type PreviewSection = {
   gameInfo: { heading: string; facts: Fact[]; links: { label: string; href: string }[] } | null;
 };
 
+export type VideoHighlight = {
+  title: string;
+  caption?: string;
+  src: string;
+  fallbackSrc?: string;
+  poster: string;
+  duration?: string;
+  credit: string;
+  sourceUrl?: string;
+};
+
 export type FinalSection = {
   headline: string;
   byline: string;
@@ -91,6 +102,7 @@ export type FinalSection = {
   quarters: { labels: string[]; rows: { team: string; scores: string[]; total: string }[] } | null;
   notes: { heading: string; paragraphs: string[] }[];
   leaders: { heading: string; source: string; items: Leader[] } | null;
+  video?: VideoHighlight | null;
 };
 
 export type GameStats = {

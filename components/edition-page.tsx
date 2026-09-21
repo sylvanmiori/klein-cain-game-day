@@ -1,5 +1,6 @@
 import { galleryForSlug } from '../lib/galleries';
 import { GamePhotoGallery, RecapPhotoStory } from './game-photos';
+import { GameHighlightVideo } from './game-video';
 import publication from '../config/publication.json';
 import schedule from '../config/season-2026.json';
 import liveScore from '../public/live-score.json';
@@ -267,6 +268,8 @@ export function FinalView({
       )}
 
       <RecapPhotoStory gallery={gallery ?? null} />
+
+      {final.video && <GameHighlightVideo video={final.video} />}
 
       {gameStats && <PlayerOfGame stats={gameStats} />}
       {gameStats && <GameStatistics stats={gameStats} />}

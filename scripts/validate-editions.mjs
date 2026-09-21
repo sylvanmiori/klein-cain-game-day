@@ -361,6 +361,35 @@ for (const file of files) {
     }
   }
 
+  if (edition.final?.video) {
+    const video = edition.final.video;
+    if (!video.title) fail('final.video needs a title');
+    if (!video.src && !video.fallbackSrc) fail('final.video needs a src or fallbackSrc');
+    if (video.poster) {
+      if (!video.poster.startsWith('/')) {
+        fail('final.video.poster must be a local path starting with /');
+      } else {
+        try {
+          await readFile(path.join(root, 'public', video.poster.slice(1)));
+        } catch {
+          fail(`final.video.poster does not exist at public${video.poster}`);
+        }
+      }
+    } else {
+      fail('final.video needs a poster image');
+    }
+    if (video.src?.startsWith('/')) {
+      try {
+        await readFile(path.join(root, 'public', video.src.slice(1)));
+      } catch {
+        fail(`final.video.src does not exist at public${video.src}`);
+      }
+    }
+    if (video.sourceUrl && !video.sourceUrl.startsWith('https://')) {
+      fail('final.video.sourceUrl must be an https URL');
+    }
+  }
+
   for (const source of edition.sources ?? []) {
     if (!source.href?.startsWith('https://')) fail(`source "${source.label}" needs an https URL`);
   }

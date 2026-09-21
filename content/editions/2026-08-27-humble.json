@@ -101,6 +101,16 @@
       ]
     },
     "notes": [],
+    "video": {
+      "title": "Game Highlights: Klein Cain vs. Humble",
+      "caption": "Texan Live broadcast highlights from Klein Cain’s thrilling 42–41 season-opening victory over Humble at Turner Stadium.",
+      "src": "/videos/2026-08-27-humble/highlights.mp4",
+      "fallbackSrc": "https://recaps.nfhsnetwork.com/postprocessor_v2/ns_gt_u98nve13u9fa3/ppv2_20260902160712600445.mp4",
+      "poster": "/videos/2026-08-27-humble/poster.jpg",
+      "duration": "0:53",
+      "credit": "Texan Live · NFHS Network",
+      "sourceUrl": "https://www.nfhsnetwork.com/"
+    },
     "leaders": {
       "heading": "Verified game leaders",
       "source": "MaxPreps box score",
