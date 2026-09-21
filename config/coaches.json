@@ -6,6 +6,11 @@
     "season": 9,
     "record": "56–33",
     "bio": "Clancy has led Klein Cain since the program opened in 2017, with district titles in 2022 and 2024 and six straight playoff berths through 2025.",
+    "career": [
+      "Klein Oak · co-offensive coordinator & quarterbacks · 2007–2012",
+      "Strake Jesuit · head coach · Area championship in 2015",
+      "Klein Cain · head coach & campus athletic director · 2017–present"
+    ],
     "source": "Klein Cain Athletics",
     "sourceUrl": "https://www.kleincainathletics.com/Staff/Bio/38148"
   },
@@ -16,8 +21,13 @@
       "season": 4,
       "record": "12–18",
       "bio": "Murphy is in his fourth season at Humble and is trying to lift the Wildcats back into the playoffs for the first time since 2019.",
-      "source": "Dave Campbell’s Texas Football",
-      "sourceUrl": "https://texashsfootball.com/humble-wildcats-2026-season-preview/"
+      "career": [
+        "New Caney · assistant · 2016–2021 (42–15, four district titles)",
+        "Humble · defensive coordinator & assistant head coach · 2021–2023",
+        "Humble · head coach · 2023–present"
+      ],
+      "source": "Humble ISD",
+      "sourceUrl": "https://www.humbleisd.net/article/1140261"
     },
     "Oak Ridge": {
       "name": "Tyler Blackshire",
@@ -25,6 +35,12 @@
       "season": 2,
       "record": "4–6",
       "bio": "Blackshire took over at Oak Ridge in 2025 and returns 13 starters while trying to end back-to-back playoff misses.",
+      "career": [
+        "Westlake · assistant coach · 2017–2021",
+        "Cameron · defensive, recruiting & strength coordinator · 2021–2022",
+        "Magnolia · defensive coordinator · 2022–2025",
+        "Oak Ridge · head coach & campus athletic director · 2025–present"
+      ],
       "source": "Dave Campbell’s Texas Football",
       "sourceUrl": "https://texashsfootball.com/oak-ridge-war-eagles-2026-season-preview/"
     },
@@ -34,8 +50,13 @@
       "season": 5,
       "record": "35–15",
       "bio": "Handal has won a playoff game in all four of his full seasons at Tomball and is working through heavy turnover on this year’s roster.",
-      "source": "Dave Campbell’s Texas Football",
-      "sourceUrl": "https://texashsfootball.com/tomball-cougars-2026-season-preview/"
+      "career": [
+        "Richardson Berkner · defensive coordinator · 2001–2012",
+        "Galena Park · head coach · 2013–2017",
+        "Tomball · defensive coordinator, then head coach · 2019–present"
+      ],
+      "source": "Tomball Cougars Athletics",
+      "sourceUrl": "https://www.tomballcougars.com/Staff/Bio/24173"
     },
     "Magnolia West": {
       "name": "Ben McGehee",
@@ -43,6 +64,14 @@
       "season": 6,
       "record": "28–28",
       "bio": "McGehee is in his sixth season at Magnolia West and has spent this fall rebuilding culture after three total wins across the last two 6A seasons.",
+      "career": [
+        "Brownwood · assistant",
+        "Abilene Cooper · assistant",
+        "Palestine · assistant",
+        "Temple · associate head coach & offensive coordinator",
+        "Sweetwater · head coach · 2017–2021 (23–21)",
+        "Magnolia West · head coach · 2021–present"
+      ],
       "source": "Dave Campbell’s Texas Football",
       "sourceUrl": "https://texashsfootball.com/magnolia-west-mustangs-2026-season-preview/"
     },
@@ -52,6 +81,10 @@
       "season": 9,
       "record": "69–26",
       "bio": "Mitchell has taken Klein Collins to the playoffs in all eight of his seasons and reached the regional semifinals in each of the last two years.",
+      "career": [
+        "Klein Collins · offensive coordinator, then co-defensive coordinator",
+        "Klein Collins · head coach · 2018–present"
+      ],
       "source": "Dave Campbell’s Texas Football",
       "sourceUrl": "https://texashsfootball.com/klein-collins-tigers-2026-season-preview/"
     },
@@ -61,8 +94,15 @@
       "season": 2,
       "record": "6–5",
       "bio": "Codutti returned Klein to the playoffs in his first season and gets quarterback Carter Lattelle back from an ACL injury this fall.",
-      "source": "Dave Campbell’s Texas Football",
-      "sourceUrl": "https://texashsfootball.com/klein-bearkats-2026-season-preview/"
+      "career": [
+        "Marshfield, Mo. · head coach · 12–18",
+        "Beaumont West Brook · offensive coordinator · from 2015",
+        "Tomball · offensive coordinator & assistant head coach · ~2017–2021",
+        "Fulshear · head coach · 2021–2025 (39–10)",
+        "Klein · head coach · 2025–present"
+      ],
+      "source": "Klein ISD",
+      "sourceUrl": "https://trc.kleinisd.net/news/post/~board/news/post/klein-high-announces-coach-nick-codutti-as-new-athletic-director"
     },
     "Klein Oak": {
       "name": "Brandon Carpenter",
@@ -70,6 +110,12 @@
       "season": 6,
       "record": "24–28",
       "bio": "Carpenter’s Panthers lost three one-score district games last year and missed the playoffs for the third time in four seasons.",
+      "career": [
+        "Klein Forest · assistant",
+        "Tarkington · head coach · 2010–2015 (first playoff win in school history, 2014)",
+        "Porter · offensive coordinator",
+        "Klein Oak · offensive coordinator, then head coach · 2017–present"
+      ],
       "source": "Dave Campbell’s Texas Football",
       "sourceUrl": "https://texashsfootball.com/klein-oak-panthers-2026-season-preview/"
     },
@@ -79,8 +125,18 @@
       "season": 3,
       "record": "8–12",
       "bio": "Cary is in his third season at Tomball Memorial, where the defense allowed 42 or more in seven district games a year ago.",
-      "source": "Dave Campbell’s Texas Football",
-      "sourceUrl": "https://texashsfootball.com/tomball-memorial-wildcats-2026-season-preview/"
+      "career": [
+        "Harker Heights · offensive line · 2000–2004",
+        "San Antonio Reagan · offensive line & run game · 2004–2005",
+        "Aledo · offensive line & special teams · 2006–2009",
+        "Port Neches-Groves · associate head coach & offensive coordinator · 2009–2014",
+        "Crandall · head coach · 2014–2020",
+        "Hondo · head coach · 2020–2022",
+        "Brazoswood · head coach · 2022–2023",
+        "Tomball Memorial · head coach · 2024–present"
+      ],
+      "source": "Tomball ISD",
+      "sourceUrl": "https://www.tomballisd.net/about-tisd/departments/communications/news-releases/news-details/~board/athletics/post/tomball-isd-welcomes-joe-cary-as-new-tmhs-athletic-coordinatorhead-football-coach"
     },
     "Magnolia": {
       "name": "Craig Martin",
@@ -88,6 +144,11 @@
       "season": 8,
       "record": "51–27",
       "bio": "Martin has won nine games in two of the last three seasons at Magnolia and has reached the playoffs in five of his seven years there.",
+      "career": [
+        "Killeen Ellison · head baseball coach · district title in 2006",
+        "Temple · head baseball coach & offensive coordinator · state finals in 2014 & 2016",
+        "Magnolia · head coach · 2019–present"
+      ],
       "source": "Dave Campbell’s Texas Football",
       "sourceUrl": "https://texashsfootball.com/magnolia-bulldogs-2026-season-preview/"
     },
@@ -97,6 +158,11 @@
       "season": 4,
       "record": "8–22",
       "bio": "Vaughn’s Eagles finished 2–8 for the second straight year and must replace most of an offense that scored well in 2025.",
+      "career": [
+        "Atlanta Falcons & Houston Texans · NFL defensive back · 2000–2003",
+        "Willis · defensive coordinator, assistant head coach & track · before 2023",
+        "Klein Forest · head coach & athletic coordinator · 2023–present"
+      ],
       "source": "Dave Campbell’s Texas Football",
       "sourceUrl": "https://texashsfootball.com/klein-forest-eagles-2026-season-preview/"
     }

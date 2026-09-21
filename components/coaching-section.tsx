@@ -13,18 +13,34 @@ function tenure(coach: CoachProfile): string {
   return `${ordinal(coach.season)} season · ${coach.record}`;
 }
 
+function CoachCareer({ stops }: { stops: string[] }) {
+  if (stops.length === 0) return null;
+  return (
+    <div className="coach-career">
+      <p className="coach-career-label">Career stops</p>
+      <ul>
+        {stops.map((stop) => (
+          <li key={stop}>{stop}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function CoachCard({
   coach,
   schoolName,
   mascot,
   side,
   hideBio = false,
+  hideCareer = false,
 }: {
   coach: CoachProfile;
   schoolName: string;
   mascot: string;
   side: 'school' | 'opponent';
   hideBio?: boolean;
+  hideCareer?: boolean;
 }) {
   return (
     <article className={`coach-card ${side}`}>
@@ -47,6 +63,7 @@ function CoachCard({
         <p className="coach-title">{coach.title}</p>
         <p className="coach-tenure">{tenure(coach)}</p>
         {!hideBio && <p className="coach-bio">{coach.bio}</p>}
+        {!hideCareer && <CoachCareer stops={coach.career} />}
         <a href={coach.sourceUrl} target="_blank" rel="noreferrer">
           {coach.source}
         </a>
@@ -94,6 +111,7 @@ export function CoachingMatchupSection({
             {matchup.opponent.name} · {matchup.opponent.schoolName}
           </h3>
           <p className="coach-spotlight-body">{matchup.opponent.bio}</p>
+          <CoachCareer stops={matchup.opponent.career} />
         </div>
       )}
       <div className="coach-grid">
@@ -109,6 +127,7 @@ export function CoachingMatchupSection({
           mascot={matchup.opponent.mascot}
           side="opponent"
           hideBio={spotlightOpponent}
+          hideCareer={spotlightOpponent}
         />
       </div>
     </section>

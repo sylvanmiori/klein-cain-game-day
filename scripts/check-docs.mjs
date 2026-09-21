@@ -60,12 +60,20 @@ for (const game of schedule) {
 }
 
 const coaches = JSON.parse(await readFile(path.join(root, 'config/coaches.json'), 'utf8'));
+if (!coaches.school?.name) problems.push('config/coaches.json: school head coach is missing');
+if (!Array.isArray(coaches.school?.career) || coaches.school.career.length === 0) {
+  problems.push('config/coaches.json: school head coach needs career stops');
+}
 for (const game of schedule) {
-  if (!coaches.opponents?.[game.opponent]) {
+  const profile = coaches.opponents?.[game.opponent];
+  if (!profile) {
     problems.push(`config/coaches.json: ${game.opponent} is missing a head coach profile`);
+    continue;
+  }
+  if (!Array.isArray(profile.career) || profile.career.length === 0) {
+    problems.push(`config/coaches.json: ${game.opponent} head coach needs career stops`);
   }
 }
-if (!coaches.school?.name) problems.push('config/coaches.json: school head coach is missing');
 
 if (problems.length) {
   console.error(problems.join('\n'));

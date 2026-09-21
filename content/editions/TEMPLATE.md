@@ -52,7 +52,10 @@ recruiting notes, keys and game information are never generated.
 
 Head coaches live in `config/coaches.json`, not in edition JSON. The site
 renders a **Head coaches** section on every preview and final game page from
-that file, and the program page shows Klein Cain’s coach between games.
+that file, and the program page shows Klein Cain’s coach between games. Each
+profile includes a verified **Career stops** list; update those entries when
+you refresh a coach’s bio from Klein Cain Athletics, the school district or
+Dave Campbell’s season preview.
 
 When writing a preview intro, name each head coach once in the body — enough
 for readers to connect the matchup section to the story. A sentence of

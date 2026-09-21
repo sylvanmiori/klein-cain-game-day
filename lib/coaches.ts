@@ -8,6 +8,7 @@ export type CoachProfile = {
   season: number;
   record: string;
   bio: string;
+  career: string[];
   source: string;
   sourceUrl: string;
 };

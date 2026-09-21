@@ -34,7 +34,7 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `config/season-2026.json` | the schedule; authority on date, opponent, venue, home/away, kickoff |
 | `config/opponent-logos.json` | exact MaxPreps profile used for each scheduled opponent's logo |
 | `config/publication.json` | school, wordmark, source URLs |
-| `config/coaches.json` | head coaches for Klein Cain and every scheduled opponent; rendered on previews and the program page |
+| `config/coaches.json` | head coaches for Klein Cain and every scheduled opponent, with bios and verified career stops; rendered on previews and the program page |
 | `config/program.json` | program history and past seasons |
 | `config/venues.json` | venue coordinates, for the forecast |
 | `scripts/lib/sources.mjs` | every external fetcher and parser |

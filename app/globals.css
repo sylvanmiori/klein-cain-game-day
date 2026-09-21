@@ -242,6 +242,11 @@ article>section { border-bottom:1px solid var(--line); }
 .coach-tenure { color:var(--purple); }
 .coach-card.opponent .coach-tenure { color:var(--red); }
 .coach-bio { margin:14px 0 0; max-width:36em; font-size:14px; line-height:1.55; color:#44444a; }
+.coach-career { margin:16px 0 0; max-width:36em; }
+.coach-career-label { margin:0; font-size:9px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#6e6e73; }
+.coach-career ul { margin:8px 0 0; padding:0 0 0 18px; font-size:13px; line-height:1.5; color:#44444a; }
+.coach-career li { margin:0 0 6px; }
+.coach-spotlight .coach-career { margin-top:18px; }
 .coach-copy a { display:inline-block; margin-top:14px; font-size:10px; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
 .early-read { display:grid; grid-template-columns:1fr minmax(340px,.72fr); gap:7vw; padding:52px var(--pad) 58px; border-bottom:1px solid var(--line); }
 .early-read dl { margin:0; border-top:1px solid #99999f; }
