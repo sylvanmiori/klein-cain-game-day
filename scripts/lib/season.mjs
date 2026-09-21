@@ -1,8 +1,8 @@
-// Which edition the home page shows on a given day.
+// Which edition the live score card follows on a given day.
 //
-// The latest result owns the home page between games. The next preview takes
-// over on the Monday of that game's week, so game-day readers always land on
-// the right matchup without replacing a useful final during a long open week.
+// The latest result stays current between games. The next preview takes over on
+// the Monday of that game's week, so game-day readers always land on the right
+// matchup without leaving the previous final on the live card through a long open week.
 
 const daysBetween = (from, to) =>
   Math.round((Date.parse(`${to}T12:00:00Z`) - Date.parse(`${from}T12:00:00Z`)) / 86400000);

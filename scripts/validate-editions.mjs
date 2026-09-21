@@ -205,7 +205,17 @@ for (const file of files) {
       const auditDate = new Date(`${playerStatsAudit.asOf}T00:00:00Z`);
       const gameDate = new Date(`${edition.date}T00:00:00Z`);
       if (!Number.isFinite(auditDate.valueOf())) fail('playerStatsAudit needs a valid asOf date');
-      if ((gameDate - auditDate) / 86_400_000 > 2) {
+      const today = process.env.VALIDATE_TODAY ?? new Intl.DateTimeFormat('en-CA', {
+        timeZone: publication.timezone,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).format(new Date());
+      const todayDate = new Date(`${today}T12:00:00Z`);
+      const daysUntilKickoff = (gameDate - todayDate) / 86_400_000;
+      // Promotion Monday can make a preview current before the final pregame refresh.
+      // Enforce the two-day audit window only once kickoff is that close.
+      if (daysUntilKickoff <= 2 && (gameDate - auditDate) / 86_400_000 > 2) {
         fail('playerStatsAudit must be completed within two days of kickoff');
       }
       if (!Array.isArray(playerStatsAudit.sources) || playerStatsAudit.sources.length < 2) {

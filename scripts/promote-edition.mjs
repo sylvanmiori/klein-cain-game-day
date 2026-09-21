@@ -1,5 +1,5 @@
-// Advances the season: decides which edition the home page shows, keeps the
-// live score card pointed at that game, and captures a final score once a game
+// Advances the season: decides which edition the live score card follows, keeps
+// that slug in public/live-score.json, and captures a final score once a game
 // has been played.
 //
 //   node scripts/promote-edition.mjs            apply

@@ -61,7 +61,9 @@ The code targets Cloudflare's free Worker and KV allowances. Those quotas are fi
 
 ## The program page
 
-`/` is the Klein Cain program page. It leads with whichever edition is current, using the live score card so the front page carries a live score on game night. Between games, the latest Final and its verified recap remain featured until the first scheduled automation run on the Monday of the next game's week; the upcoming Preview then owns that week and game day, including its early-read, players and recruiting sections on the program page. While a featured game is final, its recap, Player of the Game and game statistics appear directly below the score before the season material. Below that: the schedule with every opponent's record, program history, links to every game report, the season stat leaders and the full roster with the team photo.
+`/` is the Klein Cain program homepage. It leads with the season record, primary links to the next preview and latest recap, and a live score card for whichever edition promotion marks current. The full schedule, program history, links to every game report, season stat leaders, head coach and roster follow on the same page. Previews and recaps render only on `/games/week-<n>`.
+
+Between games, the secondary link points at the most recent final. On the Monday of the next game's week, the primary link switches to that preview and the live card moves with promotion. While a featured game is final, its recap, Player of the Game and game statistics appear on that game's report page, not on `/`.
 
 Every game report is a subpage at `/games/week-<n>`, including whichever one is current. The program page and game reports share `SeasonHub`, `LiveScoreCard` and `SeasonStats`. `RosterSection` appears only on the program page.
 
@@ -76,7 +78,7 @@ The roster and team photo live only on the program page now, and the Roster link
 One JSON file per game in `content/editions/`, named for its slug. `content/editions/TEMPLATE.md` carries the starting block and the rules. The shape is typed in `lib/edition.ts` (schema v2).
 
 - `config/season-2026.json` is the authority on date, opponent, venue, home/away and kickoff. An edition that disagrees fails validation.
-- Exactly one edition sets `"current": true`. It supplies the featured matchup on the program page and enables live polling on its own game report. Every edition, including the current one, is prerendered at `/games/week-<n>` by `app/games/[week]/page.tsx`. The roster and team photo appear only on `/`.
+- Exactly one edition sets `"current": true`. It drives the homepage live score card and enables live polling on that game's report. Every edition, including the current one, is prerendered at `/games/week-<n>` by `app/games/[week]/page.tsx`. The roster and team photo appear only on `/`.
 - `config/publication.json` holds the school, wordmark and site-level sources. `config/program.json` holds program history and past seasons. The season record in the schedule card is derived from recorded results.
 - Editions are their own archive. The retired `content/current-edition.json` and `content/archive/` were removed with schema v1.
 

@@ -232,6 +232,23 @@ export const editions: Edition[] = Object.values(modules)
 
 export const currentEdition: Edition = editions.find((edition) => edition.current) ?? editions[editions.length - 1];
 
+/** The most recent game with a captured or authored final. */
+export function latestFinalEdition(): Edition | null {
+  return [...editions].reverse().find((edition) => edition.finalScore || edition.final) ?? null;
+}
+
+/** The next game that has not finished yet. */
+export function nextUpcomingEdition(): Edition | null {
+  return editions.find((edition) => !edition.finalScore) ?? null;
+}
+
+/** True when a preview has editorial content worth linking to. */
+export function hasPreviewContent(edition: Edition): boolean {
+  const preview = edition.preview;
+  if (!preview) return false;
+  return Boolean(preview.intro) || preview.players.length > 0 || Boolean(preview.keys);
+}
+
 /** Every edition has its own route. `/` is the program page, not a game. */
 export function editionPath(edition: Edition) {
   return `/games/week-${edition.week}`;
