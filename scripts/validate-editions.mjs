@@ -3,6 +3,7 @@
 
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { detectLowQualityCaption } from './lib/caption-helper.mjs';
 
 const root = process.cwd();
 const dir = path.join(root, 'content/editions');
@@ -410,6 +411,14 @@ for (const file of galleryFiles) {
   const seen = { home: 0, thumb: 0, lead: 0 };
   for (const [index, photo] of gallery.photos.entries()) {
     if (!photo.alt || !photo.caption) fail(`photos[${index}] needs alt text and a caption`);
+    const captionIssue = detectLowQualityCaption(photo.caption);
+    if (captionIssue) {
+      fail(`photos[${index}] caption uses generic jersey placeholder "${captionIssue}"; identify players by name and position using content/roster-2026.json`);
+    }
+    const altIssue = detectLowQualityCaption(photo.alt);
+    if (altIssue) {
+      fail(`photos[${index}] alt uses generic jersey placeholder "${altIssue}"; identify players by name and position using content/roster-2026.json`);
+    }
     if (!String(photo.src || '').startsWith('/photos/')) fail(`photos[${index}] must use a local /photos/ path`);
     else {
       try {
