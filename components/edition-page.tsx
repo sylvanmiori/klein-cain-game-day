@@ -206,6 +206,17 @@ function PlayerOfGame({ stats }: { stats: GameStats }) {
   );
 }
 
+function RecapCopy({ body }: { body: string }) {
+  const paragraphs = body.split(/\n\n+/).map((p) => p.trim()).filter(Boolean);
+  return (
+    <div className="recap-copy">
+      {paragraphs.map((paragraph, index) => (
+        <p key={index}>{paragraph}</p>
+      ))}
+    </div>
+  );
+}
+
 export function FinalView({
   final,
   gameStats,
@@ -224,7 +235,7 @@ export function FinalView({
           <div>
             <h2>{final.headline}</h2>
             {final.byline && <p className="byline">{final.byline}</p>}
-            <p>{final.body}</p>
+            <RecapCopy body={final.body} />
           </div>
           <div className="quarter-box" aria-label="Quarter-by-quarter score">
             <div>
@@ -251,7 +262,7 @@ export function FinalView({
             <h2>{final.headline}</h2>
             {final.byline && <p className="byline">{final.byline}</p>}
           </div>
-          <p>{final.body}</p>
+          <RecapCopy body={final.body} />
         </section>
       )}
 

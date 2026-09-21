@@ -186,6 +186,12 @@ for (const file of files) {
       if (!leader.stat || !leader.detail) fail(`final leader ${leader.name} is missing a verified stat line`);
       if (!edition.final.leaders.source) fail('final leaders must name the box score they came from');
     }
+    // Recap commentary must be woven directly into final.body in a journalistic style, never isolated in an "Extra" block.
+    for (const note of edition.final.notes ?? []) {
+      if (/^extra$/i.test(note.heading?.trim() ?? '')) {
+        fail('do not publish notes under "Extra"; weave commentary directly into the recap body (final.body)');
+      }
+    }
   }
 
   for (const player of edition.preview?.players ?? []) {

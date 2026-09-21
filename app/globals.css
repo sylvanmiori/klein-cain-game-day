@@ -138,6 +138,12 @@ article>section { border-bottom:1px solid var(--line); }
 .opening.final-recap { display:block; }
 .opening.final-recap>div { max-width:900px; margin:0; }
 .opening.final-recap>p:last-child { max-width:900px; margin:24px 0 0; }
+.recap-copy { max-width:900px; margin:24px 0 0; }
+.recap-copy p { max-width:900px; margin:0 0 18px; font:16px/1.68 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#222; }
+.recap-copy p:last-child { margin-bottom:0; }
+.week-recap .recap-copy { max-width:680px; margin:18px 0 0; }
+.week-recap .recap-copy p { max-width:680px; margin:0 0 16px; font-size:15px; line-height:1.58; color:inherit; }
+.week-recap .recap-copy p:last-child { margin-bottom:0; }
 .byline { margin:28px 0 0; font-size:9px; font-weight:900; letter-spacing:.13em; color:#716b62; }
 .feature-grid { display:block; background:#17131a; color:#f6f1e8; }
 .feature-copy { padding:64px var(--pad) 72px; }

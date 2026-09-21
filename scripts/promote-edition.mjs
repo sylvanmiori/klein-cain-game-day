@@ -12,7 +12,7 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { DCTF_ATTRIBUTION, fetchGameStats, fetchScoreRows, fetchStatLeaders } from './lib/sources.mjs';
 import { pickCurrent } from './lib/season.mjs';
-import { composeRecap, mergeRecapNotes } from './lib/recap.mjs';
+import { composeRecap, mergeRecapNotes, mergeRecapNotesIntoBody } from './lib/recap.mjs';
 
 const root = process.cwd();
 const dryRun = process.argv.includes('--dry-run');
@@ -152,14 +152,21 @@ for (const { name, edition } of editions) {
   changes.push(`${name}: wrote recap "${recap.headline}"`);
 }
 
-// Fold optional editorial recap notes into the final section whenever they
-// change, including after an authored recap already exists.
+// Fold optional editorial commentary into the final recap body whenever provided,
+// ensuring notes are woven directly into the narrative rather than an Extra section.
 for (const { name, edition } of editions) {
-  if (!edition.final || !edition.recapNotes?.length) continue;
-  const merged = mergeRecapNotes(edition.final.notes, edition.recapNotes);
-  if (JSON.stringify(merged) === JSON.stringify(edition.final.notes)) continue;
-  edition.final.notes = merged;
-  changes.push(`${name}: merged recap notes`);
+  if (!edition.final) continue;
+  if (edition.recapNotes?.length) {
+    const mergedBody = mergeRecapNotesIntoBody(edition.final.body, edition.recapNotes);
+    if (mergedBody !== edition.final.body) {
+      edition.final.body = mergedBody;
+      changes.push(`${name}: woven recap commentary into body`);
+    }
+  }
+  if (edition.final.notes?.some((note) => /^extra$/i.test(note.heading))) {
+    edition.final.notes = mergeRecapNotes(edition.final.notes);
+    changes.push(`${name}: purged obsolete Extra notes section`);
+  }
 }
 
 // Exactly one edition is current.

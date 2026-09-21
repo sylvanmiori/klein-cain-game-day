@@ -78,10 +78,11 @@ missing.
 section is omitted from the page rather than rendered empty. `updated`,
 `event`, `ogImage` and `footerNote` accept an empty string.
 
-`recapNotes` is optional filler. The verified recap stands on its own; these
-notes are extra color when you have something useful from the sideline, a quote,
-or the stands. Each string becomes a paragraph under **Extra**. Leave the field
-out or set it to `null` when you have nothing to add — most weeks need none.
+`recapNotes` holds optional postgame editorial commentary, quotes, or sideline
+observations. When provided, commentary is woven directly into the recap narrative
+(`final.body`) as editorial paragraphs in a rich NY Times / Athletic style. It is
+never published as an isolated section titled "Extra". Leave the field out or set
+it to `null` when you have no additional commentary to add.
 
 ```json
 {

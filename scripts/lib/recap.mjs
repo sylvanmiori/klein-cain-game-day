@@ -9,17 +9,29 @@
 const MONTHS = ['Jan.', 'Feb.', 'March', 'April', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'];
 export const RECAP_NOTES_HEADING = 'Extra';
 
-/** Turn optional editorial filler into the `final.notes` shape. */
-export function recapNoteSections(recapNotes) {
-  const paragraphs = (recapNotes ?? []).map((note) => String(note || '').trim()).filter(Boolean);
-  if (!paragraphs.length) return [];
-  return [{ heading: RECAP_NOTES_HEADING, paragraphs }];
+/**
+ * Weave editorial commentary directly into the recap body narrative.
+ * Commentary is never isolated into a separate 'Extra' section.
+ */
+export function mergeRecapNotesIntoBody(existingBody, recapNotes) {
+  const cleanNotes = (recapNotes ?? []).map((note) => String(note || '').trim()).filter(Boolean);
+  if (!cleanNotes.length) return existingBody;
+  const currentBody = String(existingBody || '').trim();
+  if (!currentBody) return cleanNotes.join('\n\n');
+
+  const toAdd = cleanNotes.filter((note) => !currentBody.includes(note));
+  if (!toAdd.length) return currentBody;
+  return `${currentBody}\n\n${toAdd.join('\n\n')}`;
 }
 
-/** Keep authored note sections and replace the editorial notes block. */
-export function mergeRecapNotes(existingNotes, recapNotes) {
-  const rest = (existingNotes ?? []).filter((note) => note.heading !== RECAP_NOTES_HEADING);
-  return [...rest, ...recapNoteSections(recapNotes)];
+/** Purge any legacy 'Extra' notes section while preserving authored feature notes. */
+export function mergeRecapNotes(existingNotes) {
+  return (existingNotes ?? []).filter((note) => !/^extra$/i.test(note.heading));
+}
+
+/** Retained for backwards compatibility; returns empty array because commentary belongs in the recap body. */
+export function recapNoteSections() {
+  return [];
 }
 
 function apDate(isoDate) {
@@ -112,15 +124,18 @@ export function composeRecap({
     socialDescription: `Final score and verified game facts from ${schoolName}'s Week ${edition.week} game against ${opponent.name}.`,
   };
 
+  const noteParagraphs = (recapNotes ?? []).map((note) => String(note || '').trim()).filter(Boolean);
+  const body = [sentences.join(' '), ...noteParagraphs].join('\n\n');
+
   return {
     titles,
     headline,
     byline: `${desk} · Updated ${updated} CT`,
-    body: sentences.join(' '),
+    body,
     homeScore: score.home,
     awayScore: score.away,
     quarters: null,
-    notes: recapNoteSections(recapNotes),
+    notes: [],
     // Left empty on purpose: no verified postgame player statistics exist in
     // the sources this site uses, and pregame players to watch must never be
     // presented as though they performed.

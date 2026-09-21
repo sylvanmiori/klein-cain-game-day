@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { composeRecap, mergeRecapNotes, recapNoteSections, recordThrough } from './recap.mjs';
+import { composeRecap, mergeRecapNotes, mergeRecapNotesIntoBody, recapNoteSections, recordThrough } from './recap.mjs';
 
 const school = 'Klein Cain';
 const desk = 'Cain Game Day desk';
@@ -86,27 +86,35 @@ test('no player claims are ever produced', () => {
   assert.deepEqual(recap.notes, []);
 });
 
-test('optional recap notes become an Extra section', () => {
+test('optional recap notes are woven directly into the recap body, never an Extra section', () => {
   const game = edition({
     finalScore: { home: 55, away: 38 },
     recapNotes: ['Homecoming night at Memorial Stadium.', 'The defense forced three turnovers.'],
   });
   const recap = composeRecap({ edition: game, editions: [game], schoolName: school, desk, now: at });
-  assert.deepEqual(recap.notes, [{
-    heading: 'Extra',
-    paragraphs: ['Homecoming night at Memorial Stadium.', 'The defense forced three turnovers.'],
-  }]);
+  assert.deepEqual(recap.notes, [], 'notes must remain empty; commentary belongs in the recap body');
+  assert.match(recap.body, /Homecoming night at Memorial Stadium\./);
+  assert.match(recap.body, /The defense forced three turnovers\./);
 });
 
-test('mergeRecapNotes replaces the Extra block without touching other sections', () => {
+test('mergeRecapNotes purges any legacy Extra block without touching other sections', () => {
   const existing = [
     { heading: 'The prediction was close', paragraphs: ['Massey called it.'] },
     { heading: 'Extra', paragraphs: ['Old note.'] },
   ];
-  const merged = mergeRecapNotes(existing, ['Updated sideline note.']);
+  const merged = mergeRecapNotes(existing);
   assert.deepEqual(merged, [
     { heading: 'The prediction was close', paragraphs: ['Massey called it.'] },
-    { heading: 'Extra', paragraphs: ['Updated sideline note.'] },
   ]);
-  assert.deepEqual(recapNoteSections(null), []);
+  assert.deepEqual(recapNoteSections(), []);
+});
+
+test('mergeRecapNotesIntoBody incorporates new commentary into the recap narrative', () => {
+  const body = 'Klein Cain beat Tomball 55–38.';
+  const merged = mergeRecapNotesIntoBody(body, ['Aiden Upchurch praised the execution.']);
+  assert.equal(merged, 'Klein Cain beat Tomball 55–38.\n\nAiden Upchurch praised the execution.');
+
+  // Does not duplicate if already present in an authored story
+  const alreadyPresent = mergeRecapNotesIntoBody(merged, ['Aiden Upchurch praised the execution.']);
+  assert.equal(alreadyPresent, merged);
 });
