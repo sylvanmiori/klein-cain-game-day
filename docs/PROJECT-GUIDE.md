@@ -16,9 +16,9 @@ Live at https://kleincain.gameday.report/, deployed by Cloudflare Workers Builds
 
 `/` is the Klein Cain program page with a unified Next Game card (hero + matchup strip) for the current edition (Week 4 at Magnolia West), followed by a unified Latest Recap feature card (recap narrative, lead photo, Player of the Game spotlight, and gallery links) for the latest final (Week 3 vs. Tomball), then schedule and the rest of the program hub. Each of the ten games has its own report at `/games/week-<n>`, rendered from one JSON file in `content/editions/` by `components/edition-page.tsx`. All ten editions exist and are validated. Weeks 1–3 are finals with recaps, game statistics, and photo galleries (Week 1 includes game highlight video); Week 4 is the current preview with complete player capsules and audits; Weeks 5–10 are starter editions.
 
-The season runs unattended. A scheduled workflow creates missing editions, promotes the current game, refreshes facts from public sources and writes a postgame recap, all without a language model. See **Running unattended**.
+The season runs unattended. A scheduled workflow creates missing editions, promotes the current game, refreshes facts from public sources and writes a postgame recap. See **Running unattended**.
 
-What is still not automated is analysis: players to watch, keys, recruiting notes and any written narrative beyond the deterministic recap. No AI API is configured and none is called.
+Analysis is editorial: players to watch, keys, recruiting notes and any written narrative are written by Sylvan, the appointed editor-in-charge, under the same fact-verification standards the automation follows. See **Editorial model**.
 
 All ten scheduled opponents now have local logo files. As checked September 5, 2026, MaxPreps exposed 57 portraits on its 66-player varsity roster; those exact-name matches are stored locally and available to Player of the Game. The site roster tracks that same varsity list; run `npm run roster` when MaxPreps changes numbers or names.
 
@@ -181,7 +181,7 @@ Simulated across the season, promotion lands on the right game every week: Sept.
 
 Two invariants keep it honest. The validator fails if any scheduled game has no edition, so the season cannot quietly stop producing pages. And it fails if a game before kickoff has no prediction from any source.
 
-What automation still does not write is analysis. A generated edition has no players to watch, no keys and no recruiting notes, and its opening paragraph says only what is known and what updates later. Those sections stay empty until a person or a reviewed process fills them, because filling them automatically means inventing them. When player capsules are added, record both teams' MaxPreps statistics pages, source update timestamps and games covered in `playerStatsAudit`; for the current preview the audit must fall within two days of kickoff or validation stops the build. Search the opponent roster as a whole for recruiting status before choosing capsules. Record the source and check date in `opponentRecruitingAudit`; every verified college commit must be a Player to watch and must name the college prominently. Also record every source-specific top-10 position or top-100 national prospect. Their capsule must lead with that distinction and explain why the player matters using verified production, honors, offer count and any materially relevant, sourced football pedigree. Keep each ranking attached to its source and never confuse offers, interest or predictions with a commitment.
+What automation still does not write is analysis. A generated edition has no players to watch, no keys and no recruiting notes, and its opening paragraph says only what is known and what updates later. Those sections stay empty until the editor (Sylvan) fills them, because filling them automatically means inventing them. When player capsules are added, record both teams' MaxPreps statistics pages, source update timestamps and games covered in `playerStatsAudit`; for the current preview the audit must fall within two days of kickoff or validation stops the build. Search the opponent roster as a whole for recruiting status before choosing capsules. Record the source and check date in `opponentRecruitingAudit`; every verified college commit must be a Player to watch and must name the college prominently. Also record every source-specific top-10 position or top-100 national prospect. Their capsule must lead with that distinction and explain why the player matters using verified production, honors, offer count and any materially relevant, sourced football pedigree. Keep each ranking attached to its source and never confuse offers, interest or predictions with a commitment.
 
 ## Advancing the season
 
@@ -256,28 +256,19 @@ An authored recap is never overwritten: the composer only fills a `final` sectio
 
 Optional `recapNotes` hold postgame editorial commentary and sideline color — coach quotes, sideline context, turning points, or observations from the stands. When supplied, these notes are woven directly into the recap narrative (`final.body`) as editorial paragraphs in a journalistic, NY Times / Athletic style. They are never published as an isolated section titled "Extra".
 
-A richer written recap would need a language model, and with it the cost, citation and review controls that are still not in place. The deterministic recap exists so that a game night never ends with the site showing a stale preview while those controls are decided.
+A richer written recap is editorial, authored by Sylvan under the site's verification standards: every claim checked against a named source, every statistic traceable to a box score or published source, and never implying a pregame player performed well without verified postgame statistics. The deterministic recap exists so that a game night never ends with the site showing a stale preview; an authored recap is never overwritten.
 
-## Enabling a language model later
+## Editorial model
 
-Nothing in this repository calls an AI API. The v1 research script and its
-`weekly-edition.yml` workflow were removed once the deterministic pipeline
-replaced them; the old research prompt is in git history at commit `cf61b8b`
-if it is ever wanted as a starting point.
+Sylvan is the site's full-time editor/manager, appointed with full publishing authority and responsibility for everything the automation does not write: photo selection, captions and photographer credit; editorial quality across every page; and all analysis and narrative — player capsules, keys, recruiting notes and game recaps. The deterministic pipeline still owns the machine fields (`home.record`, `away.record`, ranks, `prediction`, `rating`, `weather`, `finalScore`, `stats`, `gameStats`) and never writes editorial fields; conversely the editor never writes machine fields by hand.
 
-Before any generated prose ships, four things need settling: how each generated
-fact is verified against a named source, how citations are captured per claim,
-what the page shows when a fact is unavailable, and the API spend per edition
-and per season. The house rules stand regardless: never invent player
-statistics, recruiting status, rankings, star ratings, records, results or
-postgame performance, and never imply a pregame player performed well without
-verified postgame statistics.
+The house rules stand regardless of who writes the copy: never invent player statistics, recruiting status, rankings, star ratings, records, results or postgame performance; never imply a pregame player performed well without verified postgame statistics; match team names exactly against source feed names; resolve identities through `content/roster-2026.json`; verify leadership against `config/coaches.json` and `config/publication.json`; store assets locally. A preview with player capsules must carry a team-by-team statistics audit completed within two days of kickoff, and a full opponent-player section must carry a dated, roster-wide recruiting audit naming every verified college commit and every source-specific top-10 position or top-100 national prospect.
 
 ## Open items
 
 - Week 3 (Tomball, September 18) was played and Klein Cain won 55–38 on homecoming night. The report at `/games/week-3` features an authored final recap, game statistics, Player of the Game (Maxwell 'Max' Hendricks), and a 38-frame photo gallery.
 - Week 4 (Magnolia West, September 25) was fully audited September 20. Klein Cain's capsules cover its three completed games; Magnolia West's cover all four. The opponent recruiting audit was completed, with commit status and prospect distinctions verified.
-- Weeks 5 to 10 are generated starter pages: real facts, no player capsules or keys. They stay that way until someone writes them or the AI path above is approved.
+- Weeks 5 to 10 are generated starter pages: real facts, no player capsules or keys. They stay that way until the editor writes them.
 - The opponent's season leaders could sit alongside ours; `fetchStatLeaders` works against any MaxPreps team stats URL.
 - `.github/workflows/deploy.yml` ignores `content/**`, so a facts-only commit refreshes Cloudflare but not the GitHub Pages fallback.
 - Confirm data-source permissions before any commercial use.

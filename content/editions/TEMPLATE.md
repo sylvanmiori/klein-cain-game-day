@@ -7,7 +7,10 @@ Most of the time you do not need to do this by hand. `npm run editions` creates
 a starter edition for every scheduled game that lacks one, deriving the teams,
 mascots, dates, venue and titles, and the scheduled workflow runs it daily. Use
 the steps below when you want to write a fuller edition: players to watch,
-recruiting notes, keys and game information are never generated.
+recruiting notes, keys and game information are never auto-generated. They are
+written by the site's editor (Sylvan), with every claim verified against a named
+source; never invent or infer scores, statistics, records, rankings, recruiting
+information or player performance.
 
 1. Copy the block below to `content/editions/<date>-<opponent-slug>.json`. The
    filename must equal the `slug`.
