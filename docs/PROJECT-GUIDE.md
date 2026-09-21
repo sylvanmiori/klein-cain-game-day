@@ -14,7 +14,7 @@ Updated September 21, 2026. Written to be picked up cold: an AI developer should
 
 Live at https://kleincain.gameday.report/, deployed by Cloudflare Workers Builds on every push to `main`. GitHub Pages remains a fallback.
 
-`/` is the Klein Cain program page with a unified Next Game card (hero + matchup strip) for the current edition, then latest recap, schedule and the rest of the program hub. Each of the ten games has its own report at `/games/week-<n>`, rendered from one JSON file in `content/editions/` by `components/edition-page.tsx`. All ten editions exist and are validated.
+`/` is the Klein Cain program page with a unified Next Game card (hero + matchup strip) for the current edition, then a photo from the latest final when one has been published, the latest recap, schedule and the rest of the program hub. Each of the ten games has its own report at `/games/week-<n>`, rendered from one JSON file in `content/editions/` by `components/edition-page.tsx`. All ten editions exist and are validated. The Tomball final (week 3) is the first game with a published gallery; later weeks get one only when a photo batch is placed by hand.
 
 The season runs unattended. A scheduled workflow creates missing editions, promotes the current game, refreshes facts from public sources and writes a postgame recap, all without a language model. See **Running unattended**.
 
@@ -28,7 +28,7 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | --- | --- |
 | `app/page.tsx` | `/`, renders `components/team-page.tsx` |
 | `app/games/[week]/page.tsx` | `/games/week-<n>`, renders `components/edition-page.tsx` |
-| `components/program-home-spotlight.tsx` | homepage stack: Next Game card + latest recap link |
+| `components/program-home-spotlight.tsx` | homepage stack: Next Game card, latest-final photo, latest recap link |
 | `components/home-next-game-card.tsx` | unified Next Game module (feature hero + matchup strip + live score poll) |
 | `content/editions/*.json` | one file per game, schema v2, typed in `lib/edition.ts` |
 | `content/season-data.json` | machine-written: our results and every opponent's record |
@@ -36,12 +36,15 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `config/season-2026.json` | the schedule; authority on date, opponent, venue, home/away, kickoff |
 | `config/opponent-logos.json` | exact MaxPreps profile used for each scheduled opponent's logo |
 | `config/publication.json` | school, wordmark, source URLs, homepage hero asset paths |
-| `config/coaches.json` | head coaches for Klein Cain and every scheduled opponent, with bios and verified career stops; rendered on previews and the program page |
+| `config/coaches.json` | head coaches for Klein Cain and every scheduled opponent, with bios and verified career stops; rendered on previews and the program page. Klein Cain's portrait is `public/coaches/james-clancy.jpg` |
 | `config/program.json` | program history and past seasons |
 | `config/venues.json` | venue coordinates, for the forecast |
 | `content/galleries/*.json` | editorial game photography, one file per game slug; not written by score or facts automation |
+| `lib/galleries.ts` | loads those files and picks `lead`, `recap`, `home` and `thumb` frames |
+| `components/game-photos.tsx` | recap story frames and the full gallery, with one credit link |
 | `app/photos/page.tsx` | `/photos`, season gallery grouped by game |
 | `public/photos/` | local game photos; do not hotlink SmugMug |
+| `public/coaches/james-clancy.jpg` | square head-and-shoulders crop used everywhere Coach Clancy's profile appears |
 | `public/silver_cain_football_helmet_cutout.png` | optional cutout asset; path on `publication.heroHelmetCutout` |
 | `scripts/lib/sources.mjs` | every external fetcher and parser |
 | `scripts/lib/rating.mjs` | least-squares rating and team records |
@@ -57,7 +60,7 @@ Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`
 
 `npm run logos` downloads any missing scheduled-opponent marks from the exact MaxPreps profiles in `config/opponent-logos.json`, stores them locally in `public/`, and replaces placeholder paths in the edition files. Every scheduled opponent must have a configured profile, so a new opponent cannot silently ship with the wrong school's similarly named logo.
 
-The recurring facts workflow does not run `photos` or `logos`. Those are intentional setup commands: run `logos` after adding a schedule opponent or changing its exact source profile, and run `photos` when the Klein Cain roster portraits have changed. Production validation rejects placeholder and missing team logos.
+The recurring facts workflow does not run `photos` or `logos`. Those are intentional setup commands: run `logos` after adding a schedule opponent or changing its exact source profile, and run `photos` when the Klein Cain roster portraits have changed. Production validation rejects placeholder and missing team logos. `npm run photos` does not publish game photography. That is a separate editorial gallery, described under **Game photography**.
 
 ## Costs
 
@@ -67,7 +70,7 @@ The code targets Cloudflare's free Worker and KV allowances. Those quotas are fi
 
 ## The program page
 
-`/` is the Klein Cain program homepage. Above the fold it shows the season record, then one unified **Next Game** card for whichever edition promotion marks current, then the latest recap link. The full schedule, program history, links to every game report, season stat leaders, head coach and roster follow on the same page. Previews and recaps render only on `/games/week-<n>`.
+`/` is the Klein Cain program homepage. Above the fold it shows the season record, then one unified **Next Game** card for whichever edition promotion marks current, then one photo from the latest final and the latest recap link. The full schedule, program history, links to every game report, season stat leaders, head coach and roster follow on the same page. Previews and recaps render only on `/games/week-<n>`. The season photo index is `/photos`.
 
 ### Next Game card
 
@@ -78,8 +81,6 @@ The code targets Cloudflare's free Worker and KV allowances. Those quotas are fi
 
 `ProgramHomeSpotlight` wires that card, one editorial frame from the latest final when a gallery marks a `home` photo, plus the latest-recap teaser. Hierarchy on `/` is: program intro → Next Game → latest-game photo → Latest Recap → schedule / reports / stats / coach / roster.
 
-Game photography is editorial and lives in `content/galleries/`, one JSON file per game slug, separate from the edition file so promotion and fact refresh cannot overwrite it. Each photo is a local file under `public/photos/`. A gallery names one `lead` frame for the recap opening, additional `recap` frames in the story, one `home` frame for the homepage, and one `thumb` for the recap card. Every frame also appears in the game's photo section and on `/photos`. The purchase credit is one link per gallery — `Photo: Spencer Hutton Photography` — not a link on every image. Watermarks stay in the files.
-
 Between games, the recap teaser points at the most recent final. On the Monday of the next game's week, promotion moves the Next Game card to that preview. While a featured game is final, its recap, Player of the Game and game statistics appear on that game's report page, not on `/`.
 
 Every game report is a subpage at `/games/week-<n>`, including whichever one is current. The program page and game reports share `SeasonHub` and `SeasonStats`. Live polling for the featured game lives inside `HomeNextGameCard` (not a separate homepage score widget). `RosterSection` appears only on the program page.
@@ -89,6 +90,22 @@ On a final matchup layout (game report cards and the Next Game strip), Klein Cai
 The roster and team photo live only on the program page now, and the Roster link in a game page's masthead points at `/#roster-heading`. The wordmark in every masthead goes to `/`.
 
 `/team` served the program page for a single deploy before it moved to `/`. The Worker answers it with a 301 to `/`, covered by a test.
+
+## Game photography
+
+Game photos are editorial. They are not edition fields, and `promote` / `refresh` must not write them. `npm run photos` is unrelated: that command only downloads roster mugshots into `public/players/`.
+
+Each week the owner sends a batch from the Klein Cain Football SmugMug site. Place the files locally and describe only what is visible. Jersey numbers that can be read in the frame are fine. Do not invent scores, statistics, player names, homecoming names or performance. Leave the photographer's watermark in the file. Do not hotlink SmugMug.
+
+1. Save each frame under `public/photos/`, in a folder named for the edition slug, scaled for the page rather than left at camera size.
+2. Add one JSON file for that slug in `content/galleries/`. `slug` matches the edition. `credit` is the photographer's name. `galleryUrl` is that week's https SmugMug gallery.
+3. Mark uses on the frames that earn a place outside the grid: exactly one `lead` (opening of the recap), any number of `recap` (other frames inside the story, including a homecoming or crowd moment when the batch has one), exactly one `home` (large frame on `/`, taken from the latest final, not from the Next Game card) and exactly one `thumb` (Latest Recap card). Every frame, including those four roles, also appears in the game's photo section and on `/photos`.
+4. The credit is one line per gallery, `Photo:` plus the photographer's name, and that name is the only link to SmugMug. Do not put a link on every photo, and do not add the credit to the homepage frame.
+5. Run `npm run validate`. A gallery file must match its slug, match an edition, use local `/photos/` files, and carry alt text and a caption on every frame.
+
+`lib/galleries.ts` loads the JSON. `components/game-photos.tsx` renders the recap story and the full gallery. The Next Game helmet stays `public/hero-next-game.jpg`; weekly photos never replace it.
+
+Coach Clancy's profile photo is separate from the weekly galleries. `public/coaches/james-clancy.jpg` is a square head-and-shoulders crop of the sideline portrait, and `config/coaches.json` points at it. The circular profile uses that crop as-is. Use it everywhere his profile appears until a replacement is supplied.
 
 ## Editions
 
@@ -280,7 +297,8 @@ Each of these cost real debugging time. They are recorded so the next person doe
 - **A CSS margin is not a space.** Two elements separated only by `margin-left` read as `ThuAug 27` to a screen reader and when copied. Put a real space in the markup.
 - **Measuring a CSS transition in a hidden browser pane gives the start value forever**, because no animation frames run. A `max-height` read as a stuck 60px and looked exactly like a broken cascade. Disable the transition before measuring.
 - **Cloudflare's check-run registers a little after the push.** A wait loop that only counts completed checks can exit before Workers Builds appears and report success too early. Wait for the check by name.
-- **Asset sync is setup, not recurring automation.** The facts workflow does not run `npm run roster`, `npm run photos` or `npm run logos`. Add an exact opponent profile and run the logo sync before a new edition can pass validation; refresh the roster and portraits manually when MaxPreps changes.
+- **Asset sync is setup, not recurring automation.** The facts workflow does not run `npm run roster`, `npm run photos` or `npm run logos`. Add an exact opponent profile and run the logo sync before a new edition can pass validation; refresh the roster and portraits manually when MaxPreps changes. `npm run photos` fills `public/players/` only. A SmugMug game batch goes in `public/photos/` and `content/galleries/` by hand.
+- **A plain static file server is not the production router.** Cloudflare serves `/games/week-3` from `games/week-3.html` and `/photos` from `photos.html` because `html_handling` is `drop-trailing-slash`. `python -m http.server` does not. It 404s the game page and lists the `public/photos/` directory at `/photos`. Check those routes through `npm run dev` or the built `*.html` files.
 - **Homepage hero readability is a gradient problem, not a shrink-the-photo problem.** The Next Game feature photo should stay large and editorial. Solve hard edges and text contrast with crop, `object-position`, and a left-to-right black edge gradient over the image — not by anchoring a small corner sticker or lowering opacity until the subject disappears. Swap the asset through `publication.heroNextGameImage`; keep the file local under `public/`.
 
 ## Recovery and future schools
@@ -297,6 +315,7 @@ The visual reference is Apple Sports and Yahoo Sports: compact, useful, informat
 
 - Every band on the page aligns to one column, through the `--pad` custom property. Do not reintroduce `4vw` padding or per-section containers; they drifted apart at wide widths.
 - The homepage Next Game module is one premium editorial card: photographic hero + integrated matchup strip. Do not split it back into a separate dark score dashboard under the hero; do not duplicate date, kickoff, district or a second preview CTA in the strip.
+- Weekly game photos sit under that card and inside the recap. They never replace the Next Game helmet. One photographer credit per gallery, not a link on every frame.
 - Player reports are compact. On a phone each shows two clamped lines and expands in place, one at a time.
 - After a game the final view is the default and the original preview stays in its own tab.
 - The roster in small type and the team photo live on the program page, not on each game report.

@@ -8,7 +8,7 @@ Start with [AGENTS.md](AGENTS.md) when handing the repository to an AI developer
 
 Live at https://kleincain.gameday.report/. https://gameday.report/ redirects there while Klein Cain is the only school. GitHub Pages remains a migration fallback.
 
-`/` is the Klein Cain program homepage: season record, one unified Next Game card (preview CTA, live polling and matchup strip), a photo from the latest final when one has been published, the latest recap, schedule, season leaders, roster and paths to every game report. Game photography lives in `content/galleries/` and on `/photos`. Each game keeps its own page at `/games/week-<n>`. Promotion still sets which game the Next Game card follows; full preview and recap copy are never embedded on `/`.
+`/` is the Klein Cain program homepage: season record, one unified Next Game card (preview CTA, live polling and matchup strip), a photo from the latest final when one has been published, the latest recap, schedule, season leaders, roster and paths to every game report. Game photography is editorial: one JSON file per game in `content/galleries/`, local files in `public/photos/`, a few frames in that game's recap, the full set on the recap and on `/photos`. The credit is one link per gallery. This is not `npm run photos`, which only syncs roster portraits. Each game keeps its own page at `/games/week-<n>`. Promotion still sets which game the Next Game card follows; full preview and recap copy are never embedded on `/`.
 
 Between games, the homepage links to the latest final recap. On the first scheduled automation run on the Monday of the next game's week, the Next Game card switches to that game's preview; game day therefore always opens on the current matchup.
 

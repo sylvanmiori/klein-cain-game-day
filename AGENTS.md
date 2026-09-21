@@ -10,6 +10,7 @@ Read `README.md`, then `docs/PROJECT-GUIDE.md`, before changing this repository.
 - Never expose implementation labels, model names, debug copy, credentials or internal workflow language on public pages.
 - Keep MaxPreps/Dave Campbell team matching exact. Similar school names in this district make substring matching unsafe.
 - Store public assets locally; do not make page rendering depend on third-party image hotlinks.
+- Game photography stays editorial in `content/galleries/` and `public/photos/`. Do not put it on the edition, and do not treat `npm run photos` as the game-photo import. That command only syncs roster portraits.
 - Keep the compact Apple Sports/Yahoo Sports design direction. Test desktop and mobile.
 - Never commit passwords, access tokens, payment details or Cloudflare secrets.
 
