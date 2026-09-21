@@ -131,6 +131,15 @@ export function ProgramHomeSpotlight({
   );
 }
 
+function extractLeadSentence(text: string): string {
+  if (!text) return '';
+  const firstPara = text.split('\n\n')[0].trim();
+  const normalized = firstPara.replace(/\b(Sept|Aug|Oct|Nov|Dec|Jan|Feb|Mar|Apr|Jun|Jul|Jr|Sr|St|vs)\./g, '$1\u2024');
+  const match = normalized.match(/^.*?[.!?](?=\s+[A-Z]|$)/);
+  if (!match) return firstPara;
+  return match[0].replace(/\u2024/g, '.').trim();
+}
+
 export function buildRecapLink(edition: Edition | null): RecapFeature | null {
   if (!edition?.final) return null;
   const gallery = galleryForSlug(edition.slug);
@@ -148,17 +157,7 @@ export function buildRecapLink(edition: Edition | null): RecapFeature | null {
   const isWin = (cainScore ?? 0) > (oppScore ?? 0);
   const finalScore = cainScore != null && oppScore != null ? `${cainScore}–${oppScore}` : '';
 
-  let leadExcerpt = '';
-  if (edition.final.body) {
-    const firstPara = edition.final.body.split('\n\n')[0].trim();
-    const sentences = firstPara.match(/[^.!?]+[.!?]+/g) || [firstPara];
-    if (sentences.length > 0) {
-      leadExcerpt = sentences[0].trim();
-      if (leadExcerpt.length < 120 && sentences[1]) {
-        leadExcerpt += ' ' + sentences[1].trim();
-      }
-    }
-  }
+  const leadExcerpt = extractLeadSentence(edition.final.body);
 
   const pog = edition.gameStats?.playerOfGame;
 
