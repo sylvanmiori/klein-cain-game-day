@@ -197,6 +197,12 @@ for (const file of files) {
     if (edition.final.body && /\btold\s+the\s+(?:team|players|squad|locker\s*room)\b/i.test(edition.final.body)) {
       fail('recap body must not assume quotes were delivered to the team ("told the team"); attribute quotes as statements to reporters or Game Day (e.g. "[Name] said" or "[Name] said before kickoff")');
     }
+    if (edition.final.body && /John\s+Shuman/i.test(edition.final.body)) {
+      fail('recap body refers to John Shuman; the Klein Cain Head Coach is James Clancy');
+    }
+    if (edition.final.body && /Nicole\s+Patin/i.test(edition.final.body)) {
+      fail('recap body refers to Nicole Patin; the current Klein Cain Principal is Lauren Marti');
+    }
   }
 
   for (const player of edition.preview?.players ?? []) {
@@ -413,15 +419,37 @@ for (const file of galleryFiles) {
   if (!gallery.credit || !String(gallery.galleryUrl || '').startsWith('https://')) fail('needs a credit and an https gallery URL');
   if (!Array.isArray(gallery.photos) || gallery.photos.length === 0) fail('needs at least one photo');
   const seen = { home: 0, thumb: 0, lead: 0 };
+  const validHeadCoaches = [
+    coaches.school?.name,
+    ...Object.values(coaches.opponents ?? {}).map((c) => c.name),
+  ].filter(Boolean);
+
   for (const [index, photo] of gallery.photos.entries()) {
     if (!photo.alt || !photo.caption) fail(`photos[${index}] needs alt text and a caption`);
-    const captionIssue = detectLowQualityCaption(photo.caption);
-    if (captionIssue) {
-      fail(`photos[${index}] caption uses generic jersey placeholder "${captionIssue}"; identify players by name and position using content/roster-2026.json`);
-    }
-    const altIssue = detectLowQualityCaption(photo.alt);
-    if (altIssue) {
-      fail(`photos[${index}] alt uses generic jersey placeholder "${altIssue}"; identify players by name and position using content/roster-2026.json`);
+    for (const field of ['caption', 'alt']) {
+      const text = photo[field];
+      if (!text) continue;
+      const placeholderIssue = detectLowQualityCaption(text);
+      if (placeholderIssue) {
+        fail(`photos[${index}] ${field} uses generic jersey placeholder "${placeholderIssue}"; identify players by name and position using content/roster-2026.json`);
+      }
+      if (/John\s+Shuman/i.test(text)) {
+        fail(`photos[${index}] ${field} refers to John Shuman; the Klein Cain Head Coach is James Clancy.`);
+      }
+      if (/Nicole\s+Patin/i.test(text)) {
+        fail(`photos[${index}] ${field} refers to Nicole Patin; the current Klein Cain Principal is Lauren Marti.`);
+      }
+      if (/head\s+coach/i.test(text)) {
+        const mentionsValidCoach = validHeadCoaches.some((name) => text.includes(name));
+        if (!mentionsValidCoach) {
+          fail(`photos[${index}] ${field} mentions "head coach" without referencing a verified head coach (${validHeadCoaches.join(', ')})`);
+        }
+      }
+      if (/principal/i.test(text)) {
+        if (!text.includes('Lauren Marti')) {
+          fail(`photos[${index}] ${field} mentions "principal" without referencing verified Klein Cain Principal Lauren Marti`);
+        }
+      }
     }
     if (!String(photo.src || '').startsWith('/photos/')) fail(`photos[${index}] must use a local /photos/ path`);
     else {

@@ -41,11 +41,11 @@ test('detectLowQualityCaption passes journalistic captions that identify players
     null
   );
   assert.equal(
-    detectLowQualityCaption('Head coach John Shuman gathers the Hurricanes in the postgame huddle.'),
+    detectLowQualityCaption('Head coach James Clancy gathers the Hurricanes in the postgame huddle.'),
     null
   );
   assert.equal(
-    detectLowQualityCaption('Klein Cain Principal Nicole Patin congratulates the 2026 Homecoming King and Queen.'),
+    detectLowQualityCaption('Klein Cain Principal Lauren Marti congratulates the 2026 Homecoming King and Queen.'),
     null
   );
 });
