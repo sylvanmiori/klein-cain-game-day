@@ -15,33 +15,6 @@ import {
 } from '../lib/edition';
 import { sitePath } from '../lib/site-path';
 
-function IconCalendar() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="3" y="5" width="18" height="16" rx="2" />
-      <path d="M8 3v4M16 3v4M3 10h18" />
-    </svg>
-  );
-}
-
-function IconClock() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="8" />
-      <path d="M12 8v4l3 2" />
-    </svg>
-  );
-}
-
-function IconPin() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10Z" />
-      <circle cx="12" cy="11" r="2.2" />
-    </svg>
-  );
-}
-
 type RecapLink = {
   href: string;
   headline: string;
@@ -62,16 +35,19 @@ export function ProgramHomeSpotlight({
     .filter((fact): fact is NonNullable<typeof fact> => fact !== null);
   const facts = [...featured.scheduledFacts, ...autoFacts].slice(0, 4);
   const showPreview = hasPreviewContent(featured) && !featured.finalScore;
+  const helmetSrc = sitePath(publication.heroHelmetCutout ?? '/silver_cain_football_helmet_cutout.png');
 
   return (
     <div className="home-stack">
       <article className="home-spotlight">
-        <div
-          className="home-spotlight-art"
-          style={{ backgroundImage: `url(${sitePath('/hero-helmet.jpg')})` }}
-          aria-hidden="true"
+        <div className="home-spotlight-bg" aria-hidden="true" />
+        <div className="home-spotlight-glow" aria-hidden="true" />
+        <img
+          className="home-spotlight-helmet"
+          src={helmetSrc}
+          alt=""
+          decoding="async"
         />
-        <div className="home-spotlight-scrim" aria-hidden="true" />
         <div className="home-spotlight-copy">
           <p className="home-kicker">Next game</p>
           <h2>
@@ -81,18 +57,9 @@ export function ProgramHomeSpotlight({
             Week {featured.week} · District 15-6A
           </p>
           <ul className="home-spotlight-details">
-            <li>
-              <IconCalendar />
-              {gameDayLong(featured.date, publication.timezone)}
-            </li>
-            <li>
-              <IconClock />
-              {featured.kickoff}
-            </li>
-            <li>
-              <IconPin />
-              {featured.venue}
-            </li>
+            <li>{gameDayLong(featured.date, publication.timezone)}</li>
+            <li>{featured.kickoff}</li>
+            <li>{featured.venue}</li>
           </ul>
           {showPreview && (
             <a className="home-spotlight-cta" href={previewHref}>
@@ -106,7 +73,6 @@ export function ProgramHomeSpotlight({
         initialScore={liveScore as LiveScore}
         editionDate={featured.date}
         kickoff={featured.kickoff}
-        venue={featured.venue}
         home={featured.home}
         away={featured.away}
         scheduledFacts={facts}

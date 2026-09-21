@@ -10,7 +10,6 @@ type Props = {
   initialScore: LiveScore;
   editionDate: string;
   kickoff: string;
-  venue: string;
   home: Team;
   away: Team;
   scheduledFacts: Fact[];
@@ -27,7 +26,6 @@ export function HomeMatchupCard({
   initialScore,
   editionDate,
   kickoff,
-  venue,
   home,
   away,
   scheduledFacts,
@@ -84,19 +82,18 @@ export function HomeMatchupCard({
 
   return (
     <div className={`home-matchup ${score.status}`} aria-label={`${away.name} at ${home.name} matchup`}>
-      <div className="home-matchup-head">
-        <div className="home-matchup-time">
-          {score.status === 'live' && <span className="live-dot" aria-hidden="true" />}
-          <strong>{statusLine}</strong>
-          <span>{gameDayShort(editionDate, publication.timezone)}</span>
-        </div>
-        <span className="home-matchup-district">District 15-6A</span>
-        {!isScheduled && (
+      {!isScheduled && (
+        <div className="home-matchup-head">
+          <div className="home-matchup-time">
+            {score.status === 'live' && <span className="live-dot" aria-hidden="true" />}
+            <strong>{statusLine}</strong>
+            <span>{gameDayShort(editionDate, publication.timezone)}</span>
+          </div>
           <button type="button" className="home-matchup-refresh" onClick={() => void refresh()} disabled={refreshing}>
             {refreshing ? 'Checking…' : 'Refresh score'}
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="home-matchup-teams">
         <div className="home-matchup-team">
