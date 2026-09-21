@@ -1,12 +1,11 @@
 import publication from '../config/publication.json';
 import liveScore from '../public/live-score.json';
-import { HomeMatchupCard } from './home-matchup-card';
+import { HomeNextGameCard } from './home-next-game-card';
 import { type LiveScore } from './live-score-card';
 import {
   type Edition,
   apDate,
   editionPath,
-  gameDayLong,
   hasPreviewContent,
   opponentOf,
   predictionFact,
@@ -30,7 +29,6 @@ export function ProgramHomeSpotlight({
   previewHref: string;
   recap: RecapLink | null;
 }) {
-  const opponent = opponentOf(featured, publication.schoolName);
   const autoFacts = [rankFact(featured), predictionFact(featured, publication.schoolName), weatherFact(featured)]
     .filter((fact): fact is NonNullable<typeof fact> => fact !== null);
   const facts = [...featured.scheduledFacts, ...autoFacts].slice(0, 4);
@@ -39,44 +37,18 @@ export function ProgramHomeSpotlight({
 
   return (
     <div className="home-stack">
-      <article className="home-spotlight">
-        <div className="home-spotlight-bg" aria-hidden="true" />
-        <div className="home-spotlight-glow" aria-hidden="true" />
-        <img
-          className="home-spotlight-helmet"
-          src={helmetSrc}
-          alt=""
-          decoding="async"
-        />
-        <div className="home-spotlight-copy">
-          <p className="home-kicker">Next game</p>
-          <h2>
-            {publication.schoolName} vs. {opponent.name}
-          </h2>
-          <p className="home-spotlight-meta">
-            Week {featured.week} · District 15-6A
-          </p>
-          <ul className="home-spotlight-details">
-            <li>{gameDayLong(featured.date, publication.timezone)}</li>
-            <li>{featured.kickoff}</li>
-            <li>{featured.venue}</li>
-          </ul>
-          {showPreview && (
-            <a className="home-spotlight-cta" href={previewHref}>
-              Game Preview →
-            </a>
-          )}
-        </div>
-      </article>
-
-      <HomeMatchupCard
+      <HomeNextGameCard
         initialScore={liveScore as LiveScore}
         editionDate={featured.date}
         kickoff={featured.kickoff}
+        venue={featured.venue}
+        week={featured.week}
         home={featured.home}
         away={featured.away}
         scheduledFacts={facts}
         previewHref={previewHref}
+        showPreview={showPreview}
+        helmetSrc={helmetSrc}
       />
 
       {recap && (
