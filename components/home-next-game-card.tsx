@@ -120,6 +120,7 @@ export function HomeNextGameCard({
       <div className="home-next-game-feature">
         <div className="home-next-game-glow" aria-hidden="true" />
         <img className="home-next-game-hero" src={heroImageSrc} alt="" decoding="async" />
+        <div className="home-next-game-edge" aria-hidden="true" />
         <div className="home-next-game-scrim" aria-hidden="true" />
         <div className="home-next-game-copy">
           <p className="home-kicker">Next game</p>
