@@ -47,6 +47,12 @@ recruiting notes, keys and game information are never generated.
   deliberately empty, so it fails validation until real content is added.
 - Postgame leaders need a stat, a detail and a named box score. Do not list a
   pregame player as a leader without verified postgame statistics.
+- Photo gallery captions must resolve players by name, number and position against
+  `content/roster-2026.json` (or opponent rosters). Generic "Jersey <number>" placeholders fail validation.
+- Leadership references must match verified records: head coaches must agree with
+  `config/coaches.json` and campus principals with `config/publication.json`.
+- Video highlights (`final.video`): `poster` and `src` must point to local files under
+  `public/` (e.g. `public/videos/<slug>/`), `title` must be non-empty, and `sourceUrl` must use https.
 
 ## Head coaches
 
@@ -77,6 +83,10 @@ missing.
 `gameInfo` accept `null` when the information does not exist yet. A null
 section is omitted from the page rather than rendered empty. `updated`,
 `event`, `ogImage` and `footerNote` accept an empty string.
+
+`final.video` is an optional `VideoHighlight` object (`title`, `caption`, `src`, `fallbackSrc`,
+`poster`, `duration`, `credit`, `sourceUrl`). When included, `src` and `poster` must be local paths
+starting with `/`.
 
 `recapNotes` holds optional postgame editorial commentary, quotes, or sideline
 observations. When provided, commentary is woven directly into the recap narrative

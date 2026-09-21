@@ -14,7 +14,7 @@ Updated September 21, 2026. Written to be picked up cold: an AI developer should
 
 Live at https://kleincain.gameday.report/, deployed by Cloudflare Workers Builds on every push to `main`. GitHub Pages remains a fallback.
 
-`/` is the Klein Cain program page with a unified Next Game card (hero + matchup strip) for the current edition, then latest recap, schedule and the rest of the program hub. Each of the ten games has its own report at `/games/week-<n>`, rendered from one JSON file in `content/editions/` by `components/edition-page.tsx`. All ten editions exist and are validated.
+`/` is the Klein Cain program page with a unified Next Game card (hero + matchup strip) for the current edition (Week 4 at Magnolia West), followed by a unified Latest Recap feature card (recap narrative, lead photo, Player of the Game spotlight, and gallery links) for the latest final (Week 3 vs. Tomball), then schedule and the rest of the program hub. Each of the ten games has its own report at `/games/week-<n>`, rendered from one JSON file in `content/editions/` by `components/edition-page.tsx`. All ten editions exist and are validated. Weeks 1–3 are finals with recaps, game statistics, and photo galleries (Week 1 includes game highlight video); Week 4 is the current preview with complete player capsules and audits; Weeks 5–10 are starter editions.
 
 The season runs unattended. A scheduled workflow creates missing editions, promotes the current game, refreshes facts from public sources and writes a postgame recap, all without a language model. See **Running unattended**.
 
@@ -28,8 +28,10 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | --- | --- |
 | `app/page.tsx` | `/`, renders `components/team-page.tsx` |
 | `app/games/[week]/page.tsx` | `/games/week-<n>`, renders `components/edition-page.tsx` |
-| `components/program-home-spotlight.tsx` | homepage stack: Next Game card + latest recap link |
+| `components/program-home-spotlight.tsx` | homepage stack: Next Game card + unified Latest Recap feature card |
 | `components/home-next-game-card.tsx` | unified Next Game module (feature hero + matchup strip + live score poll) |
+| `components/game-photos.tsx` | accessible photo gallery grid, native `<dialog>` lightbox modal with keyboard navigation, photographer credits |
+| `components/game-video.tsx` | game highlight video player with poster, duration, and credit |
 | `content/editions/*.json` | one file per game, schema v2, typed in `lib/edition.ts` |
 | `content/season-data.json` | machine-written: our results and every opponent's record |
 | `content/roster-2026.json` | varsity roster synced from MaxPreps with `npm run roster`; local portrait paths are synced with `npm run photos` |
@@ -40,9 +42,13 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `config/program.json` | program history and past seasons |
 | `config/venues.json` | venue coordinates, for the forecast |
 | `content/galleries/*.json` | editorial game photography, one file per game slug; not written by score or facts automation |
+| `lib/galleries.ts` | types and loaders for editorial game galleries |
 | `app/photos/page.tsx` | `/photos`, season gallery grouped by game |
 | `public/photos/` | local game photos; do not hotlink SmugMug |
+| `public/videos/` | local MP4 highlights and poster images; do not hotlink external streams |
 | `public/silver_cain_football_helmet_cutout.png` | optional cutout asset; path on `publication.heroHelmetCutout` |
+| `scripts/lib/caption-helper.mjs` | roster resolution and quality validation for photo captions |
+| `scripts/lib/player-of-game.mjs` | deterministic Cain Impact v1 model for Player of the Game |
 | `scripts/lib/sources.mjs` | every external fetcher and parser |
 | `scripts/lib/rating.mjs` | least-squares rating and team records |
 | `scripts/lib/recap.mjs` | deterministic postgame recap |
@@ -67,20 +73,29 @@ The code targets Cloudflare's free Worker and KV allowances. Those quotas are fi
 
 ## The program page
 
-`/` is the Klein Cain program homepage. Above the fold it shows the season record, then one unified **Next Game** card for whichever edition promotion marks current, then the latest recap link. The full schedule, program history, links to every game report, season stat leaders, head coach and roster follow on the same page. Previews and recaps render only on `/games/week-<n>`.
+`/` is the Klein Cain program homepage. Above the fold it shows the season record, then one unified **Next Game** card for whichever edition promotion marks current, followed by a unified **Latest Recap** feature card for the most recent final. The full schedule, program history, links to every game report, season stat leaders, head coach bio and roster follow on the same page. Full previews and recaps render on `/games/week-<n>`.
 
-### Next Game card
+### Next Game card and Latest Recap feature
 
 `components/home-next-game-card.tsx` is one outer card with two zones, not two stacked widgets:
 
 1. **Feature zone** — dark editorial hero. Left column: Next game kicker, matchup headline, week/district, date/time/venue with icons, single Game Preview CTA. Right side: local photographic hero (`publication.heroNextGameImage` → `public/hero-next-game.jpg`) framed with `object-fit: cover` and a left-to-right black edge gradient so the photo never shows a hard rectangular seam into the text. Live/final games add a compact status line in this zone; scheduled games do not repeat date, kickoff or district in a second header.
 2. **Matchup strip** — same card, separated by a 1px translucent divider. Team logos, names and records (or live scores), then a compact Last meeting / Texas rank row. No second preview button.
 
-`ProgramHomeSpotlight` wires that card, one editorial frame from the latest final when a gallery marks a `home` photo, plus the latest-recap teaser. Hierarchy on `/` is: program intro → Next Game → latest-game photo → Latest Recap → schedule / reports / stats / coach / roster.
+`ProgramHomeSpotlight` (`components/program-home-spotlight.tsx`) wires that card together with the unified Latest Recap feature card (`article.home-recap`). Instead of stacking a separate photo banner above a small text teaser, this card integrates the story's visual hero, camera badge, photo caption, result status ("W 55–38"), recap headline, lead excerpt, Player of the Game spotlight, and dual actions ("Read full game recap →" and "View N photos →"). Hierarchy on `/` is: program intro → Next Game card → Latest Recap feature card → schedule / reports / stats / coach / roster.
 
-Game photography is editorial and lives in `content/galleries/`, one JSON file per game slug, separate from the edition file so promotion and fact refresh cannot overwrite it. Each photo is a local file under `public/photos/`. A gallery names one `lead` frame for the recap opening, additional `recap` frames in the story, one `home` frame for the homepage, and one `thumb` for the recap card. Every frame also appears in the game's photo section and on `/photos`. The purchase credit is one link per gallery — `Photo: Spencer Hutton Photography` — not a link on every image. Watermarks stay in the files. Photo captions and alt text must be written in high-caliber sports journalism style, identifying players by full name, position, and jersey number resolved against `content/roster-2026.json` (or opponent rosters). Low-IQ or unresolved placeholders like "Jersey 1 turns upfield" are rejected by `scripts/validate-editions.mjs` via `scripts/lib/caption-helper.mjs`. Clicking any photo in the recap story, game gallery, or on `/photos` opens an accessible, full-screen lightbox modal using native HTML `<dialog>` with top-right 'X' close button, native `Escape` dismissal, backdrop light-dismiss, previous/next chevron buttons, `ArrowLeft`/`ArrowRight` keyboard cycling, and full photo captions.
+Game photography is editorial and lives in `content/galleries/`, one JSON file per game slug, separate from the edition file so promotion and fact refresh cannot overwrite it. Each photo is a local file under `public/photos/`. A gallery names one `lead` frame for the recap opening, additional `recap` frames in the story, one `home` frame for the homepage, and one `thumb` for the recap card. Every frame also appears in the game's photo section and on `/photos`. Watermarks stay in the files. Photo captions and alt text must be written in high-caliber sports journalism style, identifying players by full name, position, and jersey number resolved against `content/roster-2026.json` (or opponent rosters). Low-IQ or unresolved placeholders like "Jersey 1 turns upfield" are rejected by `scripts/validate-editions.mjs` via `scripts/lib/caption-helper.mjs`.
 
-Between games, the recap teaser points at the most recent final. On the Monday of the next game's week, promotion moves the Next Game card to that preview. While a featured game is final, its recap, Player of the Game and game statistics appear on that game's report page, not on `/`.
+Photographer recognition is elevated across both game galleries and `/photos`:
+- **Gallery headers** display a camera icon, byline ("Photography by [Name]"), photo count chip, and direct "View full album ↗" link.
+- **Gallery footers** provide a prominent attribution block: "Photography by [Name] · View full SmugMug album & downloads ↗".
+- **Accessible modal lightbox**: Clicking any photo in the recap story, game gallery, or on `/photos` opens a full-screen lightbox modal using native HTML `<dialog>` (`components/game-photos.tsx`) with top-right 'X' close button, native `Escape` dismissal, backdrop light-dismiss, previous/next chevron buttons, `ArrowLeft`/`ArrowRight` keyboard cycling, and full photo captions.
+
+### Game highlight video
+
+Game recap pages support local MP4 video highlights embedded via `components/game-video.tsx` when `final.video` is defined in the edition JSON (`lib/edition.ts`). Video assets and poster frames are stored locally under `public/videos/*` (e.g. `public/videos/2026-08-27-humble/highlights.mp4`). The component renders a styled video player with custom poster, duration badge, title, contextual caption, and credit link (e.g., "Texan Live · NFHS Network"). `scripts/validate-editions.mjs` verifies that `poster` and `src` paths exist locally in `public/` and that `sourceUrl` is an https link.
+
+Between games, the recap card points at the most recent final. On the Monday of the next game's week, promotion moves the Next Game card to that preview. While a featured game is final, its recap, Player of the Game and game statistics appear on that game's report page, not on `/`.
 
 Every game report is a subpage at `/games/week-<n>`, including whichever one is current. The program page and game reports share `SeasonHub` and `SeasonStats`. Live polling for the featured game lives inside `HomeNextGameCard` (not a separate homepage score widget). `RosterSection` appears only on the program page.
 
@@ -105,7 +120,7 @@ To publish a new game: add the file, set `current` on the right edition, run `np
 
 Two scripts run automatically as part of `npm run build` and `npm run build:cloudflare`. Both exit non-zero and stop the build.
 
-- `scripts/validate-editions.mjs` checks structure against the schedule and enforces the editorial rules: a preview player must carry a rating or say plainly that none is listed, and a current preview with player capsules must record a team-by-team MaxPreps audit completed within two days of kickoff. A recruiting row must carry an https source, and a full opponent-player section must record a dated roster-wide recruiting audit. Every verified college commit and every player ranked by a named service in the top 10 at his position or top 100 nationally must be included and clearly identified. Postgame leaders need a stat and a named box score, the disclaimer must name the opponent, a preview must have content, and every team logo must be a real local file rather than a placeholder. Recap commentary must be woven into `final.body` rather than an isolated "Extra" section, and quotes must be attributed as statements to reporters/Game Day rather than assuming team-speech context (e.g. "told the team" is rejected). A game gallery, when present, must match an edition slug, use local photo files, mark exactly one `lead`, one `home` and one `thumb`, and must use smart, roster-resolved player identifications (generic "Jersey X" placeholders fail validation). Captions and recaps are also verified against leadership hallucinations: head coach names must match verified coaches from `config/coaches.json` and campus principal references must match `publication.campusPrincipal`.
+- `scripts/validate-editions.mjs` checks structure against the schedule and enforces the editorial rules: a preview player must carry a rating or say plainly that none is listed, and a current preview with player capsules must record a team-by-team MaxPreps audit completed within two days of kickoff. A recruiting row must carry an https source, and a full opponent-player section must record a dated roster-wide recruiting audit. Every verified college commit and every player ranked by a named service in the top 10 at his position or top 100 nationally must be included and clearly identified. Postgame leaders need a stat and a named box score, the disclaimer must name the opponent, a preview must have content, and every team logo must be a real local file rather than a placeholder. When highlight video is included (`final.video`), video and poster paths must exist locally under `public/`, `title` must be non-empty, and source attributions must use https. Recap commentary must be woven into `final.body` rather than an isolated "Extra" section, and quotes must be attributed as statements to reporters/Game Day rather than assuming team-speech context (e.g. "told the team" is rejected). A game gallery, when present, must match an edition slug, use local photo files, mark exactly one `lead`, one `home` and one `thumb`, and must use smart, roster-resolved player identifications (generic "Jersey X" placeholders fail validation). Captions and recaps are also verified against leadership hallucinations: head coach names must match verified coaches from `config/coaches.json` and campus principal references must match `publication.campusPrincipal`.
 - `scripts/check-build.mjs` reads the built HTML and fails if a page's title, meta tags, heading or disclaimer names an opponent from a different week. Both checks account for schedule names that are prefixes of others, such as Klein and Klein Cain, or Magnolia and Magnolia West.
 - `scripts/check-docs.mjs` reads the README, `AGENTS.md` and this guide and fails if a referenced repository path or `npm run` command no longer exists. It also parses the edition template's JSON example against the current top-level schema and verifies that every scheduled opponent has exactly one MaxPreps logo source.
 
@@ -260,8 +275,9 @@ verified postgame statistics.
 
 ## Open items
 
-- Week 3 (Tomball, September 18) was fully re-audited September 17. Klein Cain's capsules cover its two completed games; Tomball's cover all three, including the September 11 Klein Forest game. Ian Thomas' capsule includes his 641 scrimmage yards and nine touchdowns, Trevon Johnson's includes all three games, and Andres von der Meden's recent kickoff and punting work is sourced from the game logs. The opponent recruiting roster was also rechecked: von der Meden's Texas A&M commitment and Ian Thomas' 247Sports No. 1 running-back ranking remain current. Records, ranks, the prediction and the forecast continue to refresh automatically.
-- Weeks 4 to 10 are generated pages: real facts, no player capsules or keys. They stay that way until someone writes them or the AI path above is approved.
+- Week 3 (Tomball, September 18) was played and Klein Cain won 55–38 on homecoming night. The report at `/games/week-3` features an authored final recap, game statistics, Player of the Game (Maxwell 'Max' Hendricks), and a 38-frame photo gallery.
+- Week 4 (Magnolia West, September 25) was fully audited September 20. Klein Cain's capsules cover its three completed games; Magnolia West's cover all four. The opponent recruiting audit was completed, with commit status and prospect distinctions verified.
+- Weeks 5 to 10 are generated starter pages: real facts, no player capsules or keys. They stay that way until someone writes them or the AI path above is approved.
 - The opponent's season leaders could sit alongside ours; `fetchStatLeaders` works against any MaxPreps team stats URL.
 - `.github/workflows/deploy.yml` ignores `content/**`, so a facts-only commit refreshes Cloudflare but not the GitHub Pages fallback.
 - Confirm data-source permissions before any commercial use.

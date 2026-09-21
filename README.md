@@ -8,9 +8,9 @@ Start with [AGENTS.md](AGENTS.md) when handing the repository to an AI developer
 
 Live at https://kleincain.gameday.report/. https://gameday.report/ redirects there while Klein Cain is the only school. GitHub Pages remains a migration fallback.
 
-`/` is the Klein Cain program homepage: season record, one unified Next Game card (preview CTA, live polling and matchup strip), a photo from the latest final when one has been published, the latest recap, schedule, season leaders, roster and paths to every game report. Game photography lives in `content/galleries/` and on `/photos`. Each game keeps its own page at `/games/week-<n>`. Promotion still sets which game the Next Game card follows; full preview and recap copy are never embedded on `/`.
+`/` is the Klein Cain program homepage: season record (3–0), one unified Next Game card (preview CTA, live score polling and matchup strip), a unified Latest Recap feature card (recap narrative, lead game photography with caption, Player of the Game spotlight and gallery link), schedule, season leaders, head coach bio, roster and paths to every game report. Game photography lives in `content/galleries/` and on `/photos`, featuring an accessible `<dialog>` lightbox with keyboard navigation and elevated photographer bylines. Video highlights live under `public/videos/` and embed in game reports via `components/game-video.tsx`. Each game keeps its own page at `/games/week-<n>`. Promotion still sets which game the Next Game card follows; full preview and recap copy are never embedded on `/`.
 
-Between games, the homepage links to the latest final recap. On the first scheduled automation run on the Monday of the next game's week, the Next Game card switches to that game's preview; game day therefore always opens on the current matchup.
+Between games, the homepage features the latest final recap card. On the first scheduled automation run on the Monday of the next game's week, the Next Game card switches to that game's preview (currently Week 4 at Magnolia West); game day therefore always opens on the current matchup.
 
 The in-season data pipeline runs unattended in GitHub Actions. A scheduled workflow creates missing editions, promotes the current game, refreshes facts from public sources and writes a postgame recap. No language model is involved anywhere, and no AI API is configured.
 

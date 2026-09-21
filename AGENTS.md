@@ -13,6 +13,8 @@ Read `README.md`, then `docs/PROJECT-GUIDE.md`, before changing this repository.
 - Keep the compact Apple Sports/Yahoo Sports design direction. Test desktop and mobile.
 - Never use generic "Jersey <number>" placeholders in photo captions or alt text. Resolve player names, numbers and positions using `content/roster-2026.json` (and opponent rosters when available) in high-caliber sports journalism style.
 - Attribute quotes and commentary as statements to reporters or Game Day (e.g., "[Name] said before kickoff" or "[Name] said"), never assuming or inventing internal team speech context like "told the team" or "addressed the locker room".
+- Ensure school leadership references in copy and captions match verified personnel: head coaches must agree with `config/coaches.json` and campus principals with `config/publication.json`.
+- When game highlight video is included, store video and poster assets locally under `public/videos/` with verified local files and an https source attribution.
 - Never commit passwords, access tokens, payment details or Cloudflare secrets.
 
 ## Before handing work back
