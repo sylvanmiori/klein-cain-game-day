@@ -118,9 +118,9 @@ export function HomeNextGameCard({
   return (
     <article className={`home-next-game ${score.status}`} aria-label={`Next game: ${featured.name} vs. ${opponent.name}`}>
       <div className="home-next-game-feature">
+        <div className="home-next-game-glow" aria-hidden="true" />
         <img className="home-next-game-hero" src={heroImageSrc} alt="" decoding="async" />
         <div className="home-next-game-scrim" aria-hidden="true" />
-        <div className="home-next-game-glow" aria-hidden="true" />
         <div className="home-next-game-copy">
           <p className="home-kicker">Next game</p>
           <h2>
