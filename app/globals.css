@@ -76,9 +76,20 @@ a { color:inherit; text-decoration:none; }
 .photo-gallery { padding:28px var(--pad) 36px; }
 .photo-gallery-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px 14px; }
 .photo-gallery-grid img { display:block; width:100%; height:210px; object-fit:cover; object-position:center 35%; border-radius:14px; background:#111; }
-.photo-credit { margin:18px 0 0; color:#6e6e73; font-size:12px; font-weight:650; }
+.photo-gallery-head { align-items:flex-end; }
+.photo-gallery-byline { display:flex; align-items:center; flex-wrap:wrap; gap:6px; margin:7px 0 0; font-size:13px; font-weight:650; color:#5a5c63; }
+.photo-gallery-byline .camera-icon { display:inline-block; vertical-align:-1px; color:var(--purple); flex-shrink:0; }
+.photographer-name { color:#111114; font-weight:800; text-decoration:none; border-bottom:1.5px solid rgba(97,38,148,0.3); transition:border-color .15s ease,color .15s ease; }
+.photographer-name:hover { color:var(--purple); border-color:var(--purple); }
+.photo-count-chip { display:inline-flex; align-items:center; padding:2px 8px; margin-left:4px; background:#e8e6ed; border:1px solid #d4d0dc; border-radius:999px; font-size:11px; font-weight:750; color:#4a4652; }
+.photo-gallery-game-link { margin:0; }
+.photo-gallery-game-link a { display:inline-flex; align-items:center; color:var(--purple); font-size:12px; font-weight:800; transition:color .15s ease; }
+.photo-gallery-game-link a:hover { color:#4f1f7d; }
+.photo-credit { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:18px 0 0; color:#6e6e73; font-size:12px; font-weight:650; }
 .photo-credit a { color:var(--purple); font-weight:800; }
 .photo-credit a:hover { color:#4f1f7d; }
+.photo-credit-sep { color:#a8a8b0; font-weight:700; }
+.photo-credit-link { display:inline-flex; align-items:center; }
 .photo-trigger { display:block; width:100%; border:0; padding:0; margin:0; background:transparent; cursor:pointer; text-align:left; position:relative; border-radius:14px; overflow:hidden; transition:transform .2s cubic-bezier(0.16,1,0.3,1),box-shadow .2s ease; }
 .recap-photo-lead .photo-trigger { border-radius:16px; }
 .photo-trigger:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.18); }

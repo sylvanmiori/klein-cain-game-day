@@ -256,14 +256,40 @@ export function PhotoGalleryGrid({ photos }: { photos: GamePhoto[] }) {
   );
 }
 
+export function CameraIcon() {
+  return (
+    <svg
+      className="camera-icon"
+      viewBox="0 0 24 24"
+      width="13"
+      height="13"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+      <circle cx="12" cy="13" r="4" />
+    </svg>
+  );
+}
+
 function PhotoCredit({ gallery }: { gallery: GameGallery }) {
   return (
-    <p className="photo-credit">
-      Photo:{' '}
-      <a href={gallery.galleryUrl} target="_blank" rel="noreferrer">
-        {gallery.credit}
+    <div className="photo-credit">
+      <span>
+        Photography by{' '}
+        <a href={gallery.galleryUrl} target="_blank" rel="noreferrer">
+          {gallery.credit}
+        </a>
+      </span>
+      <span className="photo-credit-sep" aria-hidden="true">·</span>
+      <a href={gallery.galleryUrl} target="_blank" rel="noreferrer" className="photo-credit-link">
+        View full SmugMug album & downloads ↗
       </a>
-    </p>
+    </div>
   );
 }
 
@@ -327,9 +353,23 @@ export function GamePhotoGallery({ gallery }: { gallery: GameGallery | null }) {
   if (!gallery || gallery.photos.length === 0) return null;
   return (
     <section className="photo-gallery" id="photos" aria-labelledby="photo-gallery-heading">
-      <div className="compact-head">
-        <h2 id="photo-gallery-heading">Photos</h2>
-        <p>{gallery.photos.length} frames</p>
+      <div className="compact-head photo-gallery-head">
+        <div>
+          <h2 id="photo-gallery-heading">Photos</h2>
+          <p className="photo-gallery-byline">
+            <CameraIcon />
+            Photography by{' '}
+            <a href={gallery.galleryUrl} target="_blank" rel="noreferrer" className="photographer-name">
+              {gallery.credit}
+            </a>
+            <span className="photo-count-chip">{gallery.photos.length} photos</span>
+          </p>
+        </div>
+        <p className="photo-gallery-game-link">
+          <a href={gallery.galleryUrl} target="_blank" rel="noreferrer">
+            View full album ↗
+          </a>
+        </p>
       </div>
       <PhotoGalleryGrid photos={gallery.photos} />
       <PhotoCredit gallery={gallery} />
