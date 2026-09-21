@@ -290,7 +290,7 @@ article>section { border-bottom:1px solid var(--line); }
 .season li>span { color:#6e6e73; }
 .season li>span strong { color:var(--ink); font-weight:800; }
 .season li>b { font-size:12px; font-variant-numeric:tabular-nums; }
-.season-hub { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr); gap:24px; padding:58px var(--pad) 68px; background:#eceef2; content-visibility:auto; contain-intrinsic-size:0 600px; }
+.season-hub { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr); gap:24px; align-items:start; padding:58px var(--pad) 68px; background:#eceef2; content-visibility:auto; contain-intrinsic-size:0 600px; }
 .season-card,.history-card { background:#fff; border:1px solid #d8dae0; border-radius:16px; box-shadow:0 8px 24px rgba(24,24,30,.05); }
 .season-card { overflow:hidden; }
 .season-card .season-head { max-width:none; margin:0; padding:24px 26px 20px; border-top:5px solid var(--purple); border-bottom:1px solid var(--line); }
