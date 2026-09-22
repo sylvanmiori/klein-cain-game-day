@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 import { sitePath } from '../lib/site-path';
 import { siteIcons } from '../lib/site-icons';
 import './globals.css';
@@ -10,6 +11,9 @@ export const viewport: Viewport = {
 };
 
 const siteUrl = 'https://kleincain.gameday.report';
+
+// Google Analytics 4 measurement ID (public identifier; property "kleincain.gameday.report").
+const gaMeasurementId = 'G-KXFWBBSXFL';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -69,7 +73,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gaMeasurementId}');
+          `}
+        </Script>
+      </body>
     </html>
   );
 }
