@@ -28,9 +28,6 @@
     "Magnolia": "1–3",
     "Klein Forest": "1–3"
   },
-  "source": "Dave Campbell’s Texas Football",
-  "sourceUrl": "https://www.texasfootball.com/scores/",
-  "asOf": "2026-09-21T16:46:50.520Z",
   "standings": {
     "district": "District 15-6A",
     "rows": [
@@ -92,5 +89,8 @@
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/team/klein-cain-hurricanes",
     "asOf": "2026-09-21T21:49:46.331Z"
-  }
+  },
+  "source": "Dave Campbell’s Texas Football",
+  "sourceUrl": "https://www.texasfootball.com/scores/",
+  "asOf": "2026-09-22T15:25:03.007Z"
 }
