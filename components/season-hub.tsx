@@ -69,6 +69,7 @@ function outcomeClass(result: GameResult | null) {
 export function SeasonHub({ activeDate }: { activeDate: string }) {
   return (
     <section className="season-hub" id="schedule" aria-labelledby="schedule-heading">
+      <div className="season-top">
       <div className="season-card">
         <div className="season-head">
           <h2 id="schedule-heading">{program.seasonLabel}</h2>
@@ -108,10 +109,21 @@ export function SeasonHub({ activeDate }: { activeDate: string }) {
         <p className="district-note">{program.districtNote}</p>
       </div>
 
-      <div className="season-side">
         <StandingsCard />
-        <div className="history-card">
+      </div>
+
+      <div className="history-band">
+        <div className="history-band-head">
           <h2>Program history</h2>
+          <p className="history-source">
+            {program.links.map((link) => (
+              <a key={link.label} href={link.href} target="_blank" rel="noreferrer">
+                {link.label}
+              </a>
+            ))}
+          </p>
+        </div>
+        <div className="history-band-body">
           <dl className="history-facts">
             {program.facts.map((fact) => (
               <div key={fact.label}>
@@ -120,22 +132,17 @@ export function SeasonHub({ activeDate }: { activeDate: string }) {
               </div>
             ))}
           </dl>
-          <h3>Past seasons</h3>
-          <ul className="past-seasons">
-            {program.pastSeasons.map((season) => (
-              <li key={season.year}>
-                <span>{season.year}</span>
-                <strong>{season.record}</strong>
-              </li>
-            ))}
-          </ul>
-          <p className="history-source">
-            {program.links.map((link) => (
-              <a key={link.label} href={link.href} target="_blank" rel="noreferrer">
-                {link.label}
-              </a>
-            ))}
-          </p>
+          <div className="history-seasons">
+            <h3>Past seasons</h3>
+            <ul className="past-seasons">
+              {program.pastSeasons.map((season) => (
+                <li key={season.year}>
+                  <span>{season.year}</span>
+                  <strong>{season.record}</strong>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>
