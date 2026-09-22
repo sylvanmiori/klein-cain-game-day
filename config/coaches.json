@@ -42,7 +42,8 @@
         "Oak Ridge · head coach & campus athletic director · 2025–present"
       ],
       "source": "Dave Campbell’s Texas Football",
-      "sourceUrl": "https://texashsfootball.com/oak-ridge-war-eagles-2026-season-preview/"
+      "sourceUrl": "https://texashsfootball.com/oak-ridge-war-eagles-2026-season-preview/",
+      "image": "/coaches/oak-ridge.jpg"
     },
     "Tomball": {
       "name": "Dave Handal",
@@ -56,7 +57,8 @@
         "Tomball · defensive coordinator, then head coach · 2019–present"
       ],
       "source": "Tomball Cougars Athletics",
-      "sourceUrl": "https://www.tomballcougars.com/Staff/Bio/24173"
+      "sourceUrl": "https://www.tomballcougars.com/Staff/Bio/24173",
+      "image": "/coaches/tomball.jpg"
     },
     "Magnolia West": {
       "name": "Ben McGehee",
@@ -73,7 +75,8 @@
         "Magnolia West · head coach · 2021–present"
       ],
       "source": "Dave Campbell’s Texas Football",
-      "sourceUrl": "https://texashsfootball.com/magnolia-west-mustangs-2026-season-preview/"
+      "sourceUrl": "https://texashsfootball.com/magnolia-west-mustangs-2026-season-preview/",
+      "image": "/coaches/magnolia-west.jpg"
     },
     "Klein Collins": {
       "name": "Adrian Mitchell",
@@ -113,7 +116,8 @@
         "Klein Oak · offensive coordinator, then head coach · 2017–present"
       ],
       "source": "Dave Campbell’s Texas Football",
-      "sourceUrl": "https://texashsfootball.com/klein-oak-panthers-2026-season-preview/"
+      "sourceUrl": "https://texashsfootball.com/klein-oak-panthers-2026-season-preview/",
+      "image": "/coaches/klein-oak.jpg"
     },
     "Tomball Memorial": {
       "name": "Joe Dale Cary",
@@ -132,7 +136,8 @@
         "Tomball Memorial · head coach · 2024–present"
       ],
       "source": "Tomball ISD",
-      "sourceUrl": "https://www.tomballisd.net/about-tisd/departments/communications/news-releases/news-details/~board/athletics/post/tomball-isd-welcomes-joe-cary-as-new-tmhs-athletic-coordinatorhead-football-coach"
+      "sourceUrl": "https://www.tomballisd.net/about-tisd/departments/communications/news-releases/news-details/~board/athletics/post/tomball-isd-welcomes-joe-cary-as-new-tmhs-athletic-coordinatorhead-football-coach",
+      "image": "/coaches/tomball-memorial.jpg"
     },
     "Magnolia": {
       "name": "Craig Martin",
@@ -146,7 +151,8 @@
         "Magnolia · head coach · 2019–present"
       ],
       "source": "Dave Campbell’s Texas Football",
-      "sourceUrl": "https://texashsfootball.com/magnolia-bulldogs-2026-season-preview/"
+      "sourceUrl": "https://texashsfootball.com/magnolia-bulldogs-2026-season-preview/",
+      "image": "/coaches/magnolia.jpg"
     },
     "Klein Forest": {
       "name": "Darrick Vaughn",
@@ -160,7 +166,8 @@
         "Klein Forest · head coach & athletic coordinator · 2023–present"
       ],
       "source": "Dave Campbell’s Texas Football",
-      "sourceUrl": "https://texashsfootball.com/klein-forest-eagles-2026-season-preview/"
+      "sourceUrl": "https://texashsfootball.com/klein-forest-eagles-2026-season-preview/",
+      "image": "/coaches/klein-forest.jpg"
     }
   }
 }
