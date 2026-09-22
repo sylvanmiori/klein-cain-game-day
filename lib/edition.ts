@@ -55,6 +55,8 @@ export type Leader = {
 export type PullQuote = {
   image: string;
   imageAlt: string;
+  /** CSS object-position for the cropped image, e.g. "center 10%". Defaults to center. */
+  imagePosition?: string;
   quote: string;
   name: string;
   detail: string;

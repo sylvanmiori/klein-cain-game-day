@@ -53,7 +53,7 @@ export function PreviewView({ edition, preview }: { edition: Edition; preview: P
             <EditorialCopy body={preview.intro.body} />
             {preview.intro.pullQuote && (
               <figure className="pull-quote">
-                <img src={sitePath(preview.intro.pullQuote.image)} alt={preview.intro.pullQuote.imageAlt} loading="lazy" />
+                <img src={sitePath(preview.intro.pullQuote.image)} alt={preview.intro.pullQuote.imageAlt} loading="lazy" style={{ objectPosition: preview.intro.pullQuote.imagePosition ?? 'center' }} />
                 <blockquote>
                   <p>“{preview.intro.pullQuote.quote}”</p>
                 </blockquote>
