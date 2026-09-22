@@ -25,6 +25,7 @@ export function teamJsonLd() {
         alternateName: ['Cain Game Day', 'Klein Cain High School Football', 'Klein Cain Hurricanes Football'],
         description: 'Independent coverage of Klein Cain Hurricanes high school football in Houston, TX (District 15-6A). Schedule, live scores, recaps, roster, and statistics.',
         publisher: { '@id': `${siteUrl}/#team` },
+        sameAs: ['https://x.com/CainGameday'],
         inLanguage: 'en-US',
       },
       {
@@ -37,6 +38,7 @@ export function teamJsonLd() {
           'Klein Cain Hurricanes',
           'Cain Football',
         ],
+        sameAs: ['https://x.com/CainGameday'],
         sport: 'American Football',
         gender: 'Male',
         url: `${siteUrl}/`,
@@ -130,10 +132,13 @@ export function gameJsonLd(edition: Edition) {
           '@type': 'Organization',
           name: publication.siteName,
           url: `${siteUrl}/`,
+          sameAs: ['https://x.com/CainGameday'],
         },
         publisher: {
           '@type': 'Organization',
           name: publication.siteName,
+          url: `${siteUrl}/`,
+          sameAs: ['https://x.com/CainGameday'],
           logo: {
             '@type': 'ImageObject',
             url: `${siteUrl}/favicon.png`,

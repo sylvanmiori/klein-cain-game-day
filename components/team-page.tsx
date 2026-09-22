@@ -13,6 +13,7 @@ import {
   opponentOf,
 } from '../lib/edition';
 import { sitePath } from '../lib/site-path';
+import { XSocialLink } from './x-social-link';
 
 /**
  * The program homepage: season record, schedule, links to the latest recap and
@@ -75,10 +76,15 @@ export function TeamPage() {
       </article>
 
       <footer className="compact-footer">
-        <a className="wordmark" href={sitePath('/')}>
-          {publication.wordmarkParts[0]} <span>/</span> {publication.wordmarkParts[1]}
-        </a>
-        <p>Independent fan publication · Data from MaxPreps and Dave Campbell’s Texas Football.</p>
+        <div className="compact-footer-brand">
+          <a className="wordmark" href={sitePath('/')}>
+            {publication.wordmarkParts[0]} <span>/</span> {publication.wordmarkParts[1]}
+          </a>
+          <p>Independent fan publication · Data from MaxPreps and Dave Campbell’s Texas Football.</p>
+        </div>
+        <div className="compact-footer-social">
+          <XSocialLink />
+        </div>
       </footer>
     </main>
   );
