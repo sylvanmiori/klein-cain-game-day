@@ -331,4 +331,5 @@ The visual reference is Apple Sports and Yahoo Sports: compact, useful, informat
 - The roster in small type and the team photo live on the program page, not on each game report.
 - Colour reinforces meaning, never carries it alone: the W or L is always written out, and the school is purple with the opponent in red, matching the player cards.
 - Links stay clean, without decorative arrows, and every interactive element has a visible focus state.
+- Long-form editorial copy (`preview.intro.body`, `final.body`) uses blank lines for paragraph breaks and `**bold**` for key facts, per the convention in `content/editions/TEMPLATE.md`. Short paragraphs, bold used sparingly.
 - Test desktop and mobile before publishing.

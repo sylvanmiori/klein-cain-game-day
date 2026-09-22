@@ -133,7 +133,7 @@ export function ProgramHomeSpotlight({
 
 function extractLeadSentence(text: string): string {
   if (!text) return '';
-  const firstPara = text.split('\n\n')[0].trim();
+  const firstPara = text.split('\n\n')[0].replace(/\*\*/g, '').trim();
   const normalized = firstPara.replace(/\b(Sept|Aug|Oct|Nov|Dec|Jan|Feb|Mar|Apr|Jun|Jul|Jr|Sr|St|vs)\./g, '$1\u2024');
   const match = normalized.match(/^.*?[.!?](?=\s+[A-Z]|$)/);
   if (!match) return firstPara;

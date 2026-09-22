@@ -1,4 +1,5 @@
 import { galleryForSlug } from '../lib/galleries';
+import type { ReactNode } from 'react';
 import { GamePhotoGallery, RecapPhotoStory } from './game-photos';
 import { GameHighlightVideo } from './game-video';
 import { SocialBuzz } from './tweet-embed';
@@ -49,7 +50,7 @@ export function PreviewView({ edition, preview }: { edition: Edition; preview: P
         <section className="early-read">
           <div>
             <h2>{preview.intro.heading}</h2>
-            <p>{preview.intro.body}</p>
+            <EditorialCopy body={preview.intro.body} />
           </div>
           {preview.intro.facts.length > 0 && (
           <dl>
@@ -213,12 +214,31 @@ function PlayerOfGame({ stats }: { stats: GameStats }) {
   );
 }
 
-function RecapCopy({ body }: { body: string }) {
+/**
+ * Shared renderer for long-form editorial copy (`preview.intro.body`,
+ * `final.body`). Convention: blank lines separate paragraphs, and
+ * `**double asterisks**` bold key numbers and phrases. Plain text with no
+ * markup renders exactly as before. Content is author-written JSON, and
+ * React escapes the text segments, so no HTML passes through.
+ */
+function renderInlineMarkup(text: string): ReactNode {
+  const parts = text.split(/(\*\*[^*\n]+\*\*)/g);
+  if (parts.length === 1) return text;
+  return parts.map((part, index) =>
+    /^\*\*[^*]+\*\*$/.test(part) ? (
+      <strong key={index}>{part.slice(2, -2)}</strong>
+    ) : (
+      part
+    ),
+  );
+}
+
+function EditorialCopy({ body, className }: { body: string; className?: string }) {
   const paragraphs = body.split(/\n\n+/).map((p) => p.trim()).filter(Boolean);
   return (
-    <div className="recap-copy">
+    <div className={className ?? 'editorial-copy'}>
       {paragraphs.map((paragraph, index) => (
-        <p key={index}>{paragraph}</p>
+        <p key={index}>{renderInlineMarkup(paragraph)}</p>
       ))}
     </div>
   );
@@ -243,7 +263,7 @@ export function FinalView({
         <div className="recap-body-column">
           <h2>{final.headline}</h2>
           {final.byline && <p className="byline">{final.byline}</p>}
-          <RecapCopy body={final.body} />
+          <EditorialCopy body={final.body} className="recap-copy" />
         </div>
 
         {hasSidebar && (

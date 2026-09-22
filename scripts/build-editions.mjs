@@ -125,7 +125,9 @@ for (const [index, game] of schedule.entries()) {
         heading: 'The matchup',
         // Deliberately factual and free of analysis: it states what is known
         // and what is still to come, rather than pretending to a preview.
-        body: `${away.name} plays at ${home.name} on ${dateLong} at ${game.kickoff}, at ${game.venue}. Records, the statewide ranking and the published forecast on this page update automatically as the season goes on. Player notes are added only when they can be checked against a named source.`,
+        // Uses the editorial copy convention (see content/editions/TEMPLATE.md):
+        // blank lines separate paragraphs, **bold** marks key facts.
+        body: `**${away.name} at ${home.name}**, ${dateLong}, ${game.kickoff} at ${game.venue}.\n\nRecords, the statewide ranking and the published forecast on this page update automatically as the season goes on. Player notes are added only when they can be checked against a named source.`,
         facts: [],
       },
       players: [],

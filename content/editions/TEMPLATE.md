@@ -97,6 +97,18 @@ observations. When provided, commentary is woven directly into the recap narrati
 never published as an isolated section titled "Extra". Leave the field out or set
 it to `null` when you have no additional commentary to add.
 
+### Editorial copy formatting
+
+`preview.intro.body` and `final.body` support light inline formatting, rendered
+by the shared `EditorialCopy` component (`components/edition-page.tsx`):
+
+- Blank lines start a new paragraph.
+- `**double asterisks**` bold a key number or phrase.
+
+Keep paragraphs short (two to three sentences) and bold sparingly: scores,
+records, rankings and the one most important phrase per paragraph. No other
+markup is supported. Plain text with no markup renders exactly as before.
+
 ```json
 {
   "schemaVersion": 2,
