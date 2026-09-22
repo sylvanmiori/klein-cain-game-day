@@ -30,6 +30,7 @@ Node 24 is used in CI and recommended locally; the declared minimum is Node 22.1
 - `npm run roster` refreshes the varsity roster from MaxPreps and keeps existing local portraits by name.
 - `npm run logos` stores every configured opponent logo locally and updates its edition.
 - `npm run validate` checks every edition against the schedule and the editorial rules.
+- `npm run sitemap` generates the XML sitemap with real lastmod timestamps.
 - `npm run docs:check` verifies documented paths and npm commands still exist.
 - `npm run test:score` tests the Worker, score parser, rating, recap, promotion rule and stats parser.
 - `npm run build:cloudflare` validates, builds root-relative assets, then checks the built pages for stale opponents.

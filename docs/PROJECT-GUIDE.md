@@ -32,6 +32,7 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `components/home-next-game-card.tsx` | unified Next Game module (feature hero + matchup strip + live score poll) |
 | `components/game-photos.tsx` | accessible photo gallery grid, native `<dialog>` lightbox modal with keyboard navigation, photographer credits |
 | `components/game-video.tsx` | game highlight video player with poster, duration, and credit |
+| `components/seo-schema.tsx` | Schema.org JSON-LD structured data generators (SportsTeam, SportsEvent, NewsArticle, BreadcrumbList, ImageGallery) |
 | `content/editions/*.json` | one file per game, schema v2, typed in `lib/edition.ts` |
 | `content/season-data.json` | machine-written: our results, every opponent's record, and district standings |
 | `content/roster-2026.json` | varsity roster synced from MaxPreps with `npm run roster`; local portrait paths are synced with `npm run photos` |
@@ -46,7 +47,10 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `app/photos/page.tsx` | `/photos`, season gallery grouped by game |
 | `public/photos/` | local game photos; do not hotlink SmugMug |
 | `public/videos/` | local MP4 highlights and poster images; do not hotlink external streams |
+| `public/robots.txt` | crawler directives and sitemap declaration |
+| `public/sitemap.xml` | dynamic XML sitemap of all routes with priorities and lastmod dates |
 | `public/silver_cain_football_helmet_cutout.png` | optional cutout asset; path on `publication.heroHelmetCutout` |
+| `scripts/generate-sitemap.mjs` | generates public/sitemap.xml before builds |
 | `scripts/lib/caption-helper.mjs` | roster resolution and quality validation for photo captions |
 | `scripts/lib/player-of-game.mjs` | deterministic Cain Impact v1 model for Player of the Game |
 | `scripts/lib/sources.mjs` | every external fetcher and parser |
