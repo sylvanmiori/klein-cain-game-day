@@ -2,7 +2,6 @@ import publication from '../config/publication.json';
 import { SeasonHub, seasonRecord } from './season-hub';
 import { RosterSection, SeasonStats } from './team-sections';
 import { SchoolCoachSection } from './coaching-section';
-import { ProgramFaqSection } from './program-faq';
 import { buildRecapLink, ProgramHomeSpotlight } from './program-home-spotlight';
 import {
   currentEdition,
@@ -40,7 +39,6 @@ export function TeamPage() {
           <a href={sitePath('/photos')}>Photos</a>
           <a href="#schedule">Schedule</a>
           {stats && <a href="#stats">Stats</a>}
-          <a href="#faq">FAQ</a>
           <a href="#roster-heading">Roster</a>
         </nav>
         <span className="issue">2026 season</span>
@@ -72,8 +70,6 @@ export function TeamPage() {
         {stats && <SeasonStats edition={stats} note="Season totals" />}
 
         <SchoolCoachSection />
-
-        <ProgramFaqSection />
 
         <RosterSection />
       </article>

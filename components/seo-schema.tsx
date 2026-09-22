@@ -64,60 +64,6 @@ export function teamJsonLd() {
           },
         },
       },
-      {
-        '@type': 'FAQPage',
-        '@id': `${siteUrl}/#faq`,
-        mainEntity: [
-          {
-            '@type': 'Question',
-            name: 'Where does Klein Cain play home football games?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Klein Cain plays home games at Klein Memorial Stadium (capacity 8,500), located at 16607 Stuebner Airline Rd in Klein, Texas. The stadium features artificial turf and serves as the home venue for Klein ISD varsity football.',
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'What UIL district and classification is Klein Cain football in?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Klein Cain High School competes in Texas UIL Class 6A within District 15-6A. District opponents include Tomball, Tomball Memorial, Klein, Klein Collins, Klein Forest, Klein Oak, Magnolia, and Magnolia West.',
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'Who is the head football coach at Klein Cain?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: "James Clancy has served as the head football coach and campus athletic coordinator at Klein Cain High School since the program began varsity play in 2018, leading the Hurricanes to multiple Class 6A playoff appearances.",
-            },
-          },
-          {
-            '@type': 'Question',
-            name: "What is Klein Cain's current football record?",
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Klein Cain is currently 3–0 overall and 1–0 in District 15-6A play for the 2026 season following victories over Humble (42–14), Oak Ridge (41–20), and Tomball (55–38).',
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'Where can I find Klein Cain football box scores, stats, and game recaps?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Cain Game Day (kleincain.gameday.report) publishes comprehensive game recaps, verified box scores, category stat leaders, and Player of the Game honors immediately following every varsity matchup.',
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'Where can I see Klein Cain football game photos?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'High-resolution sideline and action game photography by the Klein Cain Football Booster Club is published weekly on the Cain Game Day Photos page with links to full download albums.',
-            },
-          },
-        ],
-      },
     ],
   };
 }
