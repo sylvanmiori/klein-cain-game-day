@@ -92,6 +92,17 @@ export type VideoHighlight = {
   sourceUrl?: string;
 };
 
+/** An embedded X post rendered as a native site card. Editorial content. */
+export type SocialPost = {
+  author: string;
+  handle: string;
+  verified: boolean;
+  text: string;
+  url: string;
+  timestamp: string;
+  media?: { type: 'video' | 'photo'; duration?: string; label: string } | null;
+};
+
 export type FinalSection = {
   headline: string;
   byline: string;
@@ -103,6 +114,8 @@ export type FinalSection = {
   notes: { heading: string; paragraphs: string[] }[];
   leaders: { heading: string; source: string; items: Leader[] } | null;
   video?: VideoHighlight | null;
+  /** Embedded X posts shown in a "What they're saying" section after the recap. Editorial. */
+  socialPosts?: SocialPost[] | null;
 };
 
 export type GameStats = {

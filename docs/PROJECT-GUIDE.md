@@ -112,6 +112,10 @@ Photographer recognition is elevated across both game galleries and `/photos`:
 
 Game recap pages support local MP4 video highlights embedded via `components/game-video.tsx` when `final.video` is defined in the edition JSON (`lib/edition.ts`). Video assets and poster frames are stored locally under `public/videos/*` (e.g. `public/videos/2026-08-27-humble/highlights.mp4`). The component renders a styled video player with custom poster, duration badge, title, contextual caption, and credit link (e.g., "Texan Live · NFHS Network"). `scripts/validate-editions.mjs` verifies that `poster` and `src` paths exist locally in `public/` and that `sourceUrl` is an https link.
 
+### Embedded X posts
+
+Game recap pages can embed X posts as native site cards via `components/tweet-embed.tsx` when `final.socialPosts` is defined in the edition JSON (`lib/edition.ts`). The card renders the author's name, handle, verification, post text and an optional media link row in the site's own visual language — no X widget scripts and no hotlinked assets; every card links out to the original post. The posts appear in a "What they're saying" section between the photo story and the highlight video.
+
 Between games, the recap card points at the most recent final. On the Monday of the next game's week, promotion moves the Next Game card to that preview. While a featured game is final, its recap, Player of the Game and game statistics appear on that game's report page, not on `/`.
 
 Every game report is a subpage at `/games/week-<n>`, including whichever one is current. The program page and game reports share `SeasonHub`, including the district standings card, and `SeasonStats`. Live polling for the featured game lives inside `HomeNextGameCard` (not a separate homepage score widget). `RosterSection` appears only on the program page.

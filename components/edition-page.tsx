@@ -1,6 +1,7 @@
 import { galleryForSlug } from '../lib/galleries';
 import { GamePhotoGallery, RecapPhotoStory } from './game-photos';
 import { GameHighlightVideo } from './game-video';
+import { SocialBuzz } from './tweet-embed';
 import publication from '../config/publication.json';
 import schedule from '../config/season-2026.json';
 import liveScore from '../public/live-score.json';
@@ -273,6 +274,10 @@ export function FinalView({
       </section>
 
       <RecapPhotoStory gallery={gallery ?? null} />
+
+      {final.socialPosts && final.socialPosts.length > 0 && (
+        <SocialBuzz posts={final.socialPosts} />
+      )}
 
       {final.video && <GameHighlightVideo video={final.video} />}
 
