@@ -17,8 +17,17 @@ const worker = {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (url.hostname === publication.domain) {
+      const isStaticAsset = url.pathname.startsWith('/favicon')
+        || url.pathname === '/apple-touch-icon.png'
+        || url.pathname === '/site.webmanifest'
+        || url.pathname === '/robots.txt';
+      if (isStaticAsset && env.ASSETS) {
+        const assetUrl = new URL(request.url);
+        assetUrl.hostname = publication.schoolHostname;
+        return env.ASSETS.fetch(new Request(assetUrl.toString(), request));
+      }
       url.hostname = publication.schoolHostname;
-      return Response.redirect(url.toString(), 302);
+      return Response.redirect(url.toString(), 301);
     }
     if (url.hostname !== publication.schoolHostname && !url.hostname.endsWith('.workers.dev')
       && !['localhost', '127.0.0.1'].includes(url.hostname)) return new Response('School not found', { status: 404 });

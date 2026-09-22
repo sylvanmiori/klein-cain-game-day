@@ -41,8 +41,20 @@ void test('final cannot regress and repeated reads do not increment a record', (
 
 void test('root redirects to Cain; unknown schools fail closed', async () => {
   const redirect = await worker.fetch(new Request('https://gameday.report/games/week-1'), {});
+  assert.equal(redirect.status, 301);
   assert.equal(redirect.headers.get('location'), 'https://kleincain.gameday.report/games/week-1');
   assert.equal((await worker.fetch(new Request('https://other.gameday.report/'), {})).status, 404);
+
+  let fetchedUrl = null;
+  const mockAssets = {
+    fetch: async (req) => {
+      fetchedUrl = req.url;
+      return new Response('icon-bytes', { status: 200 });
+    },
+  };
+  const iconResponse = await worker.fetch(new Request('https://gameday.report/favicon.ico'), { ASSETS: mockAssets });
+  assert.equal(iconResponse.status, 200);
+  assert.equal(fetchedUrl, 'https://kleincain.gameday.report/favicon.ico');
 });
 
 void test('API falls back to the checked-in snapshot during storage failure', async () => {
