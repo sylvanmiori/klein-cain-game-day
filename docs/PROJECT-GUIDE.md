@@ -32,6 +32,7 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `components/home-next-game-card.tsx` | unified Next Game module (feature hero + matchup strip + live score poll) |
 | `components/game-photos.tsx` | accessible photo gallery grid, native `<dialog>` lightbox modal with keyboard navigation, photographer credits |
 | `components/game-video.tsx` | game highlight video player with poster, duration, and credit |
+| `components/program-faq.tsx` | quick facts and FAQ accordion section with Schema.org FAQPage markup |
 | `components/seo-schema.tsx` | Schema.org JSON-LD structured data generators (SportsTeam, SportsEvent, NewsArticle, BreadcrumbList, ImageGallery) |
 | `content/editions/*.json` | one file per game, schema v2, typed in `lib/edition.ts` |
 | `content/season-data.json` | machine-written: our results, every opponent's record, and district standings |
