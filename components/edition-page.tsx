@@ -6,6 +6,7 @@ import schedule from '../config/season-2026.json';
 import liveScore from '../public/live-score.json';
 import { GameReportTabs } from './game-report-tabs';
 import { CoachingMatchupSection } from './coaching-section';
+import { JsonLd, gameJsonLd } from './seo-schema';
 import { LiveScoreCard, type LiveScore } from './live-score-card';
 import { MatchupCard } from './matchup-card';
 import { PlayerReports } from './player-reports';
@@ -356,9 +357,10 @@ export function EditionPage({ edition }: { edition: Edition }) {
 
   return (
     <main>
+      <JsonLd schema={gameJsonLd(edition)} />
       <header className="masthead">
         <a className="wordmark" href={home} aria-label={`${publication.siteName} home`}>
-          <img src={sitePath(publication.schoolLogo)} alt="" /> {publication.wordmark}
+          <img src={sitePath(publication.schoolLogo)} alt={`${publication.schoolName} ${publication.schoolMascot} logo`} /> {publication.wordmark}
         </a>
         <nav aria-label="Site navigation">
           {preview && preview.players.length > 0 && <a href="#players">Players</a>}

@@ -32,7 +32,7 @@ export function TeamPage() {
     <main>
       <header className="masthead">
         <a className="wordmark" href={sitePath('/')} aria-label={`${publication.siteName} home`}>
-          <img src={sitePath(publication.schoolLogo)} alt="" /> {publication.wordmark}
+          <img src={sitePath(publication.schoolLogo)} alt={`${publication.schoolName} ${publication.schoolMascot} logo`} /> {publication.wordmark}
         </a>
         <nav aria-label="Site navigation">
           <a href="#reports">Reports</a>
@@ -47,7 +47,7 @@ export function TeamPage() {
       <section className="program-hero" id="top">
         <div className="program-intro">
           <h1>
-            {publication.schoolName} {publication.schoolMascot}
+            {publication.schoolName} {publication.schoolMascot} Football
           </h1>
           <p>{seasonRecord()} · District 15-6A · 2026 season</p>
         </div>

@@ -1,0 +1,7 @@
+# Robots.txt for Klein Cain Football (Cain Game Day)
+# Authoritative Domain: https://kleincain.gameday.report/
+
+User-agent: *
+Allow: /
+
+Sitemap: https://kleincain.gameday.report/sitemap.xml

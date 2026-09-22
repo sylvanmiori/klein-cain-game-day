@@ -18,16 +18,22 @@ const icons: Metadata['icons'] = {
 /** Titles, descriptions and share cards all come from the edition file, so an
  *  old opponent can never survive in metadata after a new edition ships. */
 export function editionMetadata(edition: Edition, siteName: string): Metadata {
-  const url = `${siteUrl}games/week-${edition.week}`;
-  const images = edition.ogImage
-    ? [{ url: `${siteUrl}${edition.ogImage.replace(/^\//, '')}`, width: 1731, height: 909, alt: edition.pageTitle }]
-    : [];
+  const authoritativeSiteUrl = 'https://kleincain.gameday.report';
+  const url = `${authoritativeSiteUrl}/games/week-${edition.week}`;
+  const images = edition.ogImage && edition.ogImage.length > 0
+    ? [{ url: `${authoritativeSiteUrl}${edition.ogImage.startsWith('/') ? '' : '/'}${edition.ogImage}`, width: 1731, height: 909, alt: edition.pageTitle }]
+    : [{ url: `${authoritativeSiteUrl}/og.png`, width: 1200, height: 630, alt: edition.pageTitle }];
 
   return {
-    metadataBase: new URL(siteUrl),
+    metadataBase: new URL(authoritativeSiteUrl),
     icons,
-    title: edition.metaTitle,
+    title: {
+      absolute: edition.metaTitle,
+    },
     description: edition.metaDescription,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
       title: edition.metaTitle,
       description: edition.socialDescription,
@@ -37,7 +43,7 @@ export function editionMetadata(edition: Edition, siteName: string): Metadata {
       type: 'article',
     },
     twitter: {
-      card: images.length ? 'summary_large_image' : 'summary',
+      card: 'summary_large_image',
       title: edition.metaTitle,
       description: edition.metaDescription,
       images: images.map((image) => image.url),

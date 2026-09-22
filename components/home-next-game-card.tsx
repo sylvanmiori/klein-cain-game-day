@@ -127,7 +127,7 @@ export function HomeNextGameCard({
         <img
           className="home-next-game-hero"
           src={heroImageSrc}
-          alt=""
+          alt={`${publication.schoolName} Hurricanes football kickoff action`}
           fetchPriority="high"
           loading="eager"
           decoding="async"
@@ -178,7 +178,7 @@ export function HomeNextGameCard({
       <div className="home-next-game-strip">
         <div className="home-next-game-teams">
           <div className="home-next-game-team">
-            <img src={sitePath(featured.logo)} alt="" width="40" height="40" />
+            <img src={sitePath(featured.logo)} alt={`${featured.name} ${featured.mascot} logo`} width="40" height="40" />
             <div>
               <strong>{featured.name}</strong>
               <span>{isScheduled ? featured.record : featuredScore}</span>
@@ -186,7 +186,7 @@ export function HomeNextGameCard({
           </div>
           <div className="home-next-game-vs" aria-hidden="true">VS</div>
           <div className="home-next-game-team away">
-            <img src={sitePath(opponent.logo)} alt="" width="40" height="40" />
+            <img src={sitePath(opponent.logo)} alt={`${opponent.name} ${opponent.mascot} logo`} width="40" height="40" />
             <div>
               <strong>{opponent.name}</strong>
               <span>{isScheduled ? opponent.record : opponentScore}</span>

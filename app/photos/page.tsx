@@ -4,18 +4,48 @@ import { seasonGalleries } from '../../lib/galleries';
 import { apDate, editionPath, opponentOf } from '../../lib/edition';
 import { sitePath } from '../../lib/site-path';
 import { PhotoGalleryGrid, CameraIcon } from '../../components/game-photos';
+import { JsonLd, photosJsonLd } from '../../components/seo-schema';
 
 export const dynamic = 'force-static';
 
+const photosUrl = 'https://kleincain.gameday.report/photos';
+
 export const metadata: Metadata = {
-  title: `Photos | ${publication.siteName}`,
-  description: `Game photography for ${publication.schoolName} football.`,
+  title: {
+    absolute: `Klein Cain Football Photos | 2026 Season Galleries | ${publication.siteName}`,
+  },
+  description: `High-resolution game photography, player action shots, and gameday photos for ${publication.schoolName} Hurricanes football in Houston, TX.`,
+  alternates: {
+    canonical: photosUrl,
+  },
+  openGraph: {
+    title: `Klein Cain Football Photos | 2026 Season Galleries | ${publication.siteName}`,
+    description: `High-resolution game photography, player action shots, and gameday photos for ${publication.schoolName} Hurricanes football.`,
+    url: photosUrl,
+    siteName: publication.siteName,
+    type: 'website',
+    images: [
+      {
+        url: 'https://kleincain.gameday.report/og.png',
+        width: 1200,
+        height: 630,
+        alt: `${publication.schoolName} Football Photo Gallery`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Klein Cain Football Photos | 2026 Season Galleries | ${publication.siteName}`,
+    description: `High-resolution game photography, player action shots, and gameday photos for ${publication.schoolName} Hurricanes football.`,
+    images: ['https://kleincain.gameday.report/og.png'],
+  },
 };
 
 export default function PhotosPage() {
   const weeks = seasonGalleries();
   return (
     <main>
+      <JsonLd schema={photosJsonLd()} />
       <header className="masthead">
         <a className="wordmark" href={sitePath('/')} aria-label={`${publication.siteName} home`}>
           <img src={sitePath(publication.schoolLogo)} alt="" /> {publication.wordmark}
