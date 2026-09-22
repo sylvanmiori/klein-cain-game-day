@@ -4,6 +4,8 @@ A football site with a program page, one report per game, live scores and season
 
 Start with [AGENTS.md](AGENTS.md) when handing the repository to an AI developer, then read the [project guide](docs/PROJECT-GUIDE.md) for architecture, accounts, sources, automation, recovery and open work. Its **Traps worth knowing** section records the non-obvious failures already solved.
 
+Social-account logos, avatars, headers and launch graphics are in [the Cain Game Day brand kit](brand/social-2026/README.md). They are separate from the production website's current masthead and favicon.
+
 ## Status
 
 Live at https://kleincain.gameday.report/. https://gameday.report/ redirects there while Klein Cain is the only school. GitHub Pages remains a migration fallback.

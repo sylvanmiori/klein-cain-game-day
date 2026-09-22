@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="500" viewBox="0 0 1500 500">
+  <defs><linearGradient id="shade"><stop stop-color="#14141B" stop-opacity=".97"/><stop offset=".70" stop-color="#17141D" stop-opacity=".58"/><stop offset="1" stop-color="#17141D" stop-opacity=".16"/></linearGradient></defs>
+  <rect width="1500" height="500" fill="url(#shade)"/>
+  <rect x="418" y="136" width="13" height="221" fill="#9E63D6"/>
+  <text x="463" y="234" fill="#FFFFFF" font-family="Helvetica Neue,Arial,sans-serif" font-weight="900" font-size="69" letter-spacing="-2">CAIN GAME DAY</text>
+  <text x="467" y="285" fill="#D4C7DF" font-family="Helvetica Neue,Arial,sans-serif" font-weight="750" font-size="23" letter-spacing="3">THE GAME DAY REPORT</text>
+  <text x="467" y="345" fill="#C3B9CC" font-family="Helvetica Neue,Arial,sans-serif" font-weight="600" font-size="21">Independent Klein Cain football coverage</text>
+  <text x="467" y="387" fill="#A96BE0" font-family="Helvetica Neue,Arial,sans-serif" font-weight="800" font-size="20">kleincain.gameday.report</text>
+</svg>

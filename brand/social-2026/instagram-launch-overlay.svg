@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+  <defs><linearGradient id="fade" x2="0" y2="1"><stop offset="0" stop-color="#17181E"/><stop offset=".70" stop-color="#17181E" stop-opacity=".95"/><stop offset="1" stop-color="#17181E" stop-opacity=".24"/></linearGradient></defs>
+  <rect width="1080" height="1350" fill="url(#fade)"/>
+  <rect x="82" y="94" width="146" height="146" rx="30" fill="#612694"/>
+  <text x="155" y="190" fill="#FFFFFF" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-weight="900" font-size="67" letter-spacing="-7">GD</text>
+  <text x="155" y="217" fill="#FFFFFF" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-weight="800" font-size="11" letter-spacing="3">REPORT</text>
+  <text x="82" y="432" fill="#FFFFFF" font-family="Helvetica Neue,Arial,sans-serif" font-weight="900" font-size="112" letter-spacing="-5">CAIN</text>
+  <text x="82" y="552" fill="#FFFFFF" font-family="Helvetica Neue,Arial,sans-serif" font-weight="900" font-size="112" letter-spacing="-5">GAME DAY</text>
+  <rect x="82" y="602" width="498" height="8" fill="#9E63D6"/>
+  <text x="82" y="684" fill="#ECE8F2" font-family="Helvetica Neue,Arial,sans-serif" font-weight="700" font-size="36">The Game Day Report</text>
+  <text x="82" y="742" fill="#C7BDCF" font-family="Helvetica Neue,Arial,sans-serif" font-weight="500" font-size="31">Scores. Stories. The season.</text>
+  <text x="82" y="1301" fill="#FFFFFF" font-family="Helvetica Neue,Arial,sans-serif" font-weight="800" font-size="27">kleincain.gameday.report</text>
+  <rect x="82" y="1242" width="916" height="2" fill="#D7CEE0" fill-opacity=".45"/>
+</svg>

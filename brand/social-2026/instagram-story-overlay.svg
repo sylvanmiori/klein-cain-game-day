@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs><linearGradient id="fade" x2="0" y2="1"><stop offset="0" stop-color="#17181E"/><stop offset=".72" stop-color="#17181E" stop-opacity=".93"/><stop offset="1" stop-color="#17181E" stop-opacity=".22"/></linearGradient></defs>
+  <rect width="1080" height="1920" fill="url(#fade)"/>
+  <rect x="86" y="150" width="164" height="164" rx="35" fill="#612694"/>
+  <text x="168" y="258" fill="#FFFFFF" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-weight="900" font-size="76" letter-spacing="-8">GD</text>
+  <text x="168" y="291" fill="#FFFFFF" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-weight="800" font-size="12" letter-spacing="4">REPORT</text>
+  <text x="86" y="512" fill="#FFFFFF" font-family="Helvetica Neue,Arial,sans-serif" font-weight="900" font-size="112" letter-spacing="-5">CAIN</text>
+  <text x="86" y="635" fill="#FFFFFF" font-family="Helvetica Neue,Arial,sans-serif" font-weight="900" font-size="112" letter-spacing="-5">GAME DAY</text>
+  <rect x="86" y="699" width="530" height="10" fill="#9E63D6"/>
+  <text x="86" y="798" fill="#ECE8F2" font-family="Helvetica Neue,Arial,sans-serif" font-weight="700" font-size="37">Independent Klein Cain</text>
+  <text x="86" y="851" fill="#ECE8F2" font-family="Helvetica Neue,Arial,sans-serif" font-weight="700" font-size="37">football coverage</text>
+  <text x="86" y="1830" fill="#FFFFFF" font-family="Helvetica Neue,Arial,sans-serif" font-weight="800" font-size="31">kleincain.gameday.report</text>
+  <rect x="86" y="1765" width="908" height="2" fill="#D7CEE0" fill-opacity=".45"/>
+</svg>

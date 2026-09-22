@@ -60,6 +60,7 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `cloudflare/worker.mjs` | routes, score API, one-minute cron |
 | `AGENTS.md` | short, mandatory handoff rules for an AI developer |
 | `scripts/check-docs.mjs` | build gate for stale documented paths and npm commands |
+| `brand/social-2026/` | independent Cain Game Day social identity: editable SVG masters, platform PNGs, generated stadium background, render script and usage guide; not yet applied to the website |
 
 Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore`, `stats` and `gameStats` (including `gameStats.playerOfGame`). Everything else is editorial and no script writes it. `recapNotes` is editorial input: scripts read it when composing or updating the recap but never fill it.
 

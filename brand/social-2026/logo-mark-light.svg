@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Game Day Report GD logo on light background">
+  <rect width="512" height="512" rx="112" fill="#F5F5F7"/>
+  <rect x="42" y="42" width="428" height="428" rx="78" fill="none" stroke="#C9BFCE" stroke-width="3"/>
+  <path d="M42 405h428v65H42z" fill="#612694"/>
+  <path d="M58 119h88" stroke="#612694" stroke-width="15" stroke-linecap="square"/>
+  <path d="M366 119h88" stroke="#612694" stroke-width="15" stroke-linecap="square"/>
+  <text x="256" y="318" fill="#17181E" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-weight="900" font-size="216" letter-spacing="-22">GD</text>
+  <text x="256" y="444" fill="#FFFFFF" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-weight="800" font-size="36" letter-spacing="12">REPORT</text>
+</svg>
