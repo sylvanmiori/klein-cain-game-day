@@ -24,6 +24,7 @@
     "postgame": "node scripts/promote-edition.mjs",
     "editions": "node scripts/build-editions.mjs",
     "photos": "node scripts/sync-player-photos.mjs",
+    "brand:assets": "node scripts/build-brand-assets.mjs",
     "roster": "node scripts/sync-roster.mjs",
     "logos": "node scripts/sync-opponent-logos.mjs",
     "docs:check": "node scripts/check-docs.mjs"
@@ -64,6 +65,7 @@
     "oxfmt": "0.61.0",
     "oxlint": "1.76.0",
     "oxlint-tsgolint": "7.0.2001",
+    "sharp": "^0.34.5",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",
     "vite": "8.0.13",

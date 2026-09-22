@@ -1,5 +1,7 @@
 # Cain Game Day social identity
 
+**Archived concept, not the current identity.** The GD monogram in this directory was rejected. Do not upload these files to new social accounts or use them on the website. Use the approved purple helmet at `public/brand/cain-helmet-avatar-source.png` and regenerate platform sizes with `npm run brand:assets` or resize that master.
+
 An independent editorial brand for the Klein Cain edition of **Game Day Report**. This package is for social accounts and promotion; it does **not** replace the school's logo, the site's favicon, or any existing page artwork. No school or district endorsement is implied.
 
 ## Start here: upload files
@@ -54,4 +56,4 @@ The background stadium art (`stadium-background.png`) was generated with OpenAI'
 
 All logo and overlay typography is editable SVG authored for this package. PNG exports are reproducible with `node brand/social-2026/render.mjs` after `npm ci` in the repository. Keep the SVGs as masters; upload the PNGs to platforms. The rendering script uses `sharp` installed with the site's current dependency tree.
 
-No existing production-site assets were replaced. If adopting the mark on the website later, do that as a separate design change and check the effect on the masthead, favicon and Open Graph card at mobile and desktop sizes.
+The site's current masthead, favicon and Open Graph card use the approved purple helmet, not this retired concept.

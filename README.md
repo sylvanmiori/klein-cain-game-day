@@ -4,7 +4,7 @@ A football site with a program page, one report per game, live scores and season
 
 Start with [AGENTS.md](AGENTS.md) when handing the repository to an AI developer, then read the [project guide](docs/PROJECT-GUIDE.md) for architecture, accounts, sources, automation, recovery and open work. Its **Traps worth knowing** section records the non-obvious failures already solved.
 
-Social-account logos, avatars, headers and launch graphics are in [the Cain Game Day brand kit](brand/social-2026/README.md). They are separate from the production website's current masthead and favicon.
+The approved purple-helmet avatar is the site's visual identity. Its master file is `public/brand/cain-helmet-avatar-source.png`; `npm run brand:assets` regenerates the favicon set, Apple/Android touch icons, homepage helmet images and fallback social-share card. The earlier [social kit](brand/social-2026/README.md) is archived and should not be used as the current logo.
 
 ## Status
 
@@ -31,6 +31,7 @@ Node 24 is used in CI and recommended locally; the declared minimum is Node 22.1
 - `npm run photos` stores available Klein Cain roster portraits locally and maps them by player identity.
 - `npm run roster` refreshes the varsity roster from MaxPreps and keeps existing local portraits by name.
 - `npm run logos` stores every configured opponent logo locally and updates its edition.
+- `npm run brand:assets` regenerates all site identity assets from the approved helmet image.
 - `npm run validate` checks every edition against the schedule and the editorial rules.
 - `npm run sitemap` generates the XML sitemap with real lastmod timestamps.
 - `npm run docs:check` verifies documented paths and npm commands still exist.

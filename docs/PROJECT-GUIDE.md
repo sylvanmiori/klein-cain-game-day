@@ -49,7 +49,8 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `public/videos/` | local MP4 highlights and poster images; do not hotlink external streams |
 | `public/robots.txt` | crawler directives and sitemap declaration |
 | `public/sitemap.xml` | dynamic XML sitemap of all routes with priorities and lastmod dates |
-| `public/silver_cain_football_helmet_cutout.png` | optional cutout asset; path on `publication.heroHelmetCutout` |
+| `public/brand/cain-helmet-avatar-source.png` | approved 1254px purple-helmet master for the site identity; two stacked flags without a C or Cain script |
+| `scripts/build-brand-assets.mjs` | rebuilds favicon PNGs/ICO, touch icons, share card, and homepage helmet images from that master |
 | `scripts/generate-sitemap.mjs` | generates public/sitemap.xml before builds |
 | `scripts/lib/caption-helper.mjs` | roster resolution and quality validation for photo captions |
 | `scripts/lib/player-of-game.mjs` | deterministic Cain Impact v1 model for Player of the Game |
@@ -60,7 +61,9 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `cloudflare/worker.mjs` | routes, score API, one-minute cron |
 | `AGENTS.md` | short, mandatory handoff rules for an AI developer |
 | `scripts/check-docs.mjs` | build gate for stale documented paths and npm commands |
-| `brand/social-2026/` | independent Cain Game Day social identity: editable SVG masters, platform PNGs, generated stadium background, render script and usage guide; not yet applied to the website |
+| `brand/social-2026/` | archived, rejected GD social concept; do not use it for the current site or accounts |
+
+The approved purple helmet is now the visual mark on the masthead and Klein Cain matchup cards through `publication.schoolLogo` (`/favicon.png`). Its master is local and unchanged; resizing/compositing only is done by `npm run brand:assets`. The same command produces a square 48px PNG for Google Search, 16/32/96/192/512px PNGs, a multi-size `/favicon.ico`, 180px Apple touch icon, web-app manifest icon, the general `/og.png` share image, and both homepage helmet hero files. `lib/site-icons.ts` is the single HTML metadata definition for all pages. Google Search's icon is eligible after recrawl, not guaranteed immediately; keep `/favicon-48x48.png` stable and crawlable. The older silver helmet imagery contained an incorrect Texas-like/Cain-script decal and must not be reused as the public identity.
 
 Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore`, `stats` and `gameStats` (including `gameStats.playerOfGame`). Everything else is editorial and no script writes it. `recapNotes` is editorial input: scripts read it when composing or updating the recap but never fill it.
 

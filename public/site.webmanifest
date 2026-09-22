@@ -1,0 +1,13 @@
+{
+  "name": "Cain Game Day",
+  "short_name": "Cain Game Day",
+  "description": "Independent Klein Cain football coverage",
+  "start_url": "./",
+  "display": "browser",
+  "background_color": "#121016",
+  "theme_color": "#121016",
+  "icons": [
+    { "src": "favicon-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

@@ -1,5 +1,6 @@
 import publication from '../config/publication.json';
 import { type Edition, opponentOf } from '../lib/edition';
+import { resolveEditionImage } from '../lib/edition-metadata';
 
 const siteUrl = 'https://kleincain.gameday.report';
 
@@ -71,9 +72,7 @@ export function teamJsonLd() {
 export function gameJsonLd(edition: Edition) {
   const opponent = opponentOf(edition, publication.schoolName);
   const pageUrl = `${siteUrl}/games/week-${edition.week}`;
-  const imageUrl = edition.ogImage && edition.ogImage.length > 0
-    ? `${siteUrl}${edition.ogImage.startsWith('/') ? '' : '/'}${edition.ogImage}`
-    : `${siteUrl}/og.png`;
+  const imageUrl = resolveEditionImage(edition).url;
 
   const isFinal = Boolean(edition.final);
 

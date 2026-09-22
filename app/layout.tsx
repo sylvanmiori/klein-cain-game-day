@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { sitePath } from '../lib/site-path';
+import { siteIcons } from '../lib/site-icons';
 import './globals.css';
 
 export const viewport: Viewport = {
@@ -57,16 +58,8 @@ export const metadata: Metadata = {
     description: 'The independent coverage hub for Klein Cain Hurricanes high school football in Houston, TX (District 15-6A). 2026 varsity schedule, live scores, game recaps, stats, roster, and photography.',
     images: [`${siteUrl}/og.png`],
   },
-  icons: {
-    icon: [
-      { url: sitePath('/favicon.svg'), type: 'image/svg+xml' },
-      { url: sitePath('/favicon-192x192.png'), sizes: '192x192', type: 'image/png' },
-      { url: sitePath('/favicon-32x32.png'), sizes: '32x32', type: 'image/png' },
-      { url: sitePath('/favicon-16x16.png'), sizes: '16x16', type: 'image/png' },
-    ],
-    shortcut: sitePath('/favicon-32x32.png'),
-    apple: [{ url: sitePath('/apple-touch-icon.png'), sizes: '180x180', type: 'image/png' }],
-  },
+  icons: siteIcons,
+  manifest: sitePath('/site.webmanifest'),
 };
 
 export default function RootLayout({
