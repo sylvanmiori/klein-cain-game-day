@@ -40,6 +40,29 @@ function nextGameFact(edition: Edition): Fact | null {
   return { label: 'Next', value: `${next.opponent} · ${apDate(next.date)}` };
 }
 
+function FeatureBlock({ feature }: { feature: NonNullable<PreviewSection['feature']> }) {
+  return (
+    <section className="feature-block" id="feature">
+      <div className="feature-visual">
+        <img src={sitePath(feature.image)} alt={`${feature.name}, Klein Cain football`} loading="lazy" />
+      </div>
+      <div className="feature-body">
+        <p className="feature-kicker">{feature.kicker}</p>
+        <h2>{feature.heading}</h2>
+        <p className="feature-byline">{feature.name} · #{feature.number} · {feature.role}</p>
+        <p className="feature-intro">{feature.intro}</p>
+        {feature.qa.map((item) => (
+          <div key={item.question} className="feature-qa">
+            <p className="feature-question">{item.question}</p>
+            <p className="feature-answer">“{item.answer}”</p>
+          </div>
+        ))}
+        {feature.note && <p className="feature-note">{feature.note}</p>}
+      </div>
+    </section>
+  );
+}
+
 export function PreviewView({ edition, preview }: { edition: Edition; preview: PreviewSection }) {
   const opponent = opponentOf(edition, publication.schoolName);
   const matchup = coachingMatchup(opponent.name, opponent.mascot);
@@ -69,6 +92,8 @@ export function PreviewView({ edition, preview }: { edition: Edition; preview: P
       )}
 
       {matchup && <CoachingMatchupSection matchup={matchup} />}
+
+      {preview.feature && <FeatureBlock feature={preview.feature} />}
 
       {preview.players.length > 0 && (
         <section className="players" id="players">

@@ -78,6 +78,21 @@ export type PreviewSection = {
     }[];
   } | null;
   keys: { heading: string; items: { title: string; body: string }[] } | null;
+  /**
+   * Featured editorial block for a single player: a large portrait with a
+   * short Q&A. Rendered once per preview, directly after The Read.
+   */
+  feature?: {
+    kicker: string;
+    heading: string;
+    name: string;
+    number: string;
+    role: string;
+    image: string;
+    intro: string;
+    qa: { question: string; answer: string }[];
+    note: string;
+  } | null;
   gameInfo: { heading: string; facts: Fact[]; links: { label: string; href: string }[] } | null;
 };
 

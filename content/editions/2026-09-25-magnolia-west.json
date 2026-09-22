@@ -157,8 +157,8 @@
         "image": "/players/cooper-karns.jpg",
         "role": "WR · Senior",
         "tag": "Cain Game Day Q&A",
-        "rating": "#10 · in his own words",
-        "copy": "Karns answered two questions for Cain Game Day this week, and his message was pure confidence: don't get comfortable after the Tomball win, because this team has \"a lot more in the tank.\" On quarterback Jace Hanks, Karns praised his \"dawg mentality\" — \"a great teammate, leader, and elite athlete\" — and promised the Cain boys are about to show everyone why they should NEVER be counted out."
+        "rating": "#10 · featured interview above",
+        "copy": "Karns is this week's featured interview, and his message was pure confidence: don't get comfortable after the Tomball win, because this team has \"a lot more in the tank.\" He also delivered the line of the week on quarterback Jace Hanks — \"dawg mentality.\""
       },
       {
         "team": "MAGNOLIA WEST",
@@ -204,7 +204,7 @@
       "eliteProspects": []
     },
     "keys": {
-      "heading": "Three keys for Klein Cain",
+      "heading": "Four keys for Klein Cain",
       "items": [
         {
           "title": "Win early on the road",
@@ -223,6 +223,26 @@
           "body": "Cooper Karns named it as the week's key himself: coming off the 55–38 Tomball win, Cain has to \"play with confidence\" and keep climbing. \"We have a lot more in the tank,\" the senior wideout said in a message to Cain Game Day, \"and we're constantly getting better everyday.\""
         }
       ]
+    },
+    "feature": {
+      "kicker": "Cain Game Day Q&A",
+      "heading": "Cooper Karns: \"We have a lot more in the tank\"",
+      "name": "Cooper Karns",
+      "number": "10",
+      "role": "Wide receiver · Senior",
+      "image": "/players/cooper-karns.jpg",
+      "intro": "The senior wideout answered two questions for Cain Game Day this week — the key against Magnolia West, and what Jace Hanks has shown through three games. His answers, in his own words.",
+      "qa": [
+        {
+          "question": "What would you say is the key to success this week against Magnolia West?",
+          "answer": "I would say the key to success this week is to not get comfortable coming off a big win last week and play with confidence. We have a lot more in the tank and we're constantly getting better everyday."
+        },
+        {
+          "question": "What has impressed you about Jace Hanks through these first 3 games?",
+          "answer": "What's impressed me most about Jace is his dawg mentality, he's a great teammate, leader, and elite athlete. He stepped into the role with a lot of pressure coming off last year's disappointing season. I'm really proud of Jace and can't wait to show everyone why they should NEVER count the Cain boys out."
+        }
+      ],
+      "note": "Via direct message with Cain Game Day, September 22, 2026."
     },
     "gameInfo": {
       "heading": "Game information",
