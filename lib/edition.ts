@@ -52,11 +52,21 @@ export type Leader = {
   detail: string;
 };
 
+export type PullQuote = {
+  image: string;
+  imageAlt: string;
+  quote: string;
+  name: string;
+  detail: string;
+  note: string;
+  photoCredit: string;
+};
+
 export type PreviewSection = {
   playersHeading: string;
   players: EditionPlayer[];
   playersNote: string;
-  intro: { heading: string; body: string; facts: Fact[] } | null;
+  intro: { heading: string; body: string; facts: Fact[]; pullQuote?: PullQuote | null } | null;
   recruiting: { heading: string; rows: RecruitRow[]; note: string } | null;
   /**
    * Editorial record of the opponent-roster commitment check. When opponent
@@ -78,21 +88,6 @@ export type PreviewSection = {
     }[];
   } | null;
   keys: { heading: string; items: { title: string; body: string }[] } | null;
-  /**
-   * Featured editorial block for a single player: a large portrait with a
-   * short Q&A. Rendered once per preview, directly after The Read.
-   */
-  feature?: {
-    kicker: string;
-    heading: string;
-    name: string;
-    number: string;
-    role: string;
-    image: string;
-    intro: string;
-    qa: { question: string; answer: string }[];
-    note: string;
-  } | null;
   gameInfo: { heading: string; facts: Fact[]; links: { label: string; href: string }[] } | null;
 };
 
