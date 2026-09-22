@@ -9,6 +9,7 @@ Updated September 21, 2026. Written to be picked up cold: an AI developer should
 - Existing site: https://sylvanmiori.github.io/klein-cain-game-day/
 - Domain: `gameday.report`, purchased through Cloudflare September 5, 2026, confirmed by the owner.
 - Public school address: https://kleincain.gameday.report/. The parent domain redirects here. No other schools are configured.
+- Google Analytics 4 (added 2026-09-22): account "Klein Cain Gameday Report" (stevenlmiori@gmail.com), property "kleincain.gameday.report", measurement ID `G-KXFWBBSXFL`, wired into `app/layout.tsx` via `next/script`. The ID is a public identifier, not a secret.
 
 ## Current status
 
