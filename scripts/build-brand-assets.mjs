@@ -44,6 +44,15 @@ await writeFile(
   ico([16, 32, 48].map((size) => ({ size, data: faviconPngs.get(size) }))),
 );
 
+// Modern-browser vector icon: the approved helmet master embedded in an SVG
+// wrapper (there is no true vector source for the helmet). Google Search does
+// not use SVG favicons; the PNG/ICO assets above remain the Google-facing set.
+const svgIcon = await sharp(sourceImage).resize(128, 128).png().toBuffer();
+await writeFile(
+  path.join(publicDir, 'favicon.svg'),
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Klein Cain Gameday Report"><image href="data:image/png;base64,${svgIcon.toString('base64')}" x="0" y="0" width="128" height="128"/></svg>\n`,
+);
+
 async function backdrop(width, height) {
   return sharp(sourceImage)
     .resize(width, height, { fit: 'cover' })
