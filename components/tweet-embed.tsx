@@ -55,7 +55,27 @@ function TweetCard({ post }: { post: SocialPost }) {
         <span className="tweet-x" aria-hidden="true"><XGlyph /></span>
       </div>
       <p className="tweet-text">{post.text}</p>
-      {post.media && (
+      {post.media?.file ? (
+        <figure className="tweet-video">
+          <video
+            className="tweet-video-player"
+            poster={post.media.poster}
+            controls
+            playsInline
+            preload="metadata"
+          >
+            <source src={post.media.file} type="video/mp4" />
+            <track kind="captions" label="English" srcLang="en" />
+            Your browser does not support video playback.
+          </video>
+          <figcaption className="tweet-video-credit">
+            Video: {post.author} ·{' '}
+            <a href={post.url} target="_blank" rel="noreferrer">
+              View post on X
+            </a>
+          </figcaption>
+        </figure>
+      ) : post.media ? (
         <a
           className="tweet-media"
           href={post.url}
@@ -67,7 +87,7 @@ function TweetCard({ post }: { post: SocialPost }) {
           <span className="tweet-media-label">{post.media.label}</span>
           {post.media.duration && <span className="tweet-media-duration">{post.media.duration}</span>}
         </a>
-      )}
+      ) : null}
       <div className="tweet-foot">
         <a href={post.url} target="_blank" rel="noreferrer">
           View post on X

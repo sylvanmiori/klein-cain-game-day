@@ -100,7 +100,7 @@ export type SocialPost = {
   text: string;
   url: string;
   timestamp: string;
-  media?: { type: 'video' | 'photo'; duration?: string; label: string } | null;
+  media?: { type: 'video' | 'photo'; duration?: string; label: string; file?: string; poster?: string } | null;
 };
 
 export type FinalSection = {

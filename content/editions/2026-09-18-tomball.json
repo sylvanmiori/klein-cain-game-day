@@ -495,7 +495,9 @@
         "media": {
           "type": "video",
           "duration": "1:02",
-          "label": "Highlight video"
+          "label": "Highlight video",
+          "file": "/videos/2026-09-18-tomball/recap.mp4",
+          "poster": "/videos/2026-09-18-tomball/poster.jpg"
         }
       }
     ],
