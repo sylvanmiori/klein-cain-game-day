@@ -190,22 +190,25 @@ function GameStatistics({ stats }: { stats: GameStats }) {
 function PlayerOfGame({ stats }: { stats: GameStats }) {
   const player = stats.playerOfGame;
   return (
-    <section className="player-of-game" aria-labelledby="player-of-game-heading">
-      <div className="player-of-game-visual">
-        {player.image ? (
-          <img className="player-of-game-photo" src={sitePath(player.image)} alt={`${player.name}, Klein Cain football`} />
-        ) : (
-          <div className="player-of-game-number" aria-hidden="true">#{player.number}</div>
-        )}
-        {player.image && <span className="player-of-game-jersey" aria-hidden="true">#{player.number}</span>}
+    <div className="player-of-game" aria-labelledby="player-of-game-heading">
+      <div className="player-of-game-head">
+        <div className="player-of-game-visual">
+          {player.image ? (
+            <img className="player-of-game-photo" src={sitePath(player.image)} alt={`${player.name}, Klein Cain football`} />
+          ) : (
+            <div className="player-of-game-number" aria-hidden="true">#{player.number}</div>
+          )}
+          {player.image && <span className="player-of-game-jersey" aria-hidden="true">#{player.number}</span>}
+        </div>
+        <div className="player-of-game-meta">
+          <span>Cain Player of the Game</span>
+          <h3 id="player-of-game-heading">{player.name}</h3>
+          <strong>{player.headline}</strong>
+        </div>
       </div>
-      <div>
-        <span>Cain Player of the Game</span>
-        <h2 id="player-of-game-heading">{player.name}</h2>
-        <strong>{player.headline}</strong>
-        <p>{player.rationale}</p>
-      </div>
-    </section>
+      <p className="player-of-game-rationale">{player.rationale}</p>
+      {player.model && <small className="player-of-game-model">{player.model}</small>}
+    </div>
   );
 }
 
@@ -231,49 +234,48 @@ export function FinalView({
   matchup?: CoachingMatchup | null;
   gallery?: ReturnType<typeof galleryForSlug>;
 }) {
+  const hasSidebar = Boolean(final.quarters || gameStats?.playerOfGame);
+
   return (
     <>
-      {final.quarters ? (
-        <section className="week-recap" id="final">
-          <div>
-            <h2>{final.headline}</h2>
-            {final.byline && <p className="byline">{final.byline}</p>}
-            <RecapCopy body={final.body} />
-          </div>
-          <div className="quarter-box" aria-label="Quarter-by-quarter score">
-            <div>
-              <span>Team</span>
-              {final.quarters.labels.map((label) => (
-                <span key={label}>{label}</span>
-              ))}
-              <b>F</b>
-            </div>
-            {final.quarters.rows.map((row) => (
-              <div key={row.team}>
-                <strong>{row.team}</strong>
-                {row.scores.map((score, index) => (
-                  <span key={`${row.team}-${final.quarters!.labels[index]}`}>{score}</span>
-                ))}
-                <b>{row.total}</b>
-              </div>
-            ))}
-          </div>
-        </section>
-      ) : (
-        <section className="opening final-recap" id="final">
-          <div>
-            <h2>{final.headline}</h2>
-            {final.byline && <p className="byline">{final.byline}</p>}
-          </div>
+      <section className={`week-recap ${hasSidebar ? 'has-sidebar' : 'no-sidebar'}`} id="final">
+        <div className="recap-body-column">
+          <h2>{final.headline}</h2>
+          {final.byline && <p className="byline">{final.byline}</p>}
           <RecapCopy body={final.body} />
-        </section>
-      )}
+        </div>
+
+        {hasSidebar && (
+          <aside className="recap-sidebar" aria-label="Game highlights and player of the game">
+            {final.quarters && (
+              <div className="quarter-box" aria-label="Quarter-by-quarter score">
+                <div>
+                  <span>Team</span>
+                  {final.quarters.labels.map((label) => (
+                    <span key={label}>{label}</span>
+                  ))}
+                  <b>F</b>
+                </div>
+                {final.quarters.rows.map((row) => (
+                  <div key={row.team}>
+                    <strong>{row.team}</strong>
+                    {row.scores.map((score, index) => (
+                      <span key={`${row.team}-${final.quarters!.labels[index]}`}>{score}</span>
+                    ))}
+                    <b>{row.total}</b>
+                  </div>
+                ))}
+              </div>
+            )}
+            {gameStats?.playerOfGame && <PlayerOfGame stats={gameStats} />}
+          </aside>
+        )}
+      </section>
 
       <RecapPhotoStory gallery={gallery ?? null} />
 
       {final.video && <GameHighlightVideo video={final.video} />}
 
-      {gameStats && <PlayerOfGame stats={gameStats} />}
       {gameStats && <GameStatistics stats={gameStats} />}
 
       {final.leaders && !gameStats && (
