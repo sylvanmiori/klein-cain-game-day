@@ -6,6 +6,20 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const rosterPath = path.join(root, 'content', 'roster-2026.json');
 const USER_AGENT = 'kleincain.gameday.report (contact: SylvanMiori@gmail.com)';
 
+/**
+ * Manual corrections for fields MaxPreps leaves blank. Keyed by jersey number.
+ * Applied after the MaxPreps parse so a re-sync never wipes them.
+ * Every entry needs a verified source noted in the comment.
+ */
+const OVERRIDES = {
+  // #8: MaxPreps has no position or class. WR per game stats and photo
+  // captions; Jr. confirmed by Steven Miori 2026-09-23.
+  8: { position: 'WR', class: 'Jr.' },
+  // #13: MaxPreps has no position or class. Class of 2029 (freshman)
+  // confirmed by Steven Miori 2026-09-23. Position still unknown.
+  13: { class: 'Fr.' },
+};
+
 const normalize = (value) => String(value).toLowerCase().replace(/[^a-z0-9]/g, '');
 
 function nameKeys(name) {
@@ -111,7 +125,7 @@ async function main() {
     source: existing.source,
     sourceUrl: existing.sourceUrl,
     updated,
-    players,
+    players: players.map((player) => ({ ...player, ...(OVERRIDES[player.number] ?? {}) })),
   };
 
   await writeFile(rosterPath, `${JSON.stringify(roster, null, 2)}\n`);
