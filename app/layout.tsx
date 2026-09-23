@@ -15,8 +15,14 @@ const siteUrl = 'https://kleincain.gameday.report';
 // Google Analytics 4 measurement ID (public identifier; property "kleincain.gameday.report").
 const gaMeasurementId = 'G-KXFWBBSXFL';
 
+// Google Search Console site verification (URL-prefix property https://kleincain.gameday.report/).
+const googleSiteVerification = 'Fbe9AwU-P8fFiqVowpWDMmakJH14vp21VGShb5gh2Dc';
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  verification: {
+    google: googleSiteVerification,
+  },
   title: {
     default: 'Klein Cain Football | 2026 Schedule, Scores, Roster & Updates',
     template: '%s | Klein Cain Football',
