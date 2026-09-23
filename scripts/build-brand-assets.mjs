@@ -79,11 +79,12 @@ await writeFile(path.join(publicDir, 'hero-helmet.jpg'), hero);
 
 const ogWidth = 1200;
 const ogHeight = 630;
-const ogText = Buffer.from(`<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg"><style>text{font-family:Arial,Helvetica,sans-serif;fill:#fff}</style><text x="58" y="298" font-size="52" font-weight="800">KLEIN CAIN</text><text x="60" y="348" font-size="26" font-weight="600" fill="#d5c8e9">GAME DAY REPORT</text></svg>`);
+// Share card: the 16:9 helmet graphic with no text. (The "KLEIN CAIN / GAME
+// DAY REPORT" word overlay was removed 2026-09-22 per editorial direction:
+// link previews already carry the title, so words on the image read amateur.)
 await sharp(await backdrop(ogWidth, ogHeight))
   .composite([
     { input: await fadedSubject(ogHeight, 235), left: ogWidth - ogHeight, top: 0 },
-    { input: ogText, left: 0, top: 0 },
   ])
   .png()
   .toFile(path.join(publicDir, 'og.png'));
