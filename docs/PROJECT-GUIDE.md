@@ -1,6 +1,6 @@
 # Game Day Report project guide
 
-Updated September 21, 2026. Written to be picked up cold: an AI developer should read repository-root `AGENTS.md`, then **Current status**, **Where things live** and **Traps worth knowing** here. Keep this file current when accounts, hosting, automation, sources, commands or data ownership change. Never store passwords, tokens or payment details here.
+Updated September 23, 2026. Written to be picked up cold: an AI developer should read repository-root `AGENTS.md`, then **Current status**, **Where things live** and **Traps worth knowing** here. Keep this file current when accounts, hosting, automation, sources, commands or data ownership change. Never store passwords, tokens or payment details here.
 
 ## Ownership and addresses
 
@@ -49,7 +49,7 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `public/photos/` | local game photos; do not hotlink SmugMug |
 | `public/videos/` | local MP4 highlights and poster images; do not hotlink external streams |
 | `public/robots.txt` | crawler directives and sitemap declaration |
-| `public/sitemap.xml` | dynamic XML sitemap of all routes with priorities and lastmod dates |
+| `public/sitemap.xml` | generated XML sitemap of all routes with Git-backed last significant change dates when available |
 | `public/brand/cain-helmet-avatar-source.png` | approved 1254px purple-helmet master for the site identity; two stacked flags without a C or Cain script |
 | `public/launch/` | direct-link launch graphics in wide (1920×1080), square (1080×1080) and vertical (1080×1920) formats; not placed on any page |
 | `scripts/build-brand-assets.mjs` | rebuilds favicon PNGs/ICO, touch icons, share card, and homepage helmet images from that master |
@@ -77,6 +77,14 @@ The favicon is the approved purple helmet, and only the purple helmet. Source of
 - `lib/site-icons.ts` is the single HTML metadata definition for all pages: SVG icon for modern browsers, the exact-48px PNG declaration, 16/32/192 PNGs, `favicon.ico` shortcut, and the Apple touch icon.
 - Google Search requirements, all satisfied: an exact multiple-of-48px PNG explicitly declared via `link rel="icon"` (`/favicon-48x48.png`), a physical multi-resolution `/favicon.ico` at the domain root, and zero redirects on favicon fetches (Google-Favicon refuses to follow redirects). Google does not use SVG favicons; the PNG/ICO assets are the Google-facing set.
 - `cloudflare/worker.mjs` serves `/favicon*`, `/apple-touch-icon.png`, `/site.webmanifest`, and `/robots.txt` on `gameday.report` directly with HTTP 200 (no redirect), and 301-redirects everything else on `gameday.report` permanently to `kleincain.gameday.report`. Never change that redirect back to a 302: the temporary redirect caused Google to index `gameday.report` instead of `kleincain.gameday.report`.
+
+### Search visibility
+
+`kleincain.gameday.report` is the canonical school address. The homepage, photos and ten game reports are listed in `public/sitemap.xml` and linked from the site; `public/robots.txt` declares the sitemap. `scripts/generate-sitemap.mjs` uses the most recent relevant Git commit for each page's `lastmod` and omits it when Git provenance is unavailable. A build alone does not claim every page changed. Google ignores sitemap `priority` and `changefreq`, so those tags are not emitted.
+
+The homepage `WebSite` structured data names **Cain Game Day**, matching the masthead and Open Graph site name. Its publisher is the independent **Game Day Report** organization. `SportsTeam` describes Klein Cain and points to the official athletics and MaxPreps team pages; the publication's X account is not presented as the school's account. Game report `NewsArticle` structured data omits publication and modification dates until the edition model records verified editorial timestamps. The former markup used the *game date* at midnight, including future games, which was not a publication date.
+
+Google Search Console ownership and sitemap submission have not been confirmed. The owner should verify the school subdomain and submit `https://kleincain.gameday.report/sitemap.xml`, then measure impressions, position and clicks for “Klein Cain football,” “Klein Cain High School football,” and “Klein Cain varsity football” by page and query. A `site:` search establishes discovery, not ranking. Search position varies by searcher and cannot be guaranteed. Links from the official athletics site, booster club, photographers and credible local coverage would strengthen discovery, but seek permission before asking anyone to link.
 
 Machine-owned fields on an edition are `home.record`, `away.record`, `home.rank`, `away.rank`, `rankings`, `prediction`, `rating`, `weather`, `finalScore`, `stats` and `gameStats` (including `gameStats.playerOfGame`). Everything else is editorial and no script writes it. `recapNotes` is editorial input: scripts read it when composing or updating the recap but never fill it.
 
@@ -293,7 +301,7 @@ The house rules stand regardless of who writes the copy: never invent player sta
 ## Open items
 
 - Week 3 (Tomball, September 18) was played and Klein Cain won 55–38 on homecoming night. The report at `/games/week-3` features an authored final recap, game statistics, Player of the Game (Maxwell 'Max' Hendricks), and a 38-frame photo gallery.
-- Week 4 (Magnolia West, September 25) was fully audited September 20. Klein Cain's capsules cover its three completed games; Magnolia West's cover all four. The opponent recruiting audit was completed, with commit status and prospect distinctions verified.
+- Week 4 (Magnolia West, September 25) player statistics were rechecked against both MaxPreps team pages September 23; the published values and source update times had not changed. Klein Cain's capsules cover its three completed games; Magnolia West's cover all four. The opponent recruiting audit was completed September 20, with commit status and prospect distinctions verified.
 - Weeks 5 to 10 are generated starter pages: real facts, no player capsules or keys. They stay that way until the editor writes them.
 - The opponent's season leaders could sit alongside ours; `fetchStatLeaders` works against any MaxPreps team stats URL.
 - `.github/workflows/deploy.yml` ignores `content/**`, so a facts-only commit refreshes Cloudflare but not the GitHub Pages fallback.

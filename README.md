@@ -35,10 +35,14 @@ Node 24 is used in CI and recommended locally; the declared minimum is Node 22.1
 - `npm run logos` stores every configured opponent logo locally and updates its edition.
 - `npm run brand:assets` regenerates all site identity assets from the approved helmet image.
 - `npm run validate` checks every edition against the schedule and the editorial rules.
-- `npm run sitemap` generates the XML sitemap with real lastmod timestamps.
+- `npm run sitemap` generates the XML sitemap with last significant change dates from Git history; it omits dates when provenance is unavailable.
 - `npm run docs:check` verifies documented paths and npm commands still exist.
 - `npm run test:score` tests the Worker, score parser, rating, recap, promotion rule and stats parser.
 - `npm run build:cloudflare` validates, builds root-relative assets, then checks the built pages for stale opponents.
 - `npm run deploy:cloudflare` deploys the site and score Worker.
 
 `node scripts/refresh-facts.mjs --dry-run` and `node scripts/promote-edition.mjs --dry-run` report without writing. `PROMOTE_TODAY=2026-09-18 npm run promote` rehearses a given day.
+
+## Search visibility
+
+The school subdomain is the canonical URL. The homepage and ten game reports are crawlable, linked internally and listed in `public/sitemap.xml`; the sitemap is declared in `public/robots.txt`. `components/seo-schema.tsx` identifies Cain Game Day as the independent publication and Klein Cain as the team it covers. The sitemap's `lastmod` reflects a relevant Git commit rather than the time of each build. Google Search Console ownership and sitemap submission have not been confirmed; verify those in the owner's Google account before drawing conclusions from search rankings. Organic search performance should be measured there by query and page, not inferred from a single personalized results page.

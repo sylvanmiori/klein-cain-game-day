@@ -1,14 +1,26 @@
-// Generates public/sitemap.xml for search engines.
-// Runs automatically before builds to ensure all pages and game editions
-// are indexed with accurate canonical URLs, priorities, and change frequencies.
+// Generates public/sitemap.xml for search engines. A build by itself is not a
+// content update, so lastmod comes from Git history and is omitted if unknown.
 
-import { readdir, readFile, stat, writeFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.cwd();
 const editionsDir = path.join(root, 'content/editions');
 const publicDir = path.join(root, 'public');
 const domain = 'https://kleincain.gameday.report';
+
+function lastmod(paths) {
+  try {
+    const date = execFileSync('git', ['log', '-1', '--format=%cs', '--', ...paths], {
+      cwd: root,
+      encoding: 'utf8',
+    }).trim();
+    return /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : null;
+  } catch {
+    return null;
+  }
+}
 
 const editionFiles = (await readdir(editionsDir))
   .filter((name) => name.endsWith('.json'))
@@ -18,67 +30,52 @@ const editions = await Promise.all(
   editionFiles.map(async (file) => {
     const fullPath = path.join(editionsDir, file);
     const content = JSON.parse(await readFile(fullPath, 'utf8'));
-    const fileStat = await stat(fullPath);
     return {
       file,
       edition: content,
-      mtime: fileStat.mtime.toISOString().split('T')[0],
     };
   })
 );
 
-// Find the latest final edition and the current edition
-let latestFinalWeek = 0;
-let currentWeek = 0;
-for (const { edition } of editions) {
-  if (edition.final && edition.week > latestFinalWeek) {
-    latestFinalWeek = edition.week;
-  }
-  if (edition.current) {
-    currentWeek = edition.week;
-  }
-}
-
-const today = new Date().toISOString().split('T')[0];
-
 const urls = [
   {
     loc: `${domain}/`,
-    lastmod: today,
-    changefreq: 'daily',
-    priority: '1.0',
+    lastmod: lastmod([
+      'app/page.tsx', 'app/layout.tsx', 'components/team-page.tsx',
+      'components/program-home-spotlight.tsx', 'components/seo-schema.tsx',
+      'content/editions', 'content/season-data.json', 'content/galleries',
+      'config/season-2026.json', 'public/hero-next-game.jpg',
+    ]),
   },
   {
     loc: `${domain}/photos`,
-    lastmod: today,
-    changefreq: 'weekly',
-    priority: '0.8',
+    lastmod: lastmod([
+      'app/photos/page.tsx', 'components/game-photos.tsx',
+      'components/seo-schema.tsx', 'content/galleries', 'public/photos',
+    ]),
   },
 ];
 
-for (const { edition, mtime } of editions) {
-  const isHighPriority = edition.week === currentWeek || edition.week === latestFinalWeek;
-  const isPlayed = Boolean(edition.final);
-  
+for (const { edition, file } of editions) {
   urls.push({
     loc: `${domain}/games/week-${edition.week}`,
-    lastmod: mtime || edition.date,
-    changefreq: isHighPriority ? 'daily' : isPlayed ? 'weekly' : 'monthly',
-    priority: isHighPriority ? '0.9' : isPlayed ? '0.7' : '0.6',
+    lastmod: lastmod([
+      `content/editions/${file}`,
+      `content/galleries/${edition.slug}.json`,
+      'components/edition-page.tsx', 'components/seo-schema.tsx',
+    ]),
   });
 }
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls
-  .map(
-    (u) => `  <url>
-    <loc>${u.loc}</loc>
-    <lastmod>${u.lastmod}</lastmod>
-    <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
-  </url>`
-  )
+  .map((u) => [
+    '  <url>',
+    `    <loc>${u.loc}</loc>`,
+    ...(u.lastmod ? [`    <lastmod>${u.lastmod}</lastmod>`] : []),
+    '  </url>',
+  ].join('\n'))
   .join('\n')}
 </urlset>
 `;
