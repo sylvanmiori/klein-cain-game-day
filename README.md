@@ -6,6 +6,8 @@ Start with [AGENTS.md](AGENTS.md) when handing the repository to an AI developer
 
 The approved purple-helmet avatar is the site's visual identity. Its master file is `public/brand/cain-helmet-avatar-source.png`; `npm run brand:assets` regenerates the favicon set, Apple/Android touch icons, homepage helmet images and fallback social-share card. The earlier [social kit](brand/social-2026/README.md) is archived and should not be used as the current logo.
 
+Standalone launch graphics are available as public files at `/launch/gameday-report-wide-1920x1080.png`, `/launch/gameday-report-square-1080x1080.png` and `/launch/gameday-report-vertical-1080x1920.png`. They are available by direct URL but are not displayed in site pages. The device screens are illustrative mockups showing the Week 4 matchup, so review their time-specific details before sharing later in the season.
+
 ## Status
 
 Live at https://kleincain.gameday.report/. https://gameday.report/ redirects there while Klein Cain is the only school. GitHub Pages remains a migration fallback.

@@ -51,6 +51,7 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `public/robots.txt` | crawler directives and sitemap declaration |
 | `public/sitemap.xml` | dynamic XML sitemap of all routes with priorities and lastmod dates |
 | `public/brand/cain-helmet-avatar-source.png` | approved 1254px purple-helmet master for the site identity; two stacked flags without a C or Cain script |
+| `public/launch/` | direct-link launch graphics in wide (1920×1080), square (1080×1080) and vertical (1080×1920) formats; not placed on any page |
 | `scripts/build-brand-assets.mjs` | rebuilds favicon PNGs/ICO, touch icons, share card, and homepage helmet images from that master |
 | `scripts/generate-sitemap.mjs` | generates public/sitemap.xml before builds |
 | `scripts/lib/caption-helper.mjs` | roster resolution and quality validation for photo captions |
@@ -65,6 +66,8 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `brand/social-2026/` | archived, rejected GD social concept; do not use it for the current site or accounts |
 
 The approved purple helmet is now the visual mark on the masthead and Klein Cain matchup cards through `publication.schoolLogo` (`/favicon.png`). Its master is local and unchanged; resizing/compositing only is done by `npm run brand:assets`. The same command produces a square 48px PNG for Google Search, 16/32/96/192/512px PNGs, a multi-size `/favicon.ico`, 180px Apple touch icon, web-app manifest icon, the general `/og.png` share image, and both homepage helmet hero files. `lib/site-icons.ts` is the single HTML metadata definition for all pages. Google Search's icon is eligible after recrawl, not guaranteed immediately; keep `/favicon-48x48.png` stable and crawlable. The older silver helmet imagery contained an incorrect Texas-like/Cain-script decal and must not be reused as the public identity.
+
+The `/launch/` graphics are separate social assets. They are image-generated mockups using the approved helmet and screenshots as references. The small device-screen text is illustrative and the visible Week 4 matchup is time-specific. These files are intentionally unlinked from site navigation and pages; share their direct URLs or download them for social posts.
 
 ### Favicon contract
 
