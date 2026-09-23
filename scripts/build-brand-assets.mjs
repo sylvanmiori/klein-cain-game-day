@@ -79,13 +79,10 @@ await writeFile(path.join(publicDir, 'hero-helmet.jpg'), hero);
 
 const ogWidth = 1200;
 const ogHeight = 630;
-// Share card: the 16:9 helmet graphic with no text. (The "KLEIN CAIN / GAME
-// DAY REPORT" word overlay was removed 2026-09-22 per editorial direction:
-// link previews already carry the title, so words on the image read amateur.)
-await sharp(await backdrop(ogWidth, ogHeight))
-  .composite([
-    { input: await fadedSubject(ogHeight, 235), left: ogWidth - ogHeight, top: 0 },
-  ])
+// Share card: Steven's device-mockup artwork (2026-09-22). Resized to the
+// 16:9 share size; the generated helmet-graphic version is retired.
+await sharp(path.join(publicDir, 'brand', 'og-share-source.jpg'))
+  .resize(ogWidth, ogHeight, { fit: 'cover' })
   .png()
   .toFile(path.join(publicDir, 'og.png'));
 
