@@ -16,14 +16,14 @@
     "mascot": "Mustangs",
     "logo": "/magnolia-west-logo.png",
     "record": "2–2",
-    "rank": 196
+    "rank": 194
   },
   "away": {
     "name": "Klein Cain",
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
     "record": "3–0",
-    "rank": 83
+    "rank": 51
   },
   "pageTitle": "2026 Week 4 Preview: Klein Cain at Magnolia West",
   "metaTitle": "Week 4 Preview: Klein Cain at Magnolia West | Cain Game Day",
@@ -34,26 +34,26 @@
     "margin": 22,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-22T15:25:04.103Z"
+    "asOf": "2026-09-23T12:45:53.914Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
-    "sourceUrl": "https://www.texasfootball.com/article/2026/09/15/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-4",
-    "asOf": "2026-09-22T15:25:03.698Z"
+    "sourceUrl": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5",
+    "asOf": "2026-09-23T12:45:53.501Z"
   },
   "stats": null,
   "finalScore": null,
   "rating": null,
   "weather": {
-    "tempF": 87,
+    "tempF": 86,
     "condition": "Partly Cloudy",
     "precipPct": 0,
-    "humidityPct": 46,
+    "humidityPct": 50,
     "wind": "5 mph E",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-09-22T15:25:04.676Z"
+    "asOf": "2026-09-23T12:45:54.421Z"
   },
   "scheduledFacts": [
     {
@@ -90,7 +90,7 @@
     },
     "intro": {
       "heading": "The read",
-      "body": "Klein Cain rides a **55–38 homecoming win** into its first road district game of 2026 under head coach James Clancy.\n\nMagnolia West is **0–2 in District 15-6A** after a 55–7 loss to Magnolia and a 43–42 heartbreaker at Klein Forest, and Ben McGehee’s Mustangs are searching for their first league win at home.\n\nCain is 3–0 and averaging **47.3 points**; Dave Campbell’s latest computer rankings place Cain **No. 83** and Magnolia West No. 196, with the model favoring Cain **by 22**, the widest margin on Cain’s schedule so far.\n\nSenior wideout Cooper Karns gave Cain Game Day the locker-room read this week: the key against Magnolia West is \"to not get comfortable coming off a big win last week and play with confidence.\" His take on where this team stands: **\"we have a lot more in the tank\"** and the Hurricanes are \"constantly getting better everyday.\"",
+      "body": "Klein Cain rides a **55–38 homecoming win** into its first road district game of 2026 under head coach James Clancy.\n\nMagnolia West is **0–2 in District 15-6A** after a 55–7 loss to Magnolia and a 43–42 heartbreaker at Klein Forest, and Ben McGehee’s Mustangs are searching for their first league win at home.\n\nCain is 3–0 and averaging **47.3 points**; Dave Campbell’s new computer rankings place Cain **No. 51**, up 32 spots after the Tomball win, and Magnolia West No. 194, with the model favoring Cain **by 22**, the widest margin on Cain’s schedule so far.\n\nVYPE named Klein Cain its **Whataburger Team of the Week**, calling the 55–38 Tomball win “about as big a statement as Klein Cain could make.”\n\nSenior wideout Cooper Karns gave Cain Game Day the locker-room read this week: the key against Magnolia West is \"to not get comfortable coming off a big win last week and play with confidence.\" His take on where this team stands: **\"we have a lot more in the tank\"** and the Hurricanes are \"constantly getting better everyday.\"",
       "pullQuote": {
         "image": "/photos/2026-08-27-humble/cooper-karns-touchdown.jpg",
         "imageAlt": "Cooper Karns catches a pass against Humble",
@@ -218,7 +218,7 @@
       "items": [
         {
           "title": "Win early on the road",
-          "body": "Magnolia West is desperate for its first district win and will feed Gage Jordan until Cain proves it can tackle in space. An early stop keeps this from becoming the kind of shootout the Mustangs played at Klein Forest."
+          "body": "Magnolia West is desperate for its first district win and will feed Gage Jordan until Cain proves it can tackle in space, while linebacker Peyton Bjorgaard (13 tackles, two forced fumbles last week) hunts the ball. An early stop keeps this from becoming the kind of shootout the Mustangs played at Klein Forest."
         },
         {
           "title": "Finish drives",
@@ -248,6 +248,10 @@
         {
           "label": "District",
           "value": "15-6A · Cain’s first road league game"
+        },
+        {
+          "label": "Atmosphere",
+          "value": "Magnolia West homecoming night · expect a big crowd at Mustang Stadium"
         },
         {
           "label": "Recent matchups",
@@ -295,6 +299,14 @@
     {
       "label": "Dave Campbell’s Texas Football — Magnolia West preview",
       "href": "https://texashsfootball.com/magnolia-west-mustangs-2026-season-preview/"
+    },
+    {
+      "label": "VYPE — Whataburger Team of the Week: Klein Cain stuns Tomball",
+      "href": "https://www.vype.com/Texas/Houston/whataburger-team-of-the-week-klein-cain-stuns-tomball-in-a-district-showdown"
+    },
+    {
+      "label": "SportCast Media — Week 5 preview capsule: Klein Cain at Magnolia West",
+      "href": "https://sportcastmedia.com/week-5-football-preview-capsule-klein-cain-at-magnolia-west/"
     }
   ],
   "footerNote": "Independent fan publication · Player statistics and recruiting information rechecked Sept. 20.",
