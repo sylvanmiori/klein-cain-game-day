@@ -21,6 +21,7 @@ import {
   type FinalSection,
   type GameStats,
   type PreviewSection,
+  type PullQuote,
   disclaimerLine,
   apDate,
   editionPath,
@@ -51,18 +52,20 @@ export function PreviewView({ edition, preview }: { edition: Edition; preview: P
           <div>
             <h2>{preview.intro.heading}</h2>
             <EditorialCopy body={preview.intro.body} />
-            {preview.intro.pullQuote && (
-              <figure className="pull-quote">
-                <img src={sitePath(preview.intro.pullQuote.image)} alt={preview.intro.pullQuote.imageAlt} loading="lazy" style={{ objectPosition: preview.intro.pullQuote.imagePosition ?? 'center' }} />
+            {[preview.intro.pullQuote, ...(preview.intro.pullQuotes ?? [])]
+              .filter((q): q is PullQuote => !!q)
+              .map((pq, i) => (
+              <figure className="pull-quote" key={`${pq.name}-${i}`}>
+                <img src={sitePath(pq.image)} alt={pq.imageAlt} loading="lazy" style={{ objectPosition: pq.imagePosition ?? 'center' }} />
                 <blockquote>
-                  <p>“{preview.intro.pullQuote.quote}”</p>
+                  <p>“{pq.quote}”</p>
                 </blockquote>
                 <figcaption>
-                  <span className="pq-name">{preview.intro.pullQuote.name} · {preview.intro.pullQuote.detail}</span>
-                  <span className="pq-note">{preview.intro.pullQuote.note} · Photo: {preview.intro.pullQuote.photoCredit}</span>
+                  <span className="pq-name">{pq.name} · {pq.detail}</span>
+                  <span className="pq-note">{pq.note} · Photo: {pq.photoCredit}</span>
                 </figcaption>
               </figure>
-            )}
+            ))}
           </div>
           {preview.intro.facts.length > 0 && (
           <dl>

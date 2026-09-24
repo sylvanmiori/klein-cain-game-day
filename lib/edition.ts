@@ -68,7 +68,7 @@ export type PreviewSection = {
   playersHeading: string;
   players: EditionPlayer[];
   playersNote: string;
-  intro: { heading: string; body: string; facts: Fact[]; pullQuote?: PullQuote | null } | null;
+  intro: { heading: string; body: string; facts: Fact[]; pullQuote?: PullQuote | null; pullQuotes?: PullQuote[] } | null;
   recruiting: { heading: string; rows: RecruitRow[]; note: string } | null;
   /**
    * Editorial record of the opponent-roster commitment check. When opponent
