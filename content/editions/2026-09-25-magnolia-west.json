@@ -34,13 +34,13 @@
     "margin": 22,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-25T02:55:22.123Z"
+    "asOf": "2026-09-24T08:01:59.736Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5",
-    "asOf": "2026-09-25T02:55:21.794Z"
+    "asOf": "2026-09-24T08:01:59.449Z"
   },
   "stats": null,
   "finalScore": null,
@@ -49,11 +49,11 @@
     "tempF": 85,
     "condition": "Partly Cloudy",
     "precipPct": 0,
-    "humidityPct": 45,
+    "humidityPct": 50,
     "wind": "5 mph E",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-09-25T02:55:22.657Z"
+    "asOf": "2026-09-24T08:02:00.449Z"
   },
   "scheduledFacts": [
     {
@@ -276,6 +276,14 @@
         {
           "label": "Conditions",
           "value": "Partly cloudy · 85° · 5 mph east wind"
+        },
+        {
+          "label": "How to watch",
+          "value": "Texan Live streams the game live from Mustang Stadium"
+        },
+        {
+          "label": "Cain captains",
+          "value": "Tyson Freeman (17, WR), Clayton Rightmer (63, OL), Sage DesAutels (4, K), AJ Carroll (11, DB)"
         }
       ],
       "links": [
@@ -290,6 +298,10 @@
         {
           "label": "MaxPreps — Magnolia West statistics",
           "href": "https://www.maxpreps.com/tx/magnolia/magnolia-west-mustangs/football/stats/"
+        },
+        {
+          "label": "Texan Live — Klein Cain vs Magnolia West (tonight)",
+          "href": "https://www.texanlive.com/video/6aaef16472070f3ea58863e4"
         }
       ]
     }
@@ -319,6 +331,14 @@
     {
       "label": "SportCast Media — Week 5 preview capsule: Klein Cain at Magnolia West",
       "href": "https://sportcastmedia.com/week-5-football-preview-capsule-klein-cain-at-magnolia-west/"
+    },
+    {
+      "label": "Instagram — @kleincainfb: Week 5 captains vs Magnolia West (Sep 24, 2026)",
+      "href": "https://www.instagram.com/p/Ddr9JJvnNY7/"
+    },
+    {
+      "label": "Texan Live — Klein Cain vs Magnolia West, live from Mustang Stadium",
+      "href": "https://www.texanlive.com/video/6aaef16472070f3ea58863e4"
     }
   ],
   "footerNote": "Independent fan publication · Player statistics and recruiting information rechecked Sept. 20.",
