@@ -200,6 +200,28 @@ function boxscorePrompt(rosterNames, imageCount) {
     + 'Rules: every stat is an integer except ip, which is baseball-decimal innings pitched (5.2 = 5 and 2/3 innings). Use null for any game field you cannot read; use empty arrays when a whole section is missing from the screenshots.';
 }
 
+
+/** True when Workers AI rejected the Meta/Llama model until the community-license prompt 'agree' is submitted. */
+function isLlamaAgreeRequired(err) {
+  const msg = err instanceof Error ? err.message : String(err ?? '');
+  return /5016/.test(msg) || /submit the prompt ['"]agree['"]/i.test(msg);
+}
+
+/**
+ * Run the box-score vision model. If Meta's community-license gate (error 5016)
+ * requires the one-time prompt 'agree', submit it once and retry the original
+ * call once. Never loops forever — one agree + one retry max.
+ */
+async function runBoxscoreVision(env, inputs) {
+  try {
+    return await env.AI.run(BOXSCORE_VISION_MODEL, inputs);
+  } catch (err) {
+    if (!isLlamaAgreeRequired(err)) throw err;
+    await env.AI.run(BOXSCORE_VISION_MODEL, { prompt: 'agree' });
+    return await env.AI.run(BOXSCORE_VISION_MODEL, inputs);
+  }
+}
+
 /** ArrayBuffer -> base64 without blowing the call stack on large images. */
 function arrayBufferToBase64(buffer) {
   const bytes = new Uint8Array(buffer);
@@ -611,7 +633,7 @@ const worker = {
       }
       let parsed;
       try {
-        const aiOut = await env.AI.run(BOXSCORE_VISION_MODEL, {
+        const aiOut = await runBoxscoreVision(env, {
           messages: [{ role: 'user', content: parts }],
         });
         const text = typeof aiOut === 'string' ? aiOut : aiOut?.response;
