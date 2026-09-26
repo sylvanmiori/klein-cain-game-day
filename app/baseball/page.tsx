@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     absolute: '4:13 Baseball | Game Day Report',
   },
   description:
-    '4:13 Baseball 15U travel ball from Spring, TX (2026-2027 season) — this weekend\'s tournament, results, roster, and season stats.',
+    '4:13 Baseball 15U travel ball from Spring, TX (2026-2027 season) — this weekend\'s tournament, results, roster, and box-score stats.',
 };
 
 const PG_URL = 'https://www.perfectgame.org/PGBA/Team/default.aspx?orgid=69753&orgteamid=297202&Year=2027';
@@ -48,23 +48,23 @@ export default async function BaseballHome() {
   const fallbackRecord = schedule ? getSeasonRecord(schedule) : null;
 
   return (
-    <div className="flex flex-col gap-5">
-      {/* Hero */}
+    <div className="flex flex-col gap-4 sm:gap-5">
+      {/* Hero — one surface, no nested cards */}
       <section className="min-w-0 overflow-hidden rounded-2xl bg-[#12324e] text-white">
-        <div className="flex items-center gap-4 p-6">
+        <div className="flex items-center gap-3 p-4 sm:gap-4 sm:p-6">
           <img
             src="/brand/baseball/413-shield-192.png"
             alt="4:13 Baseball shield"
-            className="h-20 w-20 min-w-0 shrink-0"
+            className="h-16 w-16 min-w-0 shrink-0 sm:h-20 sm:w-20"
           />
-          <div>
-            <h1 className="text-3xl font-black tracking-tight">4:13 Baseball</h1>
-            <p className="mt-1 text-[12px] font-bold uppercase tracking-[0.18em] text-[#7BAFD4]">
+          <div className="min-w-0">
+            <h1 className="text-2xl font-black tracking-tight sm:text-3xl">4:13 Baseball</h1>
+            <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#7BAFD4] sm:text-[12px] sm:tracking-[0.18em]">
               15U &middot; Spring, TX &middot; 2026&ndash;2027
             </p>
           </div>
         </div>
-        <div className="border-t border-white/10 px-6 py-4">
+        <div className="border-t border-white/10 px-4 py-3 sm:px-6 sm:py-4">
           <p className="text-sm leading-relaxed text-[#c8d8e8]">
             Tournament coverage for the 15U travel ball club out of Spring, Texas — schedules, results,
             roster, and box-score stats, all season long.
@@ -72,35 +72,32 @@ export default async function BaseballHome() {
         </div>
       </section>
 
-      {/* This Weekend */}
+      {/* This Weekend — single card; hairline rows only, no nested boxes */}
       <section aria-label="This weekend" className="min-w-0 overflow-hidden rounded-2xl border border-[#dde7f0] bg-white">
-        <div className="p-5 pb-4">
+        <div className="px-4 pt-4 sm:px-5 sm:pt-5">
           <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">This Weekend</p>
           {!schedule || !window || !window.tournament ? (
-            <p className="mt-3 text-sm text-[#6e6e73]">Schedule loading &mdash; tournament details coming soon.</p>
+            <p className="mt-3 pb-4 text-sm text-[#6e6e73]">Schedule loading &mdash; tournament details coming soon.</p>
           ) : (
             <div className="mt-2">
-              <h2 className="text-xl font-extrabold tracking-tight text-[#12324e] sm:text-2xl">
+              <h2 className="text-lg font-extrabold tracking-tight text-[#12324e] sm:text-2xl">
                 {window.tournament.name}
               </h2>
 
-              <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:gap-y-2">
+              <div className="mt-2.5 flex flex-col gap-1.5 text-sm text-[#6e6e73] sm:mt-3 sm:flex-row sm:flex-wrap sm:gap-x-5 sm:gap-y-1.5">
                 {(window.tournament.dates || window.tournament.startDate) ? (
-                  <p className="flex items-start gap-2 text-sm text-[#6e6e73]">
-                    <CalendarDays className="mt-0.5 h-4 w-4 shrink-0 text-[#7BAFD4]" aria-hidden />
+                  <p className="flex items-center gap-2">
+                    <CalendarDays className="h-4 w-4 shrink-0 text-[#7BAFD4]" aria-hidden />
                     <span>{weekendDateLabel(window.tournament.dates, window.tournament.startDate, window.tournament.endDate)}</span>
                   </p>
                 ) : null}
                 {(window.tournament.venue || window.tournament.location) && (
-                  <p className="flex items-start gap-2 text-sm text-[#6e6e73]">
+                  <p className="flex items-start gap-2">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#7BAFD4]" aria-hidden />
-                    <span>
+                    <span className="min-w-0 leading-snug">
                       {window.tournament.venue || window.tournament.location}
                       {window.tournament.venue && window.tournament.location ? (
-                        <>
-                          <br />
-                          <span className="text-[12px]">{window.tournament.location}</span>
-                        </>
+                        <span className="text-[#9a9aa2]"> · {window.tournament.location}</span>
                       ) : null}
                     </span>
                   </p>
@@ -112,53 +109,53 @@ export default async function BaseballHome() {
               )}
 
               {window.games.length === 0 ? (
-                <p className="mt-4 text-sm text-[#6e6e73]">Game times have not been posted yet.</p>
+                <p className="mt-4 pb-4 text-sm text-[#6e6e73]">Game times have not been posted yet.</p>
               ) : (
-                <ul className="mt-4 divide-y divide-[#eef1f5] border-t border-[#eef1f5]">
-                  {window.games.map((g) => {
+                <ul className="mt-3">
+                  {window.games.map((g, i) => {
                     const parts = formatGameDateParts(g.date);
                     const vs = versusLabel(g.homeAway);
+                    const isLast = i === window.games.length - 1;
                     return (
                       <li
                         key={g.id}
-                        className="flex flex-col gap-3 py-3.5 sm:flex-row sm:items-center sm:gap-4"
+                        className={
+                          isLast
+                            ? 'flex gap-3 py-3.5'
+                            : 'flex gap-3 border-b border-[#eef1f5] py-3.5'
+                        }
                       >
-                        <div className="flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-                          <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-xl bg-[#eef1f5] text-[#12324e]">
-                            <span className="text-[10px] font-extrabold leading-none tracking-wide">
-                              {parts.weekday}
+                        <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-lg bg-[#f0f3f7] text-[#12324e] sm:h-14 sm:w-14 sm:rounded-xl">
+                          <span className="text-[10px] font-extrabold leading-none tracking-wide">
+                            {parts.weekday}
+                          </span>
+                          <span className="mt-1 text-[10px] font-bold leading-none tracking-wide sm:text-[11px]">
+                            {parts.monthDay}
+                          </span>
+                        </div>
+
+                        <div className="min-w-0 flex-1">
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-extrabold text-[#12324e]">
+                            <span className="inline-flex items-center gap-1.5">
+                              <Clock className="h-3.5 w-3.5 shrink-0 text-[#7BAFD4] sm:h-4 sm:w-4" aria-hidden />
+                              {g.time || 'TBD'}
                             </span>
-                            <span className="mt-1 text-[11px] font-bold leading-none tracking-wide">
-                              {parts.monthDay}
-                            </span>
+                            {g.field ? (
+                              <span className="inline-flex items-start gap-1.5 font-extrabold">
+                                <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#7BAFD4] sm:h-4 sm:w-4" aria-hidden />
+                                <span className="min-w-0 leading-snug">
+                                  {g.field}
+                                  {g.note ? (
+                                    <span className="font-semibold text-[#6e6e73]"> · {g.note}</span>
+                                  ) : null}
+                                </span>
+                              </span>
+                            ) : g.note ? (
+                              <span className="text-[12px] font-semibold text-[#6e6e73]">{g.note}</span>
+                            ) : null}
                           </div>
 
-                          <div className="grid min-w-0 flex-1 grid-cols-1 gap-2 sm:grid-cols-[7.5rem_minmax(0,8.5rem)_minmax(0,1fr)] sm:items-center sm:gap-3">
-                            <p className="flex items-center gap-1.5 text-sm font-extrabold text-[#12324e]">
-                              <Clock className="h-4 w-4 shrink-0 text-[#7BAFD4]" aria-hidden />
-                              <span>{g.time || 'TBD'}</span>
-                            </p>
-
-                            <div className="min-w-0">
-                              {g.field ? (
-                                <p className="flex items-start gap-1.5 text-sm font-extrabold text-[#12324e]">
-                                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#7BAFD4]" aria-hidden />
-                                  <span className="min-w-0">
-                                    <span className="block truncate">{g.field}</span>
-                                    {g.note ? (
-                                      <span className="block text-[12px] font-semibold text-[#6e6e73]">
-                                        {g.note}
-                                      </span>
-                                    ) : null}
-                                  </span>
-                                </p>
-                              ) : g.note ? (
-                                <p className="text-[12px] font-semibold text-[#6e6e73]">{g.note}</p>
-                              ) : (
-                                <p className="text-sm text-[#6e6e73]">Field TBD</p>
-                              )}
-                            </div>
-
+                          <div className="mt-1.5 flex items-start justify-between gap-2">
                             <p className="min-w-0 text-sm font-extrabold leading-snug text-[#12324e] [overflow-wrap:anywhere]">
                               <span className="mr-1">{vs}</span>
                               <span>{g.opponent}</span>
@@ -169,18 +166,17 @@ export default async function BaseballHome() {
                                 </span>
                               ) : null}
                             </p>
+                            {g.result ? (
+                              <span className="shrink-0 rounded-full bg-[#12324e] px-2.5 py-0.5 text-[11px] font-extrabold text-white tabular-nums sm:px-3 sm:py-1 sm:text-[12px]">
+                                {g.result}
+                              </span>
+                            ) : (
+                              <span className="shrink-0 rounded-full bg-[#e8f3fb] px-2.5 py-0.5 text-[11px] font-bold text-[#12324e] sm:px-3 sm:py-1 sm:text-[12px]">
+                                Upcoming
+                              </span>
+                            )}
                           </div>
                         </div>
-
-                        {g.result ? (
-                          <span className="shrink-0 self-start rounded-full bg-[#12324e] px-3 py-1 text-[12px] font-extrabold text-white tabular-nums sm:self-center">
-                            {g.result}
-                          </span>
-                        ) : (
-                          <span className="shrink-0 self-start rounded-full bg-[#e8f3fb] px-3 py-1 text-[12px] font-bold text-[#12324e] sm:self-center">
-                            Upcoming
-                          </span>
-                        )}
                       </li>
                     );
                   })}
@@ -195,7 +191,7 @@ export default async function BaseballHome() {
             href={window.tournament.pgUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between gap-3 border-t border-[#eef1f5] bg-[#fbfcfe] px-5 py-3.5 text-[13px] font-bold text-[#12324e] transition-colors hover:bg-[#f3f7fb]"
+            className="flex items-center justify-between gap-3 border-t border-[#eef1f5] px-4 py-3 text-[13px] font-bold text-[#12324e] transition-colors hover:bg-[#f7fafc] sm:px-5"
           >
             <span className="inline-flex items-center gap-2">
               <ExternalLink className="h-4 w-4 text-[#7BAFD4]" aria-hidden />
@@ -206,7 +202,6 @@ export default async function BaseballHome() {
         ) : null}
       </section>
 
-      {/* Latest result + season record */}
       <BaseballRecordStrip fallback={fallbackRecord} />
 
       <p className="text-[12px] text-[#8a8a92]">

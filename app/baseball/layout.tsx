@@ -23,7 +23,7 @@ export default function BaseballLayout({ children }: { children: React.ReactNode
     // quirk in embedded webviews that could drop the inline-end padding.
     <div className="ml-auto mr-auto min-h-screen w-full max-w-[100vw] overflow-x-clip bg-[#f5f7fa] text-[#111114]">
       <div className="border-b border-[#dde7f0] bg-white">
-        <div className="ml-auto mr-auto w-full max-w-3xl pb-4 pl-4 pr-4 pt-5">
+        <div className="ml-auto mr-auto w-full max-w-3xl pb-3 pl-3 pr-3 pt-4 sm:pb-4 sm:pl-4 sm:pr-4 sm:pt-5">
           <div className="flex items-center gap-3">
             <img src="/brand/baseball/413-shield-96.png" srcSet="/brand/baseball/413-shield-48.png 1x, /brand/baseball/413-shield-96.png 2x" alt="4:13 Baseball shield" width="44" height="44" className="h-11 w-11 min-w-0 shrink-0" />
             <div>
@@ -36,7 +36,7 @@ export default function BaseballLayout({ children }: { children: React.ReactNode
           <BaseballSubnav />
         </div>
       </div>
-      <main className="ml-auto mr-auto w-full max-w-3xl pb-16 pl-4 pr-4 pt-6">{children}</main>
+      <main className="ml-auto mr-auto w-full max-w-3xl pb-14 pl-3 pr-3 pt-4 sm:pb-16 sm:pl-4 sm:pr-4 sm:pt-6">{children}</main>
     </div>
   );
 }
