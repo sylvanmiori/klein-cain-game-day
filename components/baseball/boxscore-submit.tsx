@@ -249,15 +249,18 @@ function ModeTabs({ mode, setMode }: { mode: Mode; setMode: (m: Mode) => void })
   );
 }
 
+type GameMeta = { date: string; opponent: string; tournament: string; venue: string; result: string };
+
 function GameMetaFields({
   value,
   onChange,
 }: {
-  value: { date: string; opponent: string; tournament: string; venue: string; result: string };
-  onChange: (v: { date: string; opponent: string; tournament: string; venue: string; result: string }) => void;
+  value: GameMeta;
+  /** Patch API — parent must merge with a functional updater so concurrent field edits never clobber. */
+  onChange: (patch: Partial<GameMeta>) => void;
 }) {
-  const set = (k: keyof typeof value) => (e: React.ChangeEvent<HTMLInputElement>) =>
-    onChange({ ...value, [k]: e.target.value });
+  const set = (k: keyof GameMeta) => (e: React.ChangeEvent<HTMLInputElement>) =>
+    onChange({ [k]: e.target.value });
   const cls = 'mt-1 w-full min-w-0 rounded-xl border border-[#c9dcec] px-3 py-2 text-sm outline-none focus:border-[#7BAFD4]';
   return (
     <div className="grid grid-cols-2 gap-3">
@@ -547,6 +550,11 @@ function UploadMode({
 
   const chosenGame = selection !== '__new' ? games.find((g) => String(g.id) === selection) ?? null : null;
 
+  // Clear stale validation errors once the user fills fields / picks photos / changes game.
+  useEffect(() => {
+    setError(null);
+  }, [newGame, files, selection]);
+
   async function handleAnalyze() {
     setError(null);
     if (!password.trim()) {
@@ -557,10 +565,7 @@ function UploadMode({
       setError('Choose at least one box score photo (batting and/or pitching view).');
       return;
     }
-    if (selection === '__new' && (!newGame.date.trim() || !newGame.opponent.trim())) {
-      setError('For a new game, add at least the date and opponent.');
-      return;
-    }
+    // Date/opponent are optional when photos are present — vision fills them from the box score.
 
     setPhase(files.some(isHeicLike) ? 'converting' : 'analyzing');
     let uploadFiles: File[];
@@ -748,7 +753,13 @@ function UploadMode({
 
         {selection === '__new' ? (
           <div className="mt-3">
-            <GameMetaFields value={newGame} onChange={setNewGame} />
+            <GameMetaFields
+              value={newGame}
+              onChange={(patch) => setNewGame((prev) => ({ ...prev, ...patch }))}
+            />
+            <p className="mt-2 text-[12px] text-[#9a9aa2]">
+              Date and opponent are optional when you have photos — Analyze can read them from the box score.
+            </p>
           </div>
         ) : (
           chosenGame && (
@@ -929,6 +940,11 @@ function ManualMode({
     }
   }, [roster, batting.length]);
 
+  // Clear stale validation errors once the user fills fields / changes game.
+  useEffect(() => {
+    setError(null);
+  }, [meta, selection]);
+
   const existingGame = selection !== '__new';
   const scores = parseResultScores(meta.result);
   const warnings = totalWarnings(
@@ -1029,7 +1045,10 @@ function ManualMode({
           </p>
         ) : (
           <div className="mt-3">
-            <GameMetaFields value={meta} onChange={setMeta} />
+            <GameMetaFields
+              value={meta}
+              onChange={(patch) => setMeta((prev) => ({ ...prev, ...patch }))}
+            />
           </div>
         )}
       </section>
@@ -1085,6 +1104,10 @@ function EditMode({
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+
+  useEffect(() => {
+    setError(null);
+  }, [meta, selection]);
 
   async function loadGame(id: string) {
     setSelection(id);
@@ -1212,7 +1235,10 @@ function EditMode({
             <p className="mb-3 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">
               Game details
             </p>
-            <GameMetaFields value={meta} onChange={setMeta} />
+            <GameMetaFields
+              value={meta}
+              onChange={(patch) => setMeta((prev) => ({ ...prev, ...patch }))}
+            />
           </section>
 
           <Warnings messages={warnings} />
