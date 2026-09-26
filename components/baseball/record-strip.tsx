@@ -66,10 +66,22 @@ export function BaseballRecordStrip({ fallback }: { fallback?: SeasonRecord | nu
     return (
       <section className="min-w-0 rounded-2xl border border-[#dde7f0] bg-white p-5">
         <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">Season Record</p>
-        <p className="mt-2 text-sm text-[#6e6e73]">
-          <span className="font-bold text-[#12324e]">No games recorded yet.</span>{' '}
-          Results will appear here after the first pitch.
-        </p>
+        <div className="mt-3 flex items-start gap-3">
+          <span
+            aria-hidden
+            className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#e8f3fb] text-[#12324e]"
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.75">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M7.5 5.5c2.2 2.4 2.2 10.6 0 13" />
+              <path d="M16.5 5.5c-2.2 2.4-2.2 10.6 0 13" />
+            </svg>
+          </span>
+          <div className="min-w-0">
+            <p className="text-sm font-bold text-[#12324e]">No games recorded yet.</p>
+            <p className="mt-0.5 text-sm text-[#6e6e73]">Results will appear here after the first pitch.</p>
+          </div>
+        </div>
       </section>
     );
   }

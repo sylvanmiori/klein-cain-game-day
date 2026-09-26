@@ -159,10 +159,14 @@ export default async function BaseballHome() {
                               )}
                             </div>
 
-                            <p className="min-w-0 truncate text-sm font-extrabold text-[#12324e]">
-                              {vs} {g.opponent}
+                            <p className="min-w-0 text-sm font-extrabold leading-snug text-[#12324e] [overflow-wrap:anywhere]">
+                              <span className="mr-1">{vs}</span>
+                              <span>{g.opponent}</span>
                               {g.opponentRecord ? (
-                                <span className="font-semibold text-[#6e6e73]"> ({g.opponentRecord})</span>
+                                <span className="whitespace-nowrap font-semibold text-[#6e6e73]">
+                                  {' '}
+                                  ({g.opponentRecord})
+                                </span>
                               ) : null}
                             </p>
                           </div>
