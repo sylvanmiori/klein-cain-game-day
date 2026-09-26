@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+// Plain <a>, not next/link: the baseball host rewrite breaks the App
+// Router's client-side navigation (taps silently swallowed). Full-page
+// loads always work.
 import type { SeasonRecord, StatsResponse } from './types';
 
 function parseRecord(games: StatsResponse['games']): SeasonRecord | null {
@@ -75,9 +77,9 @@ export function BaseballRecordStrip({ fallback }: { fallback?: SeasonRecord | nu
     <section className="rounded-2xl border border-[#dde7f0] bg-white p-5">
       <div className="flex items-baseline justify-between gap-3">
         <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">Season Record</p>
-        <Link href="/baseball/stats" className="text-[12px] font-bold text-[#12324e] underline decoration-[#7BAFD4] decoration-2 underline-offset-2">
+        <a href="/baseball/stats" className="text-[12px] font-bold text-[#12324e] underline decoration-[#7BAFD4] decoration-2 underline-offset-2">
           Full stats
-        </Link>
+        </a>
       </div>
       <p className="mt-2 text-3xl font-black tracking-tight text-[#12324e] tabular-nums">
         {w}-{l}{t > 0 ? `-${t}` : ''}
