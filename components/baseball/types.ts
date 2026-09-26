@@ -308,3 +308,55 @@ export interface GameDetailResponse {
   batting: GameLineBatting[];
   pitching: GameLinePitching[];
 }
+
+
+// ---- GET /api/baseball/standings live-snapshot shapes ----
+// Polled from Perfect Game by the Worker cron; see docs/baseball-standings-poller.md.
+export interface StandingsTeam {
+  seed?: number | null;
+  name?: string | null;
+  team_url?: string | null;
+  state?: string | null;
+  pct?: number | null;
+  w?: number | null;
+  l?: number | null;
+  t?: number | null;
+  ra?: number | null;
+  rs?: number | null;
+}
+
+export interface StandingsPool {
+  pool: string;
+  teams: StandingsTeam[];
+}
+
+export interface StandingsTeamRecord {
+  pool?: string | null;
+  seed?: number | null;
+  w?: number | null;
+  l?: number | null;
+  t?: number | null;
+  pct?: number | null;
+  ra?: number | null;
+  rs?: number | null;
+}
+
+/** Build-time fallback from schedule.json pool_standings. */
+export interface BaseballPoolStandingsFallback {
+  tournamentName?: string | null;
+  standingsUrl?: string | null;
+  pools: StandingsPool[];
+  teamRecord?: StandingsTeamRecord | null;
+}
+
+export interface LiveStandingsSnapshot {
+  schemaVersion: number;
+  event_id: string;
+  tournament?: string | null;
+  standings_url?: string | null;
+  pools: StandingsPool[];
+  team_record?: StandingsTeamRecord | null;
+  scraped_at: string;
+  updated_at?: string | null;
+  source: string;
+}

@@ -273,43 +273,79 @@
           "pool": "Pool A",
           "teams": [
             {
-              "seed": null,
+              "seed": 1,
               "name": "Nitro baseball Ortiz 15u",
               "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1176649",
-              "state": "Game Recap",
-              "pct": null,
-              "w": null,
-              "l": 5,
-              "t": null,
-              "ra": 1,
-              "rs": null
-            },
-            {
-              "seed": 2,
-              "name": "Den Guys 15u",
-              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1178393",
               "state": "TX",
               "pct": 1,
               "w": 1,
               "l": 0,
               "t": 0,
-              "ra": 2,
+              "ra": 1,
+              "rs": 5
+            },
+            {
+              "seed": 2,
+              "name": "Banditos 2030 Elite",
+              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1182565",
+              "state": "TX",
+              "pct": 1,
+              "w": 2,
+              "l": 0,
+              "t": 0,
+              "ra": 3,
               "rs": 10
             },
             {
               "seed": 3,
-              "name": "Scorpions Team Easton 2030",
-              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1169334",
+              "name": "TBT SPACE CITY",
+              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1155848",
               "state": "TX",
               "pct": 1,
-              "w": 1,
+              "w": 2,
               "l": 0,
               "t": 0,
-              "ra": 2,
-              "rs": 3
+              "ra": 7,
+              "rs": 13
             },
             {
               "seed": 4,
+              "name": "PTX Reserves 2030 - Towles",
+              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1181556",
+              "state": "TX",
+              "pct": 0.5,
+              "w": 1,
+              "l": 1,
+              "t": 0,
+              "ra": 5,
+              "rs": 4
+            },
+            {
+              "seed": 5,
+              "name": "Scorpions Team Easton 2030",
+              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1169334",
+              "state": "TX",
+              "pct": 0.5,
+              "w": 1,
+              "l": 1,
+              "t": 0,
+              "ra": 7,
+              "rs": 6
+            },
+            {
+              "seed": 6,
+              "name": "Den Guys 15u",
+              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1178393",
+              "state": "TX",
+              "pct": 0.5,
+              "w": 1,
+              "l": 1,
+              "t": 0,
+              "ra": 10,
+              "rs": 13
+            },
+            {
+              "seed": 7,
               "name": "15U OFFSEASON BASEBALL - WILLIAMS",
               "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1164660",
               "state": "TX",
@@ -321,7 +357,7 @@
               "rs": 0
             },
             {
-              "seed": 5,
+              "seed": 8,
               "name": "4:13 Baseball",
               "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1173262",
               "state": "TX",
@@ -333,7 +369,7 @@
               "rs": 0
             },
             {
-              "seed": 6,
+              "seed": 9,
               "name": "AD BASEBALL 15U GOLD",
               "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1154965",
               "state": "TX",
@@ -345,19 +381,7 @@
               "rs": 0
             },
             {
-              "seed": 7,
-              "name": "Banditos 2030 Elite",
-              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1182565",
-              "state": "TX",
-              "pct": 0,
-              "w": 0,
-              "l": 0,
-              "t": 0,
-              "ra": 0,
-              "rs": 0
-            },
-            {
-              "seed": 8,
+              "seed": 10,
               "name": "Banditos 2030 White",
               "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1181778",
               "state": "TX",
@@ -369,19 +393,7 @@
               "rs": 0
             },
             {
-              "seed": 9,
-              "name": "BPT Hurricanes",
-              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1179467",
-              "state": "TX",
-              "pct": 0,
-              "w": 0,
-              "l": 0,
-              "t": 0,
-              "ra": 0,
-              "rs": 0
-            },
-            {
-              "seed": 10,
+              "seed": 11,
               "name": "Just Dawgs Grey",
               "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1142484",
               "state": "TX",
@@ -393,7 +405,7 @@
               "rs": 0
             },
             {
-              "seed": 11,
+              "seed": 12,
               "name": "Loudboyz 2030",
               "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1177991",
               "state": "TX",
@@ -405,21 +417,9 @@
               "rs": 0
             },
             {
-              "seed": 12,
+              "seed": 13,
               "name": "Magnolia Express 15U",
               "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1168072",
-              "state": "TX",
-              "pct": 0,
-              "w": 0,
-              "l": 0,
-              "t": 0,
-              "ra": 0,
-              "rs": 0
-            },
-            {
-              "seed": 13,
-              "name": "TBT SPACE CITY",
-              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1155848",
               "state": "TX",
               "pct": 0,
               "w": 0,
@@ -454,27 +454,27 @@
             },
             {
               "seed": 16,
-              "name": "Legacy Baseball Club - Arden",
-              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1180025",
+              "name": "BPT Hurricanes",
+              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1179467",
               "state": "TX",
               "pct": 0,
               "w": 0,
               "l": 1,
               "t": 0,
               "ra": 3,
-              "rs": 2
+              "rs": 0
             },
             {
               "seed": 17,
-              "name": "PTX Reserves 2030 - Towles",
-              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1181556",
+              "name": "Legacy Baseball Club - Arden",
+              "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1180025",
               "state": "TX",
               "pct": 0,
               "w": 0,
-              "l": 1,
+              "l": 2,
               "t": 0,
-              "ra": 5,
-              "rs": 1
+              "ra": 12,
+              "rs": 7
             },
             {
               "seed": 18,
@@ -483,9 +483,9 @@
               "state": "TX",
               "pct": 0,
               "w": 0,
-              "l": 1,
+              "l": 2,
               "t": 0,
-              "ra": 10,
+              "ra": 12,
               "rs": 2
             }
           ]
@@ -493,7 +493,7 @@
       ],
       "team_event_record": {
         "pool": "Pool A",
-        "seed": 5,
+        "seed": 8,
         "w": 0,
         "l": 0,
         "t": 0,

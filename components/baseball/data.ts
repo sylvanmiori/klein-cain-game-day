@@ -5,7 +5,7 @@
 
 import scheduleJson from '../../content/baseball/schedule.json';
 import bracketJson from '../../content/baseball/bracket.json';
-import type { BaseballBracket, BaseballSchedule, BracketGame, RosterPlayer, ScheduleGame, ScheduleTournament, SeasonRecord } from './types';
+import type { BaseballBracket, BaseballPoolStandingsFallback, BaseballSchedule, BracketGame, RosterPlayer, ScheduleGame, ScheduleTournament, SeasonRecord, StandingsPool } from './types';
 
 // ---- Raw scraper shapes ----
 interface RawScheduleGame {
@@ -31,6 +31,9 @@ interface RawScheduleTournament {
   event_address?: string;
   event_url?: string;
   bracket_url?: string;
+  standings_url?: string;
+  pool_standings?: StandingsPool[];
+  team_event_record?: BaseballPoolStandingsFallback['teamRecord'];
   games?: RawScheduleGame[];
 }
 
@@ -209,4 +212,24 @@ export function mapsSearchUrl(...parts: Array<string | undefined | null>): strin
     .join(', ');
   if (!q) return null;
   return `https://maps.google.com/?q=${encodeURIComponent(q)}`;
+}
+
+
+/** Build-time pool standings from schedule.json for the current/first tournament
+ *  that has pool_standings. Used when GET /api/baseball/standings 404s. */
+export function loadPoolStandingsFallback(): BaseballPoolStandingsFallback | null {
+  const raw = scheduleJson as unknown as { tournaments?: RawScheduleTournament[] };
+  const list = Array.isArray(raw?.tournaments) ? raw.tournaments : [];
+  const today = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).format(new Date());
+  const weekend = list.find((t) => t.start_date && t.end_date && t.start_date <= today && today <= t.end_date);
+  const t = weekend ?? list.find((x) => Array.isArray(x.pool_standings) && x.pool_standings.length > 0) ?? null;
+  if (!t || !Array.isArray(t.pool_standings) || t.pool_standings.length === 0) return null;
+  return {
+    tournamentName: t.name ?? null,
+    standingsUrl: t.standings_url ?? null,
+    pools: t.pool_standings,
+    teamRecord: t.team_event_record ?? null,
+  };
 }

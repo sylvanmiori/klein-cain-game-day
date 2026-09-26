@@ -2,7 +2,7 @@
 
 Shared reference for anyone working on **413baseball.gameday.report** (4:13 Baseball, 15U travel, Spring TX). The team is Steven Morris’s; Steven Miori hosts the site as a favor. **It is not Klein Cain football** and must never share football branding, copy, or Open Graph tags.
 
-For deep dives: [Perfect Game coverage](baseball-pg-coverage.md), [brackets](baseball-brackets.md), [bracket poller](baseball-bracket-poller.md), [D1 / box scores](baseball-d1.md). Architecture overview also lives in [PROJECT-GUIDE.md](PROJECT-GUIDE.md#413baseballgamedayreport-413-baseball).
+For deep dives: [Perfect Game coverage](baseball-pg-coverage.md), [brackets](baseball-brackets.md), [bracket poller](baseball-bracket-poller.md), [standings poller](baseball-standings-poller.md), [D1 / box scores](baseball-d1.md). Architecture overview also lives in [PROJECT-GUIDE.md](PROJECT-GUIDE.md#413baseballgamedayreport-413-baseball).
 
 ## Isolation (non-negotiable)
 
@@ -73,6 +73,7 @@ If a tournament lacks `event_address`, fall back to venue + city; still link whe
 | --- | --- | --- |
 | `/` | `/baseball` | Home — weekend card, record strip |
 | `/schedule` | `/baseball/schedule` | Tournament list + live bracket |
+| `/standings` | `/baseball/standings` | Live pool standings |
 | `/roster` | `/baseball/roster` | Roster |
 | `/stats` | `/baseball/stats` | Season stats (D1; 503 until provisioned) |
 | `/submit` | `/baseball/submit` | Password-gated box-score entry |
@@ -82,6 +83,7 @@ If a tournament lacks `event_address`, fall back to venue + city; still link whe
 - Schedule: `npm run baseball:schedule` → `content/baseball/schedule.json` (also Thursday GH Action).
 - Bracket file: `npm run baseball:bracket` / Saturday–Sunday GH Action → `content/baseball/bracket.json`.
 - Live bracket: Worker cron `*/15` → KV → `GET /api/baseball/bracket` (see [bracket poller](baseball-bracket-poller.md)).
+- Live pool standings: same `*/15` cron → KV → `GET /api/baseball/standings` (see [standings poller](baseball-standings-poller.md)); Standings nav page at `/baseball/standings`.
 - Stats: D1 + `/api/baseball/stats` (see [D1 doc](baseball-d1.md)); until D1 is bound, empty-state UI is OK and APIs return 503.
 
 ## Checklist before shipping a baseball UI change

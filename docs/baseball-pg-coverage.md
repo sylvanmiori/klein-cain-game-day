@@ -63,7 +63,7 @@ tab is `__doPostBack`-only, see below)
 
 | Field | Source |
 |---|---|
-| every pool with every team: seed, name, team URL, state, pct, W, L, T, runs allowed, runs scored | `lblPoolTitle_{p}` + `rptrPoolStandings` rows (columns: seed, team, ST, PCT, W, L, T, RA, RS) |
+| every pool with every team: seed, name, team URL, state, pct, W, L, T, runs allowed, runs scored | `lblPoolTitle_{p}` + `rptrPoolStandings` control ids (`hlTeam_{n}`, `lblRownum_{n}`) — **not** a bare `<tr>` scan (DiamondKast on the same page corrupts greedy row matches). Shared parser: `cloudflare/baseball-standings.mjs`. |
 | 4:13's record in the event | the pool row whose team name matches 4:13 |
 
 ### 4. Bracket page (Saturday job)
@@ -107,6 +107,7 @@ latest snapshot.
   commit only when staged content changed, same pattern as the schedule
   file). The site's `components/baseball/data.ts` loader reads
   `schedule.json`; its shape is backward-compatible (fields only added).
+- **Live standings (Worker)**: cron `*/15` polls the same page into KV; see `docs/baseball-standings-poller.md`.
 - **Saturday 11pm–Sunday noon CT** (`baseball-bracket.yml`):
   `npm run baseball:bracket` reads `schedule.json` for the weekend
   tournament's `event_id`/`bracket_url`, writes `bracket.json` or

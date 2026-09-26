@@ -11,6 +11,11 @@ import {
   parseBracketsPage,
   pickWeekendTournament,
 } from './baseball-bracket.mjs';
+import {
+  STANDINGS_URL_FOR,
+  buildStandingsSnapshot,
+  parsePoolStandingsPage,
+} from './baseball-standings.mjs';
 
 const keyFor = slug => `${publication.schoolId}:${slug}`;
 const metaKeyFor = slug => `${publication.schoolId}:${slug}:ingest`;
@@ -315,6 +320,8 @@ function trueToIpDecimal(ipTrue) {
 const BRACKET_POLL_CRON = '*/15 * * * *';
 /** KV key for a tournament's bracket snapshot: baseball:bracket:<event_id>. */
 const BRACKET_KV_PREFIX = 'baseball:bracket:';
+/** KV key for a tournament's pool-standings snapshot: baseball:standings:<event_id>. */
+const STANDINGS_KV_PREFIX = 'baseball:standings:';
 
 function chicagoTimeParts(ts) {
   const parts = new Intl.DateTimeFormat('en-US', {
@@ -400,6 +407,48 @@ async function pollBaseballBracket(env, scheduledTime) {
     throw err;
   }
 }
+
+/**
+ * 4:13 Baseball pool-standings poller. Same Chicago cadence as the bracket
+ * poller. Fetches TournamentPoolStandings.aspx, parses only standings rows
+ * (shared cloudflare/baseball-standings.mjs), and stores a last-good snapshot
+ * in KV. Failures record telemetry and rethrow — never overwrite good data.
+ */
+async function pollBaseballPoolStandings(env, scheduledTime) {
+  const now = new Date(scheduledTime);
+  const { weekday, hour, minute } = chicagoTimeParts(now);
+  const inGameWindow = (weekday === 'Sat' || weekday === 'Sun') && hour >= 7 && hour < 23;
+  if (!inGameWindow && minute !== 0) return;
+  const tournaments = Array.isArray(baseballSchedule?.tournaments) ? baseballSchedule.tournaments : [];
+  const tournament = pickWeekendTournament(tournaments, now);
+  if (!tournament?.event_id) return;
+  const eventId = String(tournament.event_id);
+  const standingsUrl = tournament.standings_url || STANDINGS_URL_FOR(eventId);
+  const teamName = baseballSchedule?.team?.name || '4:13 Baseball';
+  const key = `${STANDINGS_KV_PREFIX}${eventId}`;
+  try {
+    const html = await fetchBracketHtml(standingsUrl);
+    const parsed = parsePoolStandingsPage(html, { standingsUrl, teamName });
+    const teamCount = (parsed.pools ?? []).reduce((n, p) => n + (p.teams?.length ?? 0), 0);
+    if (!parsed.pools?.length || teamCount === 0) {
+      throw new Error('Standings page published no pool teams yet');
+    }
+    const snapshot = buildStandingsSnapshot({
+      eventId,
+      tournamentName: tournament.name ?? null,
+      standingsUrl: parsed.standings_url ?? standingsUrl,
+      pools: parsed.pools,
+      teamRecord: parsed.team_record,
+      scrapedAt: new Date().toISOString(),
+    });
+    await env.SCORES.put(key, JSON.stringify(snapshot));
+    await recordBracketIngest(env, `${key}:ingest`, true, snapshot.scraped_at);
+  } catch (err) {
+    await recordBracketIngest(env, `${key}:ingest`, false, err instanceof Error ? err.message : err);
+    throw err;
+  }
+}
+
 
 const worker = {
   async fetch(request, env) {
@@ -857,6 +906,23 @@ const worker = {
       return json({ ...live, updated_at: live.scraped_at ?? null, source: 'Perfect Game' });
     }
 
+    if (url.pathname === '/api/baseball/standings') {
+      if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
+      const tournaments = Array.isArray(baseballSchedule?.tournaments) ? baseballSchedule.tournaments : [];
+      const tournament = pickWeekendTournament(tournaments, new Date());
+      if (!tournament?.event_id) return json({ error: 'No tournament this weekend' }, 404);
+      const key = `${STANDINGS_KV_PREFIX}${tournament.event_id}`;
+      let live = null;
+      try {
+        live = await env.SCORES.get(key, 'json');
+      } catch {
+        return json({ error: 'Standings snapshot temporarily unavailable' }, 503);
+      }
+      if (!live) return json({ error: 'Standings not posted yet', event_id: String(tournament.event_id) }, 404);
+      return json({ ...live, updated_at: live.scraped_at ?? null, source: 'Perfect Game' });
+    }
+
+
     // The hostname rewrite above mutates `url`, so the asset lookup must use
     // the rewritten URL, not the original request (otherwise the baseball
     // host would serve the football homepage).
@@ -865,7 +931,18 @@ const worker = {
 
   async scheduled(controller, env) {
     if (controller.cron === BRACKET_POLL_CRON) {
-      await pollBaseballBracket(env, controller.scheduledTime);
+      // Run bracket + standings independently so one PG failure cannot skip the
+      // other; surface any failures via AggregateError for the dashboard.
+      const errors = [];
+      for (const poll of [pollBaseballBracket, pollBaseballPoolStandings]) {
+        try {
+          await poll(env, controller.scheduledTime);
+        } catch (err) {
+          errors.push(err instanceof Error ? err : new Error(String(err)));
+        }
+      }
+      if (errors.length === 1) throw errors[0];
+      if (errors.length > 1) throw new AggregateError(errors, 'Baseball pollers failed');
       return;
     }
     const game = activeGame(schedule, new Date(controller.scheduledTime));

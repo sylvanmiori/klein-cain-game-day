@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation';
 const LINKS = [
   { href: '/baseball', label: 'Home', match: 'home' as const },
   { href: '/baseball/schedule', label: 'Schedule', match: 'path' as const },
+  { href: '/baseball/standings', label: 'Standings', match: 'path' as const },
   { href: '/baseball/roster', label: 'Roster', match: 'path' as const },
   { href: '/baseball/stats', label: 'Stats', match: 'path' as const },
   { href: '/baseball/submit', label: 'Submit', match: 'path' as const },

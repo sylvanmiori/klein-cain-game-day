@@ -39,6 +39,7 @@
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parsePoolStandingsPage } from '../cloudflare/baseball-standings.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_DIR = join(ROOT, 'content', 'baseball');
@@ -386,47 +387,10 @@ function parseEventPage(html, eventUrl) {
 }
 
 function parsePoolStandings(html, standingsUrl, teamName) {
-  const poolTitles = [...html.matchAll(/id="[^"]*lblPoolTitle_(\d+)"[^>]*>([^<]*)</g)];
-  const pools = poolTitles.map((titleMatch) => {
-    const poolIdx = titleMatch[1];
-    const pool = stripTags(titleMatch[2]);
-    const teams = [];
-    // One table row per team; each row's cells are
-    // [seed, name(link), state, pct, W, L, T, RA, RS].
-    const rowPattern = new RegExp(
-      `<tr[^>]*>([\\s\\S]*?rptrPools_rptrPoolStandings_${poolIdx}_hlTeam_\\d+[\\s\\S]*?)<\\/tr>`, 'g');
-    for (const rowMatch of html.matchAll(rowPattern)) {
-      const row = rowMatch[1];
-      const link = new RegExp(`id="[^"]*rptrPools_rptrPoolStandings_${poolIdx}_hlTeam_\\d+"[^>]*href="([^"]+)"[^>]*>([^<]*)<`).exec(row);
-      if (!link) continue;
-      const cells = [...row.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map((m) => stripTags(m[1]));
-      const num = (i) => (cells[i] !== undefined && /^\d+$/.test(cells[i]) ? Number(cells[i]) : null);
-      teams.push({
-        seed: num(0),
-        name: stripTags(link[2]),
-        team_url: absolutize(link[1], `${PG_BASE}/events/`),
-        state: nullIfEmpty(cells[2]),
-        pct: cells[3] !== undefined && /^\d*\.\d+$/.test(cells[3]) ? Number(cells[3]) : null,
-        w: num(4),
-        l: num(5),
-        t: num(6),
-        ra: num(7),
-        rs: num(8),
-      });
-    }
-    return { pool, teams };
-  });
-  let teamRecord = null;
-  for (const { pool, teams } of pools) {
-    const row = teams.find((t) => normName(t.name) === normName(teamName));
-    if (row) {
-      teamRecord = {
-        pool, seed: row.seed, w: row.w, l: row.l, t: row.t, pct: row.pct, ra: row.ra, rs: row.rs,
-      };
-      break;
-    }
-  }
-  return { standings_url: standingsUrl, pools, team_record: teamRecord };
+  // Shared with the Worker poller (cloudflare/baseball-standings.mjs). Matches
+  // only rptrPoolStandings control ids so DiamondKast scoreboard HTML on the
+  // same page cannot corrupt seed/state/W-L cells.
+  return parsePoolStandingsPage(html, { standingsUrl, teamName });
 }
 
 /** Join event-scoreboard results onto the team's schedule games by game id. */
