@@ -166,6 +166,18 @@ export function formatGameDate(iso: string): string {
   return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 }
 
+
+/** Split YYYY-MM-DD into mockup date-block parts: { weekday: "SAT", monthDay: "SEP 26" }. */
+export function formatGameDateParts(iso: string): { weekday: string; monthDay: string } {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+  if (!m) return { weekday: '', monthDay: iso };
+  const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  const weekday = d.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
+  const mon = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+  const day = String(d.getDate());
+  return { weekday, monthDay: `${mon} ${day}` };
+}
+
 // Roster, verified against the Perfect Game team page (2026-09-26).
 // Grad years: Hayden Baker 2031, everyone else 2030.
 export const BASEBALL_ROSTER: RosterPlayer[] = [
