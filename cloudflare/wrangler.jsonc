@@ -14,10 +14,24 @@
   "kv_namespaces": [
     { "binding": "SCORES", "id": "230ad4e9643a45b7b9e7a9a88ca3db6a" }
   ],
+  // Workers AI binding used by the 4:13 Baseball box-score screenshot parser
+  // (POST /api/baseball/boxscore) in worker.mjs.
+  "ai": { "binding": "AI" },
+  // D1 database for 4:13 Baseball box-score stats. DO NOT uncomment until
+  // Steven has created the database and pasted its real ID below — a
+  // placeholder ID here breaks all deploys. Steps: docs/baseball-d1.md.
+  // "d1_databases": [
+  //   {
+  //     "binding": "BASEBALL_STATS",
+  //     "database_name": "413baseball-stats",
+  //     "database_id": "REPLACE_WITH_D1_ID_AFTER_CREATION"
+  //   }
+  // ],
   "triggers": { "crons": ["* * * * *"] },
   "observability": { "enabled": true },
   "routes": [
     { "pattern": "gameday.report", "custom_domain": true },
-    { "pattern": "kleincain.gameday.report", "custom_domain": true }
+    { "pattern": "kleincain.gameday.report", "custom_domain": true },
+    { "pattern": "413baseball.gameday.report", "custom_domain": true }
   ]
 }

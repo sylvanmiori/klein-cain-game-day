@@ -1,0 +1,260 @@
+#!/usr/bin/env node
+/**
+ * Perfect Game bracket fetcher for the 4:13 Baseball subsite.
+ *
+ * Used by a GitHub Action on tournament weekends. Reads
+ * content/baseball/schedule.json, picks the tournament whose date range
+ * contains the current (or coming) weekend, and fetches its bracket page
+ * using the URL patterns documented in docs/baseball-brackets.md.
+ *
+ * Behavior contract:
+ *   bracket found     -> content/baseball/bracket.json, prints BRACKET_FOUND=true
+ *   bracket not found -> content/baseball/bracket-missing.json, prints BRACKET_FOUND=false
+ *   exit 0 in both cases; non-zero only on unexpected errors (e.g. the
+ *   schedule file is missing or unreadable).
+ *
+ * Never invents games: every bracket game is read from the rendered
+ * Brackets.aspx table, and rounds are derived from the page's own
+ * "Winner of Game #N" links.
+ */
+
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const OUT_DIR = join(ROOT, 'content', 'baseball');
+const SCHEDULE_PATH = join(OUT_DIR, 'schedule.json');
+const BRACKET_PATH = join(OUT_DIR, 'bracket.json');
+const MISSING_PATH = join(OUT_DIR, 'bracket-missing.json');
+
+const PG_BASE = 'https://www.perfectgame.org';
+const BROWSER_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
+const TIMEOUT = 45000;
+const ATTEMPTS = 3;
+
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function get(url) {
+  let lastError;
+  for (let attempt = 1; attempt <= ATTEMPTS; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'user-agent': BROWSER_UA,
+          accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'accept-language': 'en-US,en;q=0.9',
+        },
+        signal: AbortSignal.timeout(TIMEOUT),
+      });
+      if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
+      return response;
+    } catch (error) {
+      lastError = error;
+      if (attempt < ATTEMPTS) await wait(attempt * 2000);
+    }
+  }
+  throw lastError;
+}
+
+const ENTITIES = { '&nbsp;': ' ', '&amp;': '&', '&quot;': '"', '&#39;': "'", '&apos;': "'", '&rsquo;': '’' };
+const decodeEntities = (value) => String(value ?? '').replace(/&(?:nbsp|amp|quot|#39|apos|rsquo);/g, (e) => ENTITIES[e] ?? e);
+const stripTags = (html) => decodeEntities(html.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+
+/** Today's date in America/Chicago as {year, month, day}. */
+function chicagoToday() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).format(new Date());
+  const [year, month, day] = parts.split('-').map(Number);
+  return { year, month, day };
+}
+
+const toEpochDay = ({ year, month, day }) => Date.UTC(year, month - 1, day) / 86400000;
+const parseIso = (iso) => {
+  const [year, month, day] = iso.split('-').map(Number);
+  return { year, month, day };
+};
+
+/** Saturday/Sunday pair for this weekend if run Sat/Sun, else the coming weekend. */
+function targetWeekend() {
+  const today = chicagoToday();
+  const dow = new Date(Date.UTC(today.year, today.month - 1, today.day)).getUTCDay(); // 0=Sun..6=Sat
+  const satOffset = dow === 6 ? 0 : dow === 0 ? -1 : 6 - dow;
+  const sat = toEpochDay(today) + satOffset;
+  return { saturday: sat, sunday: sat + 1 };
+}
+
+function weekendTournament(tournaments) {
+  const { saturday, sunday } = targetWeekend();
+  return tournaments.find((t) => {
+    if (!t.start_date || !t.end_date) return false;
+    const start = toEpochDay(parseIso(t.start_date));
+    const end = toEpochDay(parseIso(t.end_date));
+    return start <= sunday && end >= saturday;
+  }) ?? null;
+}
+
+function writeMissing(tournament, reason) {
+  mkdirSync(OUT_DIR, { recursive: true });
+  writeFileSync(MISSING_PATH, `${JSON.stringify({
+    tournament: tournament ? { name: tournament.name, dates: tournament.dates, event_id: tournament.event_id } : null,
+    checked_at: new Date().toISOString(),
+    reason,
+  }, null, 2)}\n`);
+  console.log('BRACKET_FOUND=false');
+}
+
+/* ------------------------------------------------------- bracket extraction */
+
+const ROUND_LABELS = { 0: 'Championship', 1: 'Semifinal', 2: 'Quarterfinal', 3: 'Round of 16', 4: 'Round of 32' };
+
+function roundLabel(depth) {
+  return ROUND_LABELS[depth] ?? `Round ${depth}`;
+}
+
+/**
+ * Parse one gvBracket table. Team boxes and game cells pair by their slot
+ * number (GamePos{N} / SeedPos{N} in the control ids); table row order is
+ * not a reliable pairing because both bracket halves render side by side.
+ */
+function parseBracketTable(tableHtml, tournament) {
+  const tournamentYear = tournament?.start_date ? Number(tournament.start_date.slice(0, 4)) : null;
+  const boxes = new Map(); // slot -> {home:{seed,name}, away:{seed,name}}
+  for (const match of tableHtml.matchAll(/<td class="(Home|Visitor)TeamBox">([\s\S]*?)<\/td>/g)) {
+    const side = match[1] === 'Home' ? 'home' : 'away';
+    const cell = match[2];
+    const slot = /SeedPos(\d+)_\d+">/.exec(cell)?.[1];
+    const seed = stripTags(/SeedPos\d+_\d+">([^<]*)/.exec(cell)?.[1] ?? '').replace(/\s+/g, ' ').trim() || null;
+    const name = stripTags(/hl(?:Home|Visitor)Pos\d+_\d+"[^>]*>([\s\S]*?)<\/a>/.exec(cell)?.[1] ?? '') || null;
+    if (!slot) continue;
+    const entry = boxes.get(slot) ?? {};
+    entry[side] = { seed, name };
+    boxes.set(slot, entry);
+  }
+
+  const games = [];
+  for (const match of tableHtml.matchAll(/<td class="GameTopBox"[^>]*>([\s\S]*?)<\/td>/g)) {
+    const cell = match[1];
+    const span = /GamePos(\d+)_\d+">([\s\S]*?)<\/span>/.exec(cell);
+    if (!span) continue;
+    const slot = span[1];
+    const text = stripTags(span[2].replace(/<br\s*\/?>/gi, ' | '));
+    const info = /^GM:\s*(\d+)\s*\|\s*(\d{1,2})\/(\d{1,2})\s*\|\s*(\d{1,2}:\d{2}\s*[AP]M)\s*\|\s*(.+)$/.exec(text);
+    if (!info) throw new Error(`Unrecognized bracket game cell: "${text}"`);
+
+    const [, gameNum, month, day, time, fieldVenue] = info;
+    // Bracket games sit within days of the tournament start; only a
+    // December/January boundary can shift the year.
+    let year = tournamentYear;
+    if (tournamentYear && tournament.start_date) {
+      const startMonth = Number(tournament.start_date.slice(5, 7));
+      const gameMonth = Number(month);
+      if (startMonth === 12 && gameMonth === 1) year += 1;
+      if (startMonth === 1 && gameMonth === 12) year -= 1;
+    }
+    const [fieldRaw, ...venueParts] = fieldVenue.split(/\s*@\s*/);
+    const venue = venueParts.join(' @ ').trim() || null;
+    const home = boxes.get(slot)?.home ?? {};
+    const away = boxes.get(slot)?.away ?? {};
+    const side = (entry) => [entry.seed, entry.name].filter(Boolean).join(' ') || 'TBD';
+    games.push({
+      game_number: Number(gameNum),
+      date: `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`,
+      time: time.replace(/\s+/, ' '),
+      matchup: `${side(home)} vs ${side(away)}`,
+      field: fieldRaw.trim() || null,
+      venue,
+    });
+  }
+  return games;
+}
+
+function parseBrackets(html, tournament) {
+  const tiers = [];
+  // Tier labels ("Gold Bracket", ...) render as plain text before each table.
+  const tableMatches = [...html.matchAll(/<table cellspacing="0" id="[^"]*_gvBracket"[^>]*>([\s\S]*?)<\/table>/g)];
+  for (const tableMatch of tableMatches) {
+    // The tier label ("Gold Bracket", ...) renders as plain text before the
+    // table, but a per-bracket <style> block sits between them, so look
+    // further back and strip style/script content first.
+    const before = html.slice(Math.max(0, tableMatch.index - 4000), tableMatch.index)
+      .replace(/<(style|script)[\s\S]*?<\/\1>/gi, ' ');
+    const tier = /((?:Gold|Silver|Bronze|Championship|Consolation)[^<]{0,20}Bracket)/i.exec(stripTags(before))?.[1] ?? null;
+    tiers.push({ tier, games: parseBracketTable(tableMatch[1], tournament) });
+  }
+  return tiers;
+}
+
+/** Round names from the page's own "Winner of Game #N" feeder references. */
+function assignRounds(games) {
+  const feeds = new Map(); // gameNumber -> consumer gameNumber
+  for (const game of games) {
+    for (const ref of game.matchup.matchAll(/Winner of Game #(\d+)/g)) {
+      feeds.set(Number(ref[1]), game.game_number);
+    }
+  }
+  const depth = (num, seen = new Set()) => {
+    if (seen.has(num)) return 0;
+    seen.add(num);
+    return feeds.has(num) ? 1 + depth(feeds.get(num), seen) : 0;
+  };
+  return games.map((game) => ({ ...game, round: roundLabel(depth(game.game_number)) }));
+}
+
+async function main() {
+  if (!existsSync(SCHEDULE_PATH)) {
+    throw new Error(`Schedule file not found at ${SCHEDULE_PATH}; run baseball:schedule first.`);
+  }
+  const schedule = JSON.parse(readFileSync(SCHEDULE_PATH, 'utf8'));
+  const tournaments = Array.isArray(schedule?.tournaments) ? schedule.tournaments : [];
+  const tournament = weekendTournament(tournaments);
+
+  if (!tournament) {
+    const { saturday } = targetWeekend();
+    const satIso = new Date(saturday * 86400000).toISOString().slice(0, 10);
+    writeMissing(null, `No tournament in the schedule covers the weekend of ${satIso}.`);
+    return;
+  }
+
+  const bracketUrl = tournament.bracket_url
+    ?? (tournament.event_id ? `${PG_BASE}/events/Brackets.aspx?event=${tournament.event_id}` : null);
+  if (!bracketUrl) {
+    writeMissing(tournament, 'The schedule has no bracket URL or event id for this tournament.');
+    return;
+  }
+
+  let html;
+  try {
+    html = await (await get(bracketUrl)).text();
+  } catch (error) {
+    writeMissing(tournament, `Bracket page fetch failed: ${error.message}`);
+    return;
+  }
+
+  const tiers = parseBrackets(html, tournament);
+  const games = tiers.flatMap(({ tier, games: tierGames }) =>
+    assignRounds(tierGames).map((game) => (tier ? { tier, ...game } : game)));
+  const ordered = games.sort((a, b) => a.game_number - b.game_number);
+
+  if (ordered.length === 0) {
+    writeMissing(tournament, `Bracket page at ${bracketUrl} published no bracket games yet.`);
+    return;
+  }
+
+  mkdirSync(OUT_DIR, { recursive: true });
+  writeFileSync(BRACKET_PATH, `${JSON.stringify({
+    tournament: tournament.name,
+    event_id: tournament.event_id,
+    bracket_url: bracketUrl,
+    games: ordered.map(({ game_number, ...rest }) => rest),
+    scraped_at: new Date().toISOString(),
+  }, null, 2)}\n`);
+  console.log(`baseball-bracket: wrote ${BRACKET_PATH} (${ordered.length} game(s))`);
+  console.log('BRACKET_FOUND=true');
+}
+
+main().catch((error) => {
+  console.error(`baseball-bracket: unexpected error: ${error?.message ?? error}`);
+  process.exit(1);
+});

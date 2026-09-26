@@ -1,0 +1,44 @@
+name: 413 Baseball weekend schedule
+
+# Thursday evening: pull the weekend tournament schedule for 4:13 Baseball
+# (15U travel team, Spring TX) from the Perfect Game team page and commit it
+# to content/baseball/schedule.json. A commit here pushes to main, which
+# Cloudflare Workers Builds deploys.
+
+on:
+  schedule:
+    # 23:00 UTC Thursday = 6:00 PM Thursday CDT (5:00 PM in CST).
+    - cron: '0 23 * * 4'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: baseball-schedule
+  cancel-in-progress: false
+
+jobs:
+  schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+
+      - name: Refresh weekend schedule from Perfect Game
+        run: npm run baseball:schedule
+
+      - name: Commit weekend schedule
+        run: |
+          git config user.name "Cain Game Day Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add content/baseball/schedule.json
+          # schedule-error.json only exists when the scrape failed; commit it
+          # too so the failure is visible in git history.
+          [ -f content/baseball/schedule-error.json ] && git add content/baseball/schedule-error.json
+          git diff --cached --quiet || git commit -m "413 Baseball: refresh weekend schedule from Perfect Game"
+          git push

@@ -1,0 +1,73 @@
+name: 413 Baseball bracket check
+
+# Bracket cadence for 4:13 Baseball (15U travel team, Spring TX) tournament weekends:
+#
+# - Thursday ~6pm CT: baseball-schedule.yml pulls the weekend schedule from the
+#   Perfect Game team page into content/baseball/schedule.json.
+# - Saturday ~11pm CT: tournament brackets are expected to post. This workflow
+#   checks hourly from 11:00pm Saturday CT through 12:00pm Sunday CT.
+# - `npm run baseball:bracket` writes content/baseball/bracket.json on success
+#   (printing BRACKET_FOUND=true) or content/baseball/bracket-missing.json
+#   (printing BRACKET_FOUND=false).
+# - bracket-missing.json is the alert signal: when its content changes, Steven
+#   can be notified that the bracket is not posted yet.
+# - Each commit step only commits when the file content actually changed, so
+#   the hourly retries never spam git history.
+#
+# A commit here pushes to main, which Cloudflare Workers Builds deploys.
+
+on:
+  schedule:
+    # 04:00-17:00 UTC Sunday = 11:00pm Saturday to 12:00pm Sunday CDT.
+    # Caveat: in CST (UTC-6) this window shifts one hour earlier,
+    # 10:00pm Saturday to 11:00am Sunday.
+    - cron: '0 4-17 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: baseball-bracket
+  cancel-in-progress: false
+
+jobs:
+  bracket:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+
+      - name: Check for tournament bracket
+        id: bracket
+        run: |
+          # A missing bracket is a normal outcome, not a step failure.
+          npm run baseball:bracket > /tmp/baseball-bracket.log 2>&1 || true
+          cat /tmp/baseball-bracket.log
+          if grep -q 'BRACKET_FOUND=true' /tmp/baseball-bracket.log; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit posted bracket
+        if: steps.bracket.outputs.found == 'true'
+        run: |
+          git config user.name "Cain Game Day Bot"
+          git config user.email "actions@users.noreply.github.com"
+          [ -f content/baseball/bracket.json ] && git add content/baseball/bracket.json
+          git diff --cached --quiet || git commit -m "413 Baseball: bracket posted"
+          git push
+
+      - name: Commit bracket-missing signal
+        if: steps.bracket.outputs.found == 'false'
+        run: |
+          git config user.name "Cain Game Day Bot"
+          git config user.email "actions@users.noreply.github.com"
+          [ -f content/baseball/bracket-missing.json ] && git add content/baseball/bracket-missing.json
+          git diff --cached --quiet || git commit -m "413 Baseball: bracket not yet posted"
+          git push

@@ -1,0 +1,49 @@
+{
+  "scraped_at": "2026-09-26T16:35:54.023Z",
+  "source": "Perfect Game",
+  "source_url": "https://www.perfectgame.org/PGBA/Team/default.aspx?orgid=69753&orgteamid=297202&Year=2027",
+  "team": {
+    "name": "4:13 Baseball",
+    "city": "Spring, TX",
+    "age_division": "15U"
+  },
+  "tournaments": [
+    {
+      "name": "2026 15U PG Backyard Brawl @ Premier",
+      "dates": "Sep 26-27",
+      "start_date": "2026-09-26",
+      "end_date": "2026-09-27",
+      "city": "Tomball, TX",
+      "venue": "Premier Baseball of Texas",
+      "event_id": "140434",
+      "event_url": "https://www.perfectgame.org/events/Default.aspx?event=140434",
+      "bracket_url": "https://www.perfectgame.org/events/Brackets.aspx?event=140434",
+      "games": [
+        {
+          "date": "2026-09-26",
+          "time": "3:00 PM",
+          "opponent": "TSB",
+          "opponent_record": "0-3-0",
+          "opponent_url": "https://www.perfectgame.org/PGBA/Team/default.aspx?orgid=83829&orgteamid=313350&team=1181719&year=2027",
+          "home_away": "@",
+          "pool": "A",
+          "field": "Field 7",
+          "venue": "Premier Baseball of Texas",
+          "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1584457"
+        },
+        {
+          "date": "2026-09-26",
+          "time": "5:20 PM",
+          "opponent": "15U OFFSEASON BASEBALL - WILLIAMS",
+          "opponent_record": "2-2-0",
+          "opponent_url": "https://www.perfectgame.org/PGBA/Team/default.aspx?orgid=35176&orgteamid=306313&team=1164660&year=2027",
+          "home_away": "vs",
+          "pool": "A",
+          "field": "Field 7",
+          "venue": "Premier Baseball of Texas",
+          "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1584458"
+        }
+      ]
+    }
+  ]
+}

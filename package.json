@@ -7,6 +7,8 @@
   },
   "scripts": {
     "dev": "vinext dev",
+    "baseball:schedule": "node scripts/baseball-pg.mjs",
+    "baseball:bracket": "node scripts/baseball-bracket.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "build": "npm run docs:check && npm run validate && npm run sitemap && vinext build && node scripts/check-build.mjs",
     "prepare:pages": "node scripts/prepare-pages.mjs",
@@ -26,6 +28,7 @@
     "photos": "node scripts/sync-player-photos.mjs",
     "brand:assets": "node scripts/build-brand-assets.mjs",
     "roster": "node scripts/sync-roster.mjs",
+    "baseball:seed": "node scripts/baseball-seed.mjs",
     "logos": "node scripts/sync-opponent-logos.mjs",
     "docs:check": "node scripts/check-docs.mjs"
   },
