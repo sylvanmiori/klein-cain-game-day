@@ -199,6 +199,8 @@ The source is Dave Campbell's Texas Football's score endpoint. It is an external
 
 The parser requires an unambiguous team/opponent match and valid scores. A source failure leaves the previous score intact. The checked-in game has a fallback in `public/live-score.json`.
 
+On busy Friday nights the Dave Campbell's scores endpoint returns every Texas game for that date in one payload (about 2.5 MB and 1,000+ rows, each with HTML `render` markup). The scheduled Worker must stay inside Cloudflare's per-invocation CPU budget, so `cloudflare/score.mjs` extracts only the matching Klein Cain row from the inner `data` JSON string instead of parsing the full array into thousands of objects. That keeps the one-minute cron reliable when the feed grows.
+
 Manual corrections use `POST /api/score/override`, disabled unless the Worker secret `SCORE_ADMIN_TOKEN` is configured. Supply bearer authorization and JSON fields `date`, `status` (`live` or `final`), `homeScore` and `awayScore`. Scores follow venue order, not always Klein Cain first. A live override pauses source updates for 15 minutes; a final stops them. There is no public editing interface.
 
 ## Running unattended

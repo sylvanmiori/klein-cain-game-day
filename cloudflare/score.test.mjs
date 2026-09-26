@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import snapshot from '../public/live-score.json' with { type: 'json' };
-import { activeGame, parseScore } from './score.mjs';
+import { activeGame, extractGameRow, parseScore } from './score.mjs';
 import worker from './worker.mjs';
 
 const game = { date: '2026-09-04', opponent: 'Oak Ridge', home: true, kickoff: '7:00 PM' };
@@ -23,6 +23,29 @@ void test('home and away scores follow venue, including road games', () => {
   assert.equal(home.homeScore, 45);
   assert.equal(away.homeScore, 20);
   assert.equal(away.awayScore, 45);
+});
+
+void test('extractGameRow finds one game in a large payload without parsing every row', () => {
+  const filler = Array.from({ length: 2000 }, (_, index) => ({
+    gameId: index,
+    school: `School ${index}`,
+    opponent: `Opponent ${index}`,
+    status: 'Final',
+    score: 7,
+    opponentScore: 14,
+    render: '<div class="c-game-score" data-game-id="' + index + '"><span>{}</span></div>',
+  }));
+  const target = { gameId: 156239, school: 'Klein Cain', opponent: 'Magnolia West', status: '3rd Quarter', score: 48, opponentScore: 0, render: '<div>{}</div>' };
+  filler.splice(1000, 0, target);
+  const data = JSON.stringify(filler);
+  assert.ok(data.length > 300_000, 'fixture should approximate a busy Friday-night feed');
+  const matches = extractGameRow(data, 'Klein Cain', 'Magnolia West');
+  assert.equal(matches.length, 1);
+  assert.equal(matches[0].status, '3rd Quarter');
+  assert.equal(matches[0].score, 48);
+  const parsed = parseScore({ d: { success: true, data } }, { date: '2026-09-25', opponent: 'Magnolia West', home: false, kickoff: '7:00 PM' }, 'Klein Cain');
+  assert.equal(parsed.awayScore, 48);
+  assert.equal(parsed.homeScore, 0);
 });
 
 void test('bad data cannot become a zero score or match a different opponent', () => {
@@ -80,6 +103,49 @@ void test('cron skips off days and already-final games without fetching the sour
   await worker.scheduled({ scheduledTime: Date.parse('2026-09-05T01:00:00Z') }, {
     SCORES: { get: async () => ({ status: 'final' }) },
   });
+});
+
+void test('cron writes KV after parsing a large DCTF payload', async () => {
+  const filler = Array.from({ length: 2000 }, (_, index) => ({
+    gameId: index,
+    school: `School ${index}`,
+    opponent: `Opponent ${index}`,
+    status: 'Final',
+    score: 7,
+    opponentScore: 14,
+    render: '<div class="c-game-score" data-game-id="' + index + '"><span>{}</span></div>',
+  }));
+  filler.splice(1000, 0, {
+    gameId: 156239,
+    school: 'Klein Cain',
+    opponent: 'Magnolia West',
+    status: '3rd Quarter',
+    score: 48,
+    opponentScore: 0,
+    render: '<div>{}</div>',
+  });
+  const payload = {
+    d: JSON.stringify({
+      success: true,
+      data: JSON.stringify(filler),
+    }),
+  };
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response(JSON.stringify(payload), { status: 200 });
+  let saved = null;
+  try {
+    await worker.scheduled({ scheduledTime: Date.parse('2026-09-26T01:50:00Z') }, {
+      SCORES: {
+        get: async () => ({ slug: '2026-09-25-magnolia-west', homeRecord: '2–2', awayRecord: '3–0' }),
+        put: async (_key, value) => { saved = JSON.parse(value); },
+      },
+    });
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+  assert.equal(saved?.awayScore, 48);
+  assert.equal(saved?.homeScore, 0);
+  assert.equal(saved?.statusLabel, '3rd Quarter');
 });
 
 test('the retired /team address redirects to the program page', async () => {

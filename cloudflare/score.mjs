@@ -16,15 +16,50 @@ export function activeGame(schedule, now = new Date()) {
 
 const normalize = value => String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 
-export function parseScore(payload, game, schoolName, previous, now = new Date()) {
-  const envelope = typeof payload.d === 'string' ? JSON.parse(payload.d) : payload.d;
-  if (!envelope?.success) throw new Error('Score source returned an unsuccessful response.');
-  const games = typeof envelope.data === 'string' ? JSON.parse(envelope.data) : envelope.data;
+/** Pull one game object out of the DCTF data array string without parsing every row. */
+export function extractGameRow(data, schoolName, opponent) {
+  const schoolNeedle = `"school":"${schoolName.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+  const normSchool = normalize(schoolName);
+  const normOpp = normalize(opponent);
+  const matches = [];
+  let idx = 0;
+  while ((idx = data.indexOf(schoolNeedle, idx)) !== -1) {
+    let start = idx;
+    while (start > 0 && data[start] !== '{') start--;
+    let depth = 0;
+    let end = start;
+    for (let i = start; i < data.length; i++) {
+      if (data[i] === '{') depth++;
+      else if (data[i] === '}') {
+        depth--;
+        if (depth === 0) { end = i; break; }
+      }
+    }
+    const row = JSON.parse(data.slice(start, end + 1));
+    if (normalize(row.school) === normSchool && normalize(row.opponent) === normOpp) matches.push(row);
+    idx += schoolNeedle.length;
+  }
+  return matches;
+}
+
+function findGameRow(envelope, game, schoolName) {
+  if (typeof envelope.data === 'string') {
+    const matches = extractGameRow(envelope.data, schoolName, game.opponent);
+    if (matches.length !== 1) throw new Error('Score source did not uniquely match the scheduled game.');
+    return matches[0];
+  }
+  const games = envelope.data;
   if (!Array.isArray(games)) throw new Error('Score source format changed.');
   const matches = games.filter(item => normalize(item.school) === normalize(schoolName)
     && normalize(item.opponent) === normalize(game.opponent));
   if (matches.length !== 1) throw new Error('Score source did not uniquely match the scheduled game.');
-  const result = matches[0];
+  return matches[0];
+}
+
+export function parseScore(payload, game, schoolName, previous, now = new Date()) {
+  const envelope = typeof payload.d === 'string' ? JSON.parse(payload.d) : payload.d;
+  if (!envelope?.success) throw new Error('Score source returned an unsuccessful response.');
+  const result = findGameRow(envelope, game, schoolName);
   const label = String(result.status || '').trim();
   const status = /final/i.test(label) ? 'final'
     : /quarter|qtr|q[1-4]|1st|2nd|3rd|4th|half|\bot\b|delay|live/i.test(label) ? 'live'
@@ -60,5 +95,5 @@ export async function fetchGameScore(game, schoolName, previous) {
     signal: AbortSignal.timeout(15000),
   });
   if (!response.ok) throw new Error(`Score source HTTP ${response.status}`);
-  return parseScore(await response.json(), game, schoolName, previous);
+  return parseScore(JSON.parse(await response.text()), game, schoolName, previous);
 }
