@@ -1,15 +1,48 @@
 import type { Metadata } from 'next';
 import { BaseballSubnav } from '../../components/baseball/baseball-subnav';
 
+const baseballUrl = 'https://413baseball.gameday.report';
+const baseballDesc =
+  '4:13 Baseball 15U travel ball from Spring, TX — tournament schedules, results, roster, and season stats, covered by Game Day Report.';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(baseballUrl),
   title: {
     default: '4:13 Baseball | Game Day Report',
     template: '%s | 4:13 Baseball',
   },
-  description:
-    '4:13 Baseball 15U travel ball from Spring, TX — tournament schedules, results, roster, and season stats, covered by Game Day Report.',
+  description: baseballDesc,
+  alternates: {
+    canonical: baseballUrl,
+  },
+  openGraph: {
+    siteName: '4:13 Baseball',
+    type: 'website',
+    locale: 'en_US',
+    url: baseballUrl,
+    title: '4:13 Baseball | Game Day Report',
+    description: baseballDesc,
+    images: [
+      {
+        url: `${baseballUrl}/brand/baseball/og.png`,
+        width: 1200,
+        height: 630,
+        alt: '4:13 Baseball',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '4:13 Baseball | Game Day Report',
+    description: baseballDesc,
+    images: [`${baseballUrl}/brand/baseball/og.png`],
+  },
   icons: {
-    
+    icon: [
+      { url: '/brand/baseball/413-shield-48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/brand/baseball/413-shield-192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: [{ url: '/brand/baseball/413-shield-192.png', sizes: '192x192', type: 'image/png' }],
   },
 };
 

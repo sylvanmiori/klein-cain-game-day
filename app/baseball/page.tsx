@@ -9,12 +9,36 @@ import {
   mapsSearchUrl,
 } from '../../components/baseball/data';
 
+const homeDesc =
+  "4:13 Baseball 15U travel ball from Spring, TX (2026-2027 season) — this weekend's tournament, results, roster, and box-score stats.";
+
 export const metadata: Metadata = {
   title: {
     absolute: '4:13 Baseball | Game Day Report',
   },
-  description:
-    '4:13 Baseball 15U travel ball from Spring, TX (2026-2027 season) — this weekend\'s tournament, results, roster, and box-score stats.',
+  description: homeDesc,
+  openGraph: {
+    siteName: '4:13 Baseball',
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://413baseball.gameday.report/',
+    title: '4:13 Baseball | Game Day Report',
+    description: homeDesc,
+    images: [
+      {
+        url: 'https://413baseball.gameday.report/brand/baseball/og.png',
+        width: 1200,
+        height: 630,
+        alt: '4:13 Baseball',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '4:13 Baseball | Game Day Report',
+    description: homeDesc,
+    images: ['https://413baseball.gameday.report/brand/baseball/og.png'],
+  },
 };
 
 const PG_URL = 'https://www.perfectgame.org/PGBA/Team/default.aspx?orgid=69753&orgteamid=297202&Year=2027';
