@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { BaseballRecordStrip } from '../../components/baseball/record-strip';
-import { currentWeekend, formatGameDate, loadSchedule } from '../../components/baseball/data';
+import { currentWeekend, formatGameDate, getSeasonRecord, loadSchedule } from '../../components/baseball/data';
 
 export const metadata: Metadata = {
   title: {
@@ -15,6 +15,7 @@ const PG_URL = 'https://www.perfectgame.org/PGBA/Team/default.aspx?orgid=69753&o
 export default async function BaseballHome() {
   const schedule = await loadSchedule();
   const window = schedule ? currentWeekend(schedule) : null;
+  const fallbackRecord = schedule ? getSeasonRecord(schedule) : null;
 
   return (
     <div className="grid gap-5">
@@ -100,7 +101,7 @@ export default async function BaseballHome() {
       </section>
 
       {/* Latest result + season record */}
-      <BaseballRecordStrip />
+      <BaseballRecordStrip fallback={fallbackRecord} />
 
       <p className="text-[12px] text-[#8a8a92]">
         Team page on Perfect Game:{' '}

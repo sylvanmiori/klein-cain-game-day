@@ -5,7 +5,7 @@
 
 import scheduleJson from '../../content/baseball/schedule.json';
 import bracketJson from '../../content/baseball/bracket.json';
-import type { BaseballBracket, BaseballSchedule, BracketGame, RosterPlayer, ScheduleGame, ScheduleTournament } from './types';
+import type { BaseballBracket, BaseballSchedule, BracketGame, RosterPlayer, ScheduleGame, ScheduleTournament, SeasonRecord } from './types';
 
 // ---- Raw scraper shapes ----
 interface RawScheduleGame {
@@ -79,6 +79,27 @@ export function loadSchedule(): BaseballSchedule | null {
     (Array.isArray(t.games) ? t.games : []).map((g, j) => normalizeGame(g, `t${i}`, j)),
   );
   return { tournaments, games };
+}
+
+/** Season record derived from Perfect Game results in schedule.json
+ *  (result format "W 5-1"). Always available — used as the fallback for the
+ *  homepage record strip when the live D1-backed fetch fails or is empty. */
+export function getSeasonRecord(schedule: BaseballSchedule): SeasonRecord | null {
+  let w = 0, l = 0, t = 0;
+  let lastDate = '';
+  let last: SeasonRecord['last'] = null;
+  for (const g of schedule.games) {
+    if (!g.result) continue;
+    const c = g.result.trim().charAt(0).toUpperCase();
+    if (c !== 'W' && c !== 'L' && c !== 'T') continue;
+    if (c === 'W') w += 1; else if (c === 'L') l += 1; else t += 1;
+    if ((g.date ?? '') >= lastDate) {
+      lastDate = g.date ?? '';
+      last = { opponent: g.opponent, result: g.result };
+    }
+  }
+  if (w + l + t === 0) return null;
+  return { w, l, t, last };
 }
 
 export function loadBracket(): BaseballBracket | null {

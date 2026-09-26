@@ -2,28 +2,32 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import type { StatsResponse } from './types';
+import type { SeasonRecord, StatsResponse } from './types';
 
-type State = 'loading' | 'ready' | 'empty' | 'error';
-
-function parseRecord(games: StatsResponse['games']) {
+function parseRecord(games: StatsResponse['games']): SeasonRecord | null {
   let w = 0, l = 0, t = 0;
-  let last: StatsResponse['games'][number] | null = null;
+  let lastDate = '';
+  let last: SeasonRecord['last'] = null;
   for (const g of games) {
     if (!g.result) continue;
     const c = g.result.trim().charAt(0).toUpperCase();
-    if (c === 'W') w += 1;
-    else if (c === 'L') l += 1;
-    else if (c === 'T') t += 1;
-    if (!last || g.date > last.date) last = g;
+    if (c !== 'W' && c !== 'L' && c !== 'T') continue;
+    if (c === 'W') w += 1; else if (c === 'L') l += 1; else t += 1;
+    if ((g.date ?? '') >= lastDate) {
+      lastDate = g.date ?? '';
+      last = { opponent: g.opponent, result: g.result };
+    }
   }
+  if (w + l + t === 0) return null;
   return { w, l, t, last };
 }
 
-/** Season record strip, fetched live from /api/baseball/stats. */
-export function BaseballRecordStrip() {
-  const [state, setState] = useState<State>('loading');
-  const [record, setRecord] = useState<{ w: number; l: number; t: number; last: StatsResponse['games'][number] | null } | null>(null);
+/** Season record strip. Live D1 box-score data wins when it loads; the
+ *  server-rendered Perfect Game fallback covers the gap (D1 not yet
+ *  provisioned, no box scores submitted yet, or a fetch failure). */
+export function BaseballRecordStrip({ fallback }: { fallback?: SeasonRecord | null }) {
+  const [live, setLive] = useState<SeasonRecord | null>(null);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let alive = true;
@@ -34,27 +38,20 @@ export function BaseballRecordStrip() {
       })
       .then((data) => {
         if (!alive) return;
-        if (!data || !Array.isArray(data.games) || data.games.length === 0) {
-          setState('empty');
-          return;
-        }
-        const rec = parseRecord(data.games);
-        if (rec.w + rec.l + rec.t === 0) {
-          setState('empty');
-          return;
-        }
-        setRecord(rec);
-        setState('ready');
+        setLive(data && Array.isArray(data.games) ? parseRecord(data.games) : null);
+        setLoaded(true);
       })
       .catch(() => {
-        if (alive) setState('error');
+        if (alive) setLoaded(true);
       });
     return () => {
       alive = false;
     };
   }, []);
 
-  if (state === 'loading') {
+  const record = live ?? fallback ?? null;
+
+  if (!loaded) {
     return (
       <section className="rounded-2xl border border-[#dde7f0] bg-white p-5" aria-live="polite">
         <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">Season Record</p>
@@ -63,16 +60,7 @@ export function BaseballRecordStrip() {
     );
   }
 
-  if (state === 'error') {
-    return (
-      <section className="rounded-2xl border border-[#dde7f0] bg-white p-5">
-        <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">Season Record</p>
-        <p className="mt-2 text-sm text-[#6e6e73]">Record unavailable right now. Try refreshing in a bit.</p>
-      </section>
-    );
-  }
-
-  if (state === 'empty' || !record) {
+  if (!record) {
     return (
       <section className="rounded-2xl border border-[#dde7f0] bg-white p-5">
         <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">Season Record</p>

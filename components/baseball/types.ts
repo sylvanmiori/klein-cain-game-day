@@ -33,6 +33,14 @@ export interface BaseballSchedule {
   games: ScheduleGame[];
 }
 
+/** Season W-L-T derived from a results source (PG schedule or D1 box scores). */
+export interface SeasonRecord {
+  w: number;
+  l: number;
+  t: number;
+  last: { opponent: string; result: string } | null;
+}
+
 export interface BracketGame {
   tier?: string;
   round: string;
