@@ -22,7 +22,7 @@
     "name": "Klein Cain",
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
-    "record": "3–0",
+    "record": "4–0",
     "rank": 51
   },
   "pageTitle": "2026 Week 6 Preview: Klein Cain at Klein",
@@ -34,17 +34,25 @@
     "margin": -5,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-25T19:04:48.505Z"
+    "asOf": "2026-09-26T03:07:12.910Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5",
-    "asOf": "2026-09-25T19:04:48.357Z"
+    "asOf": "2026-09-26T03:07:12.614Z"
   },
   "stats": null,
   "finalScore": null,
-  "rating": null,
+  "rating": {
+    "home": 14.01,
+    "away": 15.94,
+    "margin": 1.03,
+    "method": "Least-squares rating of every Texas result, margins capped at 28",
+    "source": "Cain Game Day",
+    "sourceUrl": "https://kleincain.gameday.report/",
+    "asOf": "2026-09-26T03:07:12.910Z"
+  },
   "weather": null,
   "scheduledFacts": [],
   "resultFacts": [],

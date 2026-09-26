@@ -15,14 +15,14 @@
     "name": "Klein Cain",
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
-    "record": "3–0",
+    "record": "4–0",
     "rank": 51
   },
   "away": {
     "name": "Klein Collins",
     "mascot": "Tigers",
     "logo": "/klein-collins-logo.png",
-    "record": "3–1",
+    "record": "4–1",
     "rank": 39
   },
   "pageTitle": "2026 Week 5 Preview: Klein Collins at Klein Cain",
@@ -34,17 +34,25 @@
     "margin": -8,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-25T19:04:48.011Z"
+    "asOf": "2026-09-26T03:07:12.200Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5",
-    "asOf": "2026-09-25T19:04:47.891Z"
+    "asOf": "2026-09-26T03:07:12.014Z"
   },
   "stats": null,
   "finalScore": null,
-  "rating": null,
+  "rating": {
+    "home": 15.94,
+    "away": 13.32,
+    "margin": 5.58,
+    "method": "Least-squares rating of every Texas result, margins capped at 28",
+    "source": "Cain Game Day",
+    "sourceUrl": "https://kleincain.gameday.report/",
+    "asOf": "2026-09-26T03:07:12.200Z"
+  },
   "weather": {
     "tempF": 82,
     "condition": "Slight Chance Showers And Thunderstorms",
@@ -53,7 +61,7 @@
     "wind": "5 mph SE",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-09-25T19:04:48.356Z"
+    "asOf": "2026-09-26T03:07:12.614Z"
   },
   "scheduledFacts": [],
   "resultFacts": [],
