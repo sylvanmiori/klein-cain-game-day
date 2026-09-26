@@ -21,11 +21,11 @@ export default function BaseballLayout({ children }: { children: React.ReactNode
     // overflow-x-clip: the page must never scroll horizontally on phones.
     // Physical pl/pr/ml/mr (not logical px/mx): sidesteps any logical-property
     // quirk in embedded webviews that could drop the inline-end padding.
-    <div className="ml-auto mr-auto min-h-screen w-full max-w-[calc(100vw-16px)] overflow-x-clip bg-[#f5f7fa] text-[#111114]">
+    <div className="ml-auto mr-auto min-h-screen w-full max-w-[100vw] overflow-x-clip bg-[#f5f7fa] text-[#111114]">
       <div className="border-b border-[#dde7f0] bg-white">
         <div className="ml-auto mr-auto w-full max-w-3xl pb-4 pl-4 pr-4 pt-5">
           <div className="flex items-center gap-3">
-            <img src="/brand/baseball-shield.svg" alt="4:13 Baseball shield" className="h-11 w-11 shrink-0" />
+            <img src="/brand/baseball-shield.svg" alt="4:13 Baseball shield" className="h-11 w-11 min-w-0 shrink-0" />
             <div>
               <p className="text-lg font-black tracking-tight text-[#12324e]">4:13 Baseball</p>
               <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#7BAFD4]">

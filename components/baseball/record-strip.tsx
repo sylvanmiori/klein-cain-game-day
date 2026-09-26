@@ -55,7 +55,7 @@ export function BaseballRecordStrip({ fallback }: { fallback?: SeasonRecord | nu
 
   if (!loaded) {
     return (
-      <section className="rounded-2xl border border-[#dde7f0] bg-white p-5" aria-live="polite">
+      <section className="min-w-0 rounded-2xl border border-[#dde7f0] bg-white p-5" aria-live="polite">
         <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">Season Record</p>
         <p className="mt-2 text-sm text-[#6e6e73]">Loading record&hellip;</p>
       </section>
@@ -64,7 +64,7 @@ export function BaseballRecordStrip({ fallback }: { fallback?: SeasonRecord | nu
 
   if (!record) {
     return (
-      <section className="rounded-2xl border border-[#dde7f0] bg-white p-5">
+      <section className="min-w-0 rounded-2xl border border-[#dde7f0] bg-white p-5">
         <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">Season Record</p>
         <p className="mt-2 text-sm font-bold text-[#12324e]">No games recorded yet.</p>
         <p className="mt-1 text-sm text-[#6e6e73]">Results will appear here after the first pitch.</p>
@@ -74,7 +74,7 @@ export function BaseballRecordStrip({ fallback }: { fallback?: SeasonRecord | nu
 
   const { w, l, t, last } = record;
   return (
-    <section className="rounded-2xl border border-[#dde7f0] bg-white p-5">
+    <section className="min-w-0 rounded-2xl border border-[#dde7f0] bg-white p-5">
       <div className="flex items-baseline justify-between gap-3">
         <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">Season Record</p>
         <a href="/baseball/stats" className="text-[12px] font-bold text-[#12324e] underline decoration-[#7BAFD4] decoration-2 underline-offset-2">

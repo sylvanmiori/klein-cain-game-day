@@ -18,14 +18,14 @@ export default async function BaseballHome() {
   const fallbackRecord = schedule ? getSeasonRecord(schedule) : null;
 
   return (
-    <div className="grid gap-5">
+    <div className="flex flex-col gap-5">
       {/* Hero */}
-      <section className="overflow-hidden rounded-2xl bg-[#12324e] text-white">
+      <section className="min-w-0 overflow-hidden rounded-2xl bg-[#12324e] text-white">
         <div className="flex items-center gap-4 p-6">
           <img
             src="/brand/baseball-shield.svg"
             alt="4:13 Baseball shield"
-            className="h-20 w-20 shrink-0 rounded-xl bg-white/10 p-1.5"
+            className="h-20 w-20 min-w-0 shrink-0 rounded-xl bg-white/10 p-1.5"
           />
           <div>
             <h1 className="text-3xl font-black tracking-tight">4:13 Baseball</h1>
@@ -43,7 +43,7 @@ export default async function BaseballHome() {
       </section>
 
       {/* This Weekend */}
-      <section aria-label="This weekend" className="rounded-2xl border border-[#dde7f0] bg-white p-5">
+      <section aria-label="This weekend" className="min-w-0 rounded-2xl border border-[#dde7f0] bg-white p-5">
         <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">This Weekend</p>
         {!schedule || !window || !window.tournament ? (
           <p className="mt-3 text-sm text-[#6e6e73]">Schedule loading &mdash; tournament details coming soon.</p>
