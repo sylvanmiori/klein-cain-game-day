@@ -489,7 +489,10 @@ const worker = {
       });
     }
 
-    return env.ASSETS.fetch(request);
+    // The hostname rewrite above mutates `url`, so the asset lookup must use
+    // the rewritten URL, not the original request (otherwise the baseball
+    // host would serve the football homepage).
+    return env.ASSETS.fetch(new Request(url.toString(), request));
   },
 
   async scheduled(controller, env) {
