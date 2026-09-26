@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import snapshot from '../public/live-score.json' with { type: 'json' };
-import { activeGame, parseScore } from './score.mjs';
+import { activeGame, parseScore, stripHeavyScoreFields, extractSchoolGames } from './score.mjs';
 import worker from './worker.mjs';
 
 const game = { date: '2026-09-04', opponent: 'Oak Ridge', home: true, kickoff: '7:00 PM' };
@@ -44,6 +44,76 @@ void test('multi-MB render HTML is stripped so Friday-night payloads still parse
   assert.equal(parsed.statusLabel, '3rd Quarter');
   assert.equal(parsed.homeScore, 48);
   assert.equal(parsed.awayScore, 0);
+});
+
+void test('live score regressions cannot overwrite a higher verified score', () => {
+  const road = { date: '2026-09-25', opponent: 'Magnolia West', home: false, kickoff: '7:00 PM' };
+  const previous = parseScore({
+    d: JSON.stringify({ success: true, data: JSON.stringify([{
+      school: 'Klein Cain', opponent: 'Magnolia West', status: '4th Quarter', score: 58, opponentScore: 7,
+    }]) }),
+  }, road, 'Klein Cain');
+  assert.equal(previous.homeScore, 7);
+  assert.equal(previous.awayScore, 58);
+  const flickered = parseScore({
+    d: JSON.stringify({ success: true, data: JSON.stringify([{
+      school: 'Klein Cain', opponent: 'Magnolia West', status: '4th Quarter', score: 58, opponentScore: 0,
+    }]) }),
+  }, road, 'Klein Cain', previous);
+  assert.equal(flickered.homeScore, 7);
+  assert.equal(flickered.awayScore, 58);
+});
+
+
+void test('extract-before-parse handles 1000+ row Friday payloads without full-array JSON.parse', () => {
+  const target = {
+    school: 'Klein Cain', opponent: 'Magnolia West', status: '4th Quarter',
+    score: 58, opponentScore: 7, gameId: 1, location: 'Away', isDistrict: true,
+  };
+  const decoys = Array.from({ length: 1200 }, (_, i) => ({
+    school: `Decoy High ${i}`, opponent: `Rival ${i}`, status: '2nd Quarter',
+    score: 14, opponentScore: 7, gameId: i + 10, location: 'Home', isDistrict: false,
+    pad: 'y'.repeat(80),
+  }));
+  // Put target near the end so a naive scan still has to skip most rows.
+  const data = JSON.stringify([...decoys.slice(0, 1100), target, ...decoys.slice(1100)]);
+  assert.ok(data.length > 200_000, `expected multi-hundred-KB payload, got ${data.length}`);
+  const originalParse = JSON.parse;
+  let fullArrayParses = 0;
+  JSON.parse = (text, ...rest) => {
+    if (typeof text === 'string' && text.startsWith('[') && text.length > 50_000) fullArrayParses += 1;
+    return originalParse(text, ...rest);
+  };
+  try {
+    const road = { date: '2026-09-25', opponent: 'Magnolia West', home: false, kickoff: '7:00 PM' };
+    const parsed = parseScore({
+      d: JSON.stringify({ success: true, data }),
+    }, road, 'Klein Cain');
+    assert.equal(parsed.status, 'live');
+    assert.equal(parsed.homeScore, 7);
+    assert.equal(parsed.awayScore, 58);
+    assert.equal(fullArrayParses, 0, 'must not JSON.parse the full games array');
+    const only = extractSchoolGames(data, 'Klein Cain');
+    assert.equal(only.length, 1);
+    assert.equal(only[0].opponent, 'Magnolia West');
+  } finally {
+    JSON.parse = originalParse;
+  }
+});
+
+void test('stripHeavyScoreFields is linear and drops render/errorList', () => {
+  const fat = 'x'.repeat(20000);
+  const raw = JSON.stringify([{
+    school: 'Klein Cain', opponent: 'Oak Ridge', status: '3rd Quarter',
+    score: 48, opponentScore: 0, render: `<div>${fat}</div>`,
+    errorList: ['Property not found for Column (schoolTypeSortOrder)'],
+  }]);
+  const stripped = stripHeavyScoreFields(raw);
+  assert.equal(stripped.includes('"render"'), false);
+  assert.equal(stripped.includes('"errorList"'), false);
+  const row = JSON.parse(stripped)[0];
+  assert.equal(row.score, 48);
+  assert.equal(row.render, undefined);
 });
 
 void test('bad data cannot become a zero score or match a different opponent', () => {
