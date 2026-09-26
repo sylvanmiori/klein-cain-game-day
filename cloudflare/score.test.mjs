@@ -25,6 +25,27 @@ void test('home and away scores follow venue, including road games', () => {
   assert.equal(away.awayScore, 45);
 });
 
+void test('multi-MB render HTML is stripped so Friday-night payloads still parse', () => {
+  const fatRender = '<div class="c-game-score">' + 'x'.repeat(5000) + '</div>';
+  const row = {
+    school: 'Klein Cain', opponent: 'Oak Ridge', status: '3rd Quarter',
+    score: 48, opponentScore: 0, render: fatRender,
+    errorList: ['Property not found for Column (schoolTypeSortOrder)'],
+  };
+  const decoys = Array.from({ length: 200 }, (_, i) => ({
+    school: `Other ${i}`, opponent: `Foe ${i}`, status: 'Half Time',
+    score: 7, opponentScore: 3, render: fatRender, errorList: [],
+  }));
+  const payload = {
+    d: JSON.stringify({ success: true, data: JSON.stringify([row, ...decoys]) }),
+  };
+  const parsed = parseScore(payload, game, 'Klein Cain');
+  assert.equal(parsed.status, 'live');
+  assert.equal(parsed.statusLabel, '3rd Quarter');
+  assert.equal(parsed.homeScore, 48);
+  assert.equal(parsed.awayScore, 0);
+});
+
 void test('bad data cannot become a zero score or match a different opponent', () => {
   assert.throws(() => parseScore(payload('Final', ''), game, 'Klein Cain'));
   assert.throws(() => parseScore(payload('Final', null), game, 'Klein Cain'));
