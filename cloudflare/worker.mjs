@@ -4,6 +4,9 @@ import snapshot from '../public/live-score.json' with { type: 'json' };
 import { activeGame, gameSlug, fetchGameScore } from './score.mjs';
 
 const keyFor = slug => `${publication.schoolId}:${slug}`;
+const metaKeyFor = slug => `${publication.schoolId}:${slug}:ingest`;
+/** A live score with no successful ingest for this long is reported as stale. */
+const STALE_AFTER_MS = 10 * 60 * 1000;
 const json = (data, status = 200) => Response.json(data, {
   status, headers: { 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' },
 });
@@ -11,6 +14,43 @@ const json = (data, status = 200) => Response.json(data, {
 async function readScore(env, slug) {
   const saved = await env.SCORES.get(keyFor(slug), 'json');
   return saved || (snapshot.slug === slug ? snapshot : null);
+}
+
+export function scoreIsStale(score, now = Date.now()) {
+  if (!score || score.status !== 'live') return false;
+  const updated = Date.parse(score.updatedAt);
+  return Number.isFinite(updated) && now - updated > STALE_AFTER_MS;
+}
+
+/** Heartbeat cadence for successful ingests; failures and recoveries always record. */
+const INGEST_HEARTBEAT_MS = 5 * 60 * 1000;
+
+/**
+ * Lightweight health signal for the score ingest. Every cron attempt records
+ * when it ran, when it last succeeded, and the latest error plus a consecutive
+ * failure count. Failures never overwrite the last good score in KV; they are
+ * recorded here so a watcher can alert instead of the freeze going unnoticed.
+ * Steady-state successes only heartbeat every few minutes so game-night write
+ * volume stays inside the free KV quota; failures and recoveries always write.
+ * Telemetry writes are best-effort and can never break the ingest itself.
+ */
+async function recordIngestAttempt(env, slug, ok, detail, now = Date.now()) {
+  try {
+    const key = metaKeyFor(slug);
+    const prev = (await env.SCORES.get(key, 'json')) || {};
+    const failures = prev.consecutiveFailures ?? 0;
+    const lastAttempt = prev.lastAttempt ? Date.parse(prev.lastAttempt) : 0;
+    if (ok && failures === 0 && prev.lastSuccess && now - lastAttempt < INGEST_HEARTBEAT_MS) return;
+    await env.SCORES.put(key, JSON.stringify({
+      slug,
+      lastAttempt: new Date(now).toISOString(),
+      lastSuccess: ok ? detail : (prev.lastSuccess ?? null),
+      lastError: ok ? null : String(detail),
+      consecutiveFailures: ok ? 0 : failures + 1,
+    }));
+  } catch {
+    // Telemetry must never break the ingest.
+  }
 }
 
 const worker = {
@@ -44,9 +84,36 @@ const worker = {
       if (!schedule.some(game => gameSlug(game) === slug)) return json({ error: 'Game not found' }, 404);
       try {
         const score = await readScore(env, slug);
-        return score ? json(score) : json({ error: 'Score not available yet' }, 404);
+        if (!score) return json({ error: 'Score not available yet' }, 404);
+        // `stale` lets the frontend and any watcher see a frozen feed instead
+        // of silently serving an old live score as current.
+        return json({ ...score, stale: scoreIsStale(score), asOf: score.updatedAt ?? null });
       } catch {
         return snapshot.slug === slug ? json(snapshot) : json({ error: 'Score temporarily unavailable' }, 503);
+      }
+    }
+
+    if (url.pathname === '/api/score/health') {
+      if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
+      const slug = url.searchParams.get('game') || snapshot.slug;
+      if (!schedule.some(game => gameSlug(game) === slug)) return json({ error: 'Game not found' }, 404);
+      try {
+        const [score, meta] = await Promise.all([
+          readScore(env, slug).catch(() => null),
+          env.SCORES.get(metaKeyFor(slug), 'json').catch(() => null),
+        ]);
+        return json({
+          slug,
+          scoreStatus: score?.status ?? null,
+          stale: scoreIsStale(score),
+          asOf: score?.updatedAt ?? null,
+          lastAttempt: meta?.lastAttempt ?? null,
+          lastSuccess: meta?.lastSuccess ?? null,
+          lastError: meta?.lastError ?? null,
+          consecutiveFailures: meta?.consecutiveFailures ?? 0,
+        });
+      } catch {
+        return json({ error: 'Health check temporarily unavailable' }, 503);
       }
     }
 
@@ -89,9 +156,17 @@ const worker = {
     const slug = gameSlug(game);
     const previous = await readScore(env, slug);
     if (previous?.status === 'final' || previous?.manualUntil > Date.now()) return;
-    // Errors leave the previous value intact and appear as failed cron invocations.
-    const score = await fetchGameScore(game, publication.schoolName, previous);
-    await env.SCORES.put(keyFor(slug), JSON.stringify(score));
+    // A failed attempt keeps the previous (last good) value in KV, records the
+    // failure for watchers, and rethrows so the invocation still shows as
+    // failed in the Cloudflare dashboard. Nothing fails silently.
+    try {
+      const score = await fetchGameScore(game, publication.schoolName, previous);
+      await env.SCORES.put(keyFor(slug), JSON.stringify(score));
+      await recordIngestAttempt(env, slug, true, score.updatedAt);
+    } catch (err) {
+      await recordIngestAttempt(env, slug, false, err instanceof Error ? err.message : err);
+      throw err;
+    }
   },
 };
 

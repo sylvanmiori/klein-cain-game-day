@@ -55,7 +55,16 @@ for (const { name, edition } of editions) {
     const normalize = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
     const row = rows.find((item) => normalize(item.school) === normalize(publication.schoolName)
       && normalize(item.opponent).includes(normalize(game.opponent)));
-    if (!row || !/final/i.test(String(row.status || ''))) continue;
+    if (!row) continue;
+    const dctfStatus = String(row.status || '');
+    if (!/final/i.test(dctfStatus)) {
+      // Played game, but DCTF has not marked it final yet (tonight it still
+      // said "4th Quarter" at 58-7 after the game ended). Say so loudly instead
+      // of silently skipping, so the stuck state shows up in the run report
+      // and the Saturday final-capture check can escalate it.
+      problems.push(`${name}: DCTF status is "${dctfStatus || 'unknown'}", final not captured yet`);
+      continue;
+    }
     const forScore = Number(row.score);
     const againstScore = Number(row.opponentScore);
     if (!Number.isInteger(forScore) || !Number.isInteger(againstScore)) continue;

@@ -1,5 +1,7 @@
 # AI developer handoff
 
+Two AIs operate this project: Sylvan (full-time editor/manager, owns all publishing) and GrokBot (monitor/track/draft only, never publishes unprompted). The binding operating rules, handoff protocol, pre-publish checklist, and duplicate-post prevention are in `docs/GROKBOT-RUNBOOK.md`. Read it before touching anything.
+
 Read `README.md`, then `docs/PROJECT-GUIDE.md`, before changing this repository. The guide is the durable project memory: architecture, hosting, automation, data ownership, source behavior, design decisions, recovery and open work all live there.
 
 ## Non-negotiables

@@ -249,9 +249,6 @@ article>section { border-bottom:1px solid var(--line); }
 .recap-copy { max-width:780px; margin:24px auto 0; }
 .recap-copy p { max-width:780px; margin:0 0 18px; font:16.5px/1.72 "Helvetica Neue", Helvetica, Arial, sans-serif; color:#222; }
 .recap-copy p:last-child { margin-bottom:0; }
-.week-recap .recap-copy { max-width:680px; margin:18px 0 0; }
-.week-recap .recap-copy p { max-width:680px; margin:0 0 16px; font-size:15px; line-height:1.58; color:inherit; }
-.week-recap .recap-copy p:last-child { margin-bottom:0; }
 .byline { margin:28px 0 0; font-size:9px; font-weight:900; letter-spacing:.13em; color:#716b62; }
 .feature-grid { display:block; background:#17131a; color:#f6f1e8; }
 .feature-copy { padding:64px var(--pad) 72px; }
@@ -362,13 +359,28 @@ article>section { border-bottom:1px solid var(--line); }
 .history-source { display:flex; gap:14px; margin:0; color:var(--purple); font-size:9px; font-weight:800; }
 .history-source a { transition:color .15s ease; }
 .history-source a:hover { color:#32104e; }
-.week-recap { display:grid; grid-template-columns:minmax(0,1fr) minmax(320px,380px); gap:48px 56px; align-items:start; padding:52px var(--pad) 56px; border-bottom:none; }
+/* RECAP COLUMN INVARIANT (single source of truth) --------------------------
+ * The recap story column is always max-width:780px and horizontally
+ * centered (margin-inline:auto), in BOTH the sidebar and no-sidebar
+ * layouts. Change the measure only through --recap-measure on .week-recap.
+ * The only per-layout differences live in this block: .no-sidebar collapses
+ * the section grid to one full-width column, and the .recap-copy text
+ * measure is 680px with a sidebar but follows --recap-measure without one.
+ * Do NOT set width, max-width, or horizontal margin on .recap-body-column
+ * or .recap-copy anywhere else in this file. This measure was patched four
+ * separate times (f080cd3, f20a0a9, 7977752, a101984d) because the width
+ * and the centering lived in different rules; that split is what kept
+ * breaking. The single block is the fix.
+ * ---------------------------------------------------------------------- */
+.week-recap { --recap-measure:780px; display:grid; grid-template-columns:minmax(0,1fr) minmax(320px,380px); gap:48px 56px; align-items:start; padding:52px var(--pad) 56px; border-bottom:none; }
 .week-recap.no-sidebar { grid-template-columns:minmax(0,1fr); max-width:none; width:100%; }
-.week-recap.no-sidebar .recap-body-column { width:100%; max-width:780px; margin-inline:auto; }
-.week-recap.no-sidebar .recap-copy, .week-recap.no-sidebar .recap-copy p { max-width:780px; }
+.week-recap .recap-body-column { width:100%; max-width:var(--recap-measure); margin-inline:auto; min-width:0; }
 .week-recap .byline { margin:10px 0 0; color:#787268; font-size:11px; font-weight:750; letter-spacing:.03em; text-transform:uppercase; }
-.recap-body-column { min-width:0; }
 .recap-sidebar { display:flex; flex-direction:column; gap:24px; min-width:0; }
+.week-recap .recap-copy { max-width:680px; margin:18px 0 0; }
+.week-recap .recap-copy p { max-width:680px; margin:0 0 16px; font-size:15px; line-height:1.58; color:inherit; }
+.week-recap .recap-copy p:last-child { margin-bottom:0; }
+.week-recap.no-sidebar .recap-copy, .week-recap.no-sidebar .recap-copy p { max-width:var(--recap-measure); }
 .week-recap h2,.compact-head h2,.early-read h2 { margin:0; font-size:clamp(27px,3vw,40px); line-height:1.04; font-weight:850; letter-spacing:-.05em; }
 .week-recap p,.early-read p { max-width:680px; margin:18px 0 0; font-size:15px; line-height:1.58; }
 .quarter-box { align-self:stretch; border-top:1px solid #98989f; border-bottom:1px solid #98989f; }

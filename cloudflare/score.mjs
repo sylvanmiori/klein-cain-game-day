@@ -18,69 +18,122 @@ const normalize = value => String(value || '').toLowerCase().replace(/[^a-z0-9]/
 
 /** Linear-time removal of DCTF heavy fields. Avoids regex backtracking on multi-MB HTML. */
 export function stripHeavyScoreFields(jsonText) {
-  let out = '';
+  const parts = [];
+  let kept = 0; // start of the not-yet-copied kept region
   let i = 0;
   const n = jsonText.length;
+  const flush = (end) => {
+    if (end > kept) parts.push(jsonText.slice(kept, end));
+    kept = end;
+  };
+  const dropTrailingComma = () => {
+    for (let k = parts.length - 1; k >= 0; k--) {
+      const tail = parts[k];
+      if (!tail) continue;
+      if (tail.endsWith(',')) parts[k] = tail.slice(0, -1);
+      return;
+    }
+  };
   while (i < n) {
-    const atRender = jsonText.startsWith('"render":"', i);
-    const atErrors = jsonText.startsWith('"errorList":[', i);
-    if (!atRender && !atErrors) {
-      out += jsonText[i++];
+    // Jump straight to the next string; only a string can start a heavy field.
+    const q = jsonText.indexOf('"', i);
+    if (q === -1) break;
+    const isRender = jsonText.startsWith('"render":"', q);
+    const isErrors = !isRender && jsonText.startsWith('"errorList":[', q);
+    if (!isRender && !isErrors) {
+      // Ordinary string (possibly containing text like `"render":` that must
+      // be kept verbatim): skip to its closing quote.
+      i = q + 1;
+      while (i < n) {
+        const c = jsonText[i];
+        if (c === '\\') { i += 2; continue; }
+        if (c === '"') { i += 1; break; }
+        i += 1;
+      }
       continue;
     }
-    if (out.endsWith(',')) out = out.slice(0, -1);
-    if (atRender) {
-      i += '"render":"'.length;
-      while (i < n) {
-        const c = jsonText[i++];
-        if (c === '\\') {
-          if (i < n) i += 1;
-          continue;
-        }
-        if (c === '"') break;
+    // Heavy field: copy everything before it, then drop the field plus exactly
+    // one separator comma (the following one when present, else the preceding).
+    flush(q);
+    let j = q + (isRender ? '"render":"'.length : '"errorList":['.length);
+    if (isRender) {
+      while (j < n) {
+        const c = jsonText[j];
+        if (c === '\\') { j += 2; continue; }
+        if (c === '"') { j += 1; break; }
+        j += 1;
       }
     } else {
-      i += '"errorList":['.length;
       let depth = 1;
-      while (i < n && depth > 0) {
-        const c = jsonText[i++];
+      while (j < n && depth > 0) {
+        const c = jsonText[j];
         if (c === '"') {
-          while (i < n) {
-            const d = jsonText[i++];
-            if (d === '\\') {
-              if (i < n) i += 1;
-              continue;
-            }
-            if (d === '"') break;
+          j += 1;
+          while (j < n) {
+            const d = jsonText[j];
+            if (d === '\\') { j += 2; continue; }
+            if (d === '"') { j += 1; break; }
+            j += 1;
           }
           continue;
         }
         if (c === '[') depth += 1;
         else if (c === ']') depth -= 1;
+        j += 1;
       }
     }
-    if (jsonText[i] === ',') i += 1;
+    if (jsonText[j] === ',') j += 1;
+    else dropTrailingComma();
+    kept = j;
+    i = j;
   }
-  return out;
+  flush(n);
+  return parts.join('');
 }
 
 /**
- * After strip, DCTF rows are flat primitive objects (~500B). Pull only objects whose
- * school field matches — never JSON.parse the full ~500KB+/1100-row Friday array.
+ * Pull only the top-level row objects whose `school` field matches, never
+ * JSON.parse the full games array. A linear brace-matching scan (string
+ * aware), so rows that gain nested objects in a DCTF shape change still
+ * extract; anything unrecognized fails closed in the unique-match check below.
  */
 export function extractSchoolGames(dataText, schoolName) {
-  const escaped = String(schoolName).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const pattern = new RegExp(
-    '\\{[^{}]*"school"\\s*:\\s*"' + escaped + '"[^{}]*\\}',
-    'g',
-  );
+  const nameJson = JSON.stringify(schoolName);
   const rows = [];
-  for (const match of dataText.matchAll(pattern)) {
-    try {
-      rows.push(JSON.parse(match[0]));
-    } catch {
-      // Skip malformed candidates; unique-match below will fail closed if needed.
+  const stack = [];
+  let i = 0;
+  const n = dataText.length;
+  while (i < n) {
+    const c = dataText[i];
+    if (c === '"') {
+      i += 1;
+      while (i < n) {
+        const d = dataText[i];
+        if (d === '\\') { i += 2; continue; }
+        if (d === '"') { i += 1; break; }
+        i += 1;
+      }
+      continue;
     }
+    if (c === '{') { stack.push(i); i += 1; continue; }
+    if (c === '}') {
+      const start = stack.pop();
+      // Only array-level rows are candidates, never nested objects.
+      if (start !== undefined && stack.length === 0) {
+        const text = dataText.slice(start, i + 1);
+        if (text.includes('"school"') && text.includes(nameJson)) {
+          try {
+            const obj = JSON.parse(text);
+            if (obj && obj.school === schoolName) rows.push(obj);
+          } catch {
+            // Skip malformed candidates; the unique-match check fails closed.
+          }
+        }
+      }
+      i += 1;
+      continue;
+    }
+    i += 1;
   }
   return rows;
 }
@@ -99,7 +152,7 @@ export function parseScore(payload, game, schoolName, previous, now = new Date()
   if (!envelope?.success) throw new Error('Score source returned an unsuccessful response.');
   // Friday-night DCTF payloads are multi-MB because every row embeds HTML in `render`
   // (and unused errorList). Linear-strip those, then extract only the target school's
-  // flat row(s) — never JSON.parse the full slimmed array (still ~537KB / 1100 rows).
+  // flat row(s), never JSON.parse the full slimmed array (still ~537KB / 1100 rows).
   let data = envelope.data;
   if (typeof data === 'string') data = stripHeavyScoreFields(data);
   const matches = matchGames(data, schoolName, game.opponent);
@@ -107,8 +160,8 @@ export function parseScore(payload, game, schoolName, previous, now = new Date()
   const result = matches[0];
   const label = String(result.status || '').trim();
   const status = /final/i.test(label) ? 'final'
-    : /quarter|qtr|q[1-4]|1st|2nd|3rd|4th|half|\\bot\\b|delay|live/i.test(label) ? 'live'
-    : /scheduled|[ap]\\.?m\\.?/i.test(label) ? 'scheduled' : null;
+    : /quarter|qtr|q[1-4]|1st|2nd|3rd|4th|half|\bbot\b|delay|live/i.test(label) ? 'live'
+    : /scheduled|[ap]\.?m\.?/i.test(label) ? 'scheduled' : null;
   if (!status) throw new Error(`Unrecognized game status: ${label}`);
   const numeric = value => value !== null && value !== undefined && String(value).trim() !== ''
     && Number.isInteger(Number(value)) && Number(value) >= 0 && Number(value) <= 200;
@@ -143,6 +196,9 @@ export function parseScore(payload, game, schoolName, previous, now = new Date()
   };
 }
 
+/** Hard ceiling on the raw DCTF response body. Bounds memory and CPU before parsing. */
+export const MAX_SCORE_PAYLOAD_BYTES = 8_000_000;
+
 export async function fetchGameScore(game, schoolName, previous) {
   const [year, month, day] = game.date.split('-');
   const response = await fetch('https://www.texasfootball.com/api/schools/scoresGetJson', {
@@ -152,6 +208,6 @@ export async function fetchGameScore(game, schoolName, previous) {
   });
   if (!response.ok) throw new Error(`Score source HTTP ${response.status}`);
   const raw = await response.text();
-  if (raw.length > 8_000_000) throw new Error('Score source payload too large.');
+  if (raw.length > MAX_SCORE_PAYLOAD_BYTES) throw new Error('Score source payload too large.');
   return parseScore(JSON.parse(raw), game, schoolName, previous);
 }
