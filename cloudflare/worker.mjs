@@ -1,7 +1,16 @@
 import publication from '../config/publication.json' with { type: 'json' };
 import schedule from '../config/season-2026.json' with { type: 'json' };
 import snapshot from '../public/live-score.json' with { type: 'json' };
+import baseballSchedule from '../content/baseball/schedule.json' with { type: 'json' };
 import { activeGame, gameSlug, fetchGameScore } from './score.mjs';
+import {
+  BRACKET_URL_FOR,
+  BROWSER_UA,
+  assignRounds,
+  buildSnapshot,
+  parseBracketsPage,
+  pickWeekendTournament,
+} from './baseball-bracket.mjs';
 
 const keyFor = slug => `${publication.schoolId}:${slug}`;
 const metaKeyFor = slug => `${publication.schoolId}:${slug}:ingest`;
@@ -300,6 +309,96 @@ function ipToTrue(ip) {
 function trueToIpDecimal(ipTrue) {
   const thirds = Math.round(ipTrue * 3);
   return Math.floor(thirds / 3) + (thirds % 3) / 10;
+}
+
+/** Cron string for the 4:13 Baseball bracket poller (every 15 minutes). */
+const BRACKET_POLL_CRON = '*/15 * * * *';
+/** KV key for a tournament's bracket snapshot: baseball:bracket:<event_id>. */
+const BRACKET_KV_PREFIX = 'baseball:bracket:';
+
+function chicagoTimeParts(ts) {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Chicago', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false,
+  }).formatToParts(ts);
+  const get = (t) => parts.find((p) => p.type === t)?.value;
+  return {
+    weekday: get('weekday'),
+    hour: Number(get('hour')) % 24,
+    minute: Number(get('minute')),
+  };
+}
+
+async function fetchBracketHtml(url, timeoutMs = 45000) {
+  const response = await fetch(url, {
+    headers: {
+      'user-agent': BROWSER_UA,
+      accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'accept-language': 'en-US,en;q=0.9',
+    },
+    signal: AbortSignal.timeout(timeoutMs),
+  });
+  if (!response.ok) throw new Error(`Bracket page returned HTTP ${response.status}`);
+  return response.text();
+}
+
+/**
+ * Telemetry for the bracket poll. Failures are recorded here and never touch
+ * the last-good snapshot in KV. Best-effort: telemetry can never break the poll.
+ */
+async function recordBracketIngest(env, metaKey, ok, detail) {
+  try {
+    const prev = (await env.SCORES.get(metaKey, 'json')) || {};
+    await env.SCORES.put(metaKey, JSON.stringify({
+      lastAttempt: new Date().toISOString(),
+      lastSuccess: ok ? detail : (prev.lastSuccess ?? null),
+      lastError: ok ? null : String(detail),
+      consecutiveFailures: ok ? 0 : (prev.consecutiveFailures ?? 0) + 1,
+    }));
+  } catch {
+    // Telemetry must never break the poll.
+  }
+}
+
+/**
+ * 4:13 Baseball bracket poller. Runs on the BRACKET_POLL_CRON schedule:
+ * every 15 minutes during Sat/Sun game hours (7am-11pm CT), hourly otherwise.
+ * Fetches the weekend tournament's Perfect Game bracket page, normalizes it
+ * into a snapshot, and stores it in KV. Last-good semantics: the snapshot is
+ * only written after a successful fetch+parse, so a Perfect Game blip can
+ * never wipe good data. A failure records telemetry and rethrows so the
+ * invocation shows as failed in the Cloudflare dashboard — nothing fails
+ * silently. Never invents scores, seeds or games.
+ */
+async function pollBaseballBracket(env, scheduledTime) {
+  const now = new Date(scheduledTime);
+  const { weekday, hour, minute } = chicagoTimeParts(now);
+  const inGameWindow = (weekday === 'Sat' || weekday === 'Sun') && hour >= 7 && hour < 23;
+  if (!inGameWindow && minute !== 0) return; // Off-hours: hourly is enough.
+  const tournaments = Array.isArray(baseballSchedule?.tournaments) ? baseballSchedule.tournaments : [];
+  const tournament = pickWeekendTournament(tournaments, now);
+  if (!tournament?.event_id) return; // No tournament this weekend: nothing to poll.
+  const eventId = String(tournament.event_id);
+  const bracketUrl = tournament.bracket_url || BRACKET_URL_FOR(eventId);
+  const key = `${BRACKET_KV_PREFIX}${eventId}`;
+  try {
+    const html = await fetchBracketHtml(bracketUrl);
+    const tiers = parseBracketsPage(html, tournament)
+      .map(({ tier, games }) => ({ tier, games: assignRounds(games) }));
+    const gameCount = tiers.reduce((n, t) => n + t.games.length, 0);
+    if (gameCount === 0) throw new Error('Bracket page published no bracket games yet');
+    const snapshot = buildSnapshot({
+      eventId,
+      tournamentName: tournament.name ?? null,
+      bracketUrl,
+      tiers,
+      scrapedAt: new Date().toISOString(),
+    });
+    await env.SCORES.put(key, JSON.stringify(snapshot));
+    await recordBracketIngest(env, `${key}:ingest`, true, snapshot.scraped_at);
+  } catch (err) {
+    await recordBracketIngest(env, `${key}:ingest`, false, err instanceof Error ? err.message : err);
+    throw err;
+  }
 }
 
 const worker = {
@@ -737,6 +836,27 @@ const worker = {
       });
     }
 
+    // Live bracket snapshot for 4:13 Baseball, polled from Perfect Game by
+    // the Worker cron (see docs/baseball-bracket-poller.md). Last-good
+    // semantics: this returns the most recent successful poll, so a Perfect
+    // Game blip never blanks the page. 404 when nothing is stored yet — the
+    // site falls back to the build-time bracket.json in that case.
+    if (url.pathname === '/api/baseball/bracket') {
+      if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
+      const tournaments = Array.isArray(baseballSchedule?.tournaments) ? baseballSchedule.tournaments : [];
+      const tournament = pickWeekendTournament(tournaments, new Date());
+      if (!tournament?.event_id) return json({ error: 'No tournament this weekend' }, 404);
+      const key = `${BRACKET_KV_PREFIX}${tournament.event_id}`;
+      let live = null;
+      try {
+        live = await env.SCORES.get(key, 'json');
+      } catch {
+        return json({ error: 'Bracket snapshot temporarily unavailable' }, 503);
+      }
+      if (!live) return json({ error: 'Bracket not posted yet', event_id: String(tournament.event_id) }, 404);
+      return json({ ...live, updated_at: live.scraped_at ?? null, source: 'Perfect Game' });
+    }
+
     // The hostname rewrite above mutates `url`, so the asset lookup must use
     // the rewritten URL, not the original request (otherwise the baseball
     // host would serve the football homepage).
@@ -744,6 +864,10 @@ const worker = {
   },
 
   async scheduled(controller, env) {
+    if (controller.cron === BRACKET_POLL_CRON) {
+      await pollBaseballBracket(env, controller.scheduledTime);
+      return;
+    }
     const game = activeGame(schedule, new Date(controller.scheduledTime));
     if (!game) return;
     const slug = gameSlug(game);

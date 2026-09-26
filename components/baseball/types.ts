@@ -58,6 +58,43 @@ export interface BaseballBracket {
   games: BracketGame[];
 }
 
+// ---- GET /api/baseball/bracket live-snapshot shapes ----
+// Polled from Perfect Game by the Worker cron; see docs/baseball-bracket-poller.md.
+export interface BracketTeam {
+  seed?: string | null;
+  name?: string | null;
+  score?: number | null;
+}
+
+export interface LiveBracketGame {
+  game_number: number;
+  round?: string | null;
+  date?: string | null;
+  time?: string | null;
+  field?: string | null;
+  venue?: string | null;
+  home: BracketTeam;
+  away: BracketTeam;
+  winner?: 'home' | 'away' | null;
+}
+
+export interface LiveBracketTier {
+  tier: string;
+  games: LiveBracketGame[];
+}
+
+export interface LiveBracketSnapshot {
+  schemaVersion: number;
+  event_id: string;
+  tournament?: string | null;
+  bracket_url?: string | null;
+  tiers: LiveBracketTier[];
+  game_count: number;
+  scraped_at: string;
+  updated_at?: string | null;
+  source: string;
+}
+
 export interface RosterPlayer {
   name: string;
   pos: string;

@@ -27,7 +27,7 @@
   //     "database_id": "REPLACE_WITH_D1_ID_AFTER_CREATION"
   //   }
   // ],
-  "triggers": { "crons": ["* * * * *"] },
+  "triggers": { "crons": ["* * * * *", "*/15 * * * *"] },
   "observability": { "enabled": true },
   "routes": [
     { "pattern": "gameday.report", "custom_domain": true },

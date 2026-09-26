@@ -25,6 +25,13 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {
+  BRACKET_URL_FOR,
+  BROWSER_UA,
+  assignRounds,
+  parseBracketsPage,
+  sideLabel,
+} from '../cloudflare/baseball-bracket.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_DIR = join(ROOT, 'content', 'baseball');
@@ -33,8 +40,6 @@ const BRACKET_PATH = join(OUT_DIR, 'bracket.json');
 const MISSING_PATH = join(OUT_DIR, 'bracket-missing.json');
 const SNAPSHOT_DIR = join(OUT_DIR, 'pg-snapshots');
 
-const PG_BASE = 'https://www.perfectgame.org';
-const BROWSER_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 const TIMEOUT = 45000;
 const ATTEMPTS = 3;
 
@@ -110,102 +115,8 @@ function writeMissing(tournament, reason) {
   console.log('BRACKET_FOUND=false');
 }
 
-/* ------------------------------------------------------- bracket extraction */
-
-const ROUND_LABELS = { 0: 'Championship', 1: 'Semifinal', 2: 'Quarterfinal', 3: 'Round of 16', 4: 'Round of 32' };
-
-function roundLabel(depth) {
-  return ROUND_LABELS[depth] ?? `Round ${depth}`;
-}
-
-/**
- * Parse one gvBracket table. Team boxes and game cells pair by their slot
- * number (GamePos{N} / SeedPos{N} in the control ids); table row order is
- * not a reliable pairing because both bracket halves render side by side.
- */
-function parseBracketTable(tableHtml, tournament) {
-  const tournamentYear = tournament?.start_date ? Number(tournament.start_date.slice(0, 4)) : null;
-  const boxes = new Map(); // slot -> {home:{seed,name}, away:{seed,name}}
-  for (const match of tableHtml.matchAll(/<td class="(Home|Visitor)TeamBox">([\s\S]*?)<\/td>/g)) {
-    const side = match[1] === 'Home' ? 'home' : 'away';
-    const cell = match[2];
-    const slot = /SeedPos(\d+)_\d+">/.exec(cell)?.[1];
-    const seed = stripTags(/SeedPos\d+_\d+">([^<]*)/.exec(cell)?.[1] ?? '').replace(/\s+/g, ' ').trim() || null;
-    const name = stripTags(/hl(?:Home|Visitor)Pos\d+_\d+"[^>]*>([\s\S]*?)<\/a>/.exec(cell)?.[1] ?? '') || null;
-    if (!slot) continue;
-    const entry = boxes.get(slot) ?? {};
-    entry[side] = { seed, name };
-    boxes.set(slot, entry);
-  }
-
-  const games = [];
-  for (const match of tableHtml.matchAll(/<td class="GameTopBox"[^>]*>([\s\S]*?)<\/td>/g)) {
-    const cell = match[1];
-    const span = /GamePos(\d+)_\d+">([\s\S]*?)<\/span>/.exec(cell);
-    if (!span) continue;
-    const slot = span[1];
-    const text = stripTags(span[2].replace(/<br\s*\/?>/gi, ' | '));
-    const info = /^GM:\s*(\d+)\s*\|\s*(\d{1,2})\/(\d{1,2})\s*\|\s*(\d{1,2}:\d{2}\s*[AP]M)\s*\|\s*(.+)$/.exec(text);
-    if (!info) throw new Error(`Unrecognized bracket game cell: "${text}"`);
-
-    const [, gameNum, month, day, time, fieldVenue] = info;
-    // Bracket games sit within days of the tournament start; only a
-    // December/January boundary can shift the year.
-    let year = tournamentYear;
-    if (tournamentYear && tournament.start_date) {
-      const startMonth = Number(tournament.start_date.slice(5, 7));
-      const gameMonth = Number(month);
-      if (startMonth === 12 && gameMonth === 1) year += 1;
-      if (startMonth === 1 && gameMonth === 12) year -= 1;
-    }
-    const [fieldRaw, ...venueParts] = fieldVenue.split(/\s*@\s*/);
-    const venue = venueParts.join(' @ ').trim() || null;
-    const home = boxes.get(slot)?.home ?? {};
-    const away = boxes.get(slot)?.away ?? {};
-    const side = (entry) => [entry.seed, entry.name].filter(Boolean).join(' ') || 'TBD';
-    games.push({
-      game_number: Number(gameNum),
-      date: `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`,
-      time: time.replace(/\s+/, ' '),
-      matchup: `${side(home)} vs ${side(away)}`,
-      field: fieldRaw.trim() || null,
-      venue,
-    });
-  }
-  return games;
-}
-
-function parseBrackets(html, tournament) {
-  const tiers = [];
-  // Tier labels ("Gold Bracket", ...) render as plain text before each table.
-  const tableMatches = [...html.matchAll(/<table cellspacing="0" id="[^"]*_gvBracket"[^>]*>([\s\S]*?)<\/table>/g)];
-  for (const tableMatch of tableMatches) {
-    // The tier label ("Gold Bracket", ...) renders as plain text before the
-    // table, but a per-bracket <style> block sits between them, so look
-    // further back and strip style/script content first.
-    const before = html.slice(Math.max(0, tableMatch.index - 4000), tableMatch.index)
-      .replace(/<(style|script)[\s\S]*?<\/\1>/gi, ' ');
-    const tier = /((?:Gold|Silver|Bronze|Championship|Consolation)[^<]{0,20}Bracket)/i.exec(stripTags(before))?.[1] ?? null;
-    tiers.push({ tier, games: parseBracketTable(tableMatch[1], tournament) });
-  }
-  return tiers;
-}
-
-/** Round names from the page's own "Winner of Game #N" feeder references. */
-function assignRounds(games) {
-  const feeds = new Map(); // gameNumber -> consumer gameNumber
-  for (const game of games) {
-    for (const ref of game.matchup.matchAll(/Winner of Game #(\d+)/g)) {
-      feeds.set(Number(ref[1]), game.game_number);
-    }
-  }
-  const depth = (num, seen = new Set()) => {
-    if (seen.has(num)) return 0;
-    seen.add(num);
-    return feeds.has(num) ? 1 + depth(feeds.get(num), seen) : 0;
-  };
-  return games.map((game) => ({ ...game, round: roundLabel(depth(game.game_number)) }));
-}
+/* Bracket parsing lives in cloudflare/baseball-bracket.mjs, shared with the
+ * Worker poller so both read the Brackets.aspx page the same way. */
 
 /**
  * Best-effort merge of the found bracket into the latest dated snapshot
@@ -255,7 +166,7 @@ async function main() {
   }
 
   const bracketUrl = tournament.bracket_url
-    ?? (tournament.event_id ? `${PG_BASE}/events/Brackets.aspx?event=${tournament.event_id}` : null);
+    ?? (tournament.event_id ? BRACKET_URL_FOR(tournament.event_id) : null);
   if (!bracketUrl) {
     writeMissing(tournament, 'The schedule has no bracket URL or event id for this tournament.');
     return;
@@ -269,9 +180,18 @@ async function main() {
     return;
   }
 
-  const tiers = parseBrackets(html, tournament);
+  const tiers = parseBracketsPage(html, tournament);
   const games = tiers.flatMap(({ tier, games: tierGames }) =>
-    assignRounds(tierGames).map((game) => (tier ? { tier, ...game } : game)));
+    assignRounds(tierGames).map((game) => ({
+      game_number: game.game_number,
+      ...(tier ? { tier } : {}),
+      round: game.round,
+      matchup: `${sideLabel(game.home)} vs ${sideLabel(game.away)}`,
+      date: game.date,
+      time: game.time,
+      field: game.field,
+      venue: game.venue,
+    })));
   const ordered = games.sort((a, b) => a.game_number - b.game_number);
 
   if (ordered.length === 0) {

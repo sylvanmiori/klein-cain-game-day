@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { formatGameDate, loadBracket, loadSchedule } from '../../../components/baseball/data';
+import { BracketLive } from '../../../components/baseball/bracket-live';
 
 export const metadata: Metadata = {
   title: 'Schedule',
@@ -105,55 +106,9 @@ export default async function BaseballSchedulePage() {
         </>
       )}
 
-      {/* Bracket */}
-      <section className="rounded-2xl border border-[#dde7f0] bg-white p-5">
-        <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">Bracket</p>
-        {!bracket || bracket.games.length === 0 ? (
-          <p className="mt-2 text-sm text-[#6e6e73]">Bracket not posted yet.</p>
-        ) : (
-          <div className="mt-3 grid gap-5">
-            {bracket.tournamentName && (
-              <h2 className="text-base font-extrabold tracking-tight text-[#12324e]">{bracket.tournamentName}</h2>
-            )}
-            {Array.from(
-              bracket.games.reduce((acc, g) => {
-                const tier = g.tier ?? 'Bracket';
-                if (!acc.has(tier)) acc.set(tier, []);
-                acc.get(tier)!.push(g);
-                return acc;
-              }, new Map<string, typeof bracket.games>()),
-            ).map(([tier, tierGames]) => (
-              <div key={tier}>
-                <h3 className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-[#7BAFD4]">{tier}</h3>
-                <ul className="mt-1 divide-y divide-[#eef1f5]">
-                  {tierGames.map((m, i) => (
-                    <li key={i} className="py-2.5">
-                      <p className="text-sm font-bold text-[#12324e]">
-                        {m.round}: {m.matchup}
-                      </p>
-                      <p className="mt-0.5 text-[12px] text-[#6e6e73]">
-                        {[m.date ? formatGameDate(m.date) : null, m.time, m.field, m.venue]
-                          .filter(Boolean)
-                          .join(' \u00B7 ')}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-            {bracket.bracketUrl && (
-              <a
-                href={bracket.bracketUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[13px] font-bold text-[#12324e] underline decoration-[#7BAFD4] decoration-2 underline-offset-2"
-              >
-                View live bracket on Perfect Game
-              </a>
-            )}
-          </div>
-        )}
-      </section>
+      {/* Bracket: live Perfect Game snapshot when the Worker poller has one,
+          build-time bracket.json fallback otherwise. */}
+      <BracketLive fallback={bracket} />
     </div>
   );
 }
