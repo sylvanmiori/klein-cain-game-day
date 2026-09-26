@@ -19,7 +19,16 @@ const normalize = value => String(value || '').toLowerCase().replace(/[^a-z0-9]/
 export function parseScore(payload, game, schoolName, previous, now = new Date()) {
   const envelope = typeof payload.d === 'string' ? JSON.parse(payload.d) : payload.d;
   if (!envelope?.success) throw new Error('Score source returned an unsuccessful response.');
-  const games = typeof envelope.data === 'string' ? JSON.parse(envelope.data) : envelope.data;
+  // Friday-night DCTF payloads are multi-MB because every row embeds HTML in `render`
+  // (and unused errorList). Parsing that in a Worker cron blows the CPU budget and
+  // leaves KV stuck mid-game. Strip heavy fields before JSON.parse.
+  let data = envelope.data;
+  if (typeof data === 'string') {
+    data = data
+      .replace(/,"render":"(?:[^"\\]|\\.)*"/g, '')
+      .replace(/,"errorList":\[[^\]]*\]/g, '');
+  }
+  const games = typeof data === 'string' ? JSON.parse(data) : data;
   if (!Array.isArray(games)) throw new Error('Score source format changed.');
   const matches = games.filter(item => normalize(item.school) === normalize(schoolName)
     && normalize(item.opponent) === normalize(game.opponent));
