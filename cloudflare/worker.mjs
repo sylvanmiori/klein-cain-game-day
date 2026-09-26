@@ -16,6 +16,7 @@ import {
   buildStandingsSnapshot,
   parsePoolStandingsPage,
 } from './baseball-standings.mjs';
+import { filterRosterDump, preferBoxscoreParse } from './boxscore-filter.mjs';
 
 const keyFor = slug => `${publication.schoolId}:${slug}`;
 const metaKeyFor = slug => `${publication.schoolId}:${slug}:ingest`;
@@ -264,9 +265,10 @@ function boxscorePrompt(rosterNames, imageCount) {
     + 'Hit splitting: TB = 1B + 2*2B + 3*3B + 4*HR and H = 1B + 2B + 3B + HR. Use explicit 2B:/3B:/HR: lines when present; otherwise derive 2B = TB - H - 2*3B - 3*HR, then 1B = H - 2B - 3B - HR. Every row\'s 1b+2b+3b+hr must equal its h. If a row has no TB and no explicit 2B/3B/HR, set 1b=h and 2b=3b=hr=0.\n'
     + 'Roster discipline (anti-hallucination):\n'
     + '- Transcribe ONLY players who appear in the screenshot lineup/pitching tables. Never invent a name or jersey that is not printed on the photo.\n'
+    + '- Output ONLY players printed in the screenshot tables — typically 9–11 batters. NEVER pad with other roster candidates.\n'
     + '- The jersey number printed in the photo is ground truth. Prefer that jersey over any roster guess.\n'
-    + '- Use the candidate list only to expand a truncated last name when the jersey (or clear initial+stem) matches. Do not pull in roster players who are absent from the photo.\n'
-    + '- Candidates (jersey in parentheses when known): '
+    + '- Use the candidate list only to expand a truncated last name when the jersey (or clear initial+stem) matches. Never invent a player from the candidate list who is not printed in the photo.\n'
+    + '- Candidate names for fuzzy expansion only (jersey in parentheses only when verified in D1): '
     + rosterNames.join(', ') + '\n'
     + 'If a player cannot be matched confidently, still include their row with first_initial/last_name/jersey as printed and add {"player":"<as shown>","jersey":<number or null>,"reason":"<why>"} to "uncertain".\n'
     + 'Rules: every stat is an integer except ip, which is baseball-decimal innings pitched (4.0 = 4 innings, 5.2 = 5 and 2/3). Use null for any game/line_score field you cannot read; use empty arrays when a whole section is missing. Output must be one complete JSON object that starts with { and ends with } — never truncate mid-array. Begin your reply with { immediately.';
@@ -816,12 +818,11 @@ const worker = {
             const secondCheck = boxscoreSumCheck(audited);
             sumCheckMeta.second = secondCheck;
             sumCheckMeta.audited = true;
-            // Prefer the audit when it improves the sum check, or when the
-            // first parse had empty batting/pitching and the audit does not.
-            const firstBad = firstCheck.issues.length;
-            const secondBad = secondCheck.issues.length;
-            if (secondBad < firstBad || (firstBad > 0 && secondBad === firstBad
-              && (Array.isArray(audited.batting) && audited.batting.length >= (parsed.batting?.length ?? 0)))) {
+            // Prefer audit only on fewer sum issues; on a tie prefer the shorter
+            // batting list (never amplify roster-dump by picking the longer parse).
+            const pick = preferBoxscoreParse(parsed, firstCheck, audited, secondCheck);
+            sumCheckMeta.pick = pick.reason;
+            if (pick.parsed === audited) {
               parsed = audited;
               rawPayload = auditRaw;
             }
@@ -838,12 +839,12 @@ const worker = {
           : base;
         return json({ error: 'Box-score extraction failed', message }, 502);
       }
-      const batting = (Array.isArray(parsed.batting) ? parsed.batting : []).map(line => {
+      let batting = (Array.isArray(parsed.batting) ? parsed.batting : []).map(line => {
         const row = { player: lineDisplayName(line), jersey: toJersey(line.jersey), pos: String(line.pos ?? '').trim() || null };
         for (const f of BAT_STAT_FIELDS) row[f] = toInt(line[f]);
         return row;
       });
-      const pitching = (Array.isArray(parsed.pitching) ? parsed.pitching : []).map(line => {
+      let pitching = (Array.isArray(parsed.pitching) ? parsed.pitching : []).map(line => {
         const row = {
           player: lineDisplayName(line), jersey: toJersey(line.jersey), pos: String(line.pos ?? '').trim() || null,
           ip: Number(line.ip) || 0,
@@ -851,6 +852,18 @@ const worker = {
         for (const f of PITCH_STAT_FIELDS) row[f] = toInt(line[f]);
         return row;
       });
+      // Scores needed for the roster-dump filter (header / line_score).
+      const modelGameEarly = parsed.game && typeof parsed.game === 'object' ? parsed.game : {};
+      let filterOur = modelGameEarly.our_score == null ? null : toInt(modelGameEarly.our_score);
+      let filterOpp = modelGameEarly.opp_score == null ? null : toInt(modelGameEarly.opp_score);
+      if ((filterOur == null || filterOpp == null) && parsed.line_score && typeof parsed.line_score === 'object') {
+        if (filterOur == null && parsed.line_score.our?.r != null) filterOur = toInt(parsed.line_score.our.r);
+        if (filterOpp == null && parsed.line_score.opp?.r != null) filterOpp = toInt(parsed.line_score.opp.r);
+      }
+      const filtered = filterRosterDump(batting, pitching, filterOur, filterOpp);
+      batting = filtered.batting;
+      pitching = filtered.pitching;
+      if (sumCheckMeta) sumCheckMeta.roster_filter = filtered.meta;
       const uncertain = (Array.isArray(parsed.uncertain) ? parsed.uncertain : []).map(u => ({
         player: String(u?.player ?? '').trim(),
         jersey: toJersey(u?.jersey),
