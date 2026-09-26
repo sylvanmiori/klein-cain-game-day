@@ -327,7 +327,11 @@ const worker = {
       && !['localhost', '127.0.0.1'].includes(url.hostname)) return new Response('School not found', { status: 404 });
 
     if (isBaseballHost && !url.pathname.startsWith('/api/')
-      && url.pathname !== '/baseball' && !url.pathname.startsWith('/baseball/')) {
+      && url.pathname !== '/baseball' && !url.pathname.startsWith('/baseball/')
+      && url.pathname !== '/favicon.ico' && !url.pathname.startsWith('/_next/')
+      && !/\/[^/]*\.[a-z0-9]+$/i.test(url.pathname)) {
+      // Static assets (/_next/*, /brand/*, /videos/*, etc.) must NOT be
+      // rewritten — they live at the same paths in the build output.
       url.pathname = url.pathname === '/' ? '/baseball' : `/baseball${url.pathname}`;
     }
 
