@@ -257,7 +257,7 @@ function GameMetaFields({
 }) {
   const set = (k: keyof typeof value) => (e: React.ChangeEvent<HTMLInputElement>) =>
     onChange({ ...value, [k]: e.target.value });
-  const cls = 'mt-1 w-full rounded-xl border border-[#c9dcec] px-3 py-2 text-sm outline-none focus:border-[#7BAFD4]';
+  const cls = 'mt-1 w-full min-w-0 rounded-xl border border-[#c9dcec] px-3 py-2 text-sm outline-none focus:border-[#7BAFD4]';
   return (
     <div className="grid grid-cols-2 gap-3">
       <div>
