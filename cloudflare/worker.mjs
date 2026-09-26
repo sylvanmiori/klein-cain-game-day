@@ -126,9 +126,11 @@ const toInt = v => {
 
 /**
  * Pull the first JSON object out of a model text response, tolerating
- * markdown fences and surrounding prose.
+ * markdown fences and surrounding prose. Accepts a pre-parsed object too
+ * (Workers AI JSON Mode can return response as an object).
  */
 function extractJsonObject(text) {
+  if (text && typeof text === 'object' && !Array.isArray(text)) return text;
   const raw = String(text ?? '');
   const fenced = raw.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
   const body = (fenced ? fenced[1] : raw).trim();
@@ -136,6 +138,46 @@ function extractJsonObject(text) {
   const end = body.lastIndexOf('}');
   if (start === -1 || end === -1 || end < start) throw new Error('No JSON object in model response');
   return JSON.parse(body.slice(start, end + 1));
+}
+
+/**
+ * Normalize Workers AI vision output to text (or a pre-parsed object).
+ * Binding usually returns { response: string }; some paths use result /
+ * description; JSON Mode may return response as an object already.
+ */
+function visionModelPayload(aiOut) {
+  if (aiOut == null) return '';
+  if (typeof aiOut === 'string') return aiOut;
+  if (typeof aiOut.response === 'string') return aiOut.response;
+  if (aiOut.response && typeof aiOut.response === 'object') return aiOut.response;
+  if (typeof aiOut.result === 'string') return aiOut.result;
+  if (aiOut.result && typeof aiOut.result === 'object') {
+    if (typeof aiOut.result.response === 'string') return aiOut.result.response;
+    return aiOut.result;
+  }
+  if (typeof aiOut.description === 'string') return aiOut.description;
+  try {
+    return JSON.stringify(aiOut);
+  } catch {
+    return String(aiOut);
+  }
+}
+
+/** Short, secret-free snippet of raw model text for 502 debug messages. */
+function modelSnippet(value, max = 240) {
+  let s;
+  if (typeof value === 'string') s = value;
+  else if (value == null) s = '';
+  else {
+    try {
+      s = JSON.stringify(value);
+    } catch {
+      s = String(value);
+    }
+  }
+  const cleaned = s.replace(/\s+/g, ' ').trim();
+  if (!cleaned) return '(empty)';
+  return cleaned.length <= max ? cleaned : `${cleaned.slice(0, max)}…`;
 }
 
 /**
@@ -197,7 +239,7 @@ function boxscorePrompt(rosterNames, imageCount) {
     + 'Player matching: the primary key is the JERSEY NUMBER. Match last names fuzzily second (a truncated "Hoeg...r" matches "Hoegemeyer" when the jersey matches). Candidates, with jersey numbers in parentheses when known:\n'
     + rosterNames.join(', ') + '\n'
     + 'If a player cannot be matched confidently by jersey or name, still include their row with your best reading and add {"player":"<as shown>","jersey":<number or null>,"reason":"<why>"} to "uncertain".\n'
-    + 'Rules: every stat is an integer except ip, which is baseball-decimal innings pitched (5.2 = 5 and 2/3 innings). Use null for any game field you cannot read; use empty arrays when a whole section is missing from the screenshots.';
+    + 'Rules: every stat is an integer except ip, which is baseball-decimal innings pitched (5.2 = 5 and 2/3 innings). Use null for any game field you cannot read; use empty arrays when a whole section is missing from the screenshots. Output must be one complete JSON object that starts with { and ends with } — never truncate mid-array.';
 }
 
 
@@ -208,17 +250,26 @@ function isLlamaAgreeRequired(err) {
 }
 
 /**
- * Run the box-score vision model. If Meta's community-license gate (error 5016)
- * requires the one-time prompt 'agree', submit it once and retry the original
- * call once. Never loops forever — one agree + one retry max.
+ * Run the box-score vision model with enough max_tokens for a full game JSON.
+ * Workers AI defaults max_tokens to 256, which truncates mid-object and yields
+ * "No JSON object in model response". If Meta's community-license gate (5016)
+ * requires the one-time prompt 'agree', submit it once and retry once.
  */
+const BOXSCORE_MAX_TOKENS = 4096;
+
 async function runBoxscoreVision(env, inputs) {
+  const payload = {
+    max_tokens: BOXSCORE_MAX_TOKENS,
+    temperature: 0.2,
+    ...inputs,
+  };
+  if (payload.max_tokens == null) payload.max_tokens = BOXSCORE_MAX_TOKENS;
   try {
-    return await env.AI.run(BOXSCORE_VISION_MODEL, inputs);
+    return await env.AI.run(BOXSCORE_VISION_MODEL, payload);
   } catch (err) {
     if (!isLlamaAgreeRequired(err)) throw err;
     await env.AI.run(BOXSCORE_VISION_MODEL, { prompt: 'agree' });
-    return await env.AI.run(BOXSCORE_VISION_MODEL, inputs);
+    return await env.AI.run(BOXSCORE_VISION_MODEL, payload);
   }
 }
 
@@ -632,14 +683,20 @@ const worker = {
         return json({ error: 'Could not read the image files', message: err instanceof Error ? err.message : String(err) }, 400);
       }
       let parsed;
+      let rawPayload = '';
       try {
         const aiOut = await runBoxscoreVision(env, {
           messages: [{ role: 'user', content: parts }],
         });
-        const text = typeof aiOut === 'string' ? aiOut : aiOut?.response;
-        parsed = extractJsonObject(text);
+        rawPayload = visionModelPayload(aiOut);
+        parsed = extractJsonObject(rawPayload);
       } catch (err) {
-        return json({ error: 'Box-score extraction failed', message: err instanceof Error ? err.message : String(err) }, 502);
+        const base = err instanceof Error ? err.message : String(err);
+        const snippet = modelSnippet(rawPayload);
+        const message = /No JSON object|JSON\.parse|Unexpected token/i.test(base)
+          ? `${base} | model_snippet=${snippet}`
+          : base;
+        return json({ error: 'Box-score extraction failed', message }, 502);
       }
       const batting = (Array.isArray(parsed.batting) ? parsed.batting : []).map(line => {
         const row = { player: lineDisplayName(line), jersey: toJersey(line.jersey), pos: String(line.pos ?? '').trim() || null };

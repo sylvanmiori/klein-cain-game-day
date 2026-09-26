@@ -136,7 +136,11 @@ Settings → Domains → Add custom domain.
   matches players by jersey number first, fuzzy last name second. Returns the
   extracted `{game, batting, pitching}` plus `uncertain` (low-confidence
   player matches with reasons) and `already_exists` (true when D1 already has
-  lines for that `game_id`). AI failure → `502`.
+  lines for that `game_id`). Vision call uses `max_tokens: 4096` (Workers AI
+  default is 256, which truncates dense box-score JSON mid-object). On Meta
+  license gate 5016 the worker submits `{prompt:'agree'}` once and retries.
+  AI failure → `502` with `message`; parse failures include a short
+  `model_snippet=` of the raw model text (no secrets) for debugging.
 - `POST /api/baseball/boxscore/confirm` — JSON `{password, game:{id|null,
   date, opponent, tournament, venue, result}, batting:[...], pitching:[...]}`.
   Replacement semantics: existing lines for the game are deleted and
