@@ -15,13 +15,13 @@ export const metadata: Metadata = {
 
 export default function BaseballLayout({ children }: { children: React.ReactNode }) {
   return (
-    // Never wider than the viewport: max-w-[100vw] caps the page at the
-    // visible width even if a descendant tries to push wider (100vw, not
-    // 100%, so it binds to the viewport, not a possibly-overflowing body).
+    // Never wider than the visible screen: the Muse iOS webview reports
+    // 100vw as ~16px wider than the physical screen, so cap at
+    // calc(100vw - 16px) to bind the page to the actual visible width.
     // overflow-x-clip: the page must never scroll horizontally on phones.
     // Physical pl/pr/ml/mr (not logical px/mx): sidesteps any logical-property
     // quirk in embedded webviews that could drop the inline-end padding.
-    <div className="min-h-screen w-full max-w-[100vw] overflow-x-clip bg-[#f5f7fa] text-[#111114]">
+    <div className="ml-auto mr-auto min-h-screen w-full max-w-[calc(100vw-16px)] overflow-x-clip bg-[#f5f7fa] text-[#111114]">
       <div className="border-b border-[#dde7f0] bg-white">
         <div className="ml-auto mr-auto w-full max-w-3xl pb-4 pl-4 pr-4 pt-5">
           <div className="flex items-center gap-3">
