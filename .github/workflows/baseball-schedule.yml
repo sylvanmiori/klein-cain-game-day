@@ -40,5 +40,9 @@ jobs:
           # schedule-error.json only exists when the scrape failed; commit it
           # too so the failure is visible in git history.
           [ -f content/baseball/schedule-error.json ] && git add content/baseball/schedule-error.json
+          # Dated raw snapshots: stage the snapshots directory whenever the
+          # run wrote one. The file always carries a fresh scraped_at, so a
+          # successful run always stages a change here.
+          [ -d content/baseball/pg-snapshots ] && git add content/baseball/pg-snapshots
           git diff --cached --quiet || git commit -m "413 Baseball: refresh weekend schedule from Perfect Game"
           git push

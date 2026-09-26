@@ -63,14 +63,15 @@ export interface RosterPlayer {
 
 // ---- /api/baseball/stats response shapes ----
 export interface ApiPlayer {
-  id: string;
+  id: number;
   name: string;
   pos: string;
   grad_year: number;
+  jersey_number?: number | null;
 }
 
 export interface ApiGame {
-  id: string;
+  id: number;
   date: string;
   opponent: string;
   tournament?: string;
@@ -79,12 +80,13 @@ export interface ApiGame {
 }
 
 export interface BattingSeasonLine {
-  player_id: string;
+  player_id: number;
   name: string;
   gp: number;
   ab: number;
   r: number;
   h: number;
+  '1b': number;
   '2b': number;
   '3b': number;
   hr: number;
@@ -96,6 +98,7 @@ export interface BattingSeasonLine {
   hbp: number;
   sf: number;
   sac: number;
+  e: number;
   avg: number;
   obp: number;
   slg: number;
@@ -103,7 +106,7 @@ export interface BattingSeasonLine {
 }
 
 export interface PitchingSeasonLine {
-  player_id: string;
+  player_id: number;
   name: string;
   gp: number;
   ip: string | number;
@@ -119,6 +122,8 @@ export interface PitchingSeasonLine {
   w: number;
   l: number;
   sv: number;
+  pitches: number;
+  strikes: number;
   era: number;
   whip: number;
 }
@@ -133,9 +138,12 @@ export interface StatsResponse {
 // ---- /api/baseball/boxscore shapes ----
 export interface ParsedBattingLine {
   player: string;
+  jersey?: number | null;
+  pos?: string | null;
   ab: number;
   r: number;
   h: number;
+  '1b': number;
   '2b': number;
   '3b': number;
   hr: number;
@@ -147,10 +155,81 @@ export interface ParsedBattingLine {
   hbp: number;
   sf: number;
   sac: number;
+  e: number;
 }
 
 export interface ParsedPitchingLine {
   player: string;
+  jersey?: number | null;
+  pos?: string | null;
+  ip: string | number;
+  h: number;
+  r: number;
+  er: number;
+  bb: number;
+  k: number;
+  hr: number;
+  hbp: number;
+  wp: number;
+  bf: number;
+  pitches: number;
+  strikes: number;
+  w: number;
+  l: number;
+  sv: number;
+}
+
+export interface ParsedGame {
+  id: number | null;
+  date: string;
+  opponent: string;
+  tournament?: string;
+  venue?: string;
+  result?: string;
+  our_score?: number | null;
+  opp_score?: number | null;
+}
+
+export interface UncertainMatch {
+  player: string;
+  jersey?: number | null;
+  reason: string;
+}
+
+export interface BoxscoreResponse {
+  game: ParsedGame;
+  batting: ParsedBattingLine[];
+  pitching: ParsedPitchingLine[];
+  already_exists: boolean;
+  uncertain?: UncertainMatch[];
+}
+
+// ---- Editable line rows used by the submit page grids ----
+export interface EditableBattingLine {
+  player: string;
+  jersey: string; // '' = no jersey yet
+  pos: string;
+  ab: number;
+  r: number;
+  h: number;
+  '1b': number;
+  '2b': number;
+  '3b': number;
+  hr: number;
+  rbi: number;
+  bb: number;
+  k: number;
+  sb: number;
+  cs: number;
+  hbp: number;
+  sf: number;
+  sac: number;
+  e: number;
+}
+
+export interface EditablePitchingLine {
+  player: string;
+  jersey: string; // '' = no jersey yet
   ip: string;
   h: number;
   r: number;
@@ -161,23 +240,24 @@ export interface ParsedPitchingLine {
   hbp: number;
   wp: number;
   bf: number;
+  pitches: number;
+  strikes: number;
   w: number;
   l: number;
   sv: number;
 }
 
-export interface ParsedGame {
-  id: string | null;
-  date: string;
-  opponent: string;
-  tournament?: string;
-  venue?: string;
-  result?: string;
+// ---- GET /api/baseball/games/:id shapes ----
+export interface GameLineBatting extends ParsedBattingLine {
+  player_id: number;
 }
 
-export interface BoxscoreResponse {
-  game: ParsedGame;
-  batting: ParsedBattingLine[];
-  pitching: ParsedPitchingLine[];
-  already_exists: boolean;
+export interface GameLinePitching extends ParsedPitchingLine {
+  player_id: number;
+}
+
+export interface GameDetailResponse {
+  game: ApiGame;
+  batting: GameLineBatting[];
+  pitching: GameLinePitching[];
 }

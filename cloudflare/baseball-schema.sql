@@ -8,14 +8,20 @@
 --   Confirm uses REPLACEMENT semantics: DELETE lines for the game, then INSERT.
 -- - IP is stored as baseball-decimal (e.g. 5.2 = 5 and 2/3 innings). The
 --   /api/baseball/stats endpoint aggregates in thirds (outs) before converting.
--- - "2b" and "3b" are quoted because bare identifiers starting with a digit
---   are not valid SQL column names.
+-- - "1b", "2b" and "3b" are quoted because bare identifiers starting with a
+--   digit are not valid SQL column names.
+-- - players.jersey_number is filled in from box-score screenshots (the PG
+--   roster has no jersey numbers) and is the primary key used to match
+--   GameChanger's truncated player names to roster players.
+-- - batting_lines.e is fielding errors committed while batting-side players
+--   were in the field (GameChanger's "E:" line under the batting table).
 
 CREATE TABLE IF NOT EXISTS players (
   id INTEGER PRIMARY KEY,
   name TEXT UNIQUE NOT NULL,
   pos TEXT,
-  grad_year INTEGER
+  grad_year INTEGER,
+  jersey_number INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS games (
@@ -33,6 +39,7 @@ CREATE TABLE IF NOT EXISTS batting_lines (
   ab INTEGER DEFAULT 0,
   r INTEGER DEFAULT 0,
   h INTEGER DEFAULT 0,
+  "1b" INTEGER DEFAULT 0,
   "2b" INTEGER DEFAULT 0,
   "3b" INTEGER DEFAULT 0,
   hr INTEGER DEFAULT 0,
@@ -44,6 +51,7 @@ CREATE TABLE IF NOT EXISTS batting_lines (
   hbp INTEGER DEFAULT 0,
   sf INTEGER DEFAULT 0,
   sac INTEGER DEFAULT 0,
+  e INTEGER DEFAULT 0,
   PRIMARY KEY (game_id, player_id),
   FOREIGN KEY (game_id) REFERENCES games (id),
   FOREIGN KEY (player_id) REFERENCES players (id)
@@ -65,6 +73,8 @@ CREATE TABLE IF NOT EXISTS pitching_lines (
   w INTEGER DEFAULT 0,
   l INTEGER DEFAULT 0,
   sv INTEGER DEFAULT 0,
+  pitches INTEGER DEFAULT 0,
+  strikes INTEGER DEFAULT 0,
   PRIMARY KEY (game_id, player_id),
   FOREIGN KEY (game_id) REFERENCES games (id),
   FOREIGN KEY (player_id) REFERENCES players (id)

@@ -718,7 +718,163 @@
           "venue": "Premier Baseball of Texas",
           "field": "Field 7"
         }
-      ]
+      ],
+      "bracket": {
+        "bracket_url": "https://www.perfectgame.org/events/Brackets.aspx?event=140434",
+        "scraped_at": "2026-09-26T16:49:22.269Z",
+        "games": [
+          {
+            "tier": "Gold Bracket",
+            "game_number": 20,
+            "date": "2026-09-27",
+            "time": "8:00 AM",
+            "matchup": "#4 Seed #4 vs #5 Seed #5",
+            "field": "Field 7",
+            "venue": "Premier Baseball of Texas",
+            "round": "Quarterfinal"
+          },
+          {
+            "tier": "Gold Bracket",
+            "game_number": 21,
+            "date": "2026-09-27",
+            "time": "12:40 PM",
+            "matchup": "#2 Seed #2 vs #7 Seed #7",
+            "field": "Field 7",
+            "venue": "Premier Baseball of Texas",
+            "round": "Quarterfinal"
+          },
+          {
+            "tier": "Gold Bracket",
+            "game_number": 22,
+            "date": "2026-09-27",
+            "time": "10:20 AM",
+            "matchup": "#3 Seed #3 vs #6 Seed #6",
+            "field": "Field 7",
+            "venue": "Premier Baseball of Texas",
+            "round": "Quarterfinal"
+          },
+          {
+            "tier": "Gold Bracket",
+            "game_number": 23,
+            "date": "2026-09-27",
+            "time": "3:00 PM",
+            "matchup": "#1 Seed #1 vs Winner of Game #20",
+            "field": "Field 7",
+            "venue": "Premier Baseball of Texas",
+            "round": "Semifinal"
+          },
+          {
+            "tier": "Gold Bracket",
+            "game_number": 24,
+            "date": "2026-09-27",
+            "time": "5:20 PM",
+            "matchup": "Winner of Game #21 vs Winner of Game #22",
+            "field": "Field 7",
+            "venue": "Premier Baseball of Texas",
+            "round": "Semifinal"
+          },
+          {
+            "tier": "Gold Bracket",
+            "game_number": 25,
+            "date": "2026-09-27",
+            "time": "7:40 PM",
+            "matchup": "Winner of Game #23 vs Winner of Game #24",
+            "field": "Field 7",
+            "venue": "Premier Baseball of Texas",
+            "round": "Championship"
+          },
+          {
+            "tier": "Silver Bracket",
+            "game_number": 26,
+            "date": "2026-09-27",
+            "time": "8:00 AM",
+            "matchup": "#4 Seed #11 vs #5 Seed #12",
+            "field": "Field 8",
+            "venue": "Premier Baseball of Texas",
+            "round": "Quarterfinal"
+          },
+          {
+            "tier": "Silver Bracket",
+            "game_number": 27,
+            "date": "2026-09-27",
+            "time": "12:40 PM",
+            "matchup": "#2 Seed #9 vs #7 Seed #14",
+            "field": "Field 8",
+            "venue": "Premier Baseball of Texas",
+            "round": "Quarterfinal"
+          },
+          {
+            "tier": "Silver Bracket",
+            "game_number": 28,
+            "date": "2026-09-27",
+            "time": "10:20 AM",
+            "matchup": "#3 Seed #10 vs #6 Seed #13",
+            "field": "Field 8",
+            "venue": "Premier Baseball of Texas",
+            "round": "Quarterfinal"
+          },
+          {
+            "tier": "Silver Bracket",
+            "game_number": 29,
+            "date": "2026-09-27",
+            "time": "3:00 PM",
+            "matchup": "#1 Seed #8 vs Winner of Game #26",
+            "field": "Field 8",
+            "venue": "Premier Baseball of Texas",
+            "round": "Semifinal"
+          },
+          {
+            "tier": "Silver Bracket",
+            "game_number": 30,
+            "date": "2026-09-27",
+            "time": "5:20 PM",
+            "matchup": "Winner of Game #27 vs Winner of Game #28",
+            "field": "Field 8",
+            "venue": "Premier Baseball of Texas",
+            "round": "Semifinal"
+          },
+          {
+            "tier": "Silver Bracket",
+            "game_number": 31,
+            "date": "2026-09-27",
+            "time": "7:40 PM",
+            "matchup": "Winner of Game #29 vs Winner of Game #30",
+            "field": "Field 8",
+            "venue": "Premier Baseball of Texas",
+            "round": "Championship"
+          },
+          {
+            "tier": "Bronze Bracket",
+            "game_number": 32,
+            "date": "2026-09-27",
+            "time": "12:40 PM",
+            "matchup": "#1 Seed #15 vs #4 Seed #18",
+            "field": "Field 3",
+            "venue": "Schiel Road Park",
+            "round": "Semifinal"
+          },
+          {
+            "tier": "Bronze Bracket",
+            "game_number": 33,
+            "date": "2026-09-27",
+            "time": "10:20 AM",
+            "matchup": "#2 Seed #16 vs #3 Seed #17",
+            "field": "Field 3",
+            "venue": "Schiel Road Park",
+            "round": "Semifinal"
+          },
+          {
+            "tier": "Bronze Bracket",
+            "game_number": 34,
+            "date": "2026-09-27",
+            "time": "3:00 PM",
+            "matchup": "Winner of Game #32 vs Winner of Game #33",
+            "field": "Field 3",
+            "venue": "Schiel Road Park",
+            "round": "Championship"
+          }
+        ]
+      }
     }
   ],
   "capture_notes": []

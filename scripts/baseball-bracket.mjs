@@ -13,12 +13,16 @@
  *   exit 0 in both cases; non-zero only on unexpected errors (e.g. the
  *   schedule file is missing or unreadable).
  *
+ * On a found bracket the script also merges the bracket games into the
+ * latest dated snapshot under content/baseball/pg-snapshots/ (best-effort;
+ * never throws and never changes the contract above).
+ *
  * Never invents games: every bracket game is read from the rendered
  * Brackets.aspx table, and rounds are derived from the page's own
  * "Winner of Game #N" links.
  */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -27,6 +31,7 @@ const OUT_DIR = join(ROOT, 'content', 'baseball');
 const SCHEDULE_PATH = join(OUT_DIR, 'schedule.json');
 const BRACKET_PATH = join(OUT_DIR, 'bracket.json');
 const MISSING_PATH = join(OUT_DIR, 'bracket-missing.json');
+const SNAPSHOT_DIR = join(OUT_DIR, 'pg-snapshots');
 
 const PG_BASE = 'https://www.perfectgame.org';
 const BROWSER_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
@@ -202,6 +207,38 @@ function assignRounds(games) {
   return games.map((game) => ({ ...game, round: roundLabel(depth(game.game_number)) }));
 }
 
+/**
+ * Best-effort merge of the found bracket into the latest dated snapshot
+ * (content/baseball/pg-snapshots/). Never throws: the bracket.json output
+ * and BRACKET_FOUND contract above are the source of truth; the snapshot
+ * merge is enrichment only.
+ */
+function mergeBracketIntoSnapshot(tournament, bracketUrl, games) {
+  try {
+    if (!existsSync(SNAPSHOT_DIR)) return;
+    const snapshots = readdirSync(SNAPSHOT_DIR).filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort();
+    if (snapshots.length === 0) return;
+    const file = snapshots[snapshots.length - 1];
+    const path = join(SNAPSHOT_DIR, file);
+    const snapshot = JSON.parse(readFileSync(path, 'utf8'));
+    const entry = (snapshot.tournaments ?? []).find(
+      (t) => String(t.event_id) === String(tournament.event_id));
+    if (!entry) {
+      console.warn(`baseball-bracket: latest snapshot has no tournament with event_id ${tournament.event_id}; skipping merge`);
+      return;
+    }
+    entry.bracket = {
+      bracket_url: bracketUrl,
+      scraped_at: new Date().toISOString(),
+      games,
+    };
+    writeFileSync(path, `${JSON.stringify(snapshot, null, 2)}\n`);
+    console.log(`baseball-bracket: merged bracket into snapshot ${file}`);
+  } catch (error) {
+    console.warn(`baseball-bracket: snapshot merge skipped: ${error.message}`);
+  }
+}
+
 async function main() {
   if (!existsSync(SCHEDULE_PATH)) {
     throw new Error(`Schedule file not found at ${SCHEDULE_PATH}; run baseball:schedule first.`);
@@ -251,6 +288,7 @@ async function main() {
     scraped_at: new Date().toISOString(),
   }, null, 2)}\n`);
   console.log(`baseball-bracket: wrote ${BRACKET_PATH} (${ordered.length} game(s))`);
+  mergeBracketIntoSnapshot(tournament, bracketUrl, ordered);
   console.log('BRACKET_FOUND=true');
 }
 

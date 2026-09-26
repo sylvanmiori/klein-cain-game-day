@@ -1,0 +1,4 @@
+# Local development secrets for the Cloudflare Worker.
+# Copy to .dev.vars (gitignored) and set real values. NEVER commit .dev.vars.
+# The baseball box-score password is a single word of your choice.
+BOXSCORE_PASSWORD=changeme
