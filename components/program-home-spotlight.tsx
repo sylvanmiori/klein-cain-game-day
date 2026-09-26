@@ -43,27 +43,31 @@ export function ProgramHomeSpotlight({
   const autoFacts = [rankFact(featured), predictionFact(featured, publication.schoolName), weatherFact(featured)]
     .filter((fact): fact is NonNullable<typeof fact> => fact !== null);
   const facts = [...featured.scheduledFacts, ...autoFacts].slice(0, 4);
+  const featuredIsFinal = Boolean(featured.finalScore || featured.final);
   const showPreview = hasPreviewContent(featured) && !featured.finalScore;
   const heroImageSrc = sitePath(publication.heroNextGameImage ?? '/hero-next-game.jpg');
 
   return (
     <div className="home-stack">
-      <HomeNextGameCard
-        initialScore={liveScore as LiveScore}
-        editionDate={featured.date}
-        kickoff={featured.kickoff}
-        venue={featured.venue}
-        week={featured.week}
-        home={featured.home}
-        away={featured.away}
-        scheduledFacts={facts}
-        previewHref={previewHref}
-        showPreview={showPreview}
-        heroImageSrc={heroImageSrc}
-      />
+      {/* Never keep a finished current game framed as "Next game". */}
+      {!featuredIsFinal && (
+        <HomeNextGameCard
+          initialScore={liveScore as LiveScore}
+          editionDate={featured.date}
+          kickoff={featured.kickoff}
+          venue={featured.venue}
+          week={featured.week}
+          home={featured.home}
+          away={featured.away}
+          scheduledFacts={facts}
+          previewHref={previewHref}
+          showPreview={showPreview}
+          heroImageSrc={heroImageSrc}
+        />
+      )}
 
       {recap && (
-        <article className="home-recap" aria-labelledby="home-recap-title">
+        <article className={`home-recap${featuredIsFinal ? ' home-recap-feature' : ''}`} aria-labelledby="home-recap-title">
           {recap.photo && (
             <div className="home-recap-visual">
               <a href={recap.href} className="home-recap-visual-link" tabIndex={-1} aria-hidden="true">
