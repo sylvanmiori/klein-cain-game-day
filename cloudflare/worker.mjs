@@ -207,39 +207,51 @@ async function baseballRosterNames(env) {
  * reads all of them and merges them into a single game record.
  *
  * GameChanger layout facts the prompt relies on:
- * - Header: date ("Thu, Jul 16"), team names ("4:13 Baseb..." 9 FINAL 10
- *   "Slammers N..."), and a line score with inning-by-inning runs plus R/H/E
- *   totals. Our (4:13's) score is on the left.
+ * - Header: date ("Sat, Sep 26"), team names ("4:13 Baseball 15U" FINAL
+ *   "Texas Steel"), and a line score with inning-by-inning runs plus R/H/E
+ *   totals. Our (4:13's) score is on the left. Read line_score R/H/E FIRST.
  * - Batting LINEUP table columns: AB, R, H, RBI, BB, SO. Player cells look
  *   like "L Morris #42 (SS)": first initial, last name, jersey number, position.
  * - Extra batting lines below the table: 2B:, 3B:, HR:, TB: (total bases),
  *   HBP:, SF:, SB:, CS:, E:.
- * - Pitching table columns: IP, H, R, ER, BB, SO. (W)/(L)/(SV) after the name
- *   marks the decision.
- * - Extra pitching lines: HBP:, "Pitches-Strikes: Name 87-46", "Batters Faced:".
- * - Player names are truncated in the UI ("H Hoeg...r #14", "L Bartko...#37"),
- *   so matching runs on JERSEY NUMBER first, fuzzy last name second.
+ * - Pitching table columns: IP, H, R, ER, BB, SO. (W)/(L)/(S)/(SV) after the
+ *   name marks the decision.
+ * - Extra pitching lines: HBP:, "Pitches-Strikes: Name 69-48", "Batters Faced:".
+ * - Names may truncate with "..."; matching runs on JERSEY from the PHOTO first.
+ * - NEVER invent example players — only names/jerseys visible in the photo
+ *   (or the roster candidates list for fuzzy expansion of a truncated last name).
  */
 function boxscorePrompt(rosterNames, imageCount) {
   const shape = '{"game":{"date":null,"opponent":null,"our_score":null,"opp_score":null,"result":null},'
-    + '"batting":[{"jersey":null,"last_name":"","first_initial":"","pos":null,"ab":0,"r":0,"h":0,"1b":0,"2b":0,"3b":0,"hr":0,"rbi":0,"bb":0,"k":0,"sb":0,"cs":0,"hbp":0,"sf":0,"sac":0,"e":0}],'
-    + '"pitching":[{"jersey":null,"last_name":"","first_initial":"","ip":0,"h":0,"r":0,"er":0,"bb":0,"k":0,"hr":0,"hbp":0,"wp":0,"bf":0,"pitches":0,"strikes":0,"w":0,"l":0,"sv":0}],'
+    + '"line_score":{"our":{"innings":[],"r":null,"h":null,"e":null},"opp":{"innings":[],"r":null,"h":null,"e":null}},'
+    + '"batting":[{"jersey":42,"last_name":"","first_initial":"","pos":null,"ab":0,"r":0,"h":0,"1b":0,"2b":0,"3b":0,"hr":0,"rbi":0,"bb":0,"k":0,"sb":0,"cs":0,"hbp":0,"sf":0,"sac":0,"e":0}],'
+    + '"pitching":[{"jersey":23,"last_name":"","first_initial":"","ip":0,"h":0,"r":0,"er":0,"bb":0,"k":0,"hr":0,"hbp":0,"wp":0,"bf":0,"pitches":0,"strikes":0,"w":0,"l":0,"sv":0}],'
     + '"uncertain":[]}';
-  return 'You are a baseball box-score transcriber for 4:13 Baseball, a 15U travel baseball team from Spring, Texas. '
+  return 'You are a baseball box-score JSON extractor for 4:13 Baseball (15U, Spring, Texas). Output MUST be a single raw JSON object only — no markdown, no headings, no bullet lists, no commentary, no code fences. '
     + `You are shown ${imageCount} screenshot${imageCount === 1 ? '' : 's'} from the GameChanger app: the batting box-score view and/or the pitching box-score view for ONE game. `
-    + 'Read all of them and combine what you see into one game record. Return ONLY a single JSON object, no markdown fences and no commentary, with this exact shape:\n'
+    + 'Read all of them and combine what you see into one game record. Return ONLY a single JSON object, no markdown fences and no commentary, with this exact shape (PLACEHOLDER digits only — always read real digits and #jersey from the photo):\n'
     + shape + '\n'
-    + 'Layout guide:\n'
-    + '- Header: the game date (e.g. "Thu, Jul 16"), our team name "4:13 Baseball" (often truncated, e.g. "4:13 Baseb..."), the word FINAL, and the final score with OUR score on the left. Below is the line score: inning-by-inning runs plus R/H/E totals. our_score is 4:13\'s R total, opp_score is the opponent\'s R total, opponent is the other team\'s full name (expand obvious truncations), date is YYYY-MM-DD using the current year when the year is not shown. result is "W", "L" or "T" followed by the score in OUR-score-first order, e.g. "W 10-9" or "L 9-10".\n'
-    + '- Batting "LINEUP" table columns: AB, R, H, RBI, BB, SO. Player cells look like "L Morris #42 (SS)": first initial, last name, jersey number after #, position in parentheses. Names are often truncated with "..." (e.g. "H Hoeg...r #14").\n'
-    + '- Below the batting table are extra stat lines: "2B:" (doubles), "3B:" (triples), "HR:" when shown, "TB:" (total bases per player), "HBP:", "SF:", "SB:", "CS:", "E:" (errors). A bare name in these lines means 1, e.g. "SB: P McCain 2" means 2 stolen bases.\n'
-    + '- Splitting hits: TB = 1B + 2*2B + 3*3B + 4*HR and H = 1B + 2B + 3B + HR. Use explicit 2B:/3B:/HR: lines when present; otherwise derive 2B = TB - H - 2*3B - 3*HR, then 1B = H - 2B - 3B - HR. Every row\'s 1b+2b+3b+hr must equal its h. If a row has no TB line and no explicit 2B/3B, set 1b/2b/3b to 0 and flag the row in "uncertain".\n'
-    + '- Pitching "PITCHING" table columns: IP, H, R, ER, BB, SO. A (W), (L) or (SV) after the name marks the decision. Below the table: "HBP:", "Pitches-Strikes: Name 87-46" (pitches first, strikes second), "Batters Faced: Name 22".\n'
-    + '- Ignore TEAM total rows; include one batting row per player who batted and one pitching row per pitcher who threw.\n'
-    + 'Player matching: the primary key is the JERSEY NUMBER. Match last names fuzzily second (a truncated "Hoeg...r" matches "Hoegemeyer" when the jersey matches). Candidates, with jersey numbers in parentheses when known:\n'
+    + 'Read order (do this in order):\n'
+    + '1) LINE SCORE FIRST: copy inning-by-inning runs into line_score.our.innings / line_score.opp.innings (use null for X / unplayed). Copy the R, H, E TOTALS into line_score.*.r/h/e. Set game.our_score = line_score.our.r and game.opp_score = line_score.opp.r. result is "W", "L" or "T" followed by OUR-score-first, e.g. "W 7-5".\n'
+    + '2) Batting "LINEUP" table columns left-to-right: AB | R | H | RBI | BB | SO. Read EVERY column — do not stop after H. Map SO → k. Player cells look like "L Morris #42 (SS)": first_initial="L", last_name="Morris", jersey=42 (required INTEGER from #NN — never leave jersey null when # is visible), pos="SS". Example name cells (shape only — read digits from THIS photo): "L Morris #42 (SS)", "L Vannoy #66 (CF)", "J Lange #23 (P)", "T Barnes #27 (3B)". Include EVERY printed lineup row, including late substitutes.\n'
+    + '3) Extra batting lines under the table: "2B:", "3B:", "HR:", "TB:" (total bases), "HBP:", "SF:", "SB:", "CS:", "E:". A bare name with no number means 1; a trailing number is the count, e.g. "SB: L Morris 3, L Vannoy 2, C Koehn" → Morris sb=3, Vannoy sb=2, Koehn sb=1.\n'
+    + '4) Pitching table columns left-to-right: IP | H | R | ER | BB | SO. Include EVERY pitcher row (starter AND reliever). A (W), (L), (S) or (SV) after the name marks the decision (set w/l/sv to 1). jersey from #NN is required. Extra lines: "HBP:", "Pitches-Strikes: J Lange 69-48" (pitches then strikes), "Batters Faced: J Lange 21".\n'
+    + '5) Ignore TEAM total rows in the output arrays, but USE the TEAM R/H/E and line-score R as the source of truth for game.our_score / game.opp_score.\n'
+    + 'DIGIT ACCURACY (critical — models often collapse every >1 cell to 1):\n'
+    + '- Numeric cells are often 2–9 (and sometimes 10+). Do NOT default stats to 1. Read EACH digit from the photo cell by cell.\n'
+    + '- Common multi-value cells: runs (r), hits (h), RBI, AB, BB, SO/k, stolen bases, pitching H/R/ER/BB/SO, batters faced, pitches.\n'
+    + '- After filling every batting row, verify sum(batting.r) == game.our_score (and preferably == line_score.our.r). If not, re-read the R column for every batter and correct the wrong cells.\n'
+    + '- After filling every pitching row, verify sum(pitching.r) == game.opp_score (and preferably == line_score.opp.r). If not, re-read pitching R/ER/H for every pitcher and correct.\n'
+    + '- Also prefer sum(batting.h) ≈ line_score.our.h and sum(pitching.h) ≈ line_score.opp.h; flag leftover mismatches in "uncertain".\n'
+    + 'Hit splitting: TB = 1B + 2*2B + 3*3B + 4*HR and H = 1B + 2B + 3B + HR. Use explicit 2B:/3B:/HR: lines when present; otherwise derive 2B = TB - H - 2*3B - 3*HR, then 1B = H - 2B - 3B - HR. Every row\'s 1b+2b+3b+hr must equal its h. If a row has no TB and no explicit 2B/3B/HR, set 1b=h and 2b=3b=hr=0.\n'
+    + 'Roster discipline (anti-hallucination):\n'
+    + '- Transcribe ONLY players who appear in the screenshot lineup/pitching tables. Never invent a name or jersey that is not printed on the photo.\n'
+    + '- The jersey number printed in the photo is ground truth. Prefer that jersey over any roster guess.\n'
+    + '- Use the candidate list only to expand a truncated last name when the jersey (or clear initial+stem) matches. Do not pull in roster players who are absent from the photo.\n'
+    + '- Candidates (jersey in parentheses when known): '
     + rosterNames.join(', ') + '\n'
-    + 'If a player cannot be matched confidently by jersey or name, still include their row with your best reading and add {"player":"<as shown>","jersey":<number or null>,"reason":"<why>"} to "uncertain".\n'
-    + 'Rules: every stat is an integer except ip, which is baseball-decimal innings pitched (5.2 = 5 and 2/3 innings). Use null for any game field you cannot read; use empty arrays when a whole section is missing from the screenshots. Output must be one complete JSON object that starts with { and ends with } — never truncate mid-array.';
+    + 'If a player cannot be matched confidently, still include their row with first_initial/last_name/jersey as printed and add {"player":"<as shown>","jersey":<number or null>,"reason":"<why>"} to "uncertain".\n'
+    + 'Rules: every stat is an integer except ip, which is baseball-decimal innings pitched (4.0 = 4 innings, 5.2 = 5 and 2/3). Use null for any game/line_score field you cannot read; use empty arrays when a whole section is missing. Output must be one complete JSON object that starts with { and ends with } — never truncate mid-array. Begin your reply with { immediately.';
 }
 
 
@@ -260,7 +272,7 @@ const BOXSCORE_MAX_TOKENS = 4096;
 async function runBoxscoreVision(env, inputs) {
   const payload = {
     max_tokens: BOXSCORE_MAX_TOKENS,
-    temperature: 0.2,
+    temperature: 0,
     ...inputs,
   };
   if (payload.max_tokens == null) payload.max_tokens = BOXSCORE_MAX_TOKENS;
@@ -271,6 +283,69 @@ async function runBoxscoreVision(env, inputs) {
     await env.AI.run(BOXSCORE_VISION_MODEL, { prompt: 'agree' });
     return await env.AI.run(BOXSCORE_VISION_MODEL, payload);
   }
+}
+
+/** Sum a batting/pitching field across rows (missing → 0). */
+function sumStat(rows, field) {
+  let total = 0;
+  for (const row of rows ?? []) total += toInt(row?.[field]);
+  return total;
+}
+
+/**
+ * Compare extracted row sums against line-score / final scores.
+ * Returns { ok, battingRuns, pitchingRuns, ourScore, oppScore, issues[] }.
+ */
+function boxscoreSumCheck(parsed) {
+  const batting = Array.isArray(parsed?.batting) ? parsed.batting : [];
+  const pitching = Array.isArray(parsed?.pitching) ? parsed.pitching : [];
+  const game = parsed?.game && typeof parsed.game === 'object' ? parsed.game : {};
+  const ls = parsed?.line_score && typeof parsed.line_score === 'object' ? parsed.line_score : {};
+  const ourScore = game.our_score != null ? toInt(game.our_score)
+    : (ls?.our?.r != null ? toInt(ls.our.r) : null);
+  const oppScore = game.opp_score != null ? toInt(game.opp_score)
+    : (ls?.opp?.r != null ? toInt(ls.opp.r) : null);
+  const battingRuns = sumStat(batting, 'r');
+  const pitchingRuns = sumStat(pitching, 'r');
+  const issues = [];
+  if (ourScore != null && batting.length > 0 && battingRuns !== ourScore) {
+    issues.push(`sum(batting.r)=${battingRuns} != our_score=${ourScore}`);
+  }
+  if (oppScore != null && pitching.length > 0 && pitchingRuns !== oppScore) {
+    issues.push(`sum(pitching.r)=${pitchingRuns} != opp_score=${oppScore}`);
+  }
+  return { ok: issues.length === 0, battingRuns, pitchingRuns, ourScore, oppScore, issues };
+}
+
+/**
+ * Second-pass numeric audit: when row sums disagree with the line score,
+ * ask the vision model to re-read only the discrepant numeric cells and
+ * return a corrected full JSON object. Best-effort — caller keeps the
+ * first parse if this fails.
+ */
+function boxscoreAuditPrompt(firstParsed, issues) {
+  const shape = '{"game":{"date":null,"opponent":null,"our_score":null,"opp_score":null,"result":null},'
+    + '"line_score":{"our":{"innings":[],"r":null,"h":null,"e":null},"opp":{"innings":[],"r":null,"h":null,"e":null}},'
+    + '"batting":[{"jersey":42,"last_name":"","first_initial":"","pos":null,"ab":0,"r":0,"h":0,"1b":0,"2b":0,"3b":0,"hr":0,"rbi":0,"bb":0,"k":0,"sb":0,"cs":0,"hbp":0,"sf":0,"sac":0,"e":0}],'
+    + '"pitching":[{"jersey":23,"last_name":"","first_initial":"","ip":0,"h":0,"r":0,"er":0,"bb":0,"k":0,"hr":0,"hbp":0,"wp":0,"bf":0,"pitches":0,"strikes":0,"w":0,"l":0,"sv":0}],'
+    + '"uncertain":[]}';
+  let prior;
+  try {
+    prior = JSON.stringify(firstParsed);
+  } catch {
+    prior = '{}';
+  }
+  if (prior.length > 6000) prior = `${prior.slice(0, 6000)}…`;
+  return 'You previously transcribed this GameChanger baseball box score, but the numeric totals do not add up. Reply with ONE raw JSON object only (start with {). No markdown. '
+    + `Issues: ${issues.join('; ')}. `
+    + 'Re-read the PHOTO carefully. Numeric cells are often 2–9 — do NOT default every >1 value to 1. '
+    + 'Keep the same players/jerseys that appear in the photo (examples of real 4:13 names/jerseys when present: L Morris #42, L Vannoy #66, J Lange #23, T Barnes #27). '
+    + 'Do not invent players who are not printed. Prefer jersey numbers from the photo. '
+    + 'First confirm line_score R/H/E and game.our_score/opp_score from the header line score, then correct every batting row (AB,R,H,RBI,BB,SO/k and jersey from #NN) and every pitching row (including relievers; IP,H,R,ER,BB,SO) so that sum(batting.r)==our_score and sum(pitching.r)==opp_score. Never leave jersey null when #NN is visible. '
+    + 'Return ONLY a corrected JSON object with this shape (no markdown):\n'
+    + shape + '\n'
+    + 'Your previous JSON (for reference — fix the numbers, do not copy wrong digits):\n'
+    + prior;
 }
 
 /** ArrayBuffer -> base64 without blowing the call stack on large images. */
@@ -698,12 +773,45 @@ const worker = {
       }
       let parsed;
       let rawPayload = '';
+      let sumCheckMeta = null;
       try {
         const aiOut = await runBoxscoreVision(env, {
           messages: [{ role: 'user', content: parts }],
         });
         rawPayload = visionModelPayload(aiOut);
         parsed = extractJsonObject(rawPayload);
+        // Optional second-pass numeric audit when batting/pitching run sums
+        // disagree with the line-score / final score (digit-collapse fix).
+        const firstCheck = boxscoreSumCheck(parsed);
+        sumCheckMeta = { first: firstCheck, audited: false };
+        if (!firstCheck.ok) {
+          try {
+            const auditParts = [
+              { type: 'text', text: boxscoreAuditPrompt(parsed, firstCheck.issues) },
+              ...parts.slice(1), // reuse the same image parts
+            ];
+            const auditOut = await runBoxscoreVision(env, {
+              messages: [{ role: 'user', content: auditParts }],
+            });
+            const auditRaw = visionModelPayload(auditOut);
+            const audited = extractJsonObject(auditRaw);
+            const secondCheck = boxscoreSumCheck(audited);
+            sumCheckMeta.second = secondCheck;
+            sumCheckMeta.audited = true;
+            // Prefer the audit when it improves the sum check, or when the
+            // first parse had empty batting/pitching and the audit does not.
+            const firstBad = firstCheck.issues.length;
+            const secondBad = secondCheck.issues.length;
+            if (secondBad < firstBad || (firstBad > 0 && secondBad === firstBad
+              && (Array.isArray(audited.batting) && audited.batting.length >= (parsed.batting?.length ?? 0)))) {
+              parsed = audited;
+              rawPayload = auditRaw;
+            }
+          } catch {
+            // Audit is best-effort; keep the first parse.
+            sumCheckMeta.audit_error = true;
+          }
+        }
       } catch (err) {
         const base = err instanceof Error ? err.message : String(err);
         const snippet = modelSnippet(rawPayload);
@@ -754,7 +862,29 @@ const worker = {
           // A lookup failure must not block the parse response.
         }
       }
-      return json({ game, batting, pitching, uncertain, already_exists: alreadyExists });
+      // Prefer line_score totals when the model left game scores null.
+      if ((game.our_score == null || game.opp_score == null) && parsed.line_score && typeof parsed.line_score === 'object') {
+        if (game.our_score == null && parsed.line_score.our?.r != null) game.our_score = toInt(parsed.line_score.our.r);
+        if (game.opp_score == null && parsed.line_score.opp?.r != null) game.opp_score = toInt(parsed.line_score.opp.r);
+      }
+      const finalCheck = boxscoreSumCheck({ game, batting, pitching, line_score: parsed.line_score });
+      return json({
+        game,
+        batting,
+        pitching,
+        uncertain,
+        already_exists: alreadyExists,
+        line_score: parsed.line_score ?? null,
+        sum_check: {
+          ok: finalCheck.ok,
+          batting_runs: finalCheck.battingRuns,
+          pitching_runs: finalCheck.pitchingRuns,
+          our_score: finalCheck.ourScore,
+          opp_score: finalCheck.oppScore,
+          issues: finalCheck.issues,
+          audit: sumCheckMeta,
+        },
+      });
     }
 
     if (url.pathname === '/api/baseball/boxscore/confirm') {
