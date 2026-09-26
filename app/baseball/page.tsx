@@ -23,9 +23,9 @@ export default async function BaseballHome() {
       <section className="min-w-0 overflow-hidden rounded-2xl bg-[#12324e] text-white">
         <div className="flex items-center gap-4 p-6">
           <img
-            src="/brand/baseball-shield.svg"
+            src="/brand/baseball/413-shield-192.png"
             alt="4:13 Baseball shield"
-            className="h-20 w-20 min-w-0 shrink-0 rounded-xl bg-white/10 p-1.5"
+            className="h-20 w-20 min-w-0 shrink-0"
           />
           <div>
             <h1 className="text-3xl font-black tracking-tight">4:13 Baseball</h1>
