@@ -610,9 +610,11 @@ function UploadMode({
       }
       if (!res.ok) {
         let apiError = '';
+        let apiMessage = '';
         try {
-          const body = (await res.json()) as { error?: unknown };
+          const body = (await res.json()) as { error?: unknown; message?: unknown };
           if (body && typeof body.error === 'string') apiError = body.error;
+          if (body && typeof body.message === 'string') apiMessage = body.message.trim();
         } catch {
           /* ignore */
         }
@@ -620,11 +622,17 @@ function UploadMode({
           setError(
             apiError === 'uploads not configured'
               ? 'Uploads are not configured on the server yet (missing BOXSCORE_PASSWORD secret). Ask Steven to set it, then retry.'
-              : `Could not analyze those photos${apiError ? `: ${apiError}` : ''} (server ${res.status}).`,
+              : `Could not analyze those photos${apiError ? `: ${apiError}` : ''}${apiMessage ? ` — ${apiMessage}` : ''} (server ${res.status}).`,
           );
         } else {
+          // Surface server error + message (often includes model_snippet=…).
+          // Do not append a generic “clearer shots” tip — extraction/server failures
+          // are usually convert/AI/JSON issues, not photo clarity.
+          const detail = [apiError, apiMessage].filter(Boolean).join(' — ');
           setError(
-            `Could not analyze those photos${apiError ? `: ${apiError}` : ''}. Try clearer shots of the box score.`,
+            detail
+              ? `Could not analyze those photos: ${detail}`
+              : `Could not analyze those photos (server ${res.status}).`,
           );
         }
         setPhase('setup');
