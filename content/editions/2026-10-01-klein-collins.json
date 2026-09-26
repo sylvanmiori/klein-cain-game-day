@@ -34,34 +34,34 @@
     "margin": -8,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-26T03:07:12.200Z"
+    "asOf": "2026-09-26T14:52:30.378Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5",
-    "asOf": "2026-09-26T03:07:12.014Z"
+    "asOf": "2026-09-26T14:52:30.301Z"
   },
   "stats": null,
   "finalScore": null,
   "rating": {
-    "home": 15.94,
-    "away": 13.32,
-    "margin": 5.58,
+    "home": 15.29,
+    "away": 11.65,
+    "margin": 6.55,
     "method": "Least-squares rating of every Texas result, margins capped at 28",
     "source": "Cain Game Day",
     "sourceUrl": "https://kleincain.gameday.report/",
-    "asOf": "2026-09-26T03:07:12.200Z"
+    "asOf": "2026-09-26T14:52:30.378Z"
   },
   "weather": {
-    "tempF": 82,
-    "condition": "Slight Chance Showers And Thunderstorms",
-    "precipPct": 22,
+    "tempF": 83,
+    "condition": "Chance Showers And Thunderstorms",
+    "precipPct": 40,
     "humidityPct": 77,
-    "wind": "5 mph SE",
+    "wind": "10 mph SE",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-09-26T03:07:12.614Z"
+    "asOf": "2026-09-26T14:52:31.067Z"
   },
   "scheduledFacts": [],
   "resultFacts": [],
