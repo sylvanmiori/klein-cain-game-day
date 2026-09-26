@@ -23,6 +23,8 @@ export interface ScheduleTournament {
   endDate?: string; // YYYY-MM-DD
   venue?: string;
   location?: string;
+  /** Street address from Perfect Game (event_address) — used for maps links. */
+  address?: string;
   notes?: string;
   pgUrl?: string;
   bracketUrl?: string;

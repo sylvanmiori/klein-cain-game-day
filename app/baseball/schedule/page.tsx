@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { formatGameDate, loadBracket, loadSchedule } from '../../../components/baseball/data';
+import { formatGameDate, loadBracket, loadSchedule, mapsSearchUrl } from '../../../components/baseball/data';
 import { BracketLive } from '../../../components/baseball/bracket-live';
 
 export const metadata: Metadata = {
@@ -32,12 +32,36 @@ export default async function BaseballSchedulePage() {
               <section key={t.id} className="overflow-hidden rounded-2xl border border-[#dde7f0] bg-white">
                 <div className="bg-[#12324e] px-5 py-4 text-white">
                   <h2 className="text-base font-extrabold tracking-tight">{t.name}</h2>
-                  <p className="mt-0.5 text-[13px] text-[#c8d8e8]">
-                    {t.dates}
-                    {t.venue ? ` \u00B7 ${t.venue}` : ''}
-                    {t.location ? `, ${t.location}` : ''}
-                  </p>
-                  {t.notes && <p className="mt-0.5 text-[13px] text-[#c8d8e8]">{t.notes}</p>}
+                  <p className="mt-0.5 text-[13px] text-[#c8d8e8]">{t.dates}</p>
+                  {(t.venue || t.address || t.location) && (() => {
+                    const maps = mapsSearchUrl(t.venue, t.address || t.location);
+                    const line = (
+                      <>
+                        <span className="font-semibold text-white">{t.venue || t.location}</span>
+                        {t.address ? (
+                          <span className="mt-0.5 block text-[#c8d8e8]">{t.address}</span>
+                        ) : t.venue && t.location ? (
+                          <span className="mt-0.5 block text-[#c8d8e8]">{t.location}</span>
+                        ) : null}
+                        {maps ? (
+                          <span className="mt-0.5 block text-[12px] font-bold text-[#7BAFD4]">Open in Maps</span>
+                        ) : null}
+                      </>
+                    );
+                    return maps ? (
+                      <a
+                        href={maps}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-1.5 block text-[13px] leading-snug hover:underline"
+                      >
+                        {line}
+                      </a>
+                    ) : (
+                      <p className="mt-1.5 text-[13px] leading-snug text-[#c8d8e8]">{line}</p>
+                    );
+                  })()}
+                  {t.notes && <p className="mt-1 text-[13px] text-[#c8d8e8]">{t.notes}</p>}
                 </div>
                 {games.length === 0 ? (
                   <p className="px-5 py-4 text-sm text-[#6e6e73]">Game times have not been posted yet.</p>

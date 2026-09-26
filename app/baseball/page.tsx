@@ -6,6 +6,7 @@ import {
   formatGameDateParts,
   getSeasonRecord,
   loadSchedule,
+  mapsSearchUrl,
 } from '../../components/baseball/data';
 
 export const metadata: Metadata = {
@@ -91,17 +92,50 @@ export default async function BaseballHome() {
                     <span>{weekendDateLabel(window.tournament.dates, window.tournament.startDate, window.tournament.endDate)}</span>
                   </p>
                 ) : null}
-                {(window.tournament.venue || window.tournament.location) && (
-                  <p className="flex items-start gap-2">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#7BAFD4]" aria-hidden />
+                {(window.tournament.venue || window.tournament.location || window.tournament.address) && (() => {
+                  const maps = mapsSearchUrl(
+                    window.tournament.venue,
+                    window.tournament.address || window.tournament.location,
+                  );
+                  const body = (
                     <span className="min-w-0 leading-snug">
-                      {window.tournament.venue || window.tournament.location}
-                      {window.tournament.venue && window.tournament.location ? (
-                        <span className="text-[#9a9aa2]"> · {window.tournament.location}</span>
+                      <span className="font-semibold text-[#12324e]">
+                        {window.tournament.venue || window.tournament.location}
+                      </span>
+                      {window.tournament.address ? (
+                        <span className="mt-0.5 block text-[13px] text-[#6e6e73]">
+                          {window.tournament.address}
+                        </span>
+                      ) : window.tournament.venue && window.tournament.location ? (
+                        <span className="mt-0.5 block text-[13px] text-[#6e6e73]">
+                          {window.tournament.location}
+                        </span>
+                      ) : null}
+                      {maps ? (
+                        <span className="mt-0.5 block text-[12px] font-bold text-[#7BAFD4]">
+                          Open in Maps
+                        </span>
                       ) : null}
                     </span>
-                  </p>
-                )}
+                  );
+                  return (
+                    <p className="flex items-start gap-2">
+                      <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#7BAFD4]" aria-hidden />
+                      {maps ? (
+                        <a
+                          href={maps}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="min-w-0 rounded-sm outline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#7BAFD4]"
+                        >
+                          {body}
+                        </a>
+                      ) : (
+                        body
+                      )}
+                    </p>
+                  );
+                })()}
               </div>
 
               {window.tournament.notes && (

@@ -28,6 +28,7 @@ interface RawScheduleTournament {
   end_date?: string;
   city?: string;
   venue?: string;
+  event_address?: string;
   event_url?: string;
   bracket_url?: string;
   games?: RawScheduleGame[];
@@ -72,6 +73,7 @@ export function loadSchedule(): BaseballSchedule | null {
     endDate: t.end_date,
     venue: t.venue,
     location: t.city,
+    address: (t.event_address || '').trim() || undefined,
     pgUrl: t.event_url,
     bracketUrl: t.bracket_url,
   }));
@@ -197,3 +199,14 @@ export const BASEBALL_ROSTER: RosterPlayer[] = [
   { name: 'Levi Vannoy', pos: '3B', gradYear: 2030, bt: 'R/R', ht: '6-0', wt: '165', hs: 'Klein Cain', hometown: 'Spring, TX' },
   { name: 'Grayson Yates', pos: 'LHP', gradYear: 2030, bt: 'L/L', ht: '5-5', wt: '115', hs: 'Cypress Ranch', hometown: 'Cypress, TX' },
 ];
+
+
+/** Build a cross-platform maps deep link parents can open from a phone. */
+export function mapsSearchUrl(...parts: Array<string | undefined | null>): string | null {
+  const q = parts
+    .map((p) => (p || '').trim())
+    .filter(Boolean)
+    .join(', ');
+  if (!q) return null;
+  return `https://maps.google.com/?q=${encodeURIComponent(q)}`;
+}
