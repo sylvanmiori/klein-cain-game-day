@@ -23,6 +23,25 @@ function versusLabel(homeAway?: 'home' | 'away' | 'neutral') {
   return 'vs';
 }
 
+function weekendDateLabel(dates?: string, startDate?: string, endDate?: string) {
+  if (startDate && endDate) {
+    const a = /^(\d{4})-(\d{2})-(\d{2})$/.exec(startDate);
+    const b = /^(\d{4})-(\d{2})-(\d{2})$/.exec(endDate);
+    if (a && b) {
+      const start = new Date(Number(a[1]), Number(a[2]) - 1, Number(a[3]));
+      const end = new Date(Number(b[1]), Number(b[2]) - 1, Number(b[3]));
+      const mon = start.toLocaleDateString('en-US', { month: 'short' });
+      const mon2 = end.toLocaleDateString('en-US', { month: 'short' });
+      const year = end.getFullYear();
+      if (mon === mon2) {
+        return `${mon} ${start.getDate()}\u2013${end.getDate()}, ${year}`;
+      }
+      return `${mon} ${start.getDate()}\u2013${mon2} ${end.getDate()}, ${year}`;
+    }
+  }
+  return dates ?? '';
+}
+
 export default async function BaseballHome() {
   const schedule = await loadSchedule();
   const window = schedule ? currentWeekend(schedule) : null;
@@ -66,10 +85,10 @@ export default async function BaseballHome() {
               </h2>
 
               <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:gap-y-2">
-                {window.tournament.dates ? (
+                {(window.tournament.dates || window.tournament.startDate) ? (
                   <p className="flex items-start gap-2 text-sm text-[#6e6e73]">
                     <CalendarDays className="mt-0.5 h-4 w-4 shrink-0 text-[#7BAFD4]" aria-hidden />
-                    <span>{window.tournament.dates}</span>
+                    <span>{weekendDateLabel(window.tournament.dates, window.tournament.startDate, window.tournament.endDate)}</span>
                   </p>
                 ) : null}
                 {(window.tournament.venue || window.tournament.location) && (
