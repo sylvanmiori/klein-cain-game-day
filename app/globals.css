@@ -364,7 +364,7 @@ article>section { border-bottom:1px solid var(--line); }
 .history-source a:hover { color:#32104e; }
 .week-recap { display:grid; grid-template-columns:minmax(0,1fr) minmax(320px,380px); gap:48px 56px; align-items:start; padding:52px var(--pad) 56px; border-bottom:none; }
 .week-recap.no-sidebar { grid-template-columns:minmax(0,1fr); max-width:none; width:100%; }
-.week-recap.no-sidebar .recap-body-column { width:100%; max-width:780px; }
+.week-recap.no-sidebar .recap-body-column { width:100%; max-width:780px; margin-inline:auto; }
 .week-recap.no-sidebar .recap-copy, .week-recap.no-sidebar .recap-copy p { max-width:780px; }
 .week-recap .byline { margin:10px 0 0; color:#787268; font-size:11px; font-weight:750; letter-spacing:.03em; text-transform:uppercase; }
 .recap-body-column { min-width:0; }
