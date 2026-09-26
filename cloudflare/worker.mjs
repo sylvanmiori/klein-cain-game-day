@@ -136,8 +136,7 @@ function extractJsonObject(text) {
   const body = (fenced ? fenced[1] : raw).trim();
   const start = body.indexOf('{');
   if (start === -1) throw new Error('No JSON object in model response');
-  // Brace-balanced slice so trailing prose after the first JSON object
-  // does not make JSON.parse throw (lastIndexOf('}') was too greedy).
+  // Brace-balanced slice so trailing model prose does not break JSON.parse.
   let depth = 0;
   let inStr = false;
   let esc = false;
