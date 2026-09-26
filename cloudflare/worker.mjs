@@ -274,6 +274,15 @@ async function runBoxscoreVision(env, inputs) {
 }
 
 /** ArrayBuffer -> base64 without blowing the call stack on large images. */
+
+/** Reject raw HEIC/HEIF — Llama vision does not handle them; client converts to JPEG first. */
+function isHeicUpload(file) {
+  const type = String(file?.type ?? '').toLowerCase().trim();
+  if (type === 'image/heic' || type === 'image/heif') return true;
+  const name = String(file?.name ?? '').toLowerCase();
+  return name.endsWith('.heic') || name.endsWith('.heif');
+}
+
 function arrayBufferToBase64(buffer) {
   const bytes = new Uint8Array(buffer);
   let binary = '';
@@ -657,6 +666,11 @@ const worker = {
         return json({ error: 'Provide at least one image file.' }, 400);
       }
       if (images.length > 4) return json({ error: 'Too many images (4 max).' }, 413);
+      for (const image of images) {
+        if (isHeicUpload(image)) {
+          return json({ error: 'HEIC must be converted; update the app' }, 415);
+        }
+      }
       let gameId = null;
       const rawGameId = String(form.get('game_id') ?? '').trim();
       if (rawGameId !== '') {

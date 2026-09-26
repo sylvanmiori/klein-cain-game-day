@@ -13,6 +13,7 @@ import type {
   StatsResponse,
   UncertainMatch,
 } from './types';
+import { isHeicLike, prepareImagesForUpload } from './heic-to-jpeg';
 
 type Mode = 'upload' | 'manual' | 'edit';
 
@@ -518,7 +519,7 @@ function gameLabel(g: ApiGame): string {
 
 // ---------- mode: upload ----------
 
-type UploadPhase = 'setup' | 'analyzing' | 'review' | 'done';
+type UploadPhase = 'setup' | 'converting' | 'analyzing' | 'review' | 'done';
 
 function UploadMode({
   password,
@@ -561,9 +562,19 @@ function UploadMode({
       return;
     }
 
+    setPhase(files.some(isHeicLike) ? 'converting' : 'analyzing');
+    let uploadFiles: File[];
+    try {
+      uploadFiles = await prepareImagesForUpload(files);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not convert photo for upload.');
+      setPhase('setup');
+      return;
+    }
+
     const form = new FormData();
     form.append('password', password);
-    for (const f of files) form.append('images[]', f);
+    for (const f of uploadFiles) form.append('images[]', f);
     if (selection === '__new') {
       form.append('game_date', newGame.date);
       form.append('opponent', newGame.opponent);
@@ -584,6 +595,11 @@ function UploadMode({
       }
       if (res.status === 429) {
         setError('Too many failed password attempts. Wait a few minutes and try again.');
+        setPhase('setup');
+        return;
+      }
+      if (res.status === 415) {
+        setError('This photo format is not supported yet. Update the page (hard refresh) so HEIC converts automatically, or export as JPEG from Photos.');
         setPhase('setup');
         return;
       }
@@ -765,6 +781,7 @@ function UploadMode({
         )}
         <p className="mt-1 text-[12px] text-[#9a9aa2]">
           One game is up to two screenshots: the batting view and the pitching view. They are read as one game.
+          iPhone HEIC/HEIF photos are converted to JPEG automatically before Analyze.
         </p>
 
         {error && (
@@ -776,10 +793,14 @@ function UploadMode({
         <button
           type="button"
           onClick={handleAnalyze}
-          disabled={phase === 'analyzing'}
+          disabled={phase === 'converting' || phase === 'analyzing'}
           className="mt-4 w-full rounded-full bg-[#7BAFD4] px-5 py-3 text-sm font-extrabold text-[#12324e] transition-colors hover:bg-[#6aa2cc] disabled:opacity-60"
         >
-          {phase === 'analyzing' ? 'Analyzing photos…' : 'Analyze'}
+          {phase === 'converting'
+            ? 'Converting photo…'
+            : phase === 'analyzing'
+              ? 'Analyzing photos…'
+              : 'Analyze'}
         </button>
       </section>
 

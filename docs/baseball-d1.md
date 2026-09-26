@@ -129,6 +129,9 @@ Settings → Domains → Add custom domain.
   screenshot files as `images[]` (batting view and/or pitching view for ONE
   game; the legacy single `image` field still works), 10 MB per image, 4 max,
   optional `game_id`, `game_date`, `opponent`, `tournament`, `venue`.
+  Prefer JPEG/PNG/WebP. Raw `image/heic` / `image/heif` (or `.heic`/`.heif`
+  filenames) return `415` with `HEIC must be converted; update the app` —
+  the `/submit` UI converts HEIC→JPEG client-side before upload.
   The vision prompt is GameChanger-aware: it reads the header (date, teams,
   line score) to derive `our_score`/`opp_score`/`result` ("W 10-9" style),
   splits hits via the TB line (TB = 1B + 2·2B + 3·3B + 4·HR), reads the

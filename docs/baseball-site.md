@@ -78,6 +78,10 @@ If a tournament lacks `event_address`, fall back to venue + city; still link whe
 | `/stats` | `/baseball/stats` | Season stats (D1 `413baseball-stats`) |
 | `/submit` | `/baseball/submit` | Password-gated box-score entry |
 
+### Box-score photo formats (HEIC)
+
+Parents on iPhone often pick **HEIC/HEIF** from Photos. Llama vision on Workers AI does not reliably accept `image/heic`, so the submit UI (`components/baseball/boxscore-submit.tsx` + `heic-to-jpeg.ts`) **auto-converts HEIC/HEIF to JPEG in the browser** before `POST /api/baseball/boxscore`. Native decode (ImageBitmap / canvas) is preferred on Safari iOS; `heic2any` loads dynamically only if native decode fails. JPEG/PNG/WebP are unchanged. The Worker returns `415` if a raw HEIC still arrives (stale client).
+
 ## Data and automation (summary)
 
 - Schedule: `npm run baseball:schedule` → `content/baseball/schedule.json` (also Thursday GH Action).
