@@ -135,9 +135,28 @@ function extractJsonObject(text) {
   const fenced = raw.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
   const body = (fenced ? fenced[1] : raw).trim();
   const start = body.indexOf('{');
-  const end = body.lastIndexOf('}');
-  if (start === -1 || end === -1 || end < start) throw new Error('No JSON object in model response');
-  return JSON.parse(body.slice(start, end + 1));
+  if (start === -1) throw new Error('No JSON object in model response');
+  // Brace-balanced slice so trailing prose after the first JSON object
+  // does not make JSON.parse throw (lastIndexOf('}') was too greedy).
+  let depth = 0;
+  let inStr = false;
+  let esc = false;
+  for (let i = start; i < body.length; i++) {
+    const c = body[i];
+    if (inStr) {
+      if (esc) esc = false;
+      else if (c === '\\') esc = true;
+      else if (c === '"') inStr = false;
+      continue;
+    }
+    if (c === '"') { inStr = true; continue; }
+    if (c === '{') depth += 1;
+    else if (c === '}') {
+      depth -= 1;
+      if (depth === 0) return JSON.parse(body.slice(start, i + 1));
+    }
+  }
+  throw new Error('No JSON object in model response');
 }
 
 /**
