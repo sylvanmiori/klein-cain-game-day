@@ -237,15 +237,17 @@ function PlayerOfGame({ stats }: { stats: GameStats }) {
  * React escapes the text segments, so no HTML passes through.
  */
 function renderInlineMarkup(text: string): ReactNode {
-  const parts = text.split(/(\*\*[^*\n]+\*\*)/g);
+  const parts = text.split(/(\*\*[^*\n]+\*\*|\*[^*\n]+\*)/g);
   if (parts.length === 1) return text;
-  return parts.map((part, index) =>
-    /^\*\*[^*]+\*\*$/.test(part) ? (
-      <strong key={index}>{part.slice(2, -2)}</strong>
-    ) : (
-      part
-    ),
-  );
+  return parts.map((part, index) => {
+    if (/^\*\*[^*]+\*\*$/.test(part)) {
+      return <strong key={index}>{part.slice(2, -2)}</strong>;
+    }
+    if (/^\*[^*]+\*$/.test(part)) {
+      return <em key={index}>{part.slice(1, -1)}</em>;
+    }
+    return part;
+  });
 }
 
 function EditorialCopy({ body, className }: { body: string; className?: string }) {

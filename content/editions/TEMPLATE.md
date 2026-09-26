@@ -103,11 +103,14 @@ it to `null` when you have no additional commentary to add.
 by the shared `EditorialCopy` component (`components/edition-page.tsx`):
 
 - Blank lines start a new paragraph.
-- `**double asterisks**` bold a key number or phrase.
+- `**double asterisks**` bold a key number, phrase, or player name.
+- `*single asterisks*` italicize a player quote or a voice aside.
 
-Keep paragraphs short (two to three sentences) and bold sparingly: scores,
-records, rankings and the one most important phrase per paragraph. No other
-markup is supported. Plain text with no markup renders exactly as before.
+Keep paragraphs short (two to three sentences). Bold player names on first
+mention, with jersey number (e.g. `**Jace Hanks (#9)**`), plus scores, records,
+rankings, and the one most important phrase per paragraph. Bold sparingly, not
+every mention; use italics only for quotes and asides. Plain text with no
+markup renders exactly as before.
 
 ```json
 {
