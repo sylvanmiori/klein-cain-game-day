@@ -44,6 +44,7 @@ and `team.ranking` are always `null` rather than invented.
 |---|---|
 | event name, dates | `<title>`, `lblDatesNew` |
 | venue, city, street address | `lblEventLocaGeneral` (+ its Google Maps link) |
+| street address → site Maps | Scraper field `event_address` → `ScheduleTournament.address` → Home/Schedule one-tap Maps via `mapsSearchUrl` (see `docs/baseball-site.md`) |
 | age divisions offered | `rptDivisions` buttons |
 | pool standings page URL | `hlTournamentPoolStandings` link |
 | **event scoreboard**: every game tile — visitor/home, runs, status (`Final`, `Top N`/`Bot N`, or null when scheduled), date/time, venue/field, DiamondKast game id | `ucDiamondKast_dlScoreBoard` repeater (`hlDiamondKastGames_{n}`) |

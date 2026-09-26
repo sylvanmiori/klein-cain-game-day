@@ -82,3 +82,7 @@ Facebook posting needs an SMS 2FA code from Steven's phone. If he is unreachable
 ---
 
 *Standing social rules also apply: bold-first-mention player styling, real @-mention photo credits on their own line, tag featured players by handle, The Read formatting, and the photo credit conventions in AGENTS.md.*
+
+## 8. 4:13 Baseball (same repo, separate site)
+
+`413baseball.gameday.report` shares the Worker but must never show Klein Cain football in titles, images, or link previews. Before baseball UI or metadata work, read [`docs/baseball-site.md`](baseball-site.md). Live baseball deploys require `npm run deploy:cloudflare` (GitHub Pages alone is not enough). Do not invent Perfect Game scores or box-score stats.

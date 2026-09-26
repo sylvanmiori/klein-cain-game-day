@@ -24,3 +24,7 @@ Read `README.md`, then `docs/PROJECT-GUIDE.md`, before changing this repository.
 Run `git diff --check`, `npx tsc --noEmit`, `npm run test:score` and `npm run build:cloudflare`. If paths, commands, hosting, automation, sources, data ownership, design rules or known limitations changed, update the README and project guide in the same commit. `npm run docs:check` is part of both production builds.
 
 Pushes to `main` deploy through Cloudflare Workers Builds. Do not report a production change complete until both the GitHub `deploy` check and `Workers Builds: gameday-report` check succeed and the public URL returns the expected result.
+
+## 4:13 Baseball (shared site)
+
+`413baseball.gameday.report` is a separate baseball site in this repo. Read [`docs/baseball-site.md`](docs/baseball-site.md) before changing it — especially Open Graph overrides, Cloudflare publish, venue Maps links, and the isolation rules that keep it off Klein Cain football branding.
