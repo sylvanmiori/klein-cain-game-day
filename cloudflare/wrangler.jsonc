@@ -17,16 +17,15 @@
   // Workers AI binding used by the 4:13 Baseball box-score screenshot parser
   // (POST /api/baseball/boxscore) in worker.mjs.
   "ai": { "binding": "AI" },
-  // D1 database for 4:13 Baseball box-score stats. DO NOT uncomment until
-  // Steven has created the database and pasted its real ID below — a
-  // placeholder ID here breaks all deploys. Steps: docs/baseball-d1.md.
-  // "d1_databases": [
-  //   {
-  //     "binding": "BASEBALL_STATS",
-  //     "database_name": "413baseball-stats",
-  //     "database_id": "REPLACE_WITH_D1_ID_AFTER_CREATION"
-  //   }
-  // ],
+  // D1 database for 4:13 Baseball box-score stats (created 2026-09-26).
+  // Binding name must stay BASEBALL_STATS — worker.mjs reads env.BASEBALL_STATS.
+  "d1_databases": [
+    {
+      "binding": "BASEBALL_STATS",
+      "database_name": "413baseball-stats",
+      "database_id": "8885adde-6929-40f8-906d-bef5479729cf"
+    }
+  ],
   "triggers": { "crons": ["* * * * *", "*/15 * * * *"] },
   "observability": { "enabled": true },
   "routes": [

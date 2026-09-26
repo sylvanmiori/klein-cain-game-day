@@ -588,14 +588,24 @@ function UploadMode({
         return;
       }
       if (!res.ok) {
-        let detail = '';
+        let apiError = '';
         try {
           const body = (await res.json()) as { error?: unknown };
-          if (body && typeof body.error === 'string') detail = `: ${body.error}`;
+          if (body && typeof body.error === 'string') apiError = body.error;
         } catch {
           /* ignore */
         }
-        setError(`Could not analyze those photos${detail}. Try clearer shots of the box score.`);
+        if (apiError === 'uploads not configured' || res.status === 503) {
+          setError(
+            apiError === 'uploads not configured'
+              ? 'Uploads are not configured on the server yet (missing BOXSCORE_PASSWORD secret). Ask Steven to set it, then retry.'
+              : `Could not analyze those photos${apiError ? `: ${apiError}` : ''} (server ${res.status}).`,
+          );
+        } else {
+          setError(
+            `Could not analyze those photos${apiError ? `: ${apiError}` : ''}. Try clearer shots of the box score.`,
+          );
+        }
         setPhase('setup');
         return;
       }

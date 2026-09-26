@@ -4,9 +4,16 @@ The 4:13 Baseball box-score API (`POST /api/baseball/boxscore`,
 `POST /api/baseball/boxscore/confirm`, `GET /api/baseball/games/:id`,
 `PUT /api/baseball/games/:id/lines`, `DELETE /api/baseball/games/:id`,
 `GET /api/baseball/stats` in `cloudflare/worker.mjs`) reads and writes a
-Cloudflare D1 database through the `BASEBALL_STATS` binding. Wrangler was not authenticated when this was built,
-so the database itself still needs to be created. Do these steps once, in
-order.
+Cloudflare D1 database through the `BASEBALL_STATS` binding.
+
+**Status (2026-09-26):** D1 database `413baseball-stats` (id
+`8885adde-6929-40f8-906d-bef5479729cf`) is created, bound in
+`cloudflare/wrangler.jsonc`, schema applied, and the 15-player roster seeded.
+Steps a–d below are historical reference. The remaining one-time step is
+**e) Set the upload password** — until `BOXSCORE_PASSWORD` exists on the
+`gameday-report` Worker, Analyze returns `503 {"error":"uploads not configured"}`.
+
+Historical provisioning steps (already done):
 
 ## a) Create the D1 database
 
@@ -24,28 +31,26 @@ page). You will need it in the next step.
 
 ## b) Bind it in wrangler.jsonc
 
-Open `cloudflare/wrangler.jsonc` and find the commented-out `d1_databases`
-block. Paste the real database ID in place of
-`REPLACE_WITH_D1_ID_AFTER_CREATION` and **uncomment the whole block**:
+Open `cloudflare/wrangler.jsonc` and ensure the live `d1_databases` block
+matches (already bound as of 2026-09-26):
 
 ```jsonc
 "d1_databases": [
   {
     "binding": "BASEBALL_STATS",
     "database_name": "413baseball-stats",
-    "database_id": "<paste-the-real-id-here>"
+    "database_id": "8885adde-6929-40f8-906d-bef5479729cf"
   }
 ],
 ```
 
-The block is commented out on purpose: a placeholder ID in a live
-`d1_databases` block breaks every deploy, so it must stay commented until the
-real ID is in.
+The live binding uses database_id `8885adde-6929-40f8-906d-bef5479729cf`.
+Do not replace it with a placeholder — a fake ID breaks every deploy.
 
 ## c) Apply the schema
 
 ```bash
-wrangler d1 execute 413baseball-stats --file=cloudflare/baseball-schema.sql
+wrangler d1 execute 413baseball-stats --remote --file=cloudflare/baseball-schema.sql
 ```
 
 This creates `players`, `games`, `batting_lines`, and `pitching_lines`
@@ -67,7 +72,7 @@ Schema notes beyond the table definitions:
 
 ```bash
 node scripts/baseball-seed.mjs > /tmp/seed.sql
-wrangler d1 execute 413baseball-stats --file=/tmp/seed.sql
+wrangler d1 execute 413baseball-stats --remote --file=/tmp/seed.sql
 ```
 
 (`npm run baseball:seed` prints the same SQL.) This inserts the 15 roster

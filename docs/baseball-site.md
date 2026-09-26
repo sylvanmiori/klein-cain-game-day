@@ -75,7 +75,7 @@ If a tournament lacks `event_address`, fall back to venue + city; still link whe
 | `/schedule` | `/baseball/schedule` | Tournament list + live bracket |
 | `/standings` | `/baseball/standings` | Live pool standings |
 | `/roster` | `/baseball/roster` | Roster |
-| `/stats` | `/baseball/stats` | Season stats (D1; 503 until provisioned) |
+| `/stats` | `/baseball/stats` | Season stats (D1 `413baseball-stats`) |
 | `/submit` | `/baseball/submit` | Password-gated box-score entry |
 
 ## Data and automation (summary)
@@ -84,7 +84,7 @@ If a tournament lacks `event_address`, fall back to venue + city; still link whe
 - Bracket file: `npm run baseball:bracket` / Saturday–Sunday GH Action → `content/baseball/bracket.json`.
 - Live bracket: Worker cron `*/15` → KV → `GET /api/baseball/bracket` (see [bracket poller](baseball-bracket-poller.md)).
 - Live pool standings: same `*/15` cron → KV → `GET /api/baseball/standings` (see [standings poller](baseball-standings-poller.md)); Standings nav page at `/baseball/standings`.
-- Stats: D1 + `/api/baseball/stats` (see [D1 doc](baseball-d1.md)); until D1 is bound, empty-state UI is OK and APIs return 503.
+- Stats: D1 + `/api/baseball/stats` (see [D1 doc](baseball-d1.md)); D1 is bound. Uploads still need `BOXSCORE_PASSWORD` on the Worker or Analyze returns `503 uploads not configured`.
 
 ## Checklist before shipping a baseball UI change
 
