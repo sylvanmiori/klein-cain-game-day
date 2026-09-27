@@ -80,6 +80,24 @@ describe('assignRounds', () => {
   it('falls back to Round N for deep brackets', () => {
     assert.equal(roundLabel(5), 'Round 5');
   });
+
+  it('keeps correct rounds after PG replaces Winner-of placeholders with real teams', () => {
+    // Live behavior 2026-09-27: once quarterfinals complete, PG fills the
+    // semifinal slots with actual team names, erasing every feeder link.
+    // Feeder-chain inference then mislabeled finished QFs as "Championship".
+    const played = fixture
+      .replace('Winner of Game #20', 'TBT SPACE CITY')
+      .replace('Winner of Game #21', 'Scorpions Team Easton 2030')
+      .replace('Winner of Game #22', 'PTX Reserves 2030 - Towles');
+    const games = assignRounds(parseBracketsPage(played, TOURNAMENT)[0].games);
+    const byNum = new Map(games.map((g) => [g.game_number, g.round]));
+    assert.equal(byNum.get(20), 'Quarterfinal');
+    assert.equal(byNum.get(21), 'Quarterfinal');
+    assert.equal(byNum.get(22), 'Quarterfinal');
+    assert.equal(byNum.get(23), 'Semifinal');
+    assert.equal(byNum.get(24), 'Semifinal');
+    assert.equal(byNum.get(25), 'Championship');
+  });
 });
 
 describe('scores and winners', () => {

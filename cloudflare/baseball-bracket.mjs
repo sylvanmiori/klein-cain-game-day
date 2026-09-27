@@ -147,25 +147,29 @@ export function parseBracketsPage(html, tournament) {
 }
 
 /**
- * Round names from the page's own "Winner of Game #N" feeder references.
- * Depth 0 (no consumer) = Championship; each feeder level steps one round out.
+ * Round names from game numbers within the tier. PG numbers bracket games
+ * sequentially in bracket order (early rounds first, final last), so the
+ * last game is the final, the two before it the semifinals, the four
+ * before that the quarterfinals, and so on.
+ *
+ * This deliberately does NOT use the page's "Winner of Game #N" feeder
+ * references: PG replaces those placeholders with real team names as games
+ * complete, which silently breaks feeder-chain inference and mislabels
+ * finished early-round games as "Championship".
  */
 export function assignRounds(games) {
-  const feeds = new Map(); // gameNumber -> consumer gameNumber
-  for (const game of games) {
-    for (const name of [game.home?.name, game.away?.name]) {
-      if (!name) continue;
-      for (const ref of name.matchAll(/Winner of Game #(\d+)/g)) {
-        feeds.set(Number(ref[1]), game.game_number);
-      }
+  const sorted = [...games].sort((a, b) => a.game_number - b.game_number);
+  const roundFor = new Map();
+  let idx = sorted.length - 1;
+  let depth = 0;
+  while (idx >= 0) {
+    const count = 2 ** depth; // 1 final, 2 semifinals, 4 quarterfinals, ...
+    for (let i = 0; i < count && idx >= 0; i++, idx--) {
+      roundFor.set(sorted[idx].game_number, roundLabel(depth));
     }
+    depth++;
   }
-  const depth = (num, seen = new Set()) => {
-    if (seen.has(num)) return 0;
-    seen.add(num);
-    return feeds.has(num) ? 1 + depth(feeds.get(num), seen) : 0;
-  };
-  return games.map((game) => ({ ...game, round: roundLabel(depth(game.game_number)) }));
+  return games.map((game) => ({ ...game, round: roundFor.get(game.game_number) ?? null }));
 }
 
 /**
