@@ -25,7 +25,7 @@ const STALE_AFTER_MS = 10 * 60 * 1000;
 /** Hostname of the 4:13 Baseball subsite (15U travel baseball, Spring TX). */
 const BASEBALL_HOSTNAME = '413baseball.gameday.report';
 /** Workers AI vision model used to transcribe box-score screenshots. */
-const BOXSCORE_VISION_MODEL = '@cf/meta/llama-3.2-11b-vision-instruct';
+const BOXSCORE_VISION_MODEL = '@cf/meta/llama-4-scout-17b-16e-instruct';
 const json = (data, status = 200) => Response.json(data, {
   status, headers: { 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' },
 });
