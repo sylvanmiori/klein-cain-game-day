@@ -78,12 +78,22 @@ If a tournament lacks `event_address`, fall back to venue + city; still link whe
 | `/roster` | `/baseball/roster` | Roster |
 | `/stats` | `/baseball/stats` | Season stats + Game Box Scores list (D1 `413baseball-stats`) |
 | `/box-score?game=` | `/baseball/box-score` | Individual game batting/pitching (public) |
-| `/player?id=` | `/baseball/player` | Individual player season batting/pitching + game log (public) |
+| `/player?id=` | `/baseball/player` | Individual player page — hero + Summary/Game Log/Stats tabs (public) |
 | `/submit` | `/baseball/submit` | Password-gated box-score entry |
 
 ### Player pages and name links
 
-Individual player season pages live at `/baseball/player?id=<player_id>` (query style, same pattern as `/box-score?game=`). Data comes from public `GET /api/baseball/players/:id` (same season formulas as `/api/baseball/stats`, plus a game log). Roster player names on `/stats`, `/box-score`, and `/roster` link through `PlayerNameLink` — same body text color, no default underline; hover underline + focus-visible ring. Opponent names and missing `player_id` stay plain text. Submit/edit grids intentionally do not link names (edit UX).
+Individual player season pages live at `/baseball/player?id=<player_id>` (query style, same pattern as `/box-score?game=`). Optional `?tab=summary|gamelog|stats` deep-links the active section (default Summary). Data comes from public `GET /api/baseball/players/:id` (same season formulas as `/api/baseball/stats`, plus a game log).
+
+Layout (Yahoo Sports **structure**, 4:13 brand — navy `#12324e`, light cards; no purple theme, no fake headshots):
+
+1. **Hero** — large name, `#jersey POSITION` (+ quiet grad year), small 413 shield, season year badge, key stat strip (hitters: AVG·HR·RBI·R or AVG·H·RBI·OPS when HR is 0; pitchers-only: ERA·IP·K·WHIP; both: batting primary + small pitching secondary).
+2. **Sticky tabs** — Summary | Game Log | Stats (skip Splits/News/Bio).
+3. **Summary** — compact Last Games table (opponent → box-score) + season snapshot rows.
+4. **Game Log** — full game-by-game batting/pitching from `games[]`.
+5. **Stats** — full season batting (+ pitching when present).
+
+Roster player names on `/stats`, `/box-score`, and `/roster` link through `PlayerNameLink` — same body text color, no default underline; hover underline + focus-visible ring. Opponent names and missing `player_id` stay plain text. Submit/edit grids intentionally do not link names (edit UX).
 
 ### Box-score photo formats (HEIC)
 
