@@ -15,7 +15,7 @@
     "name": "Klein",
     "mascot": "Bearkats",
     "logo": "/klein-logo.png",
-    "record": "4–0",
+    "record": "5–0",
     "rank": 48
   },
   "away": {
@@ -34,24 +34,24 @@
     "margin": -5,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-26T22:14:52.312Z"
+    "asOf": "2026-09-27T14:38:31.553Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5",
-    "asOf": "2026-09-26T22:14:52.234Z"
+    "asOf": "2026-09-27T14:38:31.407Z"
   },
   "stats": null,
   "finalScore": null,
   "rating": {
-    "home": 14.05,
-    "away": 15.28,
-    "margin": 1.67,
+    "home": 13.06,
+    "away": 15.36,
+    "margin": 0.57,
     "method": "Least-squares rating of every Texas result, margins capped at 28",
     "source": "Cain Game Day",
     "sourceUrl": "https://kleincain.gameday.report/",
-    "asOf": "2026-09-26T22:14:52.312Z"
+    "asOf": "2026-09-27T14:38:31.553Z"
   },
   "weather": null,
   "scheduledFacts": [],
@@ -62,7 +62,28 @@
     "intro": {
       "heading": "The matchup",
       "body": "Klein Cain plays at Klein on October 8, 2026 at 7:00 PM, at Klein Memorial Stadium. Records, the statewide ranking and the published forecast on this page update automatically as the season goes on. Player notes are added only when they can be checked against a named source.",
-      "facts": []
+      "facts": [
+        {
+          "label": "Cain",
+          "value": "4–0 · 2–0 district · 50.0 points/game",
+          "team": "school"
+        },
+        {
+          "label": "Klein",
+          "value": "5–0 · 3–0 district",
+          "team": "opponent"
+        },
+        {
+          "label": "Pick",
+          "value": "Klein by 5",
+          "team": "opponent"
+        },
+        {
+          "label": "Klein coach",
+          "value": "David Perez · 1st season",
+          "team": "opponent"
+        }
+      ]
     },
     "players": [],
     "recruiting": null,
