@@ -44,11 +44,12 @@ function nextGameFact(edition: Edition): Fact | null {
 export function PreviewView({ edition, preview }: { edition: Edition; preview: PreviewSection }) {
   const opponent = opponentOf(edition, publication.schoolName);
   const matchup = coachingMatchup(opponent.name, opponent.mascot);
+  const hasFacts = (preview.intro?.facts?.length ?? 0) > 0;
 
   return (
     <>
       {preview.intro && (
-        <section className="early-read">
+        <section className={hasFacts ? 'early-read' : 'early-read no-sidebar'}>
           <div>
             <h2>{preview.intro.heading}</h2>
             <EditorialCopy body={preview.intro.body} />
