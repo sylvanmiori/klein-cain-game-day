@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { formatGameDate, loadBracket, loadSchedule, mapsSearchUrl } from '../../../components/baseball/data';
 import { BracketLive } from '../../../components/baseball/bracket-live';
+import { LiveGameResult } from '../../../components/baseball/live-game-result';
 
 export const metadata: Metadata = {
   title: 'Schedule',
@@ -80,15 +81,7 @@ export default async function BaseballSchedulePage() {
                             {g.note ? ` \u00B7 ${g.note}` : ''}
                           </p>
                         </div>
-                        {g.result ? (
-                          <span className="shrink-0 rounded-md bg-[#12324e] px-2 py-1 text-[12px] font-extrabold text-white tabular-nums">
-                            {g.result}
-                          </span>
-                        ) : (
-                          <span className="shrink-0 rounded-md bg-[#eef5fb] px-2 py-1 text-[12px] font-bold text-[#12324e]">
-                            Upcoming
-                          </span>
-                        )}
+                        <LiveGameResult game={g} siblingGames={games} style="schedule" />
                       </li>
                     ))}
                   </ul>
@@ -117,11 +110,12 @@ export default async function BaseballSchedulePage() {
                           {g.venue ? ` \u00B7 ${g.venue}` : ''}
                         </p>
                       </div>
-                      {g.result && (
-                        <span className="shrink-0 rounded-md bg-[#12324e] px-2 py-1 text-[12px] font-extrabold text-white tabular-nums">
-                          {g.result}
-                        </span>
-                      )}
+                      <LiveGameResult
+                        game={g}
+                        siblingGames={schedule.games.filter((candidate) => !candidate.tournamentId)}
+                        style="schedule"
+                        showUpcoming={false}
+                      />
                     </li>
                   ))}
               </ul>

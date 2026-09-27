@@ -16,7 +16,7 @@
     "score": "node scripts/update-live-score.mjs",
     "build:cloudflare": "npm run docs:check && npm run validate && npm run sitemap && DEPLOY_TARGET=cloudflare vinext build && node scripts/check-build.mjs",
     "deploy:cloudflare": "wrangler deploy --config cloudflare/wrangler.jsonc",
-    "test:score": "node --test cloudflare/*.test.mjs scripts/lib/*.test.mjs scripts/sync-roster.test.mjs && node --experimental-strip-types --test components/baseball/heic-to-jpeg.test.ts",
+    "test:score": "node --test cloudflare/*.test.mjs scripts/lib/*.test.mjs scripts/sync-roster.test.mjs && node --experimental-strip-types --test components/baseball/heic-to-jpeg.test.ts components/baseball/live-stats.test.ts",
     "lint": "oxlint",
     "format": "oxfmt",
     "validate": "node scripts/validate-editions.mjs",

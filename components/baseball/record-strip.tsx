@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 // Router's client-side navigation (taps silently swallowed). Full-page
 // loads always work.
 import type { SeasonRecord, StatsResponse } from './types';
+import { loadLiveStats } from './live-stats';
 
 function parseRecord(games: StatsResponse['games']): SeasonRecord | null {
   let w = 0, l = 0, t = 0;
@@ -33,11 +34,7 @@ export function BaseballRecordStrip({ fallback }: { fallback?: SeasonRecord | nu
 
   useEffect(() => {
     let alive = true;
-    fetch('/api/baseball/stats', { cache: 'no-store' })
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json() as Promise<StatsResponse>;
-      })
+    loadLiveStats()
       .then((data) => {
         if (!alive) return;
         setLive(data && Array.isArray(data.games) ? parseRecord(data.games) : null);

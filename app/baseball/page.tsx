@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { CalendarDays, ChevronRight, Clock, ExternalLink, MapPin } from 'lucide-react';
+import { LiveGameResult } from '../../components/baseball/live-game-result';
 import { BaseballRecordStrip } from '../../components/baseball/record-strip';
 import {
   currentWeekend,
@@ -224,15 +225,11 @@ export default async function BaseballHome() {
                                 </span>
                               ) : null}
                             </p>
-                            {g.result ? (
-                              <span className="shrink-0 rounded-full bg-[#12324e] px-2.5 py-0.5 text-[11px] font-extrabold text-white tabular-nums sm:px-3 sm:py-1 sm:text-[12px]">
-                                {g.result}
-                              </span>
-                            ) : (
-                              <span className="shrink-0 rounded-full bg-[#e8f3fb] px-2.5 py-0.5 text-[11px] font-bold text-[#12324e] sm:px-3 sm:py-1 sm:text-[12px]">
-                                Upcoming
-                              </span>
-                            )}
+                            <LiveGameResult
+                              game={g}
+                              siblingGames={window.games}
+                              style="home"
+                            />
                           </div>
                         </div>
                       </li>
