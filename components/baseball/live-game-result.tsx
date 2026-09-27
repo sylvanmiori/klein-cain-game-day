@@ -7,9 +7,9 @@ import type { ScheduleGame } from './types';
 type ResultStyle = 'home' | 'schedule';
 
 const resultClasses: Record<ResultStyle, string> = {
-  home: 'shrink-0 rounded-full bg-[#12324e] px-2.5 py-0.5 text-[11px] font-extrabold text-white tabular-nums sm:px-3 sm:py-1 sm:text-[12px]',
+  home: 'shrink-0 rounded-full bg-[#12324e] px-2.5 py-0.5 text-[11px] font-extrabold !text-white tabular-nums sm:px-3 sm:py-1 sm:text-[12px]',
   schedule:
-    'shrink-0 rounded-md bg-[#12324e] px-2 py-1 text-[12px] font-extrabold text-white tabular-nums',
+    'shrink-0 rounded-md bg-[#12324e] px-2 py-1 text-[12px] font-extrabold !text-white tabular-nums',
 };
 
 const upcomingClasses: Record<ResultStyle, string> = {
