@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { BaseballBrandLink } from '../../components/baseball/baseball-brand-link';
 import { BaseballSubnav } from '../../components/baseball/baseball-subnav';
 
 const baseballUrl = 'https://413baseball.gameday.report';
@@ -57,15 +58,7 @@ export default function BaseballLayout({ children }: { children: React.ReactNode
     <div className="ml-auto mr-auto min-h-screen w-full max-w-[100vw] overflow-x-clip bg-[#f5f7fa] text-[#111114]">
       <div className="border-b border-[#dde7f0] bg-white">
         <div className="ml-auto mr-auto w-full max-w-3xl pb-3 pl-3 pr-3 pt-4 sm:pb-4 sm:pl-4 sm:pr-4 sm:pt-5">
-          <div className="flex items-center gap-3">
-            <img src="/brand/baseball/413-shield-96.png" srcSet="/brand/baseball/413-shield-48.png 1x, /brand/baseball/413-shield-96.png 2x" alt="4:13 Baseball shield" width="44" height="44" className="h-11 w-11 min-w-0 shrink-0" />
-            <div>
-              <p className="text-lg font-black tracking-tight text-[#12324e]">4:13 Baseball</p>
-              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#7BAFD4]">
-                15U &middot; Spring, TX
-              </p>
-            </div>
-          </div>
+          <BaseballBrandLink />
           <BaseballSubnav />
         </div>
       </div>
