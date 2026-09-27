@@ -17,17 +17,20 @@ KV (SCORES namespace): baseball:bracket:<event_id>   ← last-good snapshot
 GET /api/baseball/bracket ──reads──┘
         ▲
 Schedule page <BracketLive> ──fetches──┘ (falls back to build-time bracket.json)
+Home <HomeBracketPath> ──fetches──┘ (hides until 4:13 is a named team)
 ```
 
 The Next.js request path never scrapes Perfect Game. The page shows
 "Updated … · Source: Perfect Game" when rendering live data. Snapshots live in
 **KV only** (not R2). When Perfect Game replaces `Seed #N` placeholders with
 real team names and/or fills scores, the next successful poll updates the
-Schedule bracket **without a deploy**.
+Schedule bracket **and** the Home Sunday path **without a deploy** (and without
+refreshing `schedule.json`).
 
 `<BracketLive>` is a client fetch: SSR / first paint may briefly show
 build-time `content/baseball/bracket.json` until the client hydrates from
-`GET /api/baseball/bracket`.
+`GET /api/baseball/bracket`. Home `<HomeBracketPath>` uses the same endpoint;
+it renders nothing on 404/fail or when 4:13 is only a seed placeholder.
 
 ## Cron schedule
 

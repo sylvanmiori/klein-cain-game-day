@@ -54,6 +54,7 @@ Goals: parents can see **this weekend** at a glance — time, field, pool, oppon
 - One white card for This Weekend (single outer border). Hairline dividers between games only; no tinted nested footer box.
 - Compact mobile rows: date chip left; **time + field/pool on one line**; opponent + Upcoming/result on the next.
 - Result chips use `<LiveGameResult>`: checked-in `schedule.json` `result` when present, otherwise a unique D1 match from `GET /api/baseball/stats` (opponent aliases allowed; ambiguous doubleheaders stay blank). Saved matches link to `/box-score?game=<id>` with `!text-white` on the navy pill.
+- **Sunday bracket path** (`components/baseball/home-bracket-path.tsx`): client-fetches `GET /api/baseball/bracket` (same as Schedule `<BracketLive>`). When at least one bracket game includes a **named** `4:13 Baseball` team (match by name / contains `4:13`, not pool seed; ignore `Seed #N` placeholders), Home shows a navy-branded section above This Weekend — title like “Sunday · Silver Bracket”, next game (time/field/opponent/home-away), compact QF→SF→Championship path (feeders stay “Winner of Game #N” until PG fills names), links to Schedule + Perfect Game bracket URL, and “Updated … · Source: Perfect Game”. On API 404/fail the section hides — never invents scores/seeds. **No `schedule.json` redeploy required** for this Sunday section.
 - Active Home nav pill: navy fill `#12324e` with **white** text (inline color / `!text-white` beats global `a { color: inherit }`). On the 413 host, Home href is `/` and `/` counts as active (`components/baseball/baseball-subnav.tsx`).
 - Prefer tight mobile gutters (`pl-3` / `pr-3`, wider from `sm:`) so content uses the screen width.
 - Season Record empty state: baseball mark + two-line copy (`components/baseball/record-strip.tsx`); record strip shares `loadLiveStats()` with result pills.
@@ -72,7 +73,7 @@ If a tournament lacks `event_address`, fall back to venue + city; still link whe
 
 | Public URL (413 host) | App route | Purpose |
 | --- | --- | --- |
-| `/` | `/baseball` | Home — weekend card, record strip |
+| `/` | `/baseball` | Home — weekend card, live Sunday bracket path, record strip |
 | `/schedule` | `/baseball/schedule` | Tournament list + live bracket |
 | `/standings` | `/baseball/standings` | Live pool standings |
 | `/roster` | `/baseball/roster` | Roster |
@@ -103,7 +104,7 @@ Parents on iPhone often pick **HEIC/HEIF** from Photos. Workers AI vision does n
 
 - Schedule (build-time): `npm run baseball:schedule` → `content/baseball/schedule.json` (Thursday GH Action). Powers Home "This Weekend" and the Schedule **tournament game list**.
 - Bracket file (build-time fallback only): `npm run baseball:bracket` / GH Action `baseball-bracket.yml` (hourly Sat 11pm–Sun noon CT) → `content/baseball/bracket.json`.
-- Live bracket: Worker cron `*/15` → KV `baseball:bracket:<event_id>` → `GET /api/baseball/bracket` → Schedule `<BracketLive>` (see [bracket poller](baseball-bracket-poller.md)). No deploy when PG fills seeds/scores.
+- Live bracket: Worker cron `*/15` → KV `baseball:bracket:<event_id>` → `GET /api/baseball/bracket` → Schedule `<BracketLive>` **and** Home `<HomeBracketPath>` (see [bracket poller](baseball-bracket-poller.md)). No deploy when PG fills seeds/scores; Home Sunday path needs no `schedule.json` refresh.
 - Live pool standings: same `*/15` cron (independent try/catch) → KV `baseball:standings:<event_id>` → `GET /api/baseball/standings` → `/standings` via `<StandingsLive>` (see [standings poller](baseball-standings-poller.md)). No deploy when PG updates W-L/seeds. SSR may show stale build-time fallback until client hydrates.
 - Wrangler crons: `* * * * *` = football score ingest only; `*/15 * * * *` = both baseball pollers. Chicago gate: Sat/Sun 7:00am–11:00pm CT every 15-min tick; otherwise `:00` hourly only. Skip if no tournament covering today in bundled `schedule.json`. KV only (not R2); last-good only — never invent seeds/scores/teams.
 - Stats / box scores: D1 + `/api/baseball/stats` and per-player `/api/baseball/players/:id` (see [D1 doc](baseball-d1.md)). Box-score upload (password / HEIC / Analyze) is a **separate** path from bracket/standings; see [boxscore handoff](413-BOXSCORE-UPLOAD-HANDOFF.md) for vision residuals. After a confirm, unique D1 results surface on Home/Schedule via `LiveGameResult`.
@@ -116,15 +117,16 @@ Verified operating model for tournament weekends (e.g. event 140434, 2026 15U PG
 | --- | --- | --- | --- |
 | `/standings` pool tables | Worker KV via `/api/baseball/standings` | **Yes** — next successful poll after PG updates | No |
 | Schedule `<BracketLive>` | Worker KV via `/api/baseball/bracket` | **Yes** — next poll after PG replaces `Seed #N` / fills scores | No |
-| Home "This Weekend" cards | Build-time `content/baseball/schedule.json` | **No** | **Yes** — after PG lists new games (e.g. Sunday opponent/time) |
+| Home "This Weekend" cards (Sat pool list) | Build-time `content/baseball/schedule.json` | **No** | **Yes** — after PG lists new pool games on the team schedule |
+| Home **Sunday bracket path** | Worker KV via `/api/baseball/bracket` (`<HomeBracketPath>`) | **Yes** — when PG names 4:13 on the bracket | **No** — no `schedule.json` redeploy for that section |
 | Schedule tournament **game list** | Same `schedule.json` | **No** | **Yes** — same as Home |
 | Build-time `bracket.json` | GH Action `baseball-bracket.yml` | Commits fallback only | Deploy only if you need that fallback baked into a new build; live path is KV |
 
 **What Steven does not need to babysit tonight:** standings seed/W-L and bracket structure/seeds/scores once Perfect Game publishes them. The Worker pollers handle that without an agent in the loop and without a docs-or-data deploy.
 
-**What still needs a human (or Thursday/manual scraper + deploy):** any new game that appears only on the PG team schedule (typical Sunday bracket-game opponent/time). Until `schedule.json` is refreshed and the Worker/site is redeployed, Home will not show that card — the live bracket API does **not** feed Home.
+**What still needs a human (or Thursday/manual scraper + deploy):** new **pool** games that appear only on the PG team schedule (still `schedule.json` + deploy). Sunday **bracket** opponent/time/path on Home comes from the live bracket API once Perfect Game names `4:13 Baseball` on a bracket game — no schedule.json redeploy for that section.
 
-Point-in-time check (Sat Sep 26, 2026 ~9:15 PM CT): Pool A had 4:13 at seed 11, 1-1; bracket structure live with ~15 games but placeholders only; PG team schedule showed Sat finals and no Sunday game listed yet. That snapshot is an example of the gap, not forever truth.
+Point-in-time check (Sat Sep 26, 2026 ~10:15 PM CT): 4:13 named in Silver Bracket QF game #28 (Sun 10:20 AM Field 8 vs #6 Den Guys 15u); feeders SF #30 / Championship #31. Home Sunday path is wired to that live snapshot.
 
 ## Checklist before shipping a baseball UI change
 

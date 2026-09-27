@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { CalendarDays, ChevronRight, Clock, ExternalLink, MapPin } from 'lucide-react';
+import { HomeBracketPath } from '../../components/baseball/home-bracket-path';
 import { LiveGameResult } from '../../components/baseball/live-game-result';
 import { BaseballRecordStrip } from '../../components/baseball/record-strip';
 import {
@@ -97,6 +98,9 @@ export default async function BaseballHome() {
           </p>
         </div>
       </section>
+
+      {/* Sunday bracket path — live from /api/baseball/bracket (hides until 4:13 is named) */}
+      <HomeBracketPath />
 
       {/* This Weekend — single card; hairline rows only, no nested boxes */}
       <section aria-label="This weekend" className="min-w-0 overflow-hidden rounded-2xl border border-[#dde7f0] bg-white">
