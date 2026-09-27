@@ -1063,6 +1063,137 @@ const worker = {
       return json({ error: 'Method not allowed' }, 405);
     }
 
+
+    // Public per-player season page: season aggregates (same formulas as
+    // /api/baseball/stats) plus a game log of that player's lines.
+    const playerRoute = url.pathname.match(/^\/api\/baseball\/players\/(\d+)$/);
+    if (playerRoute) {
+      if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
+      if (!env.BASEBALL_STATS) return json({ error: 'stats database not configured' }, 503);
+      const playerId = Number(playerRoute[1]);
+      if (!Number.isInteger(playerId) || playerId <= 0) return json({ error: 'Invalid player id' }, 400);
+      const db = env.BASEBALL_STATS;
+      try {
+        const player = await db.prepare(
+          'SELECT id, name, pos, grad_year, jersey_number FROM players WHERE id = ?',
+        ).bind(playerId).first();
+        if (!player) return json({ error: 'Player not found' }, 404);
+
+        const batCols = BAT_STAT_FIELDS.map(quoteIdent).join(', ');
+        const pitchCols = PITCH_STAT_FIELDS.map(quoteIdent).join(', ');
+        const [batRows, pitchRows] = await Promise.all([
+          db.prepare(
+            `SELECT bl.game_id, g.date, g.opponent, g.tournament, g.venue, g.result, ${batCols} `
+            + 'FROM batting_lines bl JOIN games g ON g.id = bl.game_id '
+            + 'WHERE bl.player_id = ? ORDER BY g.date, g.id',
+          ).bind(playerId).all(),
+          db.prepare(
+            `SELECT pl.game_id, g.date, g.opponent, g.tournament, g.venue, g.result, pl.ip, ${pitchCols} `
+            + 'FROM pitching_lines pl JOIN games g ON g.id = pl.game_id '
+            + 'WHERE pl.player_id = ? ORDER BY g.date, g.id',
+          ).bind(playerId).all(),
+        ]);
+
+        const battingLines = batRows.results ?? [];
+        const pitchingLines = pitchRows.results ?? [];
+
+        let batting = null;
+        if (battingLines.length > 0) {
+          const agg = { gp: battingLines.length };
+          for (const f of BAT_STAT_FIELDS) agg[f] = 0;
+          for (const line of battingLines) {
+            for (const f of BAT_STAT_FIELDS) agg[f] += Number(line[f]) || 0;
+          }
+          const obpDenom = agg.ab + agg.bb + agg.hbp + agg.sf;
+          const avg = agg.ab > 0 ? round3(agg.h / agg.ab) : null;
+          const obp = obpDenom > 0 ? round3((agg.h + agg.bb + agg.hbp) / obpDenom) : null;
+          const slg = agg.ab > 0 ? round3((agg.h + agg['2b'] + 2 * agg['3b'] + 3 * agg.hr) / agg.ab) : null;
+          batting = {
+            player_id: playerId, name: player.name, gp: agg.gp,
+            ab: agg.ab, r: agg.r, h: agg.h, '1b': agg['1b'], '2b': agg['2b'], '3b': agg['3b'], hr: agg.hr,
+            rbi: agg.rbi, bb: agg.bb, k: agg.k, sb: agg.sb, cs: agg.cs, hbp: agg.hbp,
+            sf: agg.sf, sac: agg.sac, e: agg.e, avg, obp, slg,
+            ops: (obp === null || slg === null) ? null : round3(obp + slg),
+          };
+        }
+
+        let pitching = null;
+        if (pitchingLines.length > 0) {
+          const agg = { gp: pitchingLines.length, thirds: 0 };
+          for (const f of PITCH_STAT_FIELDS) agg[f] = 0;
+          for (const line of pitchingLines) {
+            agg.thirds += Math.round(ipToTrue(line.ip) * 3);
+            for (const f of PITCH_STAT_FIELDS) agg[f] += Number(line[f]) || 0;
+          }
+          const ipTrue = agg.thirds / 3;
+          pitching = {
+            player_id: playerId, name: player.name, gp: agg.gp,
+            ip: trueToIpDecimal(ipTrue),
+            h: agg.h, r: agg.r, er: agg.er, bb: agg.bb, k: agg.k, hr: agg.hr,
+            hbp: agg.hbp, wp: agg.wp, bf: agg.bf, w: agg.w, l: agg.l, sv: agg.sv,
+            pitches: agg.pitches, strikes: agg.strikes,
+            era: ipTrue > 0 ? round3(agg.er * 9 / ipTrue) : null,
+            whip: ipTrue > 0 ? round3((agg.bb + agg.h) / ipTrue) : null,
+          };
+        }
+
+        const byGame = new Map();
+        for (const line of battingLines) {
+          const id = line.game_id;
+          if (!byGame.has(id)) {
+            byGame.set(id, {
+              game: {
+                id, date: line.date, opponent: line.opponent,
+                tournament: line.tournament, venue: line.venue, result: line.result,
+              },
+              batting: null,
+              pitching: null,
+            });
+          }
+          const entry = byGame.get(id);
+          const bat = { player_id: playerId, player: player.name, jersey: player.jersey_number ?? null, pos: player.pos };
+          for (const f of BAT_STAT_FIELDS) bat[f] = Number(line[f]) || 0;
+          entry.batting = bat;
+        }
+        for (const line of pitchingLines) {
+          const id = line.game_id;
+          if (!byGame.has(id)) {
+            byGame.set(id, {
+              game: {
+                id, date: line.date, opponent: line.opponent,
+                tournament: line.tournament, venue: line.venue, result: line.result,
+              },
+              batting: null,
+              pitching: null,
+            });
+          }
+          const entry = byGame.get(id);
+          const pit = {
+            player_id: playerId, player: player.name,
+            jersey: player.jersey_number ?? null, pos: player.pos,
+            ip: line.ip,
+          };
+          for (const f of PITCH_STAT_FIELDS) pit[f] = Number(line[f]) || 0;
+          entry.pitching = pit;
+        }
+        const games = [...byGame.values()].sort(
+          (a, b) => b.game.date.localeCompare(a.game.date) || b.game.id - a.game.id,
+        );
+
+        return json({
+          player: {
+            id: player.id, name: player.name, pos: player.pos,
+            grad_year: player.grad_year, jersey_number: player.jersey_number ?? null,
+          },
+          batting,
+          pitching,
+          games,
+        });
+      } catch (err) {
+        return json({ error: 'Failed to read player', message: err instanceof Error ? err.message : String(err) }, 500);
+      }
+    }
+
     if (url.pathname === '/api/baseball/stats') {
       if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
       if (!env.BASEBALL_STATS) return json({ error: 'stats database not configured' }, 503);

@@ -310,6 +310,21 @@ export interface GameDetailResponse {
 }
 
 
+// ---- GET /api/baseball/players/:id shapes ----
+export interface PlayerGameLogEntry {
+  game: ApiGame;
+  batting: GameLineBatting | null;
+  pitching: GameLinePitching | null;
+}
+
+export interface PlayerDetailResponse {
+  player: ApiPlayer;
+  batting: BattingSeasonLine | null;
+  pitching: PitchingSeasonLine | null;
+  games: PlayerGameLogEntry[];
+}
+
+
 // ---- GET /api/baseball/standings live-snapshot shapes ----
 // Polled from Perfect Game by the Worker cron; see docs/baseball-standings-poller.md.
 export interface StandingsTeam {

@@ -3,8 +3,9 @@
 The 4:13 Baseball box-score API (`POST /api/baseball/boxscore`,
 `POST /api/baseball/boxscore/confirm`, `GET /api/baseball/games/:id`,
 `PUT /api/baseball/games/:id/lines`, `DELETE /api/baseball/games/:id`,
-`GET /api/baseball/stats` in `cloudflare/worker.mjs`) reads and writes a
-Cloudflare D1 database through the `BASEBALL_STATS` binding.
+`GET /api/baseball/stats`, `GET /api/baseball/players/:id` in
+`cloudflare/worker.mjs`) reads and writes a Cloudflare D1 database through
+the `BASEBALL_STATS` binding.
 
 **Status (2026-09-26):** D1 database `413baseball-stats` (id
 `8885adde-6929-40f8-906d-bef5479729cf`) is created, bound in
@@ -174,6 +175,12 @@ Settings → Domains → Add custom domain.
   thirds of an inning so IP like 5.2 is handled correctly. Also returns the
   `players` (with `jersey_number`) and `games` lists (Home/Schedule
   `LiveGameResult` and the Stats “Game Box Scores” list consume this).
+- `GET /api/baseball/players/:id` — public. Returns `{player, batting,
+  pitching, games}` for one roster player: season aggregates use the **same
+  formulas** as `/api/baseball/stats` (do not invent a second aggregation),
+  and `games` is that player's game log (each entry has `game` plus optional
+  `batting`/`pitching` lines). Powers `/baseball/player?id=`. 404 when the
+  player id is unknown.
 
 Password checks on all write endpoints go through one helper with a
 best-effort throttle: more than 10 failed attempts from one IP in 5 minutes

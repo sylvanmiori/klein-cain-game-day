@@ -415,6 +415,15 @@ Amber warnings for small residual digit errors are OK if the grid is editable an
 
 ---
 
+## Player season pages (public)
+
+After lines are confirmed into D1, public player pages are available at
+`/baseball/player?id=<player_id>` (on the 413 host: `/player?id=`). They read
+`GET /api/baseball/players/:id` only — no invented stats. Player names on
+`/stats`, `/box-score`, and `/roster` link via `PlayerNameLink` (subtle
+styling; no bright default link look). Submit/edit review grids do not link
+names.
+
 ## Appendix B — Seed roster reference (`scripts/baseball-seed.mjs`)
 
 ```js

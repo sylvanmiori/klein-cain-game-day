@@ -6,6 +6,7 @@ import type {
   GameLineBatting,
   GameLinePitching,
 } from './types';
+import { PlayerNameLink } from './player-name-link';
 
 const BATTING_COLS = [
   ['ab', 'AB'],
@@ -79,7 +80,7 @@ function PlayerCell({ row }: { row: GameLineBatting | GameLinePitching }) {
   return (
     <td className="sticky left-0 z-[1] min-w-[148px] bg-white px-3 py-2.5 shadow-[1px_0_0_#eef1f5]">
       <span className="block whitespace-nowrap font-extrabold text-[#12324e]">
-        {row.player}
+        <PlayerNameLink playerId={row.player_id} name={row.player} />
       </span>
       {details ? (
         <span className="mt-0.5 block text-[10px] font-semibold text-[#8a8a92]">

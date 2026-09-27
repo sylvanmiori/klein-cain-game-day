@@ -78,7 +78,12 @@ If a tournament lacks `event_address`, fall back to venue + city; still link whe
 | `/roster` | `/baseball/roster` | Roster |
 | `/stats` | `/baseball/stats` | Season stats + Game Box Scores list (D1 `413baseball-stats`) |
 | `/box-score?game=` | `/baseball/box-score` | Individual game batting/pitching (public) |
+| `/player?id=` | `/baseball/player` | Individual player season batting/pitching + game log (public) |
 | `/submit` | `/baseball/submit` | Password-gated box-score entry |
+
+### Player pages and name links
+
+Individual player season pages live at `/baseball/player?id=<player_id>` (query style, same pattern as `/box-score?game=`). Data comes from public `GET /api/baseball/players/:id` (same season formulas as `/api/baseball/stats`, plus a game log). Roster player names on `/stats`, `/box-score`, and `/roster` link through `PlayerNameLink` — same body text color, no default underline; hover underline + focus-visible ring. Opponent names and missing `player_id` stay plain text. Submit/edit grids intentionally do not link names (edit UX).
 
 ### Box-score photo formats (HEIC)
 
@@ -90,8 +95,8 @@ Parents on iPhone often pick **HEIC/HEIF** from Photos. Workers AI vision does n
 - Bracket file: `npm run baseball:bracket` / Saturday–Sunday GH Action → `content/baseball/bracket.json`.
 - Live bracket: Worker cron `*/15` → KV → `GET /api/baseball/bracket` (see [bracket poller](baseball-bracket-poller.md)).
 - Live pool standings: same `*/15` cron → KV → `GET /api/baseball/standings` (see [standings poller](baseball-standings-poller.md)); Standings nav page at `/baseball/standings`.
-- Stats: D1 + `/api/baseball/stats` (see [D1 doc](baseball-d1.md)); D1 is bound. Uploads still need `BOXSCORE_PASSWORD` on the Worker or Analyze returns `503 uploads not configured`.
-- After a confirm, unique D1 results surface on Home/Schedule via `LiveGameResult` and on `/stats` / `/box-score?game=` (see [boxscore handoff](413-BOXSCORE-UPLOAD-HANDOFF.md)).
+- Stats: D1 + `/api/baseball/stats` and per-player `/api/baseball/players/:id` (see [D1 doc](baseball-d1.md)); D1 is bound. Uploads still need `BOXSCORE_PASSWORD` on the Worker or Analyze returns `503 uploads not configured`.
+- After a confirm, unique D1 results surface on Home/Schedule via `LiveGameResult` and on `/stats` / `/box-score?game=` / `/player?id=` (see [boxscore handoff](413-BOXSCORE-UPLOAD-HANDOFF.md)).
 
 ## Checklist before shipping a baseball UI change
 

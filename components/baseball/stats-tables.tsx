@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import type { BattingSeasonLine, PitchingSeasonLine, StatsResponse } from './types';
+import { PlayerNameLink } from './player-name-link';
 
 type State = 'loading' | 'ready' | 'empty' | 'error';
 
@@ -238,7 +239,11 @@ export function BaseballStatsTables() {
                 <tr key={row.player_id} className="hover:bg-[#f7fafc]">
                   {BATTING_COLS.map((c) => (
                     <td key={c.key} className={`whitespace-nowrap px-2.5 py-2 ${c.key === 'name' ? 'font-bold text-[#12324e]' : 'text-[#3a3a3f]'}`}>
-                      {formatCell(row[c.key as keyof BattingSeasonLine], (c as { fmt?: number }).fmt)}
+                      {c.key === 'name' ? (
+                        <PlayerNameLink playerId={row.player_id} name={row.name} />
+                      ) : (
+                        formatCell(row[c.key as keyof BattingSeasonLine], (c as { fmt?: number }).fmt)
+                      )}
                     </td>
                   ))}
                 </tr>
@@ -266,7 +271,11 @@ export function BaseballStatsTables() {
                 <tr key={row.player_id} className="hover:bg-[#f7fafc]">
                   {PITCHING_COLS.map((c) => (
                     <td key={c.key} className={`whitespace-nowrap px-2.5 py-2 ${c.key === 'name' ? 'font-bold text-[#12324e]' : 'text-[#3a3a3f]'}`}>
-                      {formatCell(row[c.key as keyof PitchingSeasonLine], (c as { fmt?: number }).fmt)}
+                      {c.key === 'name' ? (
+                        <PlayerNameLink playerId={row.player_id} name={row.name} />
+                      ) : (
+                        formatCell(row[c.key as keyof PitchingSeasonLine], (c as { fmt?: number }).fmt)
+                      )}
                     </td>
                   ))}
                 </tr>
