@@ -211,7 +211,7 @@ The season now advances without anyone opening an editor. At 6 AM Central daily,
 
 1. `build-editions.mjs` creates a starter page for any scheduled game that does not have one.
 2. `promote-edition.mjs` moves the front page to the right game, captures a final score, writes the recap, snapshots the season statistics and adds game-only statistics when MaxPreps posts them.
-3. `refresh-facts.mjs` fills records, ranks, the prediction, our rating, the forecast, every opponent's record and our own results.
+3. `refresh-facts.mjs` fills records, ranks, the prediction, our rating, the forecast, every opponent's record, our own results, and machine-built `preview.intro.facts` on upcoming previews.
 4. `validate-editions.mjs` gates the commit, and the build re-checks the rendered pages.
 
 Simulated across the season, promotion lands on the right game every week: Sept. 14 moves to Tomball, Sept. 21 to Magnolia West, Sept. 28 to Klein Collins, Oct. 5 to Klein, Oct. 12 to Klein Oak, Oct. 19 to Tomball Memorial, Oct. 26 to Magnolia, Nov. 2 to Klein Forest, and after the last game it stays there rather than falling off the end.
