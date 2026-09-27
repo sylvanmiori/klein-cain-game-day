@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { findSavedResult, loadLiveStats } from './live-stats';
+import { findSavedGame, loadLiveStats } from './live-stats';
 import type { ScheduleGame } from './types';
 
 type ResultStyle = 'home' | 'schedule';
@@ -33,16 +33,20 @@ export function LiveGameResult({
     typeof game.result === 'string' && game.result.trim()
       ? game.result.trim()
       : null;
-  const [result, setResult] = useState<string | null>(fallback);
+  const [display, setDisplay] = useState<{
+    result: string;
+    gameId: number | null;
+  } | null>(fallback ? { result: fallback, gameId: null } : null);
 
   useEffect(() => {
-    if (fallback) return;
-
     let alive = true;
     loadLiveStats()
       .then((stats) => {
         if (!alive || !Array.isArray(stats.games)) return;
-        setResult(findSavedResult(game, siblingGames, stats.games));
+        const savedGame = findSavedGame(game, siblingGames, stats.games);
+        if (savedGame?.result?.trim()) {
+          setDisplay({ result: savedGame.result.trim(), gameId: savedGame.id });
+        }
       })
       .catch(() => {
         // Keep the checked-in schedule fallback when live stats are unavailable.
@@ -53,14 +57,28 @@ export function LiveGameResult({
     };
   }, [fallback, game, siblingGames]);
 
-  if (result) {
+  if (display) {
+    if (display.gameId) {
+      return (
+        <a
+          href={`/baseball/box-score?game=${display.gameId}`}
+          className={`${resultClasses[style]} inline-flex items-center gap-1 transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7BAFD4]`}
+          aria-live="polite"
+          aria-label={`View box score: ${display.result}`}
+        >
+          {display.result}
+          <span aria-hidden="true">›</span>
+        </a>
+      );
+    }
+
     return (
       <span
         className={resultClasses[style]}
         aria-live="polite"
-        aria-label={`Final score ${result}`}
+        aria-label={`Final score ${display.result}`}
       >
-        {result}
+        {display.result}
       </span>
     );
   }

@@ -61,11 +61,11 @@ function opponentsMatch(left: string, right: string): boolean {
  * suffix variation. Showing no result is safer than attaching a score to the
  * wrong game.
  */
-export function findSavedResult(
+export function findSavedGame(
   scheduledGame: ScheduleGame,
   siblingScheduleGames: ScheduleGame[],
   savedGames: ApiGame[],
-): string | null {
+): ApiGame | null {
   const matches = savedGames.filter(
     (game) =>
       game.date === scheduledGame.date &&
@@ -82,5 +82,19 @@ export function findSavedResult(
       opponentsMatch(game.opponent, matches[0].opponent),
   );
 
-  return scheduledMatches.length === 1 ? matches[0].result!.trim() : null;
+  return scheduledMatches.length === 1 ? matches[0] : null;
+}
+
+export function findSavedResult(
+  scheduledGame: ScheduleGame,
+  siblingScheduleGames: ScheduleGame[],
+  savedGames: ApiGame[],
+): string | null {
+  return (
+    findSavedGame(
+      scheduledGame,
+      siblingScheduleGames,
+      savedGames,
+    )?.result?.trim() ?? null
+  );
 }

@@ -47,10 +47,21 @@ function ipToNumber(ip: string | number): number {
 function formatCell(value: unknown, fmt?: number): string {
   if (value == null) return '-';
   if (fmt != null && typeof value === 'number') return value.toFixed(fmt);
-  return String(value);
+  if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') return String(value);
+  return '-';
 }
 
-function SortHeader<T extends Record<string, unknown>>({
+function formatGameDate(date: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
+  if (!match) return date;
+  return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3])).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
+
+function SortHeader({
   col,
   sortKey,
   dir,
@@ -142,6 +153,11 @@ export function BaseballStatsTables() {
     return rows;
   }, [data, pitSort]);
 
+  const games = useMemo(
+    () => [...(data?.games ?? [])].sort((a, b) => b.date.localeCompare(a.date) || b.id - a.id),
+    [data],
+  );
+
   const toggleBat = (key: string) =>
     setBatSort((s) => (s.key === key ? { key, dir: s.dir === 'asc' ? 'desc' : 'asc' } : { key, dir: 'desc' }));
   const togglePit = (key: string) =>
@@ -175,6 +191,35 @@ export function BaseballStatsTables() {
 
   return (
     <div className="grid gap-5">
+      {games.length > 0 && (
+        <section className="overflow-hidden rounded-2xl border border-[#dde7f0] bg-white">
+          <div className="border-b border-[#eef1f5] px-4 py-3">
+            <h2 className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#12324e]">
+              Game Box Scores
+            </h2>
+            <p className="mt-0.5 text-[12px] text-[#6e6e73]">Tap a final to view that game&apos;s player stats.</p>
+          </div>
+          <ul className="divide-y divide-[#eef1f5]">
+            {games.map((game) => (
+              <li key={game.id}>
+                <a
+                  href={`/baseball/box-score?game=${game.id}`}
+                  className="flex items-center justify-between gap-3 px-4 py-3 transition-colors hover:bg-[#f7fafc] focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-[#7BAFD4]"
+                >
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm font-extrabold text-[#12324e]">vs {game.opponent}</span>
+                    <span className="mt-0.5 block text-[12px] text-[#6e6e73]">{formatGameDate(game.date)}</span>
+                  </span>
+                  <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#12324e] px-2.5 py-1 text-[12px] font-extrabold text-white tabular-nums">
+                    {game.result || 'Box score'} <span aria-hidden="true">›</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <section className="overflow-hidden rounded-2xl border border-[#dde7f0] bg-white">
         <h2 className="border-b border-[#eef1f5] px-4 py-3 text-sm font-extrabold uppercase tracking-[0.12em] text-[#12324e]">
           Batting

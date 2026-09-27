@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { findSavedResult, normalizeOpponent } from './live-stats.ts';
+import {
+  findSavedGame,
+  findSavedResult,
+  normalizeOpponent,
+} from './live-stats.ts';
 import type { ApiGame, ScheduleGame } from './types.ts';
 
 const scheduleGame: ScheduleGame = {
@@ -28,6 +32,10 @@ describe('findSavedResult', () => {
       findSavedResult(scheduleGame, [scheduleGame], [savedGame]),
       'W 7-5',
     );
+    assert.equal(
+      findSavedGame(scheduleGame, [scheduleGame], [savedGame])?.id,
+      1,
+    );
   });
 
   it('matches a unique PG age-and-coach name to the shorter saved name', () => {
@@ -40,10 +48,7 @@ describe('findSavedResult', () => {
       opponent: 'Offseason Baseball',
       result: 'L 3-4',
     };
-    assert.equal(
-      findSavedResult(pgGame, [pgGame], [gameChangerGame]),
-      'L 3-4',
-    );
+    assert.equal(findSavedResult(pgGame, [pgGame], [gameChangerGame]), 'L 3-4');
   });
 
   it('does not attach a result using the date alone', () => {
@@ -66,8 +71,15 @@ describe('findSavedResult', () => {
   });
 
   it('rejects a partial-name match when two scheduled opponents fit', () => {
-    const first = { ...scheduleGame, opponent: 'Offseason Baseball - Williams' };
-    const second = { ...scheduleGame, id: 'pool-2', opponent: 'Offseason Baseball - Smith' };
+    const first = {
+      ...scheduleGame,
+      opponent: 'Offseason Baseball - Williams',
+    };
+    const second = {
+      ...scheduleGame,
+      id: 'pool-2',
+      opponent: 'Offseason Baseball - Smith',
+    };
     const saved = { ...savedGame, opponent: 'Offseason Baseball' };
     assert.equal(findSavedResult(first, [first, second], [saved]), null);
   });
