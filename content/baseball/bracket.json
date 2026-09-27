@@ -14,8 +14,8 @@
     },
     {
       "tier": "Gold Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#2 15U OFFSEASON BASEBALL - WILLIAMS vs #7 Scorpions Team Easton 2030",
+      "round": "Championship",
+      "matchup": "#2 15U OFFSEASON BASEBALL - WILLIAMS vs TBD",
       "date": "2026-09-27",
       "time": "12:40 PM",
       "field": "Field 7",
@@ -23,8 +23,8 @@
     },
     {
       "tier": "Gold Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#3 AD BASEBALL 15U GOLD vs #6 PTX Reserves 2030 - Towles",
+      "round": "Championship",
+      "matchup": "#3 AD BASEBALL 15U GOLD vs TBD",
       "date": "2026-09-27",
       "time": "10:20 AM",
       "field": "Field 7",
@@ -42,7 +42,7 @@
     {
       "tier": "Gold Bracket",
       "round": "Semifinal",
-      "matchup": "Winner of Game #21 vs Winner of Game #22",
+      "matchup": "#6 PTX Reserves 2030 - Towles vs #7 Scorpions Team Easton 2030",
       "date": "2026-09-27",
       "time": "5:20 PM",
       "field": "Field 7",
@@ -68,8 +68,8 @@
     },
     {
       "tier": "Silver Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#2 Just Dawgs Grey vs #7 TSB",
+      "round": "Championship",
+      "matchup": "TBD vs #7 TSB",
       "date": "2026-09-27",
       "time": "12:40 PM",
       "field": "Field 8",
@@ -77,8 +77,8 @@
     },
     {
       "tier": "Silver Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#3 4:13 Baseball vs #6 Den Guys 15u",
+      "round": "Championship",
+      "matchup": "#3 4:13 Baseball vs TBD",
       "date": "2026-09-27",
       "time": "10:20 AM",
       "field": "Field 8",
@@ -96,7 +96,7 @@
     {
       "tier": "Silver Bracket",
       "round": "Semifinal",
-      "matchup": "Winner of Game #27 vs Winner of Game #28",
+      "matchup": "#2 Just Dawgs Grey vs #6 Den Guys 15u",
       "date": "2026-09-27",
       "time": "5:20 PM",
       "field": "Field 8",
@@ -113,8 +113,8 @@
     },
     {
       "tier": "Bronze Bracket",
-      "round": "Semifinal",
-      "matchup": "#1 Legacy Baseball Club - Arden vs #4 Magnolia Express 15U",
+      "round": "Championship",
+      "matchup": "#1 Legacy Baseball Club - Arden vs TBD",
       "date": "2026-09-27",
       "time": "12:40 PM",
       "field": "Field 3",
@@ -122,8 +122,8 @@
     },
     {
       "tier": "Bronze Bracket",
-      "round": "Semifinal",
-      "matchup": "#2 Houston Bengals - Weaver vs #3 Banditos 2030 White",
+      "round": "Championship",
+      "matchup": "TBD vs #3 Banditos 2030 White",
       "date": "2026-09-27",
       "time": "10:20 AM",
       "field": "Field 3",
@@ -132,12 +132,12 @@
     {
       "tier": "Bronze Bracket",
       "round": "Championship",
-      "matchup": "Winner of Game #32 vs Winner of Game #33",
+      "matchup": "#2 Houston Bengals - Weaver vs #4 Magnolia Express 15U",
       "date": "2026-09-27",
       "time": "3:00 PM",
       "field": "Field 3",
       "venue": "Schiel Road Park"
     }
   ],
-  "scraped_at": "2026-09-27T15:04:18.456Z"
+  "scraped_at": "2026-09-27T19:40:46.699Z"
 }
