@@ -221,6 +221,11 @@ function BracketPathView({ snapshot }: { snapshot: LiveBracketSnapshot }) {
   const next = pickNextGame(path);
   const nextSide = next ? teamOnGame(next) : null;
   const opponent = next ? opponentFor(next, nextSide) : null;
+  // A finished game is not "next" — label it Final and show the score.
+  const nextFinal =
+    next != null &&
+    (next.winner != null ||
+      (Number.isInteger(next.home.score) && Number.isInteger(next.away.score)));
   const updated = formatUpdated(snapshot.updated_at ?? snapshot.scraped_at);
   const tierName = found.tier.tier || 'Bracket';
   // Title: "Sunday · Silver Bracket" — use weekday from next/path date when present.
@@ -255,7 +260,7 @@ function BracketPathView({ snapshot }: { snapshot: LiveBracketSnapshot }) {
         {next && opponent ? (
           <div className="rounded-xl border border-[#dde7f0] bg-[#f7fafc] px-3.5 py-3.5 sm:px-4">
             <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">
-              Next game
+              {nextFinal ? 'Final' : 'Next game'}
             </p>
             <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-extrabold text-[#12324e]">
               {next.date ? (
@@ -306,10 +311,24 @@ function BracketPathView({ snapshot }: { snapshot: LiveBracketSnapshot }) {
               );
             })()}
             <p className="mt-2 text-base font-extrabold leading-snug text-[#12324e]">
-              <span className="mr-1.5 font-bold text-[#6e6e73]">
-                {nextSide === 'away' ? '@' : 'vs'}
-              </span>
-              {teamLabel(opponent)}
+              {nextFinal &&
+              Number.isInteger(next.home.score) &&
+              Number.isInteger(next.away.score) ? (
+                <>
+                  {teamLabel(next.home)}{' '}
+                  <span className="font-bold text-[#6e6e73]">
+                    {next.home.score} &ndash; {next.away.score}
+                  </span>{' '}
+                  {teamLabel(next.away)}
+                </>
+              ) : (
+                <>
+                  <span className="mr-1.5 font-bold text-[#6e6e73]">
+                    {nextSide === 'away' ? '@' : 'vs'}
+                  </span>
+                  {teamLabel(opponent)}
+                </>
+              )}
             </p>
             {next.round ? (
               <p className="mt-1 text-[12px] font-semibold text-[#6e6e73]">
