@@ -30,6 +30,22 @@ describe('findSavedResult', () => {
     );
   });
 
+  it('matches a unique PG age-and-coach name to the shorter saved name', () => {
+    const pgGame = {
+      ...scheduleGame,
+      opponent: '15U OFFSEASON BASEBALL - WILLIAMS',
+    };
+    const gameChangerGame = {
+      ...savedGame,
+      opponent: 'Offseason Baseball',
+      result: 'L 3-4',
+    };
+    assert.equal(
+      findSavedResult(pgGame, [pgGame], [gameChangerGame]),
+      'L 3-4',
+    );
+  });
+
   it('does not attach a result using the date alone', () => {
     assert.equal(
       findSavedResult(
@@ -47,6 +63,13 @@ describe('findSavedResult', () => {
       findSavedResult(scheduleGame, [scheduleGame, second], [savedGame]),
       null,
     );
+  });
+
+  it('rejects a partial-name match when two scheduled opponents fit', () => {
+    const first = { ...scheduleGame, opponent: 'Offseason Baseball - Williams' };
+    const second = { ...scheduleGame, id: 'pool-2', opponent: 'Offseason Baseball - Smith' };
+    const saved = { ...savedGame, opponent: 'Offseason Baseball' };
+    assert.equal(findSavedResult(first, [first, second], [saved]), null);
   });
 
   it('rejects duplicate saved games and blank results', () => {

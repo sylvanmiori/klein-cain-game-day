@@ -40,33 +40,47 @@ export function normalizeOpponent(value: string): string {
     .replace(/[^A-Z0-9]/g, '');
 }
 
+function opponentsMatch(left: string, right: string): boolean {
+  const a = normalizeOpponent(left);
+  const b = normalizeOpponent(right);
+  if (!a || !b) return false;
+  if (a === b) return true;
+
+  // GameChanger often omits Perfect Game's age prefix or coach suffix, e.g.
+  // "Offseason Baseball" vs "15U OFFSEASON BASEBALL - WILLIAMS". Only allow
+  // containment for a substantial name; the one-to-one checks below still
+  // reject any matchup that could refer to more than one game.
+  const shorter = a.length < b.length ? a : b;
+  const longer = a.length < b.length ? b : a;
+  return shorter.length >= 8 && longer.includes(shorter);
+}
+
 /**
- * Find the saved D1 result for one scheduled game. We intentionally require
- * an exact date + normalized-opponent match and reject doubleheader ambiguity;
- * showing no result is safer than attaching a score to the wrong game.
+ * Find the saved D1 result for one scheduled game. We require the same date
+ * and a unique one-to-one opponent match, including the common PG age/coach
+ * suffix variation. Showing no result is safer than attaching a score to the
+ * wrong game.
  */
 export function findSavedResult(
   scheduledGame: ScheduleGame,
   siblingScheduleGames: ScheduleGame[],
   savedGames: ApiGame[],
 ): string | null {
-  const opponent = normalizeOpponent(scheduledGame.opponent);
-  if (!opponent) return null;
-
-  const sameScheduledMatchup = siblingScheduleGames.filter(
-    (game) =>
-      game.date === scheduledGame.date &&
-      normalizeOpponent(game.opponent) === opponent,
-  );
-  if (sameScheduledMatchup.length !== 1) return null;
-
   const matches = savedGames.filter(
     (game) =>
       game.date === scheduledGame.date &&
-      normalizeOpponent(game.opponent) === opponent &&
+      opponentsMatch(game.opponent, scheduledGame.opponent) &&
       typeof game.result === 'string' &&
       game.result.trim().length > 0,
   );
 
-  return matches.length === 1 ? matches[0].result!.trim() : null;
+  if (matches.length !== 1) return null;
+
+  const scheduledMatches = siblingScheduleGames.filter(
+    (game) =>
+      game.date === scheduledGame.date &&
+      opponentsMatch(game.opponent, matches[0].opponent),
+  );
+
+  return scheduledMatches.length === 1 ? matches[0].result!.trim() : null;
 }
