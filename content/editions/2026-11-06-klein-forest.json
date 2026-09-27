@@ -34,24 +34,24 @@
     "margin": 23,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-26T22:14:53.836Z"
+    "asOf": "2026-09-27T14:38:33.037Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5",
-    "asOf": "2026-09-26T22:14:53.618Z"
+    "asOf": "2026-09-27T14:38:32.726Z"
   },
   "stats": null,
   "finalScore": null,
   "rating": {
-    "home": -13.32,
-    "away": 15.28,
-    "margin": -25.7,
+    "home": -13.27,
+    "away": 15.36,
+    "margin": -25.76,
     "method": "Least-squares rating of every Texas result, margins capped at 28",
     "source": "Cain Game Day",
     "sourceUrl": "https://kleincain.gameday.report/",
-    "asOf": "2026-09-26T22:14:53.836Z"
+    "asOf": "2026-09-27T14:38:33.037Z"
   },
   "weather": null,
   "scheduledFacts": [],
@@ -62,7 +62,28 @@
     "intro": {
       "heading": "The matchup",
       "body": "Klein Cain plays at Klein Forest on November 6, 2026 at 7:00 PM, at Klein Memorial Stadium. Records, the statewide ranking and the published forecast on this page update automatically as the season goes on. Player notes are added only when they can be checked against a named source.",
-      "facts": []
+      "facts": [
+        {
+          "label": "Cain",
+          "value": "4–0 · 2–0 district · 50.0 points/game",
+          "team": "school"
+        },
+        {
+          "label": "Klein Forest",
+          "value": "1–4 · 1–2 district",
+          "team": "opponent"
+        },
+        {
+          "label": "Pick",
+          "value": "Cain by 23",
+          "team": "school"
+        },
+        {
+          "label": "Klein Forest coach",
+          "value": "Darrick Vaughn · 4th season",
+          "team": "opponent"
+        }
+      ]
     },
     "players": [],
     "recruiting": null,

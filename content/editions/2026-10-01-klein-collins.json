@@ -34,34 +34,34 @@
     "margin": -8,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-26T22:14:51.762Z"
+    "asOf": "2026-09-27T14:38:31.038Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5",
-    "asOf": "2026-09-26T22:14:51.693Z"
+    "asOf": "2026-09-27T14:38:30.893Z"
   },
   "stats": null,
   "finalScore": null,
   "rating": {
-    "home": 15.28,
-    "away": 11.65,
-    "margin": 6.53,
+    "home": 15.36,
+    "away": 11.85,
+    "margin": 6.38,
     "method": "Least-squares rating of every Texas result, margins capped at 28",
     "source": "Cain Game Day",
     "sourceUrl": "https://kleincain.gameday.report/",
-    "asOf": "2026-09-26T22:14:51.762Z"
+    "asOf": "2026-09-27T14:38:31.038Z"
   },
   "weather": {
-    "tempF": 82,
-    "condition": "Showers And Thunderstorms Likely",
-    "precipPct": 56,
-    "humidityPct": 85,
-    "wind": "5 mph SE",
+    "tempF": 83,
+    "condition": "Chance Showers And Thunderstorms",
+    "precipPct": 52,
+    "humidityPct": 82,
+    "wind": "10 mph SE",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-09-26T22:14:52.233Z"
+    "asOf": "2026-09-27T14:38:31.406Z"
   },
   "scheduledFacts": [],
   "resultFacts": [],
@@ -71,7 +71,28 @@
     "intro": {
       "heading": "The matchup",
       "body": "Thursday night is a first-place showdown at Klein Memorial Stadium. Klein Collins visits Klein Cain at **7:00 PM** with the Tigers **3–0 in District 15-6A** at **4–1** overall and the Hurricanes **2–0** in the district at **4–0**. A Collins win keeps the Tigers alone in first place; a Cain win pulls the Hurricanes even with Klein atop the district.\n\nCain arrives off its most complete performance of the season, a **58–7** rout at Magnolia West that was **41–0** by halftime. The Hurricanes are averaging **50 points** per game through four weeks.\n\nDave Campbell's Texas Football has Collins **No. 39** and Cain **No. 51** in its Week 5 computer rankings, and the model picks the Tigers **by 8** on Cain's home field. *An unbeaten home team as an eight-point underdog: that math gets tested Thursday.*\n\nCollins is led by **Adrian Mitchell**, in his ninth season with playoff berths in all eight and regional semifinal trips each of the last two years. The Tigers arrive with momentum: Texas HS Football named Collins its Week 4 6A Team of the Week after a **42–35** comeback win at Magnolia, sealed by **Brylon Jefferson's** 48-yard touchdown pass to **Tylan Penright** with just over a minute left. James Clancy's Hurricanes counter with an offense that has topped 40 points in all four games.",
-      "facts": []
+      "facts": [
+        {
+          "label": "Cain",
+          "value": "4–0 · 2–0 district · 50.0 points/game",
+          "team": "school"
+        },
+        {
+          "label": "Klein Collins",
+          "value": "4–1 · 3–0 district",
+          "team": "opponent"
+        },
+        {
+          "label": "Pick",
+          "value": "Klein Collins by 8",
+          "team": "opponent"
+        },
+        {
+          "label": "Klein Collins coach",
+          "value": "Adrian Mitchell · 9th season",
+          "team": "opponent"
+        }
+      ]
     },
     "players": [
       {

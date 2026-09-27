@@ -233,7 +233,7 @@ The script also does two things that used to be manual and easy to forget:
 
 ## Automated facts
 
-`scripts/refresh-facts.mjs` refreshes editions from public sources on a schedule. No language model runs in it. On an edition it may write `home.record`, `away.record`, both team ranks, `rankings`, `prediction`, `rating` and `weather`. `promote-edition.mjs` owns `finalScore`, `stats` and `gameStats`. The refresh also writes results, opponent records and the district standings table to `content/season-data.json`. Copy, preview players, headlines, sources and metadata stay editorial and are never touched by automation.
+`scripts/refresh-facts.mjs` refreshes editions from public sources on a schedule. No language model runs in it. On each non-final upcoming edition it may write `home.record`, `away.record`, both team ranks, `rankings`, `prediction`, `rating`, `weather`, and `preview.intro.facts` (school and opponent records from standings, Cain points per game from verified results in `content/season-data.json`, the Dave Campbell pick, and the opponent head coach from `config/coaches.json`). Final editions are skipped. `promote-edition.mjs` owns `finalScore`, `stats` and `gameStats`. The refresh also writes results, opponent records and the district standings table to `content/season-data.json`. Preview intro body, players, keys, headlines, sources and metadata stay editorial.
 
 Sources, all free and unauthenticated:
 

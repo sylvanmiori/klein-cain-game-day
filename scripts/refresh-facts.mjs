@@ -1,7 +1,8 @@
 // Refreshes the machine-owned fields of upcoming editions from public sources.
-// No language model is involved. This script may only write four things:
-// home.record, away.record, prediction and weather. Everything else in an
-// edition is editorial and is left exactly as written.
+// No language model is involved. On each non-final upcoming edition this may
+// write home.record, away.record, statewide ranks, rankings, prediction, our
+// rating, weather, and preview.intro.facts (rebuilt from records, standings,
+// the published pick and coaches config). Everything else is editorial.
 //
 //   node scripts/refresh-facts.mjs            update files
 //   node scripts/refresh-facts.mjs --dry-run  report what would change
@@ -20,6 +21,7 @@ import {
   parseDistrictStandings,
   recordFor,
 } from './lib/sources.mjs';
+import { buildPreviewIntroFacts } from './lib/preview-facts.mjs';
 import { buildGames, formatRecord, predict, rate, teamRecords } from './lib/rating.mjs';
 
 const root = process.cwd();
@@ -29,6 +31,7 @@ const readJson = async (file) => JSON.parse(await readFile(path.join(root, file)
 const publication = await readJson('config/publication.json');
 const schedule = await readJson('config/season-2026.json');
 const venues = await readJson('config/venues.json');
+const coaches = await readJson('config/coaches.json');
 
 /** Editions still worth refreshing: anything not already played. */
 function upcoming(editions, today) {
@@ -189,6 +192,8 @@ try {
   problems.push(`team page: ${error.message}`);
 }
 
+const seasonData = await readJson('content/season-data.json').catch(() => ({ results: {}, records: {} }));
+
 for (const { name, edition } of targets) {
   const game = schedule.find((item) => item.date === edition.date);
   if (!game) {
@@ -281,6 +286,22 @@ for (const { name, edition } of targets) {
       }
     } catch (error) {
       problems.push(`${name}: weather: ${error.message}`);
+    }
+  }
+
+  if (edition.preview?.intro) {
+    const facts = buildPreviewIntroFacts({
+      edition,
+      publication,
+      seasonData,
+      coaches,
+      opponentKey: game.opponent,
+    });
+    const previousFacts = JSON.stringify(edition.preview.intro.facts ?? []);
+    const nextFacts = JSON.stringify(facts);
+    if (previousFacts !== nextFacts) {
+      changes.push(`${name}: preview.intro.facts -> ${facts.length} row(s)`);
+      edition.preview.intro.facts = facts;
     }
   }
 
