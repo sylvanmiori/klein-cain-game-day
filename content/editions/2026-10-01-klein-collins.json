@@ -1,224 +1,290 @@
 {
- "schemaVersion": 2,
- "slug": "2026-10-01-klein-collins",
- "week": 5,
- "issue": "04",
- "state": "preview",
- "date": "2026-10-01",
- "dateLong": "October 1, 2026",
- "dateShort": "OCT 1, 2026",
- "kickoff": "7:00 PM",
- "venue": "Klein Memorial Stadium",
- "event": "",
- "updated": "Sep 27, 2026",
- "home": {
-  "name": "Klein Cain",
-  "mascot": "Hurricanes",
-  "logo": "/favicon.png",
-  "record": "4–0",
-  "rank": 51
- },
- "away": {
-  "name": "Klein Collins",
-  "mascot": "Tigers",
-  "logo": "/klein-collins-logo.png",
-  "record": "4–1",
-  "rank": 39
- },
- "pageTitle": "2026 Week 5 Preview: Klein Collins at Klein Cain",
- "metaTitle": "Week 5 Preview: Klein Collins at Klein Cain | Cain Game Day",
- "metaDescription": "First-place showdown in District 15-6A: Klein Collins (4-1) visits unbeaten Klein Cain (4-0) Thursday night. Dave Campbell's has the Tigers by 8.",
- "socialDescription": "First place in District 15-6A on the line Thursday: Collins at Cain, 7 PM.",
- "ogImage": "",
- "prediction": {
-  "margin": -8,
-  "source": "Dave Campbell’s Texas Football",
-  "sourceUrl": "https://www.texasfootball.com/",
-  "asOf": "2026-09-26T22:14:51.762Z"
- },
- "massey": null,
- "rankings": {
-  "source": "Dave Campbell’s Texas Football computer rankings",
-  "sourceUrl": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5",
-  "asOf": "2026-09-26T22:14:51.693Z"
- },
- "stats": null,
- "finalScore": null,
- "rating": {
-  "home": 15.28,
-  "away": 11.65,
-  "margin": 6.53,
-  "method": "Least-squares rating of every Texas result, margins capped at 28",
-  "source": "Cain Game Day",
-  "sourceUrl": "https://kleincain.gameday.report/",
-  "asOf": "2026-09-26T22:14:51.762Z"
- },
- "weather": {
-  "tempF": 82,
-  "condition": "Showers And Thunderstorms Likely",
-  "precipPct": 56,
-  "humidityPct": 85,
-  "wind": "5 mph SE",
-  "source": "National Weather Service",
-  "sourceUrl": "https://www.weather.gov/",
-  "asOf": "2026-09-26T22:14:52.233Z"
- },
- "scheduledFacts": [],
- "resultFacts": [],
- "preview": {
-  "playersHeading": "Players to watch",
-  "playersNote": "",
-  "intro": {
-   "heading": "The matchup",
-   "body": "Thursday night is a first-place showdown at Klein Memorial Stadium. Klein Collins visits Klein Cain at **7:00 PM** with the Tigers **3–0 in District 15-6A** at **4–1** overall and the Hurricanes **2–0** in the district at **4–0**. A Collins win keeps the Tigers alone in first place; a Cain win pulls the Hurricanes even with Klein atop the district.\n\nCain arrives off its most complete performance of the season, a **58–7** rout at Magnolia West that was **41–0** by halftime. The Hurricanes are averaging **50 points** per game through four weeks.\n\nDave Campbell's Texas Football has Collins **No. 39** and Cain **No. 51** in its Week 5 computer rankings, and the model picks the Tigers **by 8** on Cain's home field. *An unbeaten home team as an eight-point underdog: that math gets tested Thursday.*\n\nCollins is led by **Adrian Mitchell**, in his ninth season with playoff berths in all eight and regional semifinal trips each of the last two years. The Tigers arrive with momentum: Texas HS Football named Collins its Week 4 6A Team of the Week after a **42–35** comeback win at Magnolia, sealed by **Brylon Jefferson's** 48-yard touchdown pass to **Tylan Penright** with just over a minute left. James Clancy's Hurricanes counter with an offense that has topped 40 points in all four games.",
-   "facts": []
+  "schemaVersion": 2,
+  "slug": "2026-10-01-klein-collins",
+  "week": 5,
+  "issue": "04",
+  "state": "preview",
+  "date": "2026-10-01",
+  "dateLong": "October 1, 2026",
+  "dateShort": "OCT 1, 2026",
+  "kickoff": "7:00 PM",
+  "venue": "Klein Memorial Stadium",
+  "event": "",
+  "updated": "Sep 27, 2026",
+  "home": {
+    "name": "Klein Cain",
+    "mascot": "Hurricanes",
+    "logo": "/favicon.png",
+    "record": "4–0",
+    "rank": 51
   },
-  "players": [
-   {
-    "team": "CAIN",
-    "number": "9",
-    "name": "Jace Hanks",
-    "image": "/players/jace-hanks.jpg",
-    "role": "QB · Junior",
-    "tag": "Eight passing touchdowns",
-    "rating": "8 TD passes · 130.1 QB rating",
-    "copy": "Hanks pilots an offense averaging 50 points a game. The junior has thrown eight touchdown passes with a 130.1 quarterback rating and 65.0 percent completions, and his legs are a weapon too: 73.5 rushing yards per game with four rushing scores. Friday's 30-yard touchdown run capped a 41–0 first half at Magnolia West."
-   },
-   {
-    "team": "CAIN",
-    "number": "16",
-    "name": "Eyan Johnson",
-    "image": "/players/eyan-johnson.jpg",
-    "role": "RB / SB · Senior",
-    "tag": "Cain rushing leader",
-    "rating": "120.8 rush Y/G · 9 total TDs",
-    "copy": "Johnson leads Cain at 120.8 rushing yards per game with nine total touchdowns, eight on the ground. He opened the second half Friday with a 59-yard touchdown run up the middle, and the senior has scored in every phase of this 4–0 start."
-   },
-   {
-    "team": "CAIN",
-    "number": "10",
-    "name": "Cooper Karns",
-    "image": "/players/cooper-karns.jpg",
-    "role": "WR · Senior",
-    "tag": "Receiving leader",
-    "rating": "83.0 rec Y/G · 2 rec TDs",
-    "copy": "Karns leads Cain's receivers at 83.0 yards per game. The senior turned a short throw into a 45-yard touchdown against Magnolia West, breaking a tackle and taking it the distance on a night Cain scored 58."
-   },
-   {
-    "team": "CAIN",
-    "number": "47",
-    "name": "Easton Mizell",
-    "image": "/players/easton-mizell.jpg",
-    "role": "DB / FS · Junior",
-    "tag": "Pick-six vs Magnolia West",
-    "rating": "7.5 Tckl/G · 2 INTs",
-    "copy": "Mizell leads the Hurricanes in tackles at 7.5 per game and in interceptions with two. His 43-yard pick-six just before halftime Friday turned a rout into a statement, and the junior safety is the tone-setter for a defense allowing 26.5 points a game."
-   }
+  "away": {
+    "name": "Klein Collins",
+    "mascot": "Tigers",
+    "logo": "/klein-collins-logo.png",
+    "record": "4–1",
+    "rank": 39
+  },
+  "pageTitle": "2026 Week 5 Preview: Klein Collins at Klein Cain",
+  "metaTitle": "Week 5 Preview: Klein Collins at Klein Cain | Cain Game Day",
+  "metaDescription": "First-place showdown in District 15-6A: Klein Collins (4-1) visits unbeaten Klein Cain (4-0) Thursday night. Dave Campbell's has the Tigers by 8.",
+  "socialDescription": "First place in District 15-6A on the line Thursday: Collins at Cain, 7 PM.",
+  "ogImage": "",
+  "prediction": {
+    "margin": -8,
+    "source": "Dave Campbell’s Texas Football",
+    "sourceUrl": "https://www.texasfootball.com/",
+    "asOf": "2026-09-26T22:14:51.762Z"
+  },
+  "massey": null,
+  "rankings": {
+    "source": "Dave Campbell’s Texas Football computer rankings",
+    "sourceUrl": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5",
+    "asOf": "2026-09-26T22:14:51.693Z"
+  },
+  "stats": null,
+  "finalScore": null,
+  "rating": {
+    "home": 15.28,
+    "away": 11.65,
+    "margin": 6.53,
+    "method": "Least-squares rating of every Texas result, margins capped at 28",
+    "source": "Cain Game Day",
+    "sourceUrl": "https://kleincain.gameday.report/",
+    "asOf": "2026-09-26T22:14:51.762Z"
+  },
+  "weather": {
+    "tempF": 82,
+    "condition": "Showers And Thunderstorms Likely",
+    "precipPct": 56,
+    "humidityPct": 85,
+    "wind": "5 mph SE",
+    "source": "National Weather Service",
+    "sourceUrl": "https://www.weather.gov/",
+    "asOf": "2026-09-26T22:14:52.233Z"
+  },
+  "scheduledFacts": [],
+  "resultFacts": [],
+  "preview": {
+    "playersHeading": "Players to watch",
+    "playersNote": "Four Hurricanes and four Tigers who will decide Thursday night.",
+    "intro": {
+      "heading": "The matchup",
+      "body": "Thursday night is a first-place showdown at Klein Memorial Stadium. Klein Collins visits Klein Cain at **7:00 PM** with the Tigers **3–0 in District 15-6A** at **4–1** overall and the Hurricanes **2–0** in the district at **4–0**. A Collins win keeps the Tigers alone in first place; a Cain win pulls the Hurricanes even with Klein atop the district.\n\nCain arrives off its most complete performance of the season, a **58–7** rout at Magnolia West that was **41–0** by halftime. The Hurricanes are averaging **50 points** per game through four weeks.\n\nDave Campbell's Texas Football has Collins **No. 39** and Cain **No. 51** in its Week 5 computer rankings, and the model picks the Tigers **by 8** on Cain's home field. *An unbeaten home team as an eight-point underdog: that math gets tested Thursday.*\n\nCollins is led by **Adrian Mitchell**, in his ninth season with playoff berths in all eight and regional semifinal trips each of the last two years. The Tigers arrive with momentum: Texas HS Football named Collins its Week 4 6A Team of the Week after a **42–35** comeback win at Magnolia, sealed by **Brylon Jefferson's** 48-yard touchdown pass to **Tylan Penright** with just over a minute left. James Clancy's Hurricanes counter with an offense that has topped 40 points in all four games.",
+      "facts": []
+    },
+    "players": [
+      {
+        "team": "CAIN",
+        "number": "9",
+        "name": "Jace Hanks",
+        "image": "/players/jace-hanks.jpg",
+        "role": "QB · Junior",
+        "tag": "Eight passing touchdowns",
+        "rating": "8 TD passes · 130.1 QB rating",
+        "copy": "Hanks pilots an offense averaging 50 points a game. The junior has thrown eight touchdown passes with a 130.1 quarterback rating and 65.0 percent completions, and his legs are a weapon too: 73.5 rushing yards per game with four rushing scores. Friday's 30-yard touchdown run capped a 41–0 first half at Magnolia West."
+      },
+      {
+        "team": "CAIN",
+        "number": "16",
+        "name": "Eyan Johnson",
+        "image": "/players/eyan-johnson.jpg",
+        "role": "RB / SB · Senior",
+        "tag": "Cain rushing leader",
+        "rating": "120.8 rush Y/G · 9 total TDs",
+        "copy": "Johnson leads Cain at 120.8 rushing yards per game with nine total touchdowns, eight on the ground. He opened the second half Friday with a 59-yard touchdown run up the middle, and the senior has scored in every phase of this 4–0 start."
+      },
+      {
+        "team": "CAIN",
+        "number": "10",
+        "name": "Cooper Karns",
+        "image": "/players/cooper-karns.jpg",
+        "role": "WR · Senior",
+        "tag": "Receiving leader",
+        "rating": "83.0 rec Y/G · 2 rec TDs",
+        "copy": "Karns leads Cain's receivers at 83.0 yards per game. The senior turned a short throw into a 45-yard touchdown against Magnolia West, breaking a tackle and taking it the distance on a night Cain scored 58."
+      },
+      {
+        "team": "CAIN",
+        "number": "47",
+        "name": "Easton Mizell",
+        "image": "/players/easton-mizell.jpg",
+        "role": "DB / FS · Junior",
+        "tag": "Pick-six vs Magnolia West",
+        "rating": "7.5 Tckl/G · 2 INTs",
+        "copy": "Mizell leads the Hurricanes in tackles at 7.5 per game and in interceptions with two. His 43-yard pick-six just before halftime Friday turned a rout into a statement, and the junior safety is the tone-setter for a defense allowing 26.5 points a game."
+      },
+      {
+        "team": "COLLINS",
+        "number": "18",
+        "name": "Brylon Jefferson",
+        "image": "",
+        "role": "QB · Senior",
+        "tag": "District passing leader",
+        "rating": "212.7 Y/G · 6 TD · 0 INT",
+        "copy": "Jefferson leads District 15-6A at 212.7 passing yards a game with six touchdowns and no interceptions. When Magnolia had the Tigers down 35-28, he tied it with a 31-yard touchdown run, then won it with a 48-yard strike to Tylan Penright with 1:09 left."
+      },
+      {
+        "team": "COLLINS",
+        "number": "4",
+        "name": "Tyce Hudson",
+        "image": "",
+        "role": "RB · Senior",
+        "tag": "Six total touchdowns",
+        "rating": "68.0 rush Y/G · 62.7 rec Y/G",
+        "copy": "Hudson is the Tigers' do-everything senior: 68 rushing yards a game, 62.7 receiving, and a team-high six total touchdowns. He found the end zone in the Magnolia comeback and gives Collins a back who can hurt Cain between the tackles or split wide."
+      },
+      {
+        "team": "COLLINS",
+        "number": "14",
+        "name": "Tylan Penright",
+        "image": "",
+        "role": "WR · Junior",
+        "tag": "The 48-yard game-winner",
+        "rating": "73.0 receiving Y/G · team high",
+        "copy": "Penright leads Collins at 73 receiving yards a game, and he owns the biggest catch of the Tigers' season: the 48-yard touchdown from Jefferson that beat Magnolia with 1:09 to play."
+      },
+      {
+        "team": "COLLINS",
+        "number": "31",
+        "name": "Jayden Guillory",
+        "image": "",
+        "role": "DB · Sophomore",
+        "tag": "60-yard pick-six",
+        "rating": "11 tackles vs Magnolia",
+        "copy": "Guillory announced himself against Magnolia with 11 tackles and a 60-yard pick-six that staked Collins to a 14-0 lead. The sophomore is the big-play threat in a Tiger secondary Cain has to account for."
+      }
+    ],
+    "recruiting": null,
+    "keys": {
+      "heading": "Four keys for Klein Cain",
+      "items": [
+        {
+          "title": "Answer the computer",
+          "body": "Dave Campbell's has Collins by eight on Cain's home field. The Hurricanes are 4–0, unbeaten in two games at Klein Memorial, and averaging 50 points. A fast start tells the Tigers the ranking gap is just a number."
+        },
+        {
+          "title": "Keep the ground game rolling",
+          "body": "Johnson (120.8 yards a game) and Hanks (73.5) are the engine. If Collins loads the box to stop the run, Karns and Smith get room outside, and Cain's receivers have won those matchups all season."
+        },
+        {
+          "title": "Take it away",
+          "body": "Cain's defense forced turnovers all night Friday: Jerod Spraberry's interception set up the opening score, Mizell's pick-six broke it open, and Reggie Yarbough added another pick. Against a 4–1 Collins team, extra possessions decide first place."
+        },
+        {
+          "title": "Win the wet ball",
+          "body": "The forecast calls for showers and thunderstorms Thursday evening. In a first-place game, the team that protects the football in the rain usually protects the lead."
+        }
+      ]
+    },
+    "gameInfo": {
+      "heading": "Game information",
+      "facts": [
+        {
+          "label": "Kickoff",
+          "value": "7:00 PM"
+        },
+        {
+          "label": "Site",
+          "value": "Klein Memorial Stadium · Klein, TX"
+        },
+        {
+          "label": "District",
+          "value": "15-6A · first-place showdown"
+        },
+        {
+          "label": "The stakes",
+          "value": "Collins win: sole first at 4–0 · Cain win: tied with Klein at 3–0"
+        },
+        {
+          "label": "Head coaches",
+          "value": "James Clancy · Adrian Mitchell"
+        },
+        {
+          "label": "Conditions",
+          "value": "Showers and thunderstorms likely Thursday evening · NWS forecast updates automatically on this page"
+        },
+        {
+          "label": "Cain at home",
+          "value": "2–0 at Klein Memorial this season · 45–20 over Oak Ridge, 55–38 over Tomball"
+        }
+      ],
+      "links": [
+        {
+          "label": "MaxPreps: Klein Cain statistics",
+          "href": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/"
+        },
+        {
+          "label": "MaxPreps: Klein Cain schedule and results",
+          "href": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/schedule/"
+        },
+        {
+          "label": "Dave Campbell's: Klein Cain team page",
+          "href": "https://www.texasfootball.com/team/klein-cain-hurricanes"
+        },
+        {
+          "label": "Texas HS Football: Collins named 6A Team of the Week",
+          "href": "https://texashsfootball.com/week-four-6a-team-of-the-week-klein-collins-tigers/"
+        }
+      ]
+    },
+    "opponentRecruitingAudit": {
+      "source": "On3 recruit database and 247Sports",
+      "sourceUrl": "https://www.on3.com/high-school/klein-collins-spring-tx-20011/football/roster/",
+      "asOf": "2026-09-27T13:30:00.000Z",
+      "committedPlayers": [],
+      "eliteProspects": []
+    },
+    "playerStatsAudit": {
+      "asOf": "2026-09-27",
+      "sources": [
+        {
+          "team": "Klein Cain",
+          "games": 4,
+          "source": "MaxPreps",
+          "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/",
+          "sourceUpdated": "2026-09-26T09:04:00Z"
+        },
+        {
+          "team": "Klein Collins",
+          "games": 5,
+          "source": "MaxPreps",
+          "sourceUrl": "https://www.maxpreps.com/tx/spring/klein-collins-tigers/football/stats/",
+          "sourceUpdated": "2026-09-11T05:55:00Z"
+        }
+      ]
+    }
+  },
+  "final": null,
+  "sources": [
+    {
+      "label": "MaxPreps: Klein Cain statistics",
+      "href": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/"
+    },
+    {
+      "label": "MaxPreps: Klein Cain schedule and results",
+      "href": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/schedule/"
+    },
+    {
+      "label": "Dave Campbell's Texas Football: Klein Cain team page",
+      "href": "https://www.texasfootball.com/team/klein-cain-hurricanes"
+    },
+    {
+      "label": "Dave Campbell's: Week 5 computer rankings",
+      "href": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5"
+    },
+    {
+      "label": "Texas HS Football: Week Four 6A Team of the Week (Klein Collins)",
+      "href": "https://texashsfootball.com/week-four-6a-team-of-the-week-klein-collins-tigers/"
+    }
   ],
-  "recruiting": null,
-  "keys": {
-   "heading": "Four keys for Klein Cain",
-   "items": [
-    {
-     "title": "Answer the computer",
-     "body": "Dave Campbell's has Collins by eight on Cain's home field. The Hurricanes are 4–0, unbeaten in two games at Klein Memorial, and averaging 50 points. A fast start tells the Tigers the ranking gap is just a number."
-    },
-    {
-     "title": "Keep the ground game rolling",
-     "body": "Johnson (120.8 yards a game) and Hanks (73.5) are the engine. If Collins loads the box to stop the run, Karns and Smith get room outside, and Cain's receivers have won those matchups all season."
-    },
-    {
-     "title": "Take it away",
-     "body": "Cain's defense forced turnovers all night Friday: Jerod Spraberry's interception set up the opening score, Mizell's pick-six broke it open, and Reggie Yarbough added another pick. Against a 4–1 Collins team, extra possessions decide first place."
-    },
-    {
-     "title": "Win the wet ball",
-     "body": "The forecast calls for showers and thunderstorms Thursday evening. In a first-place game, the team that protects the football in the rain usually protects the lead."
-    }
-   ]
-  },
-  "gameInfo": {
-   "heading": "Game information",
-   "facts": [
-    {
-     "label": "Kickoff",
-     "value": "7:00 PM"
-    },
-    {
-     "label": "Site",
-     "value": "Klein Memorial Stadium · Klein, TX"
-    },
-    {
-     "label": "District",
-     "value": "15-6A · first-place showdown"
-    },
-    {
-     "label": "The stakes",
-     "value": "Collins win: sole first at 4–0 · Cain win: tied with Klein at 3–0"
-    },
-    {
-     "label": "Head coaches",
-     "value": "James Clancy · Adrian Mitchell"
-    },
-    {
-     "label": "Conditions",
-     "value": "Showers and thunderstorms likely Thursday evening · NWS forecast updates automatically on this page"
-    },
-    {
-     "label": "Cain at home",
-     "value": "2–0 at Klein Memorial this season · 45–20 over Oak Ridge, 55–38 over Tomball"
-    }
-   ],
-   "links": [
-    {
-     "label": "MaxPreps: Klein Cain statistics",
-     "href": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/"
-    },
-    {
-     "label": "MaxPreps: Klein Cain schedule and results",
-     "href": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/schedule/"
-    },
-    {
-     "label": "Dave Campbell's: Klein Cain team page",
-     "href": "https://www.texasfootball.com/team/klein-cain-hurricanes"
-    },
-    {
-     "label": "Texas HS Football: Collins named 6A Team of the Week",
-     "href": "https://texashsfootball.com/week-four-6a-team-of-the-week-klein-collins-tigers/"
-    }
-   ]
-  }
- },
- "final": null,
- "sources": [
-  {
-   "label": "MaxPreps: Klein Cain statistics",
-   "href": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/"
-  },
-  {
-   "label": "MaxPreps: Klein Cain schedule and results",
-   "href": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/schedule/"
-  },
-  {
-   "label": "Dave Campbell's Texas Football: Klein Cain team page",
-   "href": "https://www.texasfootball.com/team/klein-cain-hurricanes"
-  },
-  {
-   "label": "Dave Campbell's: Week 5 computer rankings",
-   "href": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5"
-  },
-  {
-   "label": "Texas HS Football: Week Four 6A Team of the Week (Klein Collins)",
-   "href": "https://texashsfootball.com/week-four-6a-team-of-the-week-klein-collins-tigers/"
-  }
- ],
- "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
- "disclaimerEntities": [
-  "Klein ISD",
-  "Klein Cain High School",
-  "Klein Collins High School",
-  "MaxPreps",
-  "Dave Campbell’s Texas Football"
- ],
- "current": false
+  "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
+  "disclaimerEntities": [
+    "Klein ISD",
+    "Klein Cain High School",
+    "Klein Collins High School",
+    "MaxPreps",
+    "Dave Campbell’s Texas Football"
+  ],
+  "current": false
 }
