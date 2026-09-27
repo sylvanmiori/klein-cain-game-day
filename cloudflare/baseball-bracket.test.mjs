@@ -95,6 +95,19 @@ describe('scores and winners', () => {
     assert.equal(gm20.away.score, 3);
   });
 
+  it('parses scores when PG decorates score spans (live 2026-09-27 markup)', () => {
+    // Live PG markup carries attributes and &nbsp; entities:
+    // <span id="..._lblHomeScorePos1_0" class="ScoreTxt">&nbsp;5</span>
+    const live = fixture
+      .replace('lblHomeScorePos1_0">', 'lblHomeScorePos1_0" class="ScoreTxt">&nbsp;5')
+      .replace('lblVisitorScorePos1_3">', 'lblVisitorScorePos1_3" class="ScoreTxt">&nbsp;3');
+    const games = parseBracketsPage(live, TOURNAMENT)[0].games;
+    const gm20 = games.find((g) => g.game_number === 20);
+    assert.equal(gm20.home.score, 5);
+    assert.equal(gm20.away.score, 3);
+    assert.equal(deriveWinner(gm20), 'home');
+  });
+
   it('derives the winner only from posted scores', () => {
     assert.equal(deriveWinner(gm20), 'home');
     const unplayed = games.find((g) => g.game_number === 21);

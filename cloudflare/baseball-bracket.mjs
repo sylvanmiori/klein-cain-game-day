@@ -77,11 +77,14 @@ export function parseBracketTable(tableHtml, tournament) {
   for (const match of tableHtml.matchAll(/<td class="(Home|Visitor)TeamBox">([\s\S]*?)<\/td>/g)) {
     const side = match[1] === 'Home' ? 'home' : 'away';
     const cell = match[2];
-    const slot = /SeedPos(\d+)_\d+">/.exec(cell)?.[1];
+    const slot = /SeedPos(\d+)_\d+"/.exec(cell)?.[1];
     if (!slot) continue;
-    const seed = stripTags(/SeedPos\d+_\d+">([^<]*)/.exec(cell)?.[1] ?? '').replace(/\s+/g, ' ').trim() || null;
+    const seed = stripTags(/SeedPos\d+_\d+"[^>]*>([^<]*)/.exec(cell)?.[1] ?? '').replace(/\s+/g, ' ').trim() || null;
     const name = stripTags(/hl(?:Home|Visitor)Pos\d+_\d+"[^>]*>([\s\S]*?)<\/a>/.exec(cell)?.[1] ?? '') || null;
-    const score = parseScore(stripTags(/lbl(?:Home|Visitor)ScorePos\d+_\d+">([^<]*)/.exec(cell)?.[1] ?? ''));
+    // Score spans may carry attributes (PG renders class="ScoreTxt") and
+    // values arrive as "&nbsp;N" — tolerate both so scores actually parse.
+    const scoreText = (/lbl(?:Home|Visitor)ScorePos\d+_\d+"[^>]*>([^<]*)/.exec(cell)?.[1] ?? '').replace(/&nbsp;/gi, '');
+    const score = parseScore(scoreText);
     const entry = boxes.get(slot) ?? {};
     entry[side] = { seed, name, score };
     boxes.set(slot, entry);
