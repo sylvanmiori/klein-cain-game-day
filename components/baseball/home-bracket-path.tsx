@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Clock, ExternalLink, MapPin } from 'lucide-react';
-import { formatGameDate } from './data';
+import { formatGameDate, mapsSearchUrl } from './data';
 import type { BracketTeam, LiveBracketGame, LiveBracketSnapshot, LiveBracketTier } from './types';
 
 /** Home Sunday path: client-fetches /api/baseball/bracket and, when 4:13 is a
@@ -135,10 +135,22 @@ function opponentFor(game: LiveBracketGame, side: 'home' | 'away' | null): Brack
   return game.away;
 }
 
+
 function sideLabel(side: 'home' | 'away' | null): string | null {
   if (side === 'home') return 'Home';
   if (side === 'away') return 'Away';
   return null;
+}
+
+/** Venue · Field from the game only — never invent. */
+function venueFieldLabel(game: LiveBracketGame): string {
+  return [game.venue, game.field].filter(Boolean).join(' · ');
+}
+
+/** Compact path location: "Field 8 @ Premier Baseball of Texas" (per-game venue). */
+function pathLocationLabel(game: LiveBracketGame): string {
+  if (game.field && game.venue) return `${game.field} @ ${game.venue}`;
+  return game.field || game.venue || '';
 }
 
 function findOurTier(snapshot: LiveBracketSnapshot): {
@@ -161,7 +173,7 @@ function PathStep({
   isOurs: boolean;
   isNext: boolean;
 }) {
-  const meta = [game.time, game.field].filter(Boolean).join(' · ');
+  const loc = pathLocationLabel(game);
   const home = teamLabel(game.home);
   const away = teamLabel(game.away);
   return (
@@ -179,8 +191,11 @@ function PathStep({
             <span className="ml-1.5 font-bold tracking-normal text-[#9a9aa2]">#{game.game_number}</span>
           ) : null}
         </p>
-        {meta ? <p className="text-[12px] font-semibold text-[#6e6e73]">{meta}</p> : null}
+        {game.time ? <p className="text-[12px] font-semibold text-[#6e6e73]">{game.time}</p> : null}
       </div>
+      {loc ? (
+        <p className="mt-0.5 text-[12px] font-semibold leading-snug text-[#6e6e73]">{loc}</p>
+      ) : null}
       <p
         className={
           isOurs
@@ -252,18 +267,44 @@ function BracketPathView({ snapshot }: { snapshot: LiveBracketSnapshot }) {
                   {next.time}
                 </span>
               ) : null}
-              {next.field ? (
-                <span className="inline-flex items-center gap-1.5">
-                  <MapPin className="h-3.5 w-3.5 shrink-0 text-[#7BAFD4]" aria-hidden />
-                  {next.field}
-                </span>
-              ) : null}
               {sideLabel(nextSide) ? (
                 <span className="rounded-md bg-[#12324e] px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-white">
                   {sideLabel(nextSide)}
                 </span>
               ) : null}
             </div>
+            {(() => {
+              const loc = venueFieldLabel(next);
+              const maps = mapsSearchUrl(next.venue || next.field);
+              if (!loc && !maps) return null;
+              const body = (
+                <span className="min-w-0 leading-snug">
+                  <span className="font-extrabold text-[#12324e]">{loc}</span>
+                  {maps ? (
+                    <span className="mt-0.5 block text-[12px] font-bold text-[#7BAFD4]">
+                      Open in Maps
+                    </span>
+                  ) : null}
+                </span>
+              );
+              return (
+                <p className="mt-2 flex items-start gap-2 text-sm">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#7BAFD4]" aria-hidden />
+                  {maps ? (
+                    <a
+                      href={maps}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="min-w-0 rounded-sm outline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#7BAFD4]"
+                    >
+                      {body}
+                    </a>
+                  ) : (
+                    body
+                  )}
+                </p>
+              );
+            })()}
             <p className="mt-2 text-base font-extrabold leading-snug text-[#12324e]">
               <span className="mr-1.5 font-bold text-[#6e6e73]">
                 {nextSide === 'away' ? '@' : 'vs'}
