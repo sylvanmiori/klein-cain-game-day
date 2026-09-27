@@ -2,7 +2,7 @@
 
 Shared reference for anyone working on **413baseball.gameday.report** (4:13 Baseball, 15U travel, Spring TX). The team is Steven Morris’s; Steven Miori hosts the site as a favor. **It is not Klein Cain football** and must never share football branding, copy, or Open Graph tags.
 
-For deep dives: [Perfect Game coverage](baseball-pg-coverage.md), [brackets](baseball-brackets.md), [bracket poller](baseball-bracket-poller.md), [standings poller](baseball-standings-poller.md), [D1 / box scores](baseball-d1.md). Architecture overview also lives in [PROJECT-GUIDE.md](PROJECT-GUIDE.md#413baseballgamedayreport-413-baseball).
+For deep dives: [Perfect Game coverage](baseball-pg-coverage.md), [brackets](baseball-brackets.md), [bracket poller](baseball-bracket-poller.md), [standings poller](baseball-standings-poller.md), [D1 / box scores](baseball-d1.md), [box-score upload / vision handoff](413-BOXSCORE-UPLOAD-HANDOFF.md). Architecture overview also lives in [PROJECT-GUIDE.md](PROJECT-GUIDE.md#413baseballgamedayreport-413-baseball).
 
 ## Isolation (non-negotiable)
 
@@ -53,9 +53,10 @@ Goals: parents can see **this weekend** at a glance — time, field, pool, oppon
 
 - One white card for This Weekend (single outer border). Hairline dividers between games only; no tinted nested footer box.
 - Compact mobile rows: date chip left; **time + field/pool on one line**; opponent + Upcoming/result on the next.
-- Active Home nav pill: navy fill `#12324e` with **white** text (inline color beats global `a { color: inherit }`). On the 413 host, Home href is `/` and `/` counts as active (`components/baseball/baseball-subnav.tsx`).
+- Result chips use `<LiveGameResult>`: checked-in `schedule.json` `result` when present, otherwise a unique D1 match from `GET /api/baseball/stats` (opponent aliases allowed; ambiguous doubleheaders stay blank). Saved matches link to `/box-score?game=<id>` with `!text-white` on the navy pill.
+- Active Home nav pill: navy fill `#12324e` with **white** text (inline color / `!text-white` beats global `a { color: inherit }`). On the 413 host, Home href is `/` and `/` counts as active (`components/baseball/baseball-subnav.tsx`).
 - Prefer tight mobile gutters (`pl-3` / `pr-3`, wider from `sm:`) so content uses the screen width.
-- Season Record empty state: baseball mark + two-line copy (`components/baseball/record-strip.tsx`).
+- Season Record empty state: baseball mark + two-line copy (`components/baseball/record-strip.tsx`); record strip shares `loadLiveStats()` with result pills.
 
 Reference mockup: `docs/413-home-ui-mockup.png` (also kept under UI QA scratch when testing).
 
@@ -75,12 +76,13 @@ If a tournament lacks `event_address`, fall back to venue + city; still link whe
 | `/schedule` | `/baseball/schedule` | Tournament list + live bracket |
 | `/standings` | `/baseball/standings` | Live pool standings |
 | `/roster` | `/baseball/roster` | Roster |
-| `/stats` | `/baseball/stats` | Season stats (D1 `413baseball-stats`) |
+| `/stats` | `/baseball/stats` | Season stats + Game Box Scores list (D1 `413baseball-stats`) |
+| `/box-score?game=` | `/baseball/box-score` | Individual game batting/pitching (public) |
 | `/submit` | `/baseball/submit` | Password-gated box-score entry |
 
 ### Box-score photo formats (HEIC)
 
-Parents on iPhone often pick **HEIC/HEIF** from Photos. Llama vision on Workers AI does not reliably accept `image/heic`, so the submit UI (`components/baseball/boxscore-submit.tsx` + `heic-to-jpeg.ts`) **auto-converts HEIC/HEIF to JPEG in the browser** before `POST /api/baseball/boxscore`. Native decode (ImageBitmap / canvas) is preferred on Safari iOS; `heic2any` loads dynamically only if native decode fails. JPEG/PNG/WebP are unchanged. The Worker returns `415` if a raw HEIC still arrives (stale client).
+Parents on iPhone often pick **HEIC/HEIF** from Photos. Workers AI vision does not reliably accept raw `image/heic`, so the submit UI (`components/baseball/boxscore-submit.tsx` + `heic-to-jpeg.ts`) **auto-converts HEIC/HEIF to JPEG in the browser** before `POST /api/baseball/boxscore`. On **Safari**, `heic2any` runs **first** (native HEIC decode can “succeed” with blank/odd JPEGs); elsewhere native decode runs first, then heic2any. JPEG/PNG/WebP are unchanged. The Worker returns `415` if a raw HEIC still arrives (stale client). Vision model is `@cf/meta/llama-4-scout-17b-16e-instruct` (see [boxscore handoff](413-BOXSCORE-UPLOAD-HANDOFF.md)).
 
 ## Data and automation (summary)
 
@@ -89,6 +91,7 @@ Parents on iPhone often pick **HEIC/HEIF** from Photos. Llama vision on Workers 
 - Live bracket: Worker cron `*/15` → KV → `GET /api/baseball/bracket` (see [bracket poller](baseball-bracket-poller.md)).
 - Live pool standings: same `*/15` cron → KV → `GET /api/baseball/standings` (see [standings poller](baseball-standings-poller.md)); Standings nav page at `/baseball/standings`.
 - Stats: D1 + `/api/baseball/stats` (see [D1 doc](baseball-d1.md)); D1 is bound. Uploads still need `BOXSCORE_PASSWORD` on the Worker or Analyze returns `503 uploads not configured`.
+- After a confirm, unique D1 results surface on Home/Schedule via `LiveGameResult` and on `/stats` / `/box-score?game=` (see [boxscore handoff](413-BOXSCORE-UPLOAD-HANDOFF.md)).
 
 ## Checklist before shipping a baseball UI change
 

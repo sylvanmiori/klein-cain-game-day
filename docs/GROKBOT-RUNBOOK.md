@@ -85,4 +85,4 @@ Facebook posting needs an SMS 2FA code from Steven's phone. If he is unreachable
 
 ## 8. 4:13 Baseball (same repo, separate site)
 
-`413baseball.gameday.report` shares the Worker but must never show Klein Cain football in titles, images, or link previews. Before baseball UI or metadata work, read [`docs/baseball-site.md`](baseball-site.md). Live baseball deploys require `npm run deploy:cloudflare` (GitHub Pages alone is not enough). Do not invent Perfect Game scores or box-score stats.
+`413baseball.gameday.report` shares the Worker but must never show Klein Cain football in titles, images, or link previews. Before baseball UI or metadata work, read [`docs/baseball-site.md`](baseball-site.md). For box-score Analyze / HEIC / Scout vision / schedule result sync, read [`docs/413-BOXSCORE-UPLOAD-HANDOFF.md`](413-BOXSCORE-UPLOAD-HANDOFF.md). Live baseball deploys require `npm run deploy:cloudflare` (GitHub Pages alone is not enough). Do not invent Perfect Game scores or box-score stats. Do not fatten the vision prompt (loop-2 all-zeros); Manual entry is not the product answer for photo upload.

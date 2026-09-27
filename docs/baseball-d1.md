@@ -139,11 +139,16 @@ Settings → Domains → Add custom domain.
   matches players by jersey number first, fuzzy last name second. Returns the
   extracted `{game, batting, pitching}` plus `uncertain` (low-confidence
   player matches with reasons) and `already_exists` (true when D1 already has
-  lines for that `game_id`). Vision call uses `max_tokens: 4096` (Workers AI
-  default is 256, which truncates dense box-score JSON mid-object). On Meta
-  license gate 5016 the worker submits `{prompt:'agree'}` once and retries.
-  AI failure → `502` with `message`; parse failures include a short
-  `model_snippet=` of the raw model text (no secrets) for debugging.
+  lines for that `game_id`). Vision model is
+  `@cf/meta/llama-4-scout-17b-16e-instruct` (Codex `0f3cb19`; replaced Llama
+  3.2 after zero-filled batting trials — do not fatten the prompt instead).
+  Call uses `max_tokens: 4096` (Workers AI default is 256, which truncates
+  dense box-score JSON mid-object). On Meta license gate 5016 the worker
+  submits `{prompt:'agree'}` once and retries. After parse,
+  `cloudflare/boxscore-filter.mjs` strips roster-dump filler. AI failure →
+  `502` with `message`; parse failures include a short `model_snippet=` of
+  the raw model text (no secrets) for debugging. Full pipeline:
+  [boxscore handoff](413-BOXSCORE-UPLOAD-HANDOFF.md).
 - `POST /api/baseball/boxscore/confirm` — JSON `{password, game:{id|null,
   date, opponent, tournament, venue, result}, batting:[...], pitching:[...]}`.
   Replacement semantics: existing lines for the game are deleted and
@@ -154,7 +159,7 @@ Settings → Domains → Add custom domain.
   `{ok:true, game_id, replaced, new_players}`.
 - `GET /api/baseball/games/:id` — public. Returns `{game, batting, pitching}`
   with the per-game lines (player names, jerseys, positions included) for the
-  edit UI.
+  edit UI and the public `/baseball/box-score?game=` page.
 - `PUT /api/baseball/games/:id/lines` — password-gated. JSON
   `{password, game:{...}, batting:[...], pitching:[...]}`. Replaces ALL lines
   for the game through the same write path as confirm; the `game` object is
@@ -167,7 +172,8 @@ Settings → Domains → Add custom domain.
   `avg/obp/slg/ops`, rounded to 3 decimals, null on 0 AB) and pitching
   (`pitches`, `strikes` included; `era` = ER×9/IP, `whip`), aggregated in
   thirds of an inning so IP like 5.2 is handled correctly. Also returns the
-  `players` (with `jersey_number`) and `games` lists.
+  `players` (with `jersey_number`) and `games` lists (Home/Schedule
+  `LiveGameResult` and the Stats “Game Box Scores” list consume this).
 
 Password checks on all write endpoints go through one helper with a
 best-effort throttle: more than 10 failed attempts from one IP in 5 minutes
