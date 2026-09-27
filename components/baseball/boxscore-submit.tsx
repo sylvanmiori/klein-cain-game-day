@@ -264,23 +264,23 @@ function GameMetaFields({
   const cls = 'mt-1 w-full min-w-0 rounded-xl border border-[#c9dcec] px-3 py-2 text-sm outline-none focus:border-[#7BAFD4]';
   return (
     <div className="grid grid-cols-2 gap-3">
-      <div>
+      <div className="col-span-2 min-w-0 sm:col-span-1">
         <label className="block text-[12px] font-bold text-[#6e6e73]">Date</label>
         <input type="date" value={value.date} onChange={set('date')} className={cls} />
       </div>
-      <div>
+      <div className="col-span-2 min-w-0 sm:col-span-1">
         <label className="block text-[12px] font-bold text-[#6e6e73]">Opponent</label>
         <input type="text" value={value.opponent} onChange={set('opponent')} placeholder="Team name" className={cls} />
       </div>
-      <div>
+      <div className="min-w-0">
         <label className="block text-[12px] font-bold text-[#6e6e73]">Tournament</label>
         <input type="text" value={value.tournament} onChange={set('tournament')} placeholder="Optional" className={cls} />
       </div>
-      <div>
+      <div className="min-w-0">
         <label className="block text-[12px] font-bold text-[#6e6e73]">Venue</label>
         <input type="text" value={value.venue} onChange={set('venue')} placeholder="Optional" className={cls} />
       </div>
-      <div className="col-span-2">
+      <div className="col-span-2 min-w-0">
         <label className="block text-[12px] font-bold text-[#6e6e73]">Result</label>
         <input
           type="text"
