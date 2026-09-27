@@ -35,19 +35,31 @@ function gameMeta(game: LiveBracketGame): string {
     .join(' \u00B7 ');
 }
 
+/** Which side 4:13 is on, if they are in this game. */
+function ourSide(game: LiveBracketGame): 'home' | 'away' | null {
+  if ((game.home.name ?? '').includes('4:13')) return 'home';
+  if ((game.away.name ?? '').includes('4:13')) return 'away';
+  return null;
+}
+
 function LiveGameRow({ game }: { game: LiveBracketGame }) {
   const home = teamLabel(game.home);
   const away = teamLabel(game.away);
   const hasScores = Number.isInteger(game.home.score) && Number.isInteger(game.away.score);
   const homeWon = game.winner === 'home';
   const awayWon = game.winner === 'away';
+  // Green score for a 4:13 win, red for a loss; neutral for everyone else.
+  const side = ourSide(game);
+  const weWon = side != null && game.winner === side;
+  const weLost = side != null && game.winner != null && game.winner !== side;
+  const scoreColor = weWon ? 'text-[#17804d]' : weLost ? 'text-[#c0392b]' : '';
   return (
     <li className="min-w-0 py-2.5">
       <p className="text-sm text-[#12324e]">
         {game.round && <span className="font-bold">{game.round}: </span>}
         <span className={homeWon ? 'font-extrabold' : undefined}>{home}</span>
         {hasScores ? (
-          <span className="font-extrabold tabular-nums">
+          <span className={`font-extrabold tabular-nums ${scoreColor}`}>
             {' '}{game.home.score} &ndash; {game.away.score}{' '}
           </span>
         ) : (

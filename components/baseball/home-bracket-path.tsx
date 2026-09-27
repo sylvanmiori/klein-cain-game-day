@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 import { Clock, ExternalLink, MapPin } from 'lucide-react';
 import { formatGameDate, mapsSearchUrl } from './data';
 import type { BracketTeam, LiveBracketGame, LiveBracketSnapshot, LiveBracketTier } from './types';
@@ -221,11 +222,31 @@ function BracketPathView({ snapshot }: { snapshot: LiveBracketSnapshot }) {
   const next = pickNextGame(path);
   const nextSide = next ? teamOnGame(next) : null;
   const opponent = next ? opponentFor(next, nextSide) : null;
-  // A finished game is not "next" — label it Final and show the score.
+  // A finished game is not "next" — label it Final and show the score,
+  // green for a 4:13 win, red for a loss.
   const nextFinal =
     next != null &&
     (next.winner != null ||
       (Number.isInteger(next.home.score) && Number.isInteger(next.away.score)));
+  let finalScore: ReactNode = null;
+  if (next && nextFinal) {
+    const hs = next.home.score;
+    const as = next.away.score;
+    if (typeof hs === 'number' && typeof as === 'number') {
+      const weWon =
+        nextSide != null &&
+        (next.winner === nextSide || (nextSide === 'home' ? hs > as : as > hs));
+      finalScore = (
+        <>
+          {teamLabel(next.home)}{' '}
+          <span className={`font-bold ${weWon ? 'text-[#17804d]' : 'text-[#c0392b]'}`}>
+            {hs} &ndash; {as}
+          </span>{' '}
+          {teamLabel(next.away)}
+        </>
+      );
+    }
+  }
   const updated = formatUpdated(snapshot.updated_at ?? snapshot.scraped_at);
   const tierName = found.tier.tier || 'Bracket';
   // Title: "Sunday · Silver Bracket" — use weekday from next/path date when present.
@@ -311,17 +332,7 @@ function BracketPathView({ snapshot }: { snapshot: LiveBracketSnapshot }) {
               );
             })()}
             <p className="mt-2 text-base font-extrabold leading-snug text-[#12324e]">
-              {nextFinal &&
-              Number.isInteger(next.home.score) &&
-              Number.isInteger(next.away.score) ? (
-                <>
-                  {teamLabel(next.home)}{' '}
-                  <span className="font-bold text-[#6e6e73]">
-                    {next.home.score} &ndash; {next.away.score}
-                  </span>{' '}
-                  {teamLabel(next.away)}
-                </>
-              ) : (
+              {finalScore ?? (
                 <>
                   <span className="mr-1.5 font-bold text-[#6e6e73]">
                     {nextSide === 'away' ? '@' : 'vs'}

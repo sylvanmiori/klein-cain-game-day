@@ -6,11 +6,19 @@ import type { ScheduleGame } from './types';
 
 type ResultStyle = 'home' | 'schedule';
 
-const resultClasses: Record<ResultStyle, string> = {
-  home: 'shrink-0 rounded-full bg-[#12324e] px-2.5 py-0.5 text-[11px] font-extrabold !text-white tabular-nums sm:px-3 sm:py-1 sm:text-[12px]',
+const resultBase: Record<ResultStyle, string> = {
+  home: 'shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-extrabold !text-white tabular-nums sm:px-3 sm:py-1 sm:text-[12px]',
   schedule:
-    'shrink-0 rounded-md bg-[#12324e] px-2 py-1 text-[12px] font-extrabold !text-white tabular-nums',
+    'shrink-0 rounded-md px-2 py-1 text-[12px] font-extrabold !text-white tabular-nums',
 };
+
+/** Green for a 4:13 win, red for a loss ("W 5-1" / "L 0-7"), navy otherwise. */
+function resultOutcomeClass(result: string): string {
+  const c = result.trim().charAt(0).toUpperCase();
+  if (c === 'W') return 'bg-[#17804d]';
+  if (c === 'L') return 'bg-[#c0392b]';
+  return 'bg-[#12324e]';
+}
 
 const upcomingClasses: Record<ResultStyle, string> = {
   home: 'shrink-0 rounded-full bg-[#e8f3fb] px-2.5 py-0.5 text-[11px] font-bold text-[#12324e] sm:px-3 sm:py-1 sm:text-[12px]',
@@ -62,7 +70,7 @@ export function LiveGameResult({
       return (
         <a
           href={`/baseball/box-score?game=${display.gameId}`}
-          className={`${resultClasses[style]} inline-flex items-center gap-1 transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7BAFD4]`}
+          className={`${resultOutcomeClass(display.result)} ${resultBase[style]} inline-flex items-center gap-1 transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7BAFD4]`}
           aria-live="polite"
           aria-label={`View box score: ${display.result}`}
         >
@@ -74,7 +82,7 @@ export function LiveGameResult({
 
     return (
       <span
-        className={resultClasses[style]}
+        className={`${resultOutcomeClass(display.result)} ${resultBase[style]}`}
         aria-live="polite"
         aria-label={`Final score ${display.result}`}
       >
