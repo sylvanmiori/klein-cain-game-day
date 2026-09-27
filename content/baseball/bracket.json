@@ -5,8 +5,8 @@
   "games": [
     {
       "tier": "Gold Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#4 TBT SPACE CITY vs #5 Loudboyz 2030",
+      "round": "Championship",
+      "matchup": "TBD vs #5 Loudboyz 2030",
       "date": "2026-09-27",
       "time": "8:00 AM",
       "field": "Field 7",
@@ -33,7 +33,7 @@
     {
       "tier": "Gold Bracket",
       "round": "Semifinal",
-      "matchup": "#1 Banditos 2030 Elite vs Winner of Game #20",
+      "matchup": "#1 Banditos 2030 Elite vs #4 TBT SPACE CITY",
       "date": "2026-09-27",
       "time": "3:00 PM",
       "field": "Field 7",
@@ -59,8 +59,8 @@
     },
     {
       "tier": "Silver Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#4 BPT Hurricanes vs #5 Wildcatters/Belk",
+      "round": "Championship",
+      "matchup": "#4 BPT Hurricanes vs TBD",
       "date": "2026-09-27",
       "time": "8:00 AM",
       "field": "Field 8",
@@ -87,7 +87,7 @@
     {
       "tier": "Silver Bracket",
       "round": "Semifinal",
-      "matchup": "#1 Nitro baseball Ortiz 15u vs Winner of Game #26",
+      "matchup": "#1 Nitro baseball Ortiz 15u vs #5 Wildcatters/Belk",
       "date": "2026-09-27",
       "time": "3:00 PM",
       "field": "Field 8",
@@ -139,5 +139,5 @@
       "venue": "Schiel Road Park"
     }
   ],
-  "scraped_at": "2026-09-27T09:55:49.325Z"
+  "scraped_at": "2026-09-27T15:04:18.456Z"
 }
