@@ -13,10 +13,29 @@ for (const document of docs) {
     let reference = match[1].replace(/[.:;]+$/, '');
     if (reference.includes('*')) reference = reference.slice(0, reference.indexOf('*')).replace(/\/$/, '');
     if (intentionallyRetired.has(reference)) continue;
+    // A #fragment is a doc-section anchor, not part of the filesystem path.
+    const hashIndex = reference.indexOf('#');
+    const filePath = hashIndex === -1 ? reference : reference.slice(0, hashIndex);
+    const anchor = hashIndex === -1 ? '' : reference.slice(hashIndex + 1);
     try {
-      await access(path.join(root, reference));
+      await access(path.join(root, filePath));
     } catch {
       problems.push(`${document}: documented path does not exist: ${match[1]}`);
+      continue;
+    }
+    if (anchor && filePath.endsWith('.md')) {
+      // GitHub-style heading slug: downcase, drop punctuation, each space to a hyphen.
+      const slugify = (heading) =>
+        heading.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s/g, '-');
+      const fileText = await readFile(path.join(root, filePath), 'utf8');
+      const slugs = new Set();
+      for (const line of fileText.split('\n')) {
+        const heading = /^(#{1,6})\s+(.+?)\s*#*\s*$/.exec(line)?.[2];
+        if (heading) slugs.add(slugify(heading));
+      }
+      if (!slugs.has(anchor)) {
+        problems.push(`${document}: documented anchor does not exist: ${match[1]}`);
+      }
     }
   }
   for (const match of text.matchAll(/npm run ([a-z0-9:-]+)/g)) {
