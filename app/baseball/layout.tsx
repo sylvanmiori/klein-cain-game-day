@@ -62,7 +62,7 @@ export default function BaseballLayout({ children }: { children: React.ReactNode
           <BaseballSubnav />
         </div>
       </div>
-      <main className="ml-auto mr-auto w-full max-w-3xl pb-14 pl-3 pr-3 pt-4 sm:pb-16 sm:pl-4 sm:pr-4 sm:pt-6">{children}</main>
+      <main className="ml-auto mr-auto w-full min-w-0 max-w-3xl pb-14 pl-3 pr-3 pt-4 sm:pb-16 sm:pl-4 sm:pr-4 sm:pt-6">{children}</main>
     </div>
   );
 }

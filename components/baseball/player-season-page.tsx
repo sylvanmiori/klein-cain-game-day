@@ -166,12 +166,12 @@ function StatTable({
   row: Record<string, unknown>;
 }) {
   return (
-    <section className="overflow-hidden rounded-2xl border border-[#dde7f0] bg-white">
+    <section className="min-w-0 overflow-hidden rounded-2xl border border-[#dde7f0] bg-white">
       <h2 className="border-b border-[#eef1f5] px-4 py-3 text-sm font-extrabold uppercase tracking-[0.12em] text-[#12324e]">
         {title}
       </h2>
-      <div className="overflow-x-auto">
-        <table className="w-full text-[12px] tabular-nums">
+      <div className="w-full overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]">
+        <table className="w-full min-w-max text-[12px] tabular-nums">
           <thead className="border-b border-[#eef1f5] text-[11px] uppercase tracking-wide text-[#9a9aa2]">
             <tr>
               {cols.map((c) => (
@@ -221,9 +221,9 @@ function GameLogTable({
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-[#dde7f0] bg-white">
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[36rem] text-[12px] tabular-nums">
+    <div className="min-w-0 overflow-hidden rounded-2xl border border-[#dde7f0] bg-white">
+      <div className="w-full overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]">
+        <table className="w-full min-w-max text-[12px] tabular-nums">
           <thead className="border-b border-[#eef1f5] text-[11px] uppercase tracking-wide text-[#9a9aa2]">
             <tr>
               <th className="whitespace-nowrap px-3 py-2 text-left font-extrabold">Date</th>
@@ -407,7 +407,7 @@ export function PlayerSeasonPage() {
   const gradQuiet = player.grad_year ? `’${String(player.grad_year).slice(-2)}` : null;
 
   return (
-    <div className="grid gap-0">
+    <div className="grid min-w-0 gap-0">
       {/* oxlint-disable-next-line next/no-html-link-for-pages */}
       <a href="/baseball/stats" className="mb-3 text-[12px] font-bold text-[#6e6e73] hover:text-[#12324e]">
         ← Stats
@@ -473,10 +473,10 @@ export function PlayerSeasonPage() {
         </div>
       </nav>
 
-      <div className="mt-4 grid gap-4">
+      <div className="mt-4 grid min-w-0 gap-4">
         {tab === 'summary' ? (
           <>
-            <section>
+            <section className="min-w-0">
               <div className="mb-2 flex items-baseline justify-between gap-2">
                 <h2 className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#12324e]">Last Games</h2>
                 {games.length > SUMMARY_LAST_GAMES ? (
@@ -492,7 +492,7 @@ export function PlayerSeasonPage() {
               <GameLogTable games={games} mode="compact" />
             </section>
 
-            <section>
+            <section className="min-w-0">
               <div className="mb-2 flex items-baseline justify-between gap-2">
                 <h2 className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#12324e]">Season snapshot</h2>
                 <button
@@ -529,14 +529,14 @@ export function PlayerSeasonPage() {
         ) : null}
 
         {tab === 'gamelog' ? (
-          <section>
+          <section className="min-w-0">
             <h2 className="mb-2 text-sm font-extrabold uppercase tracking-[0.12em] text-[#12324e]">Game Log</h2>
             <GameLogTable games={games} mode="full" />
           </section>
         ) : null}
 
         {tab === 'stats' ? (
-          <section className="grid gap-3">
+          <section className="grid min-w-0 gap-3">
             <h2 className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#12324e]">Season Stats</h2>
             {batOk && batting ? (
               <StatTable
