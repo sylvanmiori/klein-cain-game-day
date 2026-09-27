@@ -86,3 +86,11 @@ Facebook posting needs an SMS 2FA code from Steven's phone. If he is unreachable
 ## 8. 4:13 Baseball (same repo, separate site)
 
 `413baseball.gameday.report` shares the Worker but must never show Klein Cain football in titles, images, or link previews. Before baseball UI or metadata work, read [`docs/baseball-site.md`](baseball-site.md). For box-score Analyze / HEIC / Scout vision / schedule result sync, read [`docs/413-BOXSCORE-UPLOAD-HANDOFF.md`](413-BOXSCORE-UPLOAD-HANDOFF.md). Live baseball deploys require `npm run deploy:cloudflare` (GitHub Pages alone is not enough). Do not invent Perfect Game scores or box-score stats. Do not fatten the vision prompt (loop-2 all-zeros); Manual entry is not the product answer for photo upload.
+
+### Weekend ops / Sunday readiness (baseball)
+
+- **Auto (no deploy, no babysitting):** Worker cron `*/15` runs `pollBaseballBracket()` + `pollBaseballPoolStandings()` (KV only). Sat/Sun 7am–11pm CT every 15 min; otherwise hourly `:00`. `/standings` and Schedule `<BracketLive>` refresh when PG publishes seeds/scores/names.
+- **Not auto on Home:** "This Weekend" and the Schedule tournament **game list** come from build-time `content/baseball/schedule.json`. A Sunday opponent/time will not appear as Home cards until `schedule.json` is refreshed **and** Cloudflare is redeployed after PG lists that game. The bracket API does not feed Home.
+- **GH Action `baseball-bracket.yml`:** still commits `bracket.json` hourly Sat 11pm–Sun noon CT as **build-time fallback only**; live path is Worker KV.
+- **Football cron** (`* * * * *` score ingest) is untouched by baseball pollers. Docs-only baseball edits: prefer commit+push; do not deploy Cloudflare unless the runbook for that change requires a site ship.
+- Deep detail: [`baseball-site.md` Weekend ops](baseball-site.md#weekend-ops--sunday-readiness), [standings poller](baseball-standings-poller.md), [bracket poller](baseball-bracket-poller.md).

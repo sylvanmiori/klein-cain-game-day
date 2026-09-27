@@ -4,6 +4,12 @@ How to find, identify, and parse tournament bracket pages for the 4:13
 Baseball subsite. Researched 2026-09-26 against the live Perfect Game site
 (tournament "2026 15U PG Backyard Brawl @ Premier", event 140434).
 
+**Live site path:** Worker cron → KV → `GET /api/baseball/bracket` (see
+[`baseball-bracket-poller.md`](baseball-bracket-poller.md)). This note is the
+page-structure reference for both the Worker poller and the one-shot GH Action
+scraper (`bracket.json` is build-time fallback only). Weekend Home/Sunday gap:
+[`baseball-site.md`](baseball-site.md#weekend-ops--sunday-readiness).
+
 ## URL patterns (verified live)
 
 Every tournament the team page lists links these event pages in the TEAM

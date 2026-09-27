@@ -20,14 +20,24 @@ Schedule page <BracketLive> ──fetches──┘ (falls back to build-time bra
 ```
 
 The Next.js request path never scrapes Perfect Game. The page shows
-"Updated … · Source: Perfect Game" when rendering live data.
+"Updated … · Source: Perfect Game" when rendering live data. Snapshots live in
+**KV only** (not R2). When Perfect Game replaces `Seed #N` placeholders with
+real team names and/or fills scores, the next successful poll updates the
+Schedule bracket **without a deploy**.
+
+`<BracketLive>` is a client fetch: SSR / first paint may briefly show
+build-time `content/baseball/bracket.json` until the client hydrates from
+`GET /api/baseball/bracket`.
 
 ## Cron schedule
 
 `cloudflare/wrangler.jsonc` triggers: `["* * * * *", "*/15 * * * *"]`.
 `scheduled()` in `cloudflare/worker.mjs` dispatches on `controller.cron`:
-`*/15 * * * *` runs `pollBaseballBracket()`; the every-minute cron keeps
-running the football score ingest untouched.
+`*/15 * * * *` runs `pollBaseballBracket()` **and**
+`pollBaseballPoolStandings()` (each in its own try/catch so one failure does
+not skip the other; any failures are rethrown, AggregateError if both fail).
+The every-minute cron (`* * * * *`) keeps running the football score ingest
+only — baseball does not touch that path.
 
 Inside the poll, cadence is gated by Chicago time:
 
@@ -91,8 +101,8 @@ identically):
 - Round labels come from the page's own "Winner of Game #N" feeder
   references (depth 0 = Championship).
 - `winner` is derived only when the page shows both scores and they differ;
-  otherwise null. Seeds render as PG shows them ("Seed #4" until pool play
-  seeds the bracket).
+  otherwise null. Seeds render as PG shows them (`Seed #N` placeholders until
+  pool play fills real team names). Do not invent names or scores ahead of PG.
 
 ## API
 
@@ -118,10 +128,24 @@ and `source: "Perfect Game"`. Responses:
 
 `.github/workflows/baseball-bracket.yml` still runs the one-shot
 `npm run baseball:bracket` (hourly Sat 11pm CT → Sun 12pm CT) and commits
-`content/baseball/bracket.json`. That file is now the **build-time fallback**
-for `<BracketLive>` when the KV snapshot is absent. Both use the same parser.
+`content/baseball/bracket.json`. That file is **build-time fallback only** for
+`<BracketLive>` when the KV snapshot is absent. The live path is Worker → KV →
+`GET /api/baseball/bracket`. Both scrapers use the same parser.
+
+Point-in-time example (Sat Sep 26, 2026 evening, event 140434): bracket
+structure was live (~15 games) with `Seed #N` placeholders only. Treat that as
+a mechanism check, not forever truth — the next poll picks up whatever PG
+publishes.
+
+## Weekend ops (bracket)
+
+Bracket seeds/scores auto-update on `/schedule` once PG publishes them; no
+deploy and no agent babysitting. Home "This Weekend" and the Schedule
+**tournament game list** still come from build-time `schedule.json` (see
+[Weekend ops / Sunday readiness](baseball-site.md#weekend-ops--sunday-readiness)).
 
 ## Out of scope (unchanged)
 
-D1 `413baseball-stats` provisioning, the upload password, social posts,
-DiamondKast (never touched), and all football behavior.
+D1 `413baseball-stats` provisioning, social posts, DiamondKast (never
+touched), football cron / score ingest, and box-score upload (separate path;
+see [boxscore handoff](413-BOXSCORE-UPLOAD-HANDOFF.md)).

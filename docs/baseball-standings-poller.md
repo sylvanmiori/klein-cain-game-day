@@ -20,7 +20,13 @@ Standings page <StandingsLive> ──fetches──┘ (falls back to schedule.js
 ```
 
 The Next.js request path never scrapes Perfect Game. The page shows
-"Updated … · Source: Perfect Game" when rendering live data.
+"Updated … · Source: Perfect Game" when rendering live data. Snapshots live in
+**KV only** (not R2). When Perfect Game updates seeds or W-L, the next
+successful poll refreshes the site **without a deploy**.
+
+`<StandingsLive>` is a client fetch: SSR / first paint may briefly show the
+build-time `schedule.json` `pool_standings` fallback until the client hydrates
+from `GET /api/baseball/standings`.
 
 ## Cron schedule
 
@@ -54,6 +60,9 @@ Nothing is ever invented: no seeds, W/L/T, or teams beyond the page.
 
 ## Snapshot schema
 
+Shape only — seed / W-L / T come from Perfect Game on each successful poll
+(never invent; values below are illustrative placeholders, not a locked weekend state):
+
 ```json
 {
   "schemaVersion": 1,
@@ -65,13 +74,13 @@ Nothing is ever invented: no seeds, W/L/T, or teams beyond the page.
       "pool": "Pool A",
       "teams": [
         {
-          "seed": 8,
+          "seed": 11,
           "name": "4:13 Baseball",
           "team_url": "https://www.perfectgame.org/events/Tournaments/Teams/Default.aspx?team=1173262",
           "state": "TX",
-          "pct": 0,
-          "w": 0,
-          "l": 0,
+          "pct": 0.5,
+          "w": 1,
+          "l": 1,
           "t": 0,
           "ra": 0,
           "rs": 0
@@ -79,8 +88,8 @@ Nothing is ever invented: no seeds, W/L/T, or teams beyond the page.
       ]
     }
   ],
-  "team_record": { "pool": "Pool A", "seed": 8, "w": 0, "l": 0, "t": 0, "pct": 0, "ra": 0, "rs": 0 },
-  "scraped_at": "2026-09-26T21:00:00.000Z",
+  "team_record": { "pool": "Pool A", "seed": 11, "w": 1, "l": 1, "t": 0, "pct": 0.5, "ra": 0, "rs": 0 },
+  "scraped_at": "2026-09-27T02:15:00.000Z",
   "source": "Perfect Game"
 }
 ```
@@ -126,7 +135,15 @@ and `source: "Perfect Game"`. Responses:
 table is the **build-time fallback** for `<StandingsLive>` when the KV
 snapshot is absent.
 
+## Weekend ops (standings)
+
+During Sat/Sun pool play the Worker keeps standings fresh on its own. Steven
+does **not** need to babysit scrapes or redeploy for seed / W-L changes on
+`/standings`. Home "This Weekend" game cards are a different path (build-time
+`schedule.json` + deploy) — see [Weekend ops / Sunday readiness](baseball-site.md#weekend-ops--sunday-readiness).
+
 ## Out of scope (unchanged)
 
-D1 `413baseball-stats` provisioning, the upload password, social posts,
-DiamondKast (never touched), and all football behavior.
+D1 `413baseball-stats` provisioning, social posts, DiamondKast (never
+touched), football cron / score ingest, and box-score upload (separate path;
+see [boxscore handoff](413-BOXSCORE-UPLOAD-HANDOFF.md)).

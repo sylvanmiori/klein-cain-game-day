@@ -83,9 +83,11 @@ snapshot under that tournament's `event_id`.
   The roster *table* and pool standings are still captured because they are
   server-rendered on the team page and on the event page's
   `TournamentPoolStandings.aspx` page respectively.
-- **Bracket results/scores** — bracket team boxes render score spans, but
-  the bracket script only extracts matchups/dates/times/fields; final
-  bracket scores are not parsed (the public scoreboard covers game scores).
+- **Invented bracket seeds/scores** — never. The live Worker bracket poller
+  (and one-shot scraper) only store what Perfect Game renders; `Seed #N`
+  placeholders and null scores stay until PG fills them. Pool-play game
+  scores on the public event scoreboard still join into `schedule.json`
+  `result` fields via the Thursday/schedule scraper.
 
 ## Snapshot scheme
 
@@ -107,12 +109,22 @@ latest snapshot.
   commit only when staged content changed, same pattern as the schedule
   file). The site's `components/baseball/data.ts` loader reads
   `schedule.json`; its shape is backward-compatible (fields only added).
-- **Live standings (Worker)**: cron `*/15` polls the same page into KV; see `docs/baseball-standings-poller.md`.
+  **Home "This Weekend" and the Schedule tournament game list are build-time
+  from this file** — a Sunday opponent listed later on PG will not appear as
+  Home cards until `schedule.json` is refreshed and Cloudflare is redeployed
+  (the live bracket API does not feed Home). See
+  [`docs/baseball-site.md` Weekend ops](baseball-site.md#weekend-ops--sunday-readiness).
+- **Live standings + live bracket (Worker)**: cron `*/15` runs
+  `pollBaseballPoolStandings()` and `pollBaseballBracket()` into KV (independent
+  try/catch; last-good only). Site reads `GET /api/baseball/standings` and
+  `GET /api/baseball/bracket`. No deploy when PG updates seeds/scores. Details:
+  `docs/baseball-standings-poller.md`, `docs/baseball-bracket-poller.md`.
 - **Saturday 11pm–Sunday noon CT** (`baseball-bracket.yml`):
   `npm run baseball:bracket` reads `schedule.json` for the weekend
   tournament's `event_id`/`bracket_url`, writes `bracket.json` or
   `bracket-missing.json`, prints `BRACKET_FOUND`, and merges found brackets
-  into the latest snapshot.
+  into the latest snapshot. That committed `bracket.json` is **build-time
+  fallback only**; the live Schedule bracket path is Worker KV.
 - On any core failure the schedule script writes
   `content/baseball/schedule-error.json` and exits non-zero, so the last
   verified schedule is kept; the workflow commits the error file for
