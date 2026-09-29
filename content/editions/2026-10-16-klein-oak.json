@@ -16,14 +16,14 @@
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
     "record": "4–0",
-    "rank": 51
+    "rank": 49
   },
   "away": {
     "name": "Klein Oak",
     "mascot": "Panthers",
     "logo": "/klein-oak-logo.png",
     "record": "1–3",
-    "rank": 66
+    "rank": 59
   },
   "pageTitle": "2026 Week 7 Preview: Klein Oak at Klein Cain",
   "metaTitle": "Week 7 Preview: Klein Oak at Klein Cain | Cain Game Day",
@@ -34,13 +34,13 @@
     "margin": -1,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-28T18:25:38.998Z"
+    "asOf": "2026-09-29T16:47:33.146Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
-    "sourceUrl": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5",
-    "asOf": "2026-09-28T18:25:38.698Z"
+    "sourceUrl": "https://www.texasfootball.com/article/2026/09/29/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-6",
+    "asOf": "2026-09-29T16:47:32.829Z"
   },
   "stats": null,
   "finalScore": null,
@@ -51,7 +51,7 @@
     "method": "Least-squares rating of every Texas result, margins capped at 28",
     "source": "Cain Game Day",
     "sourceUrl": "https://kleincain.gameday.report/",
-    "asOf": "2026-09-28T18:25:38.998Z"
+    "asOf": "2026-09-29T16:47:33.146Z"
   },
   "weather": null,
   "scheduledFacts": [],

@@ -16,14 +16,14 @@
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
     "record": "4–0",
-    "rank": 51
+    "rank": 49
   },
   "away": {
     "name": "Magnolia",
     "mascot": "Bulldogs",
     "logo": "/magnolia-logo.png",
     "record": "1–4",
-    "rank": 76
+    "rank": 75
   },
   "pageTitle": "2026 Week 9 Preview: Magnolia at Klein Cain",
   "metaTitle": "Week 9 Preview: Magnolia at Klein Cain | Cain Game Day",
@@ -34,13 +34,13 @@
     "margin": 7,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
-    "asOf": "2026-09-28T18:25:39.886Z"
+    "asOf": "2026-09-29T16:47:33.962Z"
   },
   "massey": null,
   "rankings": {
     "source": "Dave Campbell’s Texas Football computer rankings",
-    "sourceUrl": "https://www.texasfootball.com/article/2026/09/22/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-5",
-    "asOf": "2026-09-28T18:25:39.802Z"
+    "sourceUrl": "https://www.texasfootball.com/article/2026/09/29/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-6",
+    "asOf": "2026-09-29T16:47:33.867Z"
   },
   "stats": null,
   "finalScore": null,
@@ -51,7 +51,7 @@
     "method": "Least-squares rating of every Texas result, margins capped at 28",
     "source": "Cain Game Day",
     "sourceUrl": "https://kleincain.gameday.report/",
-    "asOf": "2026-09-28T18:25:39.886Z"
+    "asOf": "2026-09-29T16:47:33.962Z"
   },
   "weather": null,
   "scheduledFacts": [],
