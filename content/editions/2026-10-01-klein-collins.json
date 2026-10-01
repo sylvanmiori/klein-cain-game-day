@@ -10,7 +10,7 @@
   "kickoff": "7:00 PM",
   "venue": "Klein Memorial Stadium",
   "event": "",
-  "updated": "Sep 27, 2026",
+  "updated": "Oct 1, 2026",
   "home": {
     "name": "Klein Cain",
     "mascot": "Hurricanes",
@@ -214,6 +214,10 @@
           "value": "Klein Memorial Stadium · Klein, TX"
         },
         {
+          "label": "Watch",
+          "value": "VYPE Thursday Night Showdown on the Space City Home Network alternate channel"
+        },
+        {
           "label": "District",
           "value": "15-6A · first-place showdown"
         },
@@ -250,6 +254,10 @@
         {
           "label": "Texas HS Football: Collins named 6A Team of the Week",
           "href": "https://texashsfootball.com/week-four-6a-team-of-the-week-klein-collins-tigers/"
+        },
+        {
+          "label": "VYPE: Thursday Night Showdown on Space City Home Network",
+          "href": "https://www.instagram.com/p/Dd7Z8A0RnmJ/"
         }
       ]
     },
@@ -313,6 +321,10 @@
     {
       "label": "SportCast Media: Klein holds off Magnolia, 28-21 (Sep 27, 2026)",
       "href": "https://sportcastmedia.com/magnolia-a-touchdown-short-consecutive-weeks-as-klein-takes-win/"
+    },
+    {
+      "label": "VYPE Houston: Thursday Night Showdown Week 6 (Space City Home Network alternate channel)",
+      "href": "https://www.instagram.com/p/Dd7Z8A0RnmJ/"
     }
   ],
   "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
