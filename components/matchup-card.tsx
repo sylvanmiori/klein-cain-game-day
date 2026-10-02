@@ -5,7 +5,7 @@ type Side = Team & { score?: number | null };
 
 type Props = {
   /** Drives the card styling and whether records or scores are shown. */
-  status: 'scheduled' | 'live' | 'final';
+  status: 'scheduled' | 'live' | 'final' | 'postponed';
   statusLabel: string;
   /** Right-hand slot in the status bar: a date, or the live refresh button. */
   statusDetail?: React.ReactNode;

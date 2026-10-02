@@ -17,6 +17,17 @@ void test('Central game windows include after midnight and handle November stand
   assert.equal(activeGame([november], new Date('2026-11-07T00:30:00Z')), november);
 });
 
+void test('resume window wakes the poller for a postponed game outside evening hours', () => {
+  const postponed = { ...game, date: '2026-10-01', resume: { date: '2026-10-03', startHour: 9, endHour: 14 } };
+  // Sat 2026-10-03 10:00 AM CT = 15:00 UTC (CDT)
+  assert.equal(activeGame([postponed], new Date('2026-10-03T15:00:00Z')), postponed);
+  // Before the window (8:59 AM CT) and after it (2:00 PM CT): no game
+  assert.equal(activeGame([postponed], new Date('2026-10-03T13:59:00Z')), null);
+  assert.equal(activeGame([postponed], new Date('2026-10-03T19:00:00Z')), null);
+  // A game without a resume entry still sleeps through Saturday morning
+  assert.equal(activeGame([game], new Date('2026-10-03T15:00:00Z')), null);
+});
+
 void test('home and away scores follow venue, including road games', () => {
   const home = parseScore(payload(), game, 'Klein Cain');
   const away = parseScore(payload(), { ...game, home: false }, 'Klein Cain');

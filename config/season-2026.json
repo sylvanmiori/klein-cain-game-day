@@ -40,7 +40,13 @@
     "location": "Klein, TX",
     "home": true,
     "kickoff": "7:00 PM",
-    "dctfGameId": "6b04e04c-5ccc-4bff-84d3-e2ff2c79b767"
+    "dctfGameId": "6b04e04c-5ccc-4bff-84d3-e2ff2c79b767",
+    "resume": {
+      "date": "2026-10-03",
+      "startHour": 9,
+      "endHour": 14,
+      "note": "Week 5 resumed Sat 10:00 AM CT after 2026-10-01 weather postponement"
+    }
   },
   {
     "date": "2026-10-08",

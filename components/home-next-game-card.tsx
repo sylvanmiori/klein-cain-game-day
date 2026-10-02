@@ -114,7 +114,7 @@ export function HomeNextGameCard({
     window.dispatchEvent(new CustomEvent('cain-score-status', { detail: score.status }));
   }, [score.status]);
 
-  const statusLine = score.status === 'live'
+  const statusLine = score.status === 'live' || score.status === 'postponed'
     ? score.statusLabel
     : score.status === 'final'
       ? 'Final'

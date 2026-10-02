@@ -7,7 +7,7 @@ import type { Fact, Team } from '../lib/edition';
 export type LiveScore = {
   schemaVersion: number;
   slug: string;
-  status: 'scheduled' | 'live' | 'final';
+  status: 'scheduled' | 'live' | 'final' | 'postponed';
   statusLabel: string;
   homeScore: number | null;
   awayScore: number | null;

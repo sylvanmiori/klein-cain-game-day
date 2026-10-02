@@ -1,14 +1,19 @@
 #!/usr/bin/env node
 // Push a manual score update to the live-data branch.
-// The Cloudflare score ingest reads live-data/manual-<slug>.json as a fallback
-// when the upstream (Dave Campbell's) feed fails, and picks it up on its next
-// tick if its updatedAt is newer than the last good score.
+// The Cloudflare score ingest treats live-data/manual-<slug>.json as an
+// editor override: a fresh file wins over the upstream (Dave Campbell's) feed
+// even when the feed is healthy, and is picked up on the next tick. Use it
+// when the feed is wrong — e.g. DCTF marked the postponed Week 5 game "final"
+// on 2026-10-01. Delete the file when the override is no longer needed;
+// files older than 7 days are ignored as a safety net.
 //
 // Usage:
 //   node scripts/push-manual-score.mjs --slug 2026-10-01-klein-collins \
 //     --status live --home 7 --away 0 --label "2nd Quarter"
 //   node scripts/push-manual-score.mjs --slug 2026-10-01-klein-collins \
 //     --status final --home 28 --away 21 --label "Final"
+//   node scripts/push-manual-score.mjs --slug 2026-10-01-klein-collins \
+//     --status postponed --home 14 --away 7 --label "Postponed · Resumes Sat 10 AM"
 //
 // Requires the github skill's ghapi.py for authenticated GitHub API access.
 
@@ -35,10 +40,10 @@ const slug = arg('slug');
 const status = arg('status');
 const home = Number(arg('home'));
 const away = Number(arg('away'));
-const label = arg('label', status === 'final' ? 'Final' : 'Live');
+const label = arg('label', status === 'final' ? 'Final' : status === 'postponed' ? 'Postponed' : 'Live');
 
-if (!slug || !['live', 'final'].includes(status) || !Number.isInteger(home) || !Number.isInteger(away)) {
-  console.error('Usage: push-manual-score.mjs --slug <slug> --status live|final --home <n> --away <n> [--label <text>]');
+if (!slug || !['live', 'final', 'postponed'].includes(status) || !Number.isInteger(home) || !Number.isInteger(away)) {
+  console.error('Usage: push-manual-score.mjs --slug <slug> --status live|final|postponed --home <n> --away <n> [--label <text>]');
   process.exit(1);
 }
 

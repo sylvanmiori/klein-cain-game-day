@@ -8,8 +8,19 @@ export function activeGame(schedule, now = new Date()) {
     hour: '2-digit', hourCycle: 'h23',
   }).formatToParts(now).map(({ type, value }) => [type, value]));
   const hour = Number(parts.hour);
+  const today = `${parts.year}-${parts.month}-${parts.day}`;
+  // Resume window: a postponed game can resume on a later date, outside the
+  // normal evening window. An optional `resume: { date, startHour, endHour }`
+  // on the schedule entry keeps the poller awake for it (Week 5 resumed Sat
+  // 2026-10-03 10:00 AM CT after the 2026-10-01 weather postponement).
+  for (const game of schedule) {
+    const r = game?.resume;
+    if (r && r.date === today
+      && Number.isFinite(Number(r.startHour)) && Number.isFinite(Number(r.endHour))
+      && hour >= Number(r.startHour) && hour < Number(r.endHour)) return game;
+  }
   if (hour >= 2 && hour < 18) return null;
-  const date = new Date(`${parts.year}-${parts.month}-${parts.day}T12:00:00Z`);
+  const date = new Date(`${today}T12:00:00Z`);
   if (hour < 2) date.setUTCDate(date.getUTCDate() - 1);
   return schedule.find(game => game.date === date.toISOString().slice(0, 10)) || null;
 }

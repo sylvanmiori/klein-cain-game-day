@@ -22,6 +22,8 @@ const keyFor = slug => `${publication.schoolId}:${slug}`;
 const metaKeyFor = slug => `${publication.schoolId}:${slug}:ingest`;
 /** A live score with no successful ingest for this long is reported as stale. */
 const STALE_AFTER_MS = 10 * 60 * 1000;
+/** Safety net: a manual override file older than this is ignored (editor forgot to delete it). */
+const MANUAL_OVERRIDE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 /** Hostname of the 4:13 Baseball subsite (15U travel baseball, Spring TX). */
 const BASEBALL_HOSTNAME = '413baseball.gameday.report';
 /** Workers AI vision model used to transcribe box-score screenshots. */
@@ -36,8 +38,11 @@ async function readScore(env, slug) {
 }
 
 /**
- * Manual score fallback, maintained by the editor on the live-data branch when
- * the upstream feed is down (e.g. the provider moved or locked their API).
+ * Manual score override, maintained by the editor on the live-data branch.
+ * A fresh file wins over the upstream feed even when the feed is healthy —
+ * the feed can be wrong (DCTF marked the postponed Week 5 game "final" on
+ * 2026-10-01). Delete the file when the override is no longer needed; files
+ * older than MANUAL_OVERRIDE_MAX_AGE_MS are ignored as a safety net.
  * Strictly validated and never throws; returns null when there is nothing
  * usable. The file lives at live-data/manual-<slug>.json.
  */
@@ -71,7 +76,7 @@ async function readManualScore(slug) {
   }
   if (!data) return null;
   if (!data || data.schemaVersion !== 1 || data.slug !== slug) return null;
-  if (!['live', 'final'].includes(data.status)) return null;
+  if (!['live', 'final', 'postponed'].includes(data.status)) return null;
   const numeric = (n) => Number.isInteger(n) && n >= 0 && n <= 200;
   if (!numeric(data.homeScore) || !numeric(data.awayScore)) return null;
   if (!data.updatedAt || !Date.parse(data.updatedAt)) return null;
@@ -81,7 +86,7 @@ async function readManualScore(slug) {
     status: data.status,
     statusLabel: typeof data.statusLabel === 'string' && data.statusLabel
       ? data.statusLabel
-      : (data.status === 'final' ? 'Final' : 'Live'),
+      : (data.status === 'final' ? 'Final' : data.status === 'postponed' ? 'Postponed' : 'Live'),
     homeScore: data.homeScore,
     awayScore: data.awayScore,
     homeRecord: typeof data.homeRecord === 'string' ? data.homeRecord : '',
@@ -1391,6 +1396,20 @@ const worker = {
     if (!game) return;
     const slug = gameSlug(game);
     const previous = await readScore(env, slug);
+    // Editor override: a fresh manual file on the live-data branch wins over
+    // the upstream feed even when the feed is healthy. The old
+    // fallback-only-when-upstream-fails logic let a wrong-but-healthy feed
+    // (DCTF marked postponed Week 5 "final") lock in and stick.
+    try {
+      const manual = await readManualScore(slug);
+      if (manual && Date.now() - Date.parse(manual.updatedAt) < MANUAL_OVERRIDE_MAX_AGE_MS) {
+        await env.SCORES.put(keyFor(slug), JSON.stringify(manual));
+        await recordIngestAttempt(env, slug, true, manual.updatedAt);
+        return;
+      }
+    } catch {
+      // Fall through to the normal ingest path.
+    }
     if (previous?.status === 'final' || previous?.manualUntil > Date.now()) return;
     // A failed attempt keeps the previous (last good) value in KV, records the
     // failure for watchers, and rethrows so the invocation still shows as
