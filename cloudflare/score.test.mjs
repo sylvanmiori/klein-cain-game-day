@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import snapshot from '../public/live-score.json' with { type: 'json' };
 import { activeGame, parseScore, stripHeavyScoreFields, extractSchoolGames, fetchGameScore, MAX_SCORE_PAYLOAD_BYTES } from './score.mjs';
-import worker, { scoreIsStale } from './worker.mjs';
+import worker, { scoreIsStale, shouldApplyManual } from './worker.mjs';
 
 const game = { date: '2026-09-04', opponent: 'Oak Ridge', home: true, kickoff: '7:00 PM' };
 const payload = (status = 'Final', score = 45, opponentScore = 20) => ({
@@ -288,6 +288,64 @@ void test('oversized source payloads are rejected before parsing', async () => {
   }
 });
 
+void test('shouldApplyManual promotes newer or stale-mismatched manual scores', () => {
+  const kv = {
+    status: 'live', homeScore: 0, awayScore: 0,
+    updatedAt: new Date(Date.now() - 20 * 60 * 1000).toISOString(),
+  };
+  const manual = {
+    status: 'live', homeScore: 14, awayScore: 7,
+    updatedAt: kv.updatedAt,
+  };
+  assert.equal(shouldApplyManual(kv, manual), true);
+  const newer = { ...manual, updatedAt: new Date().toISOString() };
+  assert.equal(shouldApplyManual(kv, newer), true);
+  assert.equal(shouldApplyManual(kv, { ...manual, homeScore: 0, awayScore: 0 }), false);
+});
+
+void test('/api/score syncs KV from the manual file when the stored score is stale', async () => {
+  const stale = {
+    schemaVersion: 1, slug: '2026-10-01-klein-collins', status: 'live', statusLabel: 'Back underway',
+    homeScore: 0, awayScore: 0, homeRecord: '', awayRecord: '',
+    updatedAt: new Date(Date.now() - 20 * 60 * 1000).toISOString(),
+    source: 'Manual update', sourceUrl: 'https://kleincain.gameday.report/',
+  };
+  const manual = {
+    schemaVersion: 1, slug: '2026-10-01-klein-collins', status: 'live', statusLabel: '1st · 2:04',
+    homeScore: 14, awayScore: 7, homeRecord: '', awayRecord: '',
+    updatedAt: new Date().toISOString(), source: 'Manual update',
+    sourceUrl: 'https://kleincain.gameday.report/',
+  };
+  const puts = {};
+  const env = {
+    SCORES: {
+      get: async (key) => (key.endsWith(':ingest') ? null : stale),
+      put: async (key, value) => { puts[key] = value; },
+    },
+  };
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    if (String(url).includes('manual-2026-10-01-klein-collins.json')) {
+      return new Response(JSON.stringify(manual), { status: 200 });
+    }
+    throw new Error(`unexpected fetch ${url}`);
+  };
+  try {
+    const res = await worker.fetch(
+      new Request('https://kleincain.gameday.report/api/score?game=2026-10-01-klein-collins'),
+      env,
+    );
+    const body = await res.json();
+    assert.equal(body.homeScore, 14);
+    assert.equal(body.awayScore, 7);
+    assert.equal(body.statusLabel, '1st · 2:04');
+    assert.equal(body.stale, false);
+    assert.ok(puts['kleincain:2026-10-01-klein-collins']);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 void test('scoreIsStale flags only aging live scores', () => {
   const live = { status: 'live', updatedAt: new Date(Date.now() - 20 * 60 * 1000).toISOString() };
   const fresh = { status: 'live', updatedAt: new Date().toISOString() };
@@ -315,8 +373,19 @@ void test('/api/score exposes staleness and /api/score/health exposes ingest tel
       put: async () => {},
     },
   };
-  const scoreRes = await worker.fetch(new Request(`https://kleincain.gameday.report/api/score?game=${snapshot.slug}`), env);
-  const body = await scoreRes.json();
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url, init) => {
+    if (String(url).includes('manual-')) return new Response('not found', { status: 404 });
+    return originalFetch(url, init);
+  };
+  let scoreRes;
+  let body;
+  try {
+    scoreRes = await worker.fetch(new Request(`https://kleincain.gameday.report/api/score?game=${snapshot.slug}`), env);
+    body = await scoreRes.json();
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
   assert.equal(body.stale, true);
   assert.equal(body.asOf, staleScore.updatedAt);
   assert.equal(body.awayScore, 58);
