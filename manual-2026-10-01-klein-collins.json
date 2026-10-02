@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "slug": "2026-10-01-klein-collins",
-  "status": "final",
-  "statusLabel": "Final",
+  "status": "live",
+  "statusLabel": "Resumes Sat 10am",
   "homeScore": 14,
   "awayScore": 7,
   "homeRecord": "",
   "awayRecord": "",
-  "updatedAt": "2026-10-02T03:43:44.000Z",
-  "source": "Dave Campbell’s Texas Football",
-  "sourceUrl": "https://www.davecampbells.com/game/6b04e04c-5ccc-4bff-84d3-e2ff2c79b767"
+  "updatedAt": "2026-10-02T03:53:30.215Z",
+  "source": "Manual update",
+  "sourceUrl": "https://kleincain.gameday.report/"
 }
