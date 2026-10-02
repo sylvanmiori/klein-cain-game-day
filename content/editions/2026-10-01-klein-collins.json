@@ -6,7 +6,7 @@
   "state": "preview",
   "alert": {
     "title": "Weather delay",
-    "body": "Second lightning delay called at 7:34 PM. No update from officials yet as of 8:07 PM."
+    "body": "Delay is now indefinite as of 8:12 PM. No word from officials on a restart time."
   },
   "date": "2026-10-01",
   "dateLong": "October 1, 2026",
@@ -235,7 +235,7 @@
         },
         {
           "label": "Conditions",
-          "value": "WEATHER DELAY: second delay called 7:34 PM. No update from officials as of 8:07 PM."
+          "value": "WEATHER DELAY: now indefinite as of 8:12 PM. No word from officials on a restart time."
         },
         {
           "label": "Cain at home",
