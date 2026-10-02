@@ -42,8 +42,12 @@ async function readScore(env, slug) {
  * usable. The file lives at live-data/manual-<slug>.json.
  */
 async function readManualScore(slug) {
+  // Cache-busting query param: raw.githubusercontent.com caches branch files
+  // for ~5 minutes on its own CDN, which delayed manual updates (seen 2026-10-01
+  // when "Back underway" sat unpublished for several ticks). The query string
+  // is part of the CDN cache key, so each tick fetches fresh.
   const res = await fetch(
-    `https://raw.githubusercontent.com/sylvanmiori/klein-cain-game-day/live-data/manual-${slug}.json`,
+    `https://raw.githubusercontent.com/sylvanmiori/klein-cain-game-day/live-data/manual-${slug}.json?t=${Date.now()}`,
     { cf: { cacheTtl: 60 } },
   );
   if (!res.ok) return null;
