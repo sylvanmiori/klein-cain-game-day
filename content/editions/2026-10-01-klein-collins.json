@@ -5,8 +5,8 @@
   "issue": "04",
   "state": "preview",
   "alert": {
-    "title": "Game postponed",
-    "body": "Tonight's game is postponed due to weather. Cain led 14-7 in the 2nd. Unofficial word is they'll try to finish Saturday."
+    "title": "Game resumes Saturday",
+    "body": "Official: play resumes Saturday at 10 AM. Cain leads Collins 14-7 in the 2nd."
   },
   "date": "2026-10-01",
   "dateLong": "October 1, 2026",
@@ -235,7 +235,7 @@
         },
         {
           "label": "Conditions",
-          "value": "POSTPONED: weather. Cain led 14-7 in the 2nd. May resume Saturday (unconfirmed)."
+          "value": "OFFICIAL: resumes Saturday 10 AM. Cain leads 14-7 in the 2nd."
         },
         {
           "label": "Cain at home",
