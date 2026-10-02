@@ -45,7 +45,8 @@
       "date": "2026-10-03",
       "startHour": 9,
       "endHour": 14,
-      "note": "Week 5 resumed Sat 10:00 AM CT after 2026-10-01 weather postponement"
+      "note": "Week 5 resumed Sat 10:00 AM CT after 2026-10-01 weather postponement",
+      "kickoff": "10:00 AM"
     }
   },
   {

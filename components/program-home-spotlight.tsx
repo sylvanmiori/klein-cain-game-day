@@ -1,4 +1,5 @@
 import publication from '../config/publication.json';
+import schedule from '../config/season-2026.json';
 import liveScore from '../public/live-score.json';
 import { HomeNextGameCard } from './home-next-game-card';
 import { type LiveScore } from './live-score-card';
@@ -46,6 +47,11 @@ export function ProgramHomeSpotlight({
   const featuredIsFinal = Boolean(featured.finalScore || featured.final);
   const showPreview = hasPreviewContent(featured) && !featured.finalScore;
   const heroImageSrc = sitePath(publication.heroNextGameImage ?? '/hero-next-game.jpg');
+  const scheduleGame = schedule.find((game) => game.date === featured.date) as
+    | { resume?: { date?: string; kickoff?: string } }
+    | undefined;
+  const resumeDate = scheduleGame?.resume?.date ?? null;
+  const resumeKickoff = scheduleGame?.resume?.kickoff ?? null;
 
   return (
     <div className="home-stack">
@@ -63,6 +69,8 @@ export function ProgramHomeSpotlight({
           previewHref={previewHref}
           showPreview={showPreview}
           heroImageSrc={heroImageSrc}
+          resumeDate={resumeDate}
+          resumeKickoff={resumeKickoff}
         />
       )}
 

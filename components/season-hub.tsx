@@ -94,7 +94,14 @@ export function SeasonHub({ activeDate }: { activeDate: string }) {
                 <b className={outcomeClass(resultFor(game.date))}>
                   {(() => {
                     const result = resultFor(game.date);
-                    return result ? resultLabel(result) : game.kickoff;
+                    if (result) return resultLabel(result);
+                    const resume = (game as { resume?: { date?: string; kickoff?: string } }).resume;
+                    if (resume?.date) {
+                      const day = weekday(resume.date);
+                      const time = resume.kickoff || '10:00 AM';
+                      return `PPD · ${day} ${time}`;
+                    }
+                    return game.kickoff;
                   })()}
                 </b>
               </>

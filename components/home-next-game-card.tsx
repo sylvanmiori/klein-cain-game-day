@@ -18,6 +18,10 @@ type Props = {
   previewHref: string;
   showPreview: boolean;
   heroImageSrc: string;
+  /** When set, a postponed card shows the resume date instead of the original kickoff date. */
+  resumeDate?: string | null;
+  /** Resume kickoff clock, e.g. "10:00 AM". */
+  resumeKickoff?: string | null;
 };
 
 const liveDataUrl = 'https://raw.githubusercontent.com/sylvanmiori/klein-cain-game-day/live-data/live-score.json';
@@ -65,6 +69,8 @@ export function HomeNextGameCard({
   previewHref,
   showPreview,
   heroImageSrc,
+  resumeDate = null,
+  resumeKickoff = null,
 }: Props) {
   const [score, setScore] = useState(initialScore);
   const [refreshing, setRefreshing] = useState(false);
@@ -74,6 +80,11 @@ export function HomeNextGameCard({
   const featuredScore = home.name === featuredName ? score.homeScore : score.awayScore;
   const opponentScore = home.name === featuredName ? score.awayScore : score.homeScore;
   const isScheduled = score.status === 'scheduled';
+  const isPostponed = score.status === 'postponed';
+  const cardDate = isPostponed && resumeDate ? resumeDate : editionDate;
+  const cardKickoff = isPostponed
+    ? (resumeKickoff || score.statusLabel || kickoff)
+    : kickoff;
   const rank = factValue(scheduledFacts, 'Texas rank');
   const lastMeeting = factValue(scheduledFacts, 'Last meeting');
 
@@ -146,11 +157,11 @@ export function HomeNextGameCard({
           <ul className="home-next-game-details">
             <li>
               <IconCalendar />
-              {gameDayLong(editionDate, publication.timezone)}
+              {gameDayLong(cardDate, publication.timezone)}
             </li>
             <li>
               <IconClock />
-              {kickoff}
+              {cardKickoff}
             </li>
             <li>
               <IconPin />
@@ -161,7 +172,7 @@ export function HomeNextGameCard({
             <p className="home-next-game-status">
               {score.status === 'live' && <span className="live-dot" aria-hidden="true" />}
               <strong>{statusLine}</strong>
-              <span>{gameDayShort(editionDate, publication.timezone)}</span>
+              <span>{gameDayShort(cardDate, publication.timezone)}</span>
               <button type="button" onClick={() => void refresh()} disabled={refreshing}>
                 {refreshing ? 'Checking…' : 'Refresh'}
               </button>
