@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "slug": "2026-10-01-klein-collins",
   "status": "live",
-  "statusLabel": "1st · 2:04",
-  "homeScore": 14,
-  "awayScore": 7,
+  "statusLabel": "Weather delay",
+  "homeScore": 0,
+  "awayScore": 0,
   "homeRecord": "",
   "awayRecord": "",
-  "updatedAt": "2026-10-02T02:11:00.806Z",
+  "updatedAt": "2026-10-02T02:13:36.440Z",
   "source": "Manual update",
   "sourceUrl": "https://kleincain.gameday.report/"
 }
