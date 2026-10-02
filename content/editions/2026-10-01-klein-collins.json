@@ -5,8 +5,8 @@
   "issue": "04",
   "state": "preview",
   "alert": {
-    "title": "Weather delay",
-    "body": "Delay called at 9:12 PM. Cain leads Collins 14-7 in the 2nd."
+    "title": "Game postponed",
+    "body": "Tonight's game is postponed due to weather. Cain led 14-7 in the 2nd. Unofficial word is they'll try to finish Saturday."
   },
   "date": "2026-10-01",
   "dateLong": "October 1, 2026",
@@ -235,7 +235,7 @@
         },
         {
           "label": "Conditions",
-          "value": "WEATHER DELAY called 9:12 PM. Cain leads 14-7 in the 2nd."
+          "value": "POSTPONED: weather. Cain led 14-7 in the 2nd. May resume Saturday (unconfirmed)."
         },
         {
           "label": "Cain at home",
