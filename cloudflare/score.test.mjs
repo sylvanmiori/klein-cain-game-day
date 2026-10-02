@@ -435,3 +435,79 @@ void test('steady-state successes heartbeat instead of writing KV every minute',
   }
   assert.equal(puts, 0, 'a healthy steady state should not write ingest KV every minute');
 });
+
+void test('a failed upstream falls back to the manual score file when it is newer', async () => {
+  const puts = {};
+  const previous = {
+    schemaVersion: 1, slug: '2026-10-01-klein-collins', status: 'scheduled', statusLabel: '7:00 PM',
+    homeScore: null, awayScore: null, homeRecord: '4-0', awayRecord: '4-1',
+    updatedAt: '2026-09-28T18:25:33.813Z',
+    source: 'Dave Campbell’s Texas Football', sourceUrl: 'https://www.texasfootball.com/scores/',
+  };
+  const manual = {
+    schemaVersion: 1, slug: '2026-10-01-klein-collins', status: 'live', statusLabel: '1st Quarter',
+    homeScore: 7, awayScore: 0, homeRecord: '4-0', awayRecord: '4-1',
+    updatedAt: new Date().toISOString(), source: 'Manual update',
+  };
+  const env = {
+    SCORES: {
+      get: async (key) => (key.endsWith(':ingest') ? null : previous),
+      put: async (key, value) => { puts[key] = value; },
+    },
+  };
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    if (String(url).includes('manual-2026-10-01-klein-collins.json')) {
+      return new Response(JSON.stringify(manual), { status: 200 });
+    }
+    throw new Error('upstream down');
+  };
+  try {
+    // 2026-10-02T00:30:00Z is 7:30 PM CDT on Oct 1, inside the Collins window.
+    await worker.scheduled({ scheduledTime: Date.parse('2026-10-02T00:30:00Z') }, env);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+  const scoreKey = Object.keys(puts).find((k) => !k.endsWith(':ingest'));
+  assert.ok(scoreKey, 'manual score should be stored');
+  const stored = JSON.parse(puts[scoreKey]);
+  assert.equal(stored.homeScore, 7);
+  assert.equal(stored.awayScore, 0);
+  assert.equal(stored.status, 'live');
+  assert.equal(stored.source, 'Manual update');
+  const ingest = JSON.parse(puts[Object.keys(puts).find((k) => k.endsWith(':ingest'))]);
+  assert.equal(ingest.consecutiveFailures, 0);
+});
+
+void test('an invalid manual score file is ignored and the failure is recorded', async () => {
+  const puts = {};
+  const previous = {
+    schemaVersion: 1, slug: '2026-10-01-klein-collins', status: 'scheduled', statusLabel: '7:00 PM',
+    homeScore: null, awayScore: null, homeRecord: '4-0', awayRecord: '4-1',
+    updatedAt: '2026-09-28T18:25:33.813Z',
+    source: 'Dave Campbell’s Texas Football', sourceUrl: 'https://www.texasfootball.com/scores/',
+  };
+  const env = {
+    SCORES: {
+      get: async (key) => (key.endsWith(':ingest') ? null : previous),
+      put: async (key, value) => { puts[key] = value; },
+    },
+  };
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    if (String(url).includes('manual-2026-10-01-klein-collins.json')) {
+      return new Response(JSON.stringify({ slug: 'wrong-slug', status: 'live' }), { status: 200 });
+    }
+    throw new Error('upstream down');
+  };
+  try {
+    await assert.rejects(
+      worker.scheduled({ scheduledTime: Date.parse('2026-10-02T00:30:00Z') }, env),
+      /upstream down/,
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+  const scoreKeys = Object.keys(puts).filter((k) => !k.endsWith(':ingest'));
+  assert.deepEqual(scoreKeys, [], 'an invalid manual file must not overwrite the score');
+});

@@ -35,6 +35,41 @@ async function readScore(env, slug) {
   return saved || (snapshot.slug === slug ? snapshot : null);
 }
 
+/**
+ * Manual score fallback, maintained by the editor on the live-data branch when
+ * the upstream feed is down (e.g. the provider moved or locked their API).
+ * Strictly validated and never throws; returns null when there is nothing
+ * usable. The file lives at live-data/manual-<slug>.json.
+ */
+async function readManualScore(slug) {
+  const res = await fetch(
+    `https://raw.githubusercontent.com/sylvanmiori/klein-cain-game-day/live-data/manual-${slug}.json`,
+    { cf: { cacheTtl: 60 } },
+  );
+  if (!res.ok) return null;
+  const data = await res.json();
+  if (!data || data.schemaVersion !== 1 || data.slug !== slug) return null;
+  if (!['live', 'final'].includes(data.status)) return null;
+  const numeric = (n) => Number.isInteger(n) && n >= 0 && n <= 200;
+  if (!numeric(data.homeScore) || !numeric(data.awayScore)) return null;
+  if (!data.updatedAt || !Date.parse(data.updatedAt)) return null;
+  return {
+    schemaVersion: 1,
+    slug,
+    status: data.status,
+    statusLabel: typeof data.statusLabel === 'string' && data.statusLabel
+      ? data.statusLabel
+      : (data.status === 'final' ? 'Final' : 'Live'),
+    homeScore: data.homeScore,
+    awayScore: data.awayScore,
+    homeRecord: typeof data.homeRecord === 'string' ? data.homeRecord : '',
+    awayRecord: typeof data.awayRecord === 'string' ? data.awayRecord : '',
+    updatedAt: data.updatedAt,
+    source: typeof data.source === 'string' && data.source ? data.source : 'Manual update',
+    sourceUrl: typeof data.sourceUrl === 'string' && data.sourceUrl ? data.sourceUrl : 'https://kleincain.gameday.report/',
+  };
+}
+
 export function scoreIsStale(score, now = Date.now()) {
   if (!score || score.status !== 'live') return false;
   const updated = Date.parse(score.updatedAt);
@@ -1343,6 +1378,21 @@ const worker = {
       await env.SCORES.put(keyFor(slug), JSON.stringify(score));
       await recordIngestAttempt(env, slug, true, score.updatedAt);
     } catch (err) {
+      // The upstream feed is down (or moved). Fall back to a manually
+      // maintained score file on the live-data branch, if it is newer than
+      // the last good score. DCTF is still tried first on every tick, so a
+      // recovered feed takes over again automatically.
+      try {
+        const manual = await readManualScore(slug);
+        const prevUpdated = Date.parse(previous?.updatedAt || 0);
+        if (manual && Date.parse(manual.updatedAt) > prevUpdated) {
+          await env.SCORES.put(keyFor(slug), JSON.stringify(manual));
+          await recordIngestAttempt(env, slug, true, manual.updatedAt);
+          return;
+        }
+      } catch {
+        // Fall through to failure recording below.
+      }
       await recordIngestAttempt(env, slug, false, err instanceof Error ? err.message : err);
       throw err;
     }
