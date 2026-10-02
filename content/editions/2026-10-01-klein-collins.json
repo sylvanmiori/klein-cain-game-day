@@ -6,7 +6,7 @@
   "state": "preview",
   "alert": {
     "title": "Weather delay",
-    "body": "Lightning again at Klein Memorial Stadium. Second delay called at 7:34 PM, estimated 30 minutes."
+    "body": "Second lightning delay called at 7:34 PM. No update from officials yet as of 8:07 PM."
   },
   "date": "2026-10-01",
   "dateLong": "October 1, 2026",
@@ -235,7 +235,7 @@
         },
         {
           "label": "Conditions",
-          "value": "WEATHER DELAY: second lightning delay called at 7:34 PM, estimated 30 minutes."
+          "value": "WEATHER DELAY: second delay called 7:34 PM. No update from officials as of 8:07 PM."
         },
         {
           "label": "Cain at home",
