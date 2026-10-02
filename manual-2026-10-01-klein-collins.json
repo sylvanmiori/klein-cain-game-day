@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "slug": "2026-10-01-klein-collins",
   "status": "live",
-  "statusLabel": "2nd Quarter",
+  "statusLabel": "Weather delay",
   "homeScore": 14,
   "awayScore": 7,
-  "homeRecord": "",
-  "awayRecord": "",
-  "updatedAt": "2026-10-02T02:21:56.000Z",
+  "homeRecord": "4-0",
+  "awayRecord": "4-1",
+  "updatedAt": "2026-10-02T02:22:59.000Z",
   "source": "Manual update",
-  "sourceUrl": "https://www.davecampbells.com/high-school-football/scores?gameQuery=Klein+Cain"
+  "sourceUrl": "https://www.davecampbells.com/api/public/games/6b04e04c-5ccc-4bff-84d3-e2ff2c79b767"
 }
