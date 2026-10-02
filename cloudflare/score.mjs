@@ -221,8 +221,14 @@ export async function fetchGameScore(game, schoolName, previous) {
         },
         body: JSON.stringify({ gameDate: `${month}/${day}/${year}`, schTypeTagId: 1, classConfTagId: -1, statusId: -1 }),
         signal: AbortSignal.timeout(15000),
-        redirect: 'error',
+        // Workers edge only allows redirect "follow" | "manual" ("error" throws
+        // before fetch and skipped the manual live-data fallback on 2026-10-01).
+        redirect: 'manual',
       });
+      if (response.type === 'opaqueredirect' || (response.status >= 300 && response.status < 400)) {
+        lastErr = new Error(`Score source redirected (${response.status}) at ${endpoint}`);
+        continue;
+      }
       if (!response.ok) {
         lastErr = new Error(`Score source HTTP ${response.status} at ${endpoint}`);
         continue;
