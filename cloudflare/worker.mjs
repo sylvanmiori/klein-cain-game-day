@@ -42,21 +42,29 @@ async function readScore(env, slug) {
  * usable. The file lives at live-data/manual-<slug>.json.
  */
 async function readManualScore(slug) {
-  // Prefer jsDelivr over raw.githubusercontent.com: GitHub's raw CDN ignores
-  // query strings and can serve a stale branch tip for minutes (seen 2026-10-01
-  // when a fresh 14-7 manual file stayed invisible behind a cached 0-0).
-  // jsDelivr tracks the branch tip and returned the new file immediately.
+  // Fetch every mirror and keep the newest updatedAt. jsDelivr is usually
+  // fresher than raw.githubusercontent.com, but a purge can leave it empty
+  // (HTTP 200 / 1-byte) and GitHub raw can lag — first-success break then
+  // left KV stuck behind a stale tip on 2026-10-01.
   const urls = [
     `https://cdn.jsdelivr.net/gh/sylvanmiori/klein-cain-game-day@live-data/manual-${slug}.json?t=${Date.now()}`,
     `https://raw.githubusercontent.com/sylvanmiori/klein-cain-game-day/live-data/manual-${slug}.json?t=${Date.now()}`,
   ];
   let data = null;
+  let bestTs = -1;
   for (const url of urls) {
     try {
       const res = await fetch(url, { cf: { cacheTtl: 0 } });
       if (!res.ok) continue;
-      data = await res.json();
-      break;
+      const text = await res.text();
+      if (!text || text.trim().length < 2 || text.trimStart().startsWith('<')) continue;
+      const candidate = JSON.parse(text);
+      const ts = Date.parse(candidate?.updatedAt || 0);
+      if (!Number.isFinite(ts)) continue;
+      if (ts >= bestTs) {
+        bestTs = ts;
+        data = candidate;
+      }
     } catch {
       // Try the next mirror.
     }
