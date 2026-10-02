@@ -58,14 +58,14 @@
     "asOf": "2026-09-30T12:42:20.997Z"
   },
   "weather": {
-    "tempF": 86,
+    "tempF": 84,
     "condition": "Chance Showers And Thunderstorms",
     "precipPct": 39,
-    "humidityPct": 72,
+    "humidityPct": 80,
     "wind": "10 mph SE",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-10-01T12:13:20.103Z"
+    "asOf": "2026-10-02T00:25:11.464Z"
   },
   "scheduledFacts": [],
   "resultFacts": [],
