@@ -33,7 +33,7 @@ if (manual) {
   sourceUrl = 'https://github.com/sylvanmiori/klein-cain-game-day/actions';
 } else {
   const [year, month, day] = gameDate.split('-');
-  const response = await fetch('https://www.texasfootball.com/api/schools/scoresGetJson', {
+  const response = await fetch('https://www.davecampbells.com/api/schools/scoresGetJson', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({

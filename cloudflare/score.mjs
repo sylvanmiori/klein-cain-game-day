@@ -192,7 +192,7 @@ export function parseScore(payload, game, schoolName, previous, now = new Date()
     homeRecord: sameGame ? previous.homeRecord : '',
     awayRecord: sameGame ? previous.awayRecord : '',
     updatedAt: now.toISOString(),
-    source: 'Dave Campbell’s Texas Football', sourceUrl: 'https://www.texasfootball.com/scores/',
+    source: 'Dave Campbell’s Texas Football', sourceUrl: 'https://www.davecampbells.com/',
   };
 }
 
@@ -201,13 +201,44 @@ export const MAX_SCORE_PAYLOAD_BYTES = 8_000_000;
 
 export async function fetchGameScore(game, schoolName, previous) {
   const [year, month, day] = game.date.split('-');
-  const response = await fetch('https://www.texasfootball.com/api/schools/scoresGetJson', {
-    method: 'POST', headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ gameDate: `${month}/${day}/${year}`, schTypeTagId: 1, classConfTagId: -1, statusId: -1 }),
-    signal: AbortSignal.timeout(15000),
-  });
-  if (!response.ok) throw new Error(`Score source HTTP ${response.status}`);
-  const raw = await response.text();
-  if (raw.length > MAX_SCORE_PAYLOAD_BYTES) throw new Error('Score source payload too large.');
+  // texasfootball.com 301s the whole host to davecampbells.com (HTML), which
+  // made JSON.parse throw DOCTYPE errors and froze the feed on 2026-10-01.
+  // Hit the new host directly. It currently returns 401 without a session;
+  // that still throws so the Worker falls through to the live-data manual file.
+  const endpoints = [
+    'https://www.davecampbells.com/api/schools/scoresGetJson',
+    'https://www.texasfootball.com/api/schools/scoresGetJson',
+  ];
+  let raw = null;
+  let lastErr = null;
+  for (const endpoint of endpoints) {
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          accept: 'application/json',
+        },
+        body: JSON.stringify({ gameDate: `${month}/${day}/${year}`, schTypeTagId: 1, classConfTagId: -1, statusId: -1 }),
+        signal: AbortSignal.timeout(15000),
+        redirect: 'error',
+      });
+      if (!response.ok) {
+        lastErr = new Error(`Score source HTTP ${response.status} at ${endpoint}`);
+        continue;
+      }
+      const text = await response.text();
+      if (text.length > MAX_SCORE_PAYLOAD_BYTES) throw new Error('Score source payload too large.');
+      if (text.trimStart().startsWith('<')) {
+        lastErr = new Error(`Score source returned HTML at ${endpoint}`);
+        continue;
+      }
+      raw = text;
+      break;
+    } catch (err) {
+      lastErr = err instanceof Error ? err : new Error(String(err));
+    }
+  }
+  if (raw == null) throw lastErr || new Error('Score source unavailable');
   return parseScore(JSON.parse(raw), game, schoolName, previous);
 }

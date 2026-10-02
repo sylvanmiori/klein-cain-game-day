@@ -42,16 +42,26 @@ async function readScore(env, slug) {
  * usable. The file lives at live-data/manual-<slug>.json.
  */
 async function readManualScore(slug) {
-  // Cache-busting query param: raw.githubusercontent.com caches branch files
-  // for ~5 minutes on its own CDN, which delayed manual updates (seen 2026-10-01
-  // when "Back underway" sat unpublished for several ticks). The query string
-  // is part of the CDN cache key, so each tick fetches fresh.
-  const res = await fetch(
+  // Prefer jsDelivr over raw.githubusercontent.com: GitHub's raw CDN ignores
+  // query strings and can serve a stale branch tip for minutes (seen 2026-10-01
+  // when a fresh 14-7 manual file stayed invisible behind a cached 0-0).
+  // jsDelivr tracks the branch tip and returned the new file immediately.
+  const urls = [
+    `https://cdn.jsdelivr.net/gh/sylvanmiori/klein-cain-game-day@live-data/manual-${slug}.json?t=${Date.now()}`,
     `https://raw.githubusercontent.com/sylvanmiori/klein-cain-game-day/live-data/manual-${slug}.json?t=${Date.now()}`,
-    { cf: { cacheTtl: 60 } },
-  );
-  if (!res.ok) return null;
-  const data = await res.json();
+  ];
+  let data = null;
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, { cf: { cacheTtl: 0 } });
+      if (!res.ok) continue;
+      data = await res.json();
+      break;
+    } catch {
+      // Try the next mirror.
+    }
+  }
+  if (!data) return null;
   if (!data || data.schemaVersion !== 1 || data.slug !== slug) return null;
   if (!['live', 'final'].includes(data.status)) return null;
   const numeric = (n) => Number.isInteger(n) && n >= 0 && n <= 200;

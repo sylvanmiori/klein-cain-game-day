@@ -448,7 +448,7 @@ export function recordFor(records, team) {
  */
 export async function fetchScoreRows(isoDate) {
   const [year, month, day] = isoDate.split('-');
-  const response = await get('https://www.texasfootball.com/api/schools/scoresGetJson', {
+  const response = await get('https://www.davecampbells.com/api/schools/scoresGetJson', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ gameDate: `${month}/${day}/${year}`, schTypeTagId: 1, classConfTagId: -1, statusId: -1 }),
