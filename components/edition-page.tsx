@@ -421,6 +421,13 @@ export function EditionPage({ edition }: { edition: Edition }) {
         </a>
       </header>
 
+      {edition.alert && (
+        <div className="game-alert" role="alert">
+          <strong>{edition.alert.title}</strong>
+          <span>{edition.alert.body}</span>
+        </div>
+      )}
+
       <section className="game-overview" id="top">
         <div className="preview-title">
           <h1>{edition.pageTitle}</h1>

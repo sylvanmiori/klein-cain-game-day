@@ -156,6 +156,11 @@ export type Edition = {
   issue: string;
   /** Editorial state of the page, independent of the live score feed. */
   state: 'preview' | 'final';
+  /**
+   * Optional urgent banner pinned to the top of the page (e.g. weather delay).
+   * Editorial; clear it when it no longer applies.
+   */
+  alert?: { title: string; body: string } | null;
   date: string;
   dateLong: string;
   dateShort: string;
