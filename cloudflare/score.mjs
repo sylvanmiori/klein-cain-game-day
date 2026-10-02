@@ -199,7 +199,88 @@ export function parseScore(payload, game, schoolName, previous, now = new Date()
 /** Hard ceiling on the raw DCTF response body. Bounds memory and CPU before parsing. */
 export const MAX_SCORE_PAYLOAD_BYTES = 8_000_000;
 
+
+/** Unauthenticated DCTF game detail. Prefer this over scoresGetJson (401). */
+export async function fetchPublicDctfGame(gameId) {
+  const url = `https://www.davecampbells.com/api/public/games/${gameId}`;
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: { accept: 'application/json' },
+    signal: AbortSignal.timeout(15000),
+    redirect: 'manual',
+  });
+  if (response.type === 'opaqueredirect' || (response.status >= 300 && response.status < 400)) {
+    throw new Error(`DCTF public game redirected (${response.status})`);
+  }
+  if (!response.ok) throw new Error(`DCTF public game HTTP ${response.status}`);
+  const text = await response.text();
+  if (text.length > MAX_SCORE_PAYLOAD_BYTES) throw new Error('DCTF public game payload too large.');
+  if (text.trimStart().startsWith('<')) throw new Error('DCTF public game returned HTML');
+  return JSON.parse(text);
+}
+
+/**
+ * Map DCTF public game payload into our score card.
+ * Always key scores by school name vs our schedule home flag — DCTF participantType
+ * can disagree with venue home/away.
+ */
+export function parsePublicDctfGame(payload, game, schoolName, previous, now = new Date()) {
+  if (!payload?.success || !payload.data) throw new Error('DCTF public game unsuccessful');
+  const data = payload.data;
+  const parts = Array.isArray(data.participants) ? data.participants : [];
+  const ours = parts.find(p => normalize(p.schoolName) === normalize(schoolName));
+  const opp = parts.find(p => normalize(p.schoolName) === normalize(game.opponent));
+  if (!ours || !opp) throw new Error('DCTF public game missing school participants');
+  const labelRaw = String(data.status || data.gameState || data.eventDescription || '').trim();
+  const status = /final/i.test(labelRaw) ? 'final'
+    : /live|quarter|qtr|q[1-4]|1st|2nd|3rd|4th|half|delay|progress/i.test(labelRaw) ? 'live'
+    : /scheduled|upcoming/i.test(labelRaw) ? 'scheduled' : null;
+  if (!status) throw new Error(`Unrecognized DCTF public status: ${labelRaw}`);
+  const numeric = value => value !== null && value !== undefined && String(value).trim() !== ''
+    && Number.isInteger(Number(value)) && Number(value) >= 0 && Number(value) <= 200;
+  if (status !== 'scheduled' && (!numeric(ours.score) || !numeric(opp.score))) {
+    throw new Error('Invalid public DCTF score; keeping the last verified result.');
+  }
+  let cainScore = Number(ours.score);
+  let opponentScore = Number(opp.score);
+  const sameGame = previous?.slug === gameSlug(game);
+  if (sameGame && previous.status === 'final' && status !== 'final') return previous;
+  if (sameGame && previous && previous.status !== 'scheduled' && status === 'live'
+    && Number.isInteger(previous.homeScore) && Number.isInteger(previous.awayScore)) {
+    const prevCain = game.home ? previous.homeScore : previous.awayScore;
+    const prevOpp = game.home ? previous.awayScore : previous.homeScore;
+    if (cainScore < prevCain || opponentScore < prevOpp) {
+      cainScore = prevCain;
+      opponentScore = prevOpp;
+    }
+  }
+  const statusLabel = status === 'scheduled' ? game.kickoff
+    : (/^live$/i.test(labelRaw) ? 'Live' : labelRaw);
+  return {
+    schemaVersion: 1, slug: gameSlug(game), status,
+    statusLabel,
+    homeScore: status === 'scheduled' ? null : game.home ? cainScore : opponentScore,
+    awayScore: status === 'scheduled' ? null : game.home ? opponentScore : cainScore,
+    homeRecord: sameGame ? previous.homeRecord : '',
+    awayRecord: sameGame ? previous.awayRecord : '',
+    updatedAt: now.toISOString(),
+    source: 'Dave Campbell’s Texas Football',
+    sourceUrl: `https://www.davecampbells.com/game/${data.gameScheduleId || game.dctfGameId}`,
+  };
+}
+
 export async function fetchGameScore(game, schoolName, previous) {
+  let publicErr = null;
+  // Prefer the unauthenticated public game detail when we have a DCTF id.
+  if (game.dctfGameId) {
+    try {
+      const publicPayload = await fetchPublicDctfGame(game.dctfGameId);
+      return parsePublicDctfGame(publicPayload, game, schoolName, previous);
+    } catch (err) {
+      // Fall through to the legacy board endpoints / manual file.
+      publicErr = err instanceof Error ? err : new Error(String(err));
+    }
+  }
   const [year, month, day] = game.date.split('-');
   // texasfootball.com 301s the whole host to davecampbells.com (HTML), which
   // made JSON.parse throw DOCTYPE errors and froze the feed on 2026-10-01.
@@ -245,6 +326,6 @@ export async function fetchGameScore(game, schoolName, previous) {
       lastErr = err instanceof Error ? err : new Error(String(err));
     }
   }
-  if (raw == null) throw lastErr || new Error('Score source unavailable');
+  if (raw == null) throw lastErr || publicErr || new Error('Score source unavailable');
   return parseScore(JSON.parse(raw), game, schoolName, previous);
 }
