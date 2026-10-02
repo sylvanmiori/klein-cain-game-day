@@ -4,10 +4,7 @@
   "week": 5,
   "issue": "04",
   "state": "preview",
-  "alert": {
-    "title": "Weather delay",
-    "body": "Another delay called at 9:12 PM. We'll post when play resumes."
-  },
+  "alert": null,
   "date": "2026-10-01",
   "dateLong": "October 1, 2026",
   "dateShort": "OCT 1, 2026",
@@ -235,7 +232,7 @@
         },
         {
           "label": "Conditions",
-          "value": "WEATHER DELAY: another delay called 9:12 PM."
+          "value": "Storms moved through. Play resumed; Cain leads 14-7 in the 2nd."
         },
         {
           "label": "Cain at home",
