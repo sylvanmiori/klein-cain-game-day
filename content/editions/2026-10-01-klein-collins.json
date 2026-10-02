@@ -4,10 +4,7 @@
   "week": 5,
   "issue": "04",
   "state": "preview",
-  "alert": {
-    "title": "Weather delay",
-    "body": "Lightning in the area at Klein Memorial Stadium. Officials estimate a 45-60 minute delay from the 7 PM kickoff."
-  },
+  "alert": null,
   "date": "2026-10-01",
   "dateLong": "October 1, 2026",
   "dateShort": "OCT 1, 2026",
@@ -235,7 +232,7 @@
         },
         {
           "label": "Conditions",
-          "value": "WEATHER DELAY: lightning in the area at Klein Memorial Stadium. Officials estimate a 45-60 minute delay from the 7 PM kickoff."
+          "value": "Scattered storms early, easing later tonight · NWS forecast updates automatically on this page"
         },
         {
           "label": "Cain at home",
