@@ -5,9 +5,9 @@
   "statusLabel": "Live",
   "homeScore": 14,
   "awayScore": 7,
-  "homeRecord": "4–0",
-  "awayRecord": "4–1",
-  "updatedAt": "2026-10-02T02:08:00.000Z",
-  "source": "Dave Campbell’s Texas Football",
-  "sourceUrl": "https://www.davecampbells.com/game/6b04e04c-5ccc-4bff-84d3-e2ff2c79b767"
+  "homeRecord": "",
+  "awayRecord": "",
+  "updatedAt": "2026-10-02T02:08:17.000Z",
+  "source": "Manual update",
+  "sourceUrl": "https://kleincain.gameday.report/"
 }
