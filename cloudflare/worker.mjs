@@ -46,9 +46,11 @@ async function readManualScore(slug) {
   // query strings and can serve a stale branch tip for minutes (seen 2026-10-01
   // when a fresh 14-7 manual file stayed invisible behind a cached 0-0).
   // jsDelivr tracks the branch tip and returned the new file immediately.
+  // Never use raw.githubusercontent.com here: its CDN ignores cache-busters and
+  // has served a stale 0-0 manual file with the same updatedAt as KV, which made
+  // the cron fallback think there was nothing newer to apply.
   const urls = [
     `https://cdn.jsdelivr.net/gh/sylvanmiori/klein-cain-game-day@live-data/manual-${slug}.json?t=${Date.now()}`,
-    `https://raw.githubusercontent.com/sylvanmiori/klein-cain-game-day/live-data/manual-${slug}.json?t=${Date.now()}`,
   ];
   let data = null;
   for (const url of urls) {
@@ -88,6 +90,39 @@ export function scoreIsStale(score, now = Date.now()) {
   if (!score || score.status !== 'live') return false;
   const updated = Date.parse(score.updatedAt);
   return Number.isFinite(updated) && now - updated > STALE_AFTER_MS;
+}
+
+/** When to promote a live-data manual file over KV (cron or /api/score). */
+export function shouldApplyManual(previous, manual) {
+  if (!manual) return false;
+  const manualUpdated = Date.parse(manual.updatedAt || 0);
+  if (!Number.isFinite(manualUpdated)) return false;
+  if (!previous) return true;
+  const prevUpdated = Date.parse(previous.updatedAt || 0);
+  if (manualUpdated > prevUpdated) return true;
+  const scoresDiffer = previous.homeScore !== manual.homeScore
+    || previous.awayScore !== manual.awayScore;
+  // Stale live KV with matching timestamp but wrong totals (GitHub raw CDN).
+  if (scoresDiffer && previous.status === 'live' && scoreIsStale(previous)) return true;
+  return false;
+}
+
+async function resolveScoreForSlug(env, slug) {
+  const stored = await readScore(env, slug);
+  try {
+    const manual = await readManualScore(slug);
+    if (manual && shouldApplyManual(stored, manual)) {
+      try {
+        await env.SCORES.put(keyFor(slug), JSON.stringify(manual));
+      } catch {
+        // Best-effort KV sync; still return manual for this response.
+      }
+      return manual;
+    }
+  } catch {
+    // Keep the stored score.
+  }
+  return stored;
 }
 
 /** Heartbeat cadence for successful ingests; failures and recoveries always record. */
@@ -720,7 +755,7 @@ const worker = {
       const slug = url.searchParams.get('game') || snapshot.slug;
       if (!schedule.some(game => gameSlug(game) === slug)) return json({ error: 'Game not found' }, 404);
       try {
-        const score = await readScore(env, slug);
+        const score = await resolveScoreForSlug(env, slug);
         if (!score) return json({ error: 'Score not available yet' }, 404);
         // `stale` lets the frontend and any watcher see a frozen feed instead
         // of silently serving an old live score as current.
@@ -772,9 +807,12 @@ const worker = {
       }
       const slug = gameSlug(game);
       const previous = await readScore(env, slug);
+      const statusLabel = typeof input.statusLabel === 'string' && input.statusLabel.trim()
+        ? input.statusLabel.trim()
+        : (input.status === 'final' ? 'Final' : 'Live');
       const score = {
         schemaVersion: 1, slug, status: input.status,
-        statusLabel: input.status === 'final' ? 'Final' : 'Live',
+        statusLabel,
         homeScore: input.homeScore, awayScore: input.awayScore,
         homeRecord: previous?.homeRecord || '', awayRecord: previous?.awayRecord || '',
         updatedAt: new Date().toISOString(), source: 'Manual correction',
@@ -1398,8 +1436,7 @@ const worker = {
       // recovered feed takes over again automatically.
       try {
         const manual = await readManualScore(slug);
-        const prevUpdated = Date.parse(previous?.updatedAt || 0);
-        if (manual && Date.parse(manual.updatedAt) > prevUpdated) {
+        if (manual && shouldApplyManual(previous, manual)) {
           await env.SCORES.put(keyFor(slug), JSON.stringify(manual));
           await recordIngestAttempt(env, slug, true, manual.updatedAt);
           return;
