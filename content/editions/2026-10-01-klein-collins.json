@@ -4,7 +4,10 @@
   "week": 5,
   "issue": "04",
   "state": "preview",
-  "alert": null,
+  "alert": {
+    "title": "Weather delay",
+    "body": "Delay called at 9:12 PM. Cain leads Collins 14-7 in the 2nd."
+  },
   "date": "2026-10-01",
   "dateLong": "October 1, 2026",
   "dateShort": "OCT 1, 2026",
@@ -232,7 +235,7 @@
         },
         {
           "label": "Conditions",
-          "value": "Cain leads 14-7 in the 2nd."
+          "value": "WEATHER DELAY called 9:12 PM. Cain leads 14-7 in the 2nd."
         },
         {
           "label": "Cain at home",
