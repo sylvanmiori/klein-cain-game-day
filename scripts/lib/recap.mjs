@@ -1,3 +1,5 @@
+import { formatFavoriteMargin, schoolMarginForPublishedPick } from './prediction-margin.mjs';
+
 // Composes the postgame recap from verified data only.
 //
 // No language model is involved and nothing here is inferred. Every sentence
@@ -95,8 +97,12 @@ export function composeRecap({
   // Compare against whichever prediction the page published before kickoff.
   const pick = edition.rating ?? edition.massey ?? edition.prediction;
   if (pick && Number.isFinite(pick.margin)) {
-    const predicted = Math.round(pick.margin);
-    const favored = predicted === 0 ? null : predicted > 0 ? schoolName : opponent.name;
+    const schoolMargin = schoolMarginForPublishedPick(edition, schoolName, pick);
+    const { favorite: favored, rounded: predicted } = formatFavoriteMargin(
+      schoolMargin,
+      schoolName,
+      opponent.name,
+    );
     const actual = ours - theirs;
     const winner = won ? schoolName : opponent.name;
     sentences.push(favored
