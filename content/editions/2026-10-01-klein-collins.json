@@ -3,18 +3,15 @@
   "slug": "2026-10-01-klein-collins",
   "week": 5,
   "issue": "04",
-  "state": "preview",
-  "alert": {
-    "title": "We're live",
-    "body": "Cain vs. Collins is back underway at Klein Memorial Stadium."
-  },
+  "state": "final",
+  "alert": null,
   "date": "2026-10-01",
   "dateLong": "October 1, 2026",
   "dateShort": "OCT 1, 2026",
   "kickoff": "7:00 PM",
   "venue": "Klein Memorial Stadium",
   "event": "",
-  "updated": "Oct 1, 2026",
+  "updated": "Oct 3, 2026",
   "home": {
     "name": "Klein Cain",
     "mascot": "Hurricanes",
@@ -29,10 +26,10 @@
     "record": "4\u20131",
     "rank": 37
   },
-  "pageTitle": "2026 Week 5 Preview: Klein Collins at Klein Cain",
-  "metaTitle": "Week 5 Preview: Klein Collins at Klein Cain | Cain Game Day",
-  "metaDescription": "First-place showdown in District 15-6A: Klein Collins (4-1) visits unbeaten Klein Cain (4-0). Postponed Thursday by weather, resuming Saturday at 10 AM with Cain up 14-7. Dave Campbell's has the Tigers by 8.",
-  "socialDescription": "First place in District 15-6A on the line: Collins at Cain, resuming Saturday at 10 AM with the Hurricanes up 14-7.",
+  "pageTitle": "2026 Week 5 Recap: Klein Collins 40, Klein Cain 24",
+  "metaTitle": "Week 5 Recap: Klein Collins 40, Klein Cain 24 | Cain Game Day",
+  "metaDescription": "Klein Collins 40, Klein Cain 24: the Tigers scored 33 points after Saturday\u2019s resumption and pulled away in the second half of the Week 5 showdown, staying alone in first place in District 15-6A.",
+  "socialDescription": "FINAL: Klein Collins 40, Klein Cain 24. The Tigers stormed back in the second half of the resumed Week 5 showdown to stay alone atop District 15-6A.",
   "ogImage": "",
   "prediction": {
     "margin": -8,
@@ -47,7 +44,13 @@
     "asOf": "2026-09-30T12:42:20.821Z"
   },
   "stats": null,
-  "finalScore": null,
+  "finalScore": {
+    "home": 24,
+    "away": 40,
+    "source": "Cain Game Day sideline scoring",
+    "sourceUrl": "https://kleincain.gameday.report/games/week-5",
+    "asOf": "2026-10-03T17:30:00Z"
+  },
   "rating": {
     "home": 15.35,
     "away": 11.84,
@@ -292,7 +295,46 @@
       ]
     }
   },
-  "final": null,
+  "final": {
+    "headline": "Klein Collins Rallies Past Klein Cain, 40\u201324, to Stay Alone in First",
+    "byline": "Cain Game Day desk \u00b7 Updated Oct 3, 2026",
+    "body": "**Klein Collins Rallies Past Klein Cain, 40\u201324, to Stay Alone in First**\n\nCAIN GAME DAY DESK \u00b7 UPDATED 12:30 PM CT\n\nSaturday morning finished what Thursday night started, and it finished with Klein Collins alone in first place.\n\nThe Tigers scored **33 points** after play resumed and beat Klein Cain **40\u201324** Saturday at Klein Memorial Stadium, erasing the 14\u20137 deficit they faced when weather postponed Thursday's game in the second quarter. Collins improved to **5\u20131** overall and **4\u20130** in District 15-6A. The Hurricanes fell to **4\u20131** and **2\u20131** in district play.\n\nCain led **24\u201314** at halftime Saturday. Collins outscored the Hurricanes **26\u20130** after the break. Dave Campbell's had picked the Tigers by 8. They won by 16.\n\n**Thursday night: the 14\u20137 start**\n\nCain's opening drive stalled on fourth down after **Tyson Freeman (#17)** made a five-yard catch on third-and-8, and the punt sailed into the end zone. Collins struck first on a long **Brylon Jefferson** touchdown pass to **Tylan Penright (#14)**, and the extra point made it 7\u20130 Tigers.\n\n**Eyan Johnson (#16)** answered immediately, returning the ensuing kickoff **80 yards** for a touchdown to tie it at 7\u20137. Asked afterward when he knew he was gone, Johnson said: *\"I knew as soon as the ball touched my hands!\"*\n\nCain took the lead in the second quarter. **Jace Hanks (#9)** ripped off a 23-yard keeper, **Israel Smith (#8)** caught a pass and carried it 20 yards to the 3, and **Earl Oguinn Jr. (#1)** scored from a direct snap. The extra point made it 14\u20137.\n\nThe defense did its part before the sky opened. **Jaemin Gilstrap (#42)** dropped a runner for a six-yard loss, and **Michael Rhodes Jr. (#49)** recorded a strip-sack that Collins managed to recover. Hanks added a 15-yard run and **Cooper Karns (#10)** took a catch-and-run to the Collins 15 before the weather delay ended the night.\n\n**Saturday morning: Cain stretches it to 24\u201314**\n\nPlay resumed at **10:00 AM** with 9:45 left in the second quarter and Cain facing first-and-goal. Collins kept the Hurricanes out of the end zone, but **Sage DesAutels (#4)** drilled a **22-yard** field goal to make it 17\u20137.\n\nCollins answered with its best drive of the half. **Easton Mizell (#47)** broke up a pass and **Lovell Christian (#45)** recorded a tackle for loss, but on third-and-long Penright hauled in a **40-yard** catch-and-run, **Demarcus Jones** added a 20-yard run on third-and-9, and Jefferson finished it with a touchdown run up the middle. The extra point cut it to 17\u201314 with 2:50 left in the half.\n\nAfter a 20-yard screen to Karns, a 35-yard screen to Oguinn, an intentional grounding flag and a false start, Cain faced second-and-25 from its own 42. Hanks escaped a near-sack, somehow got loose and ran for the first down.\n\nTwo Oguinn runs of five yards each moved the chains again, and on first-and-goal from the 9, Hanks tucked it and scored at the right pylon. The extra point made it **24\u201314**.\n\nPenright's big kickoff return gave Collins one last shot from the Cain 18. **Jaiden Pacheco (#28)** sacked Jefferson, the Tigers stalled, and with 12 seconds left Aldridge shanked a field-goal attempt. Halftime: Cain 24, Collins 14.\n\n**Second half: all Tigers**\n\nCollins took the second-half kickoff at its 20 and marched. **Harmon (#6)** carried the load, Penright made a contested grab over tight coverage from **Michael Elhindi (#2)**, and even with Gilstrap repeatedly disrupting the backfield and forcing two holding penalties, Jefferson found **#1** for the touchdown. The extra point made it 24\u201321 with 8:02 left in the third.\n\nCain's next drive stalled at its own 34, and after the punt Collins struck again. Harmon broke loose for a touchdown run of about **50 yards**, putting the Tigers ahead 28\u201324 with 5:18 left in the quarter.\n\nCain punted again, but the Hurricane defense kept swinging. Gilstrap's pressure helped force an incompletion on third down, and Collins eventually punted into the end zone on fourth-and-11. Karns' slant on third-and-10 moved the chains to end the quarter with Cain at its own 31, trailing 28\u201324.\n\nThe fourth quarter belonged to Jefferson and the Collins offense. After another Cain punt, an unsportsmanlike conduct penalty on the Hurricanes gave the Tigers an automatic first down. Harmon followed with a 25-yard keeper, Jefferson ran for another first down, and Jefferson eventually scored on a sneak from the 1.\n\nThe extra point was **blocked**, leaving Collins ahead 34\u201324 with 7:41 left. Pacheco was shaken up during the drive but walked off under his own power.\n\nHanks was intercepted under pressure down the right sideline, giving Collins the ball at the Cain 21. Penright moved the Tigers to the 11, Christian recorded another tackle for loss and Mizell blew up a Harmon keeper before Jefferson found Penright on fourth down from the 14 for another touchdown.\n\nRhodes blocked his second extra point of the game, keeping it 40\u201324 with 3:46 to play.\n\nFreeman added an 18-yard catch on Cain's next possession, but Hanks was intercepted again at midfield with 3:31 left. Collins tried to close it out on the ground, but Cain's defense produced one last stand. Mizell stuffed Jefferson on third-and-4, and Hudson was stopped on fourth-and-3.\n\nCain got the ball back with 1:40 left. Hanks scrambled for **30 yards** plus a 15-yard late-hit penalty, moving the Hurricanes to the Collins 34. Karns added a 15-yard catch on third-and-long, but fourth-and-5 fell incomplete with 37 seconds left.\n\nCollins kneeled it out.\n\n**The defense deserves its due**\n\nThe scoreboard says 40\u201324, but the Hurricane defense made plenty of plays in a hard-fought loss. Gilstrap spent much of the game disrupting the Collins backfield, forcing holding penalties and hurrying throws. Christian recorded multiple tackles for loss, while Mizell broke up a pass, blew up a keeper and helped produce the final fourth-down stand.\n\nRhodes blocked **two** extra points and added Thursday's strip-sack. Elhindi delivered a big breakup on Penright, and Pacheco's sack helped force the missed field goal at the end of the first half.\n\n*Even after Collins took control, Cain's defense kept competing through the final possession.*\n\n**What's next**\n\nThere isn't much time to dwell on this one. Cain travels Thursday to face unbeaten **Klein (5\u20130)**, which held off Magnolia 28\u201321 Friday night to stay perfect.\n\nKickoff is **7:00 PM CT** on Thursday, Oct. 8. The Hurricanes enter the week 4\u20131 overall and 2\u20131 in District 15-6A, looking to answer their first loss of the season on the road.",
+    "socialPosts": [],
+    "homeScore": 24,
+    "awayScore": 40,
+    "quarters": {
+      "labels": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "rows": [
+        {
+          "team": "Klein Cain",
+          "scores": [
+            7,
+            17,
+            0,
+            0
+          ],
+          "total": 24
+        },
+        {
+          "team": "Klein Collins",
+          "scores": [
+            7,
+            7,
+            14,
+            12
+          ],
+          "total": 40
+        }
+      ]
+    },
+    "notes": [],
+    "leaders": null
+  },
   "sources": [
     {
       "label": "MaxPreps: Klein Cain statistics",
