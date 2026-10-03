@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "slug": "2026-10-01-klein-collins",
-  "status": "live",
-  "statusLabel": "4th Quarter · 2:00 left",
+  "status": "final",
+  "statusLabel": "Final",
   "homeScore": 24,
   "awayScore": 40,
   "homeRecord": "",
   "awayRecord": "",
-  "updatedAt": "2026-10-03T16:52:00.074Z",
+  "updatedAt": "2026-10-03T17:05:34.367Z",
   "source": "Manual update",
   "sourceUrl": "https://kleincain.gameday.report/"
 }
