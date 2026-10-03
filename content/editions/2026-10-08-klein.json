@@ -15,14 +15,14 @@
     "name": "Klein",
     "mascot": "Bearkats",
     "logo": "/klein-logo.png",
-    "record": "5–0",
+    "record": "5\u20130",
     "rank": 53
   },
   "away": {
     "name": "Klein Cain",
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
-    "record": "4–0",
+    "record": "4\u20131",
     "rank": 49
   },
   "pageTitle": "2026 Week 6 Preview: Klein Cain at Klein",
@@ -32,13 +32,13 @@
   "ogImage": "",
   "prediction": {
     "margin": -5,
-    "source": "Dave Campbell’s Texas Football",
+    "source": "Dave Campbell\u2019s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
     "asOf": "2026-09-29T16:47:32.768Z"
   },
   "massey": null,
   "rankings": {
-    "source": "Dave Campbell’s Texas Football computer rankings",
+    "source": "Dave Campbell\u2019s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/29/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-6",
     "asOf": "2026-09-29T16:47:32.658Z"
   },
@@ -74,12 +74,12 @@
       "facts": [
         {
           "label": "Cain",
-          "value": "4–0 · 2–0 district · 50.0 points/game",
+          "value": "4\u20130 \u00b7 2\u20130 district \u00b7 50.0 points/game",
           "team": "school"
         },
         {
           "label": "Klein",
-          "value": "5–0 · 3–0 district",
+          "value": "5\u20130 \u00b7 3\u20130 district",
           "team": "opponent"
         },
         {
@@ -89,7 +89,7 @@
         },
         {
           "label": "Klein coach",
-          "value": "David Perez · 1st season",
+          "value": "David Perez \u00b7 1st season",
           "team": "opponent"
         }
       ]
@@ -101,13 +101,13 @@
   },
   "final": null,
   "sources": [],
-  "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
+  "footerNote": "Independent fan publication \u00b7 Facts on this page refresh from public sources.",
   "disclaimerEntities": [
     "Klein ISD",
     "Klein Cain High School",
     "Klein High School",
     "MaxPreps",
-    "Dave Campbell’s Texas Football"
+    "Dave Campbell\u2019s Texas Football"
   ],
   "current": false
 }

@@ -15,14 +15,14 @@
     "name": "Klein Forest",
     "mascot": "Eagles",
     "logo": "/klein-forest-logo.png",
-    "record": "1–4",
+    "record": "1\u20134",
     "rank": 201
   },
   "away": {
     "name": "Klein Cain",
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
-    "record": "4–0",
+    "record": "4\u20131",
     "rank": 49
   },
   "pageTitle": "2026 Week 10 Preview: Klein Cain at Klein Forest",
@@ -32,13 +32,13 @@
   "ogImage": "",
   "prediction": {
     "margin": 23,
-    "source": "Dave Campbell’s Texas Football",
+    "source": "Dave Campbell\u2019s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
     "asOf": "2026-09-29T16:47:34.324Z"
   },
   "massey": null,
   "rankings": {
-    "source": "Dave Campbell’s Texas Football computer rankings",
+    "source": "Dave Campbell\u2019s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/29/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-6",
     "asOf": "2026-09-29T16:47:34.029Z"
   },
@@ -65,12 +65,12 @@
       "facts": [
         {
           "label": "Cain",
-          "value": "4–0 · 2–0 district · 50.0 points/game",
+          "value": "4\u20130 \u00b7 2\u20130 district \u00b7 50.0 points/game",
           "team": "school"
         },
         {
           "label": "Klein Forest",
-          "value": "1–4 · 1–2 district",
+          "value": "1\u20134 \u00b7 1\u20132 district",
           "team": "opponent"
         },
         {
@@ -80,7 +80,7 @@
         },
         {
           "label": "Klein Forest coach",
-          "value": "Darrick Vaughn · 4th season",
+          "value": "Darrick Vaughn \u00b7 4th season",
           "team": "opponent"
         }
       ]
@@ -92,13 +92,13 @@
   },
   "final": null,
   "sources": [],
-  "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
+  "footerNote": "Independent fan publication \u00b7 Facts on this page refresh from public sources.",
   "disclaimerEntities": [
     "Klein ISD",
     "Klein Cain High School",
     "Klein Forest High School",
     "MaxPreps",
-    "Dave Campbell’s Texas Football"
+    "Dave Campbell\u2019s Texas Football"
   ],
   "current": false
 }
