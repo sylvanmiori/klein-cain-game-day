@@ -16,34 +16,321 @@
     "name": "Klein Cain",
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
-    "record": "4\u20130",
+    "record": "4–0",
     "rank": 49
   },
   "away": {
     "name": "Klein Collins",
     "mascot": "Tigers",
     "logo": "/klein-collins-logo.png",
-    "record": "4\u20131",
+    "record": "4–1",
     "rank": 37
   },
   "pageTitle": "2026 Week 5 Recap: Klein Collins 40, Klein Cain 24",
   "metaTitle": "Week 5 Recap: Klein Collins 40, Klein Cain 24 | Cain Game Day",
-  "metaDescription": "Klein Collins 40, Klein Cain 24: the Tigers scored 33 points after Saturday\u2019s resumption and pulled away in the second half of the Week 5 showdown, staying alone in first place in District 15-6A.",
+  "metaDescription": "Klein Collins 40, Klein Cain 24: the Tigers scored 33 points after Saturday’s resumption and pulled away in the second half of the Week 5 showdown, staying alone in first place in District 15-6A.",
   "socialDescription": "FINAL: Klein Collins 40, Klein Cain 24. The Tigers stormed back in the second half of the resumed Week 5 showdown to stay alone atop District 15-6A.",
   "ogImage": "",
   "prediction": {
     "margin": -8,
-    "source": "Dave Campbell\u2019s Texas Football",
+    "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
     "asOf": "2026-09-30T12:42:20.997Z"
   },
   "massey": null,
   "rankings": {
-    "source": "Dave Campbell\u2019s Texas Football computer rankings",
+    "source": "Dave Campbell’s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/29/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-6",
     "asOf": "2026-09-30T12:42:20.821Z"
   },
-  "stats": null,
+  "stats": {
+    "leaders": [
+      {
+        "category": "Receiving Yards Per Game",
+        "header": "Y/G",
+        "name": "Cooper Karns",
+        "position": "WR",
+        "value": "83.0",
+        "rank": 1
+      },
+      {
+        "category": "Receiving Yards Per Game",
+        "header": "Y/G",
+        "name": "Israel Smith",
+        "position": "",
+        "value": "56.3",
+        "rank": 2
+      },
+      {
+        "category": "Receiving Yards Per Game",
+        "header": "Y/G",
+        "name": "Tyson Freeman",
+        "position": "WR",
+        "value": "33.8",
+        "rank": 3
+      },
+      {
+        "category": "Rushing Yards Per Game",
+        "header": "Y/G",
+        "name": "Eyan Johnson",
+        "position": "RB, SB",
+        "value": "120.8",
+        "rank": 1
+      },
+      {
+        "category": "Rushing Yards Per Game",
+        "header": "Y/G",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "73.5",
+        "rank": 2
+      },
+      {
+        "category": "Rushing Yards Per Game",
+        "header": "Y/G",
+        "name": "Earl Oguinn Jr.",
+        "position": "RB, WR",
+        "value": "53.8",
+        "rank": 3
+      },
+      {
+        "category": "Total TDs",
+        "header": "Tot",
+        "name": "Eyan Johnson",
+        "position": "RB, SB",
+        "value": "9",
+        "rank": 1
+      },
+      {
+        "category": "Total TDs",
+        "header": "Tot",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "5",
+        "rank": 2
+      },
+      {
+        "category": "Total TDs",
+        "header": "Tot",
+        "name": "Earl Oguinn Jr.",
+        "position": "RB, WR",
+        "value": "4",
+        "rank": 3
+      },
+      {
+        "category": "Tackles Per Game",
+        "header": "Tckl/G",
+        "name": "Easton Mizell",
+        "position": "DB, FS",
+        "value": "7.5",
+        "rank": 1
+      },
+      {
+        "category": "Tackles Per Game",
+        "header": "Tckl/G",
+        "name": "Gage Hansberger",
+        "position": "LB",
+        "value": "5.8",
+        "rank": 2
+      },
+      {
+        "category": "Tackles Per Game",
+        "header": "Tckl/G",
+        "name": "Jaemin Gilstrap",
+        "position": "DL",
+        "value": "5.3",
+        "rank": 3
+      },
+      {
+        "category": "Sacks",
+        "header": "Sak",
+        "name": "Colton Johnson",
+        "position": "DL",
+        "value": "1.5",
+        "rank": 1
+      },
+      {
+        "category": "Sacks",
+        "header": "Sak",
+        "name": "Mir Ibragimov",
+        "position": "DL",
+        "value": "1.0",
+        "rank": 2
+      },
+      {
+        "category": "Sacks",
+        "header": "Sak",
+        "name": "Jaiden Pacheco",
+        "position": "DB",
+        "value": "1.0",
+        "rank": 3
+      },
+      {
+        "category": "Interceptions",
+        "header": "Int",
+        "name": "Easton Mizell",
+        "position": "DB, FS",
+        "value": "2",
+        "rank": 1
+      },
+      {
+        "category": "Interceptions",
+        "header": "Int",
+        "name": "Jerod Spraberry",
+        "position": "LB",
+        "value": "1",
+        "rank": 2
+      },
+      {
+        "category": "Interceptions",
+        "header": "Int",
+        "name": "Daniel Rogers",
+        "position": "CB",
+        "value": "1",
+        "rank": 3
+      },
+      {
+        "category": "Passing TDs",
+        "header": "TD Passes",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "8",
+        "rank": 1
+      },
+      {
+        "category": "Passing TDs",
+        "header": "TD Passes",
+        "name": "Trey Reyes",
+        "position": "QB",
+        "value": "1",
+        "rank": 2
+      },
+      {
+        "category": "Receiving TDs",
+        "header": "Rec",
+        "name": "Earl Oguinn Jr.",
+        "position": "RB, WR",
+        "value": "2",
+        "rank": 1
+      },
+      {
+        "category": "Receiving TDs",
+        "header": "Rec",
+        "name": "Israel Smith",
+        "position": "",
+        "value": "2",
+        "rank": 2
+      },
+      {
+        "category": "Receiving TDs",
+        "header": "Rec",
+        "name": "Cooper Karns",
+        "position": "WR",
+        "value": "2",
+        "rank": 3
+      },
+      {
+        "category": "Rushing TDs",
+        "header": "Run",
+        "name": "Eyan Johnson",
+        "position": "RB, SB",
+        "value": "8",
+        "rank": 1
+      },
+      {
+        "category": "Rushing TDs",
+        "header": "Run",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "4",
+        "rank": 2
+      },
+      {
+        "category": "Rushing TDs",
+        "header": "Run",
+        "name": "Braylon Francis",
+        "position": "RB",
+        "value": "2",
+        "rank": 3
+      },
+      {
+        "category": "Caused Fumbles",
+        "header": "Caus",
+        "name": "Bryson Bucola",
+        "position": "DL",
+        "value": "1",
+        "rank": 1
+      },
+      {
+        "category": "Caused Fumbles",
+        "header": "Caus",
+        "name": "Lovell Christian",
+        "position": "DL",
+        "value": "1",
+        "rank": 2
+      },
+      {
+        "category": "Caused Fumbles",
+        "header": "Caus",
+        "name": "Michael Elhindi",
+        "position": "DB",
+        "value": "1",
+        "rank": 3
+      },
+      {
+        "category": "Fumble Recoveries",
+        "header": "Rcv",
+        "name": "Jaiden Pacheco",
+        "position": "DB",
+        "value": "1",
+        "rank": 1
+      },
+      {
+        "category": "QB Hurries",
+        "header": "Hur",
+        "name": "Jerod Spraberry",
+        "position": "LB",
+        "value": "3",
+        "rank": 1
+      },
+      {
+        "category": "QB Hurries",
+        "header": "Hur",
+        "name": "Bryson Bucola",
+        "position": "DL",
+        "value": "3",
+        "rank": 2
+      },
+      {
+        "category": "QB Hurries",
+        "header": "Hur",
+        "name": "Colton Johnson",
+        "position": "DL",
+        "value": "2",
+        "rank": 3
+      },
+      {
+        "category": "Completion Percentage",
+        "header": "Pct",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "0.650",
+        "rank": 1
+      },
+      {
+        "category": "QB Rating",
+        "header": "Pct",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "130.1",
+        "rank": 1
+      }
+    ],
+    "updated": "2026-10-02T12:19:03",
+    "source": "MaxPreps",
+    "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/",
+    "asOf": "2026-10-03T17:40:32.512Z"
+  },
   "finalScore": {
     "home": 24,
     "away": 40,
@@ -77,16 +364,16 @@
     "playersNote": "Four Hurricanes and four Tigers who will decide Saturday morning.",
     "intro": {
       "heading": "The matchup",
-      "body": "Saturday morning finishes what Thursday night started. Klein Cain leads Klein Collins **14\u20137** in the second quarter of a first-place showdown at Klein Memorial Stadium, play resuming at **10:00 AM** after weather postponed Thursday's game. The Tigers sit **3\u20130 in District 15-6A** at **4\u20131** overall and the Hurricanes **2\u20130** in the district at **4\u20130**. A Collins win keeps the Tigers alone in first place; a Cain win pulls the Hurricanes even with Klein atop the district. Klein stayed perfect Saturday night, holding off Magnolia **28\u201321** to reach **5\u20130**.\n\nCain arrives off its most complete performance of the season, a **58\u20137** rout at Magnolia West that was **41\u20130** by halftime. The Hurricanes are averaging **50 points** per game through four weeks.\n\nDCTF's computer has Collins **No. 37** and Cain **No. 49**, and the model picks the Tigers **by 8** on Cain's home field. *An unbeaten home team as an eight-point underdog? We'll see about that Saturday morning.*\n\nThe voters like Cain more than the computer does. Dave Campbell's put the Hurricanes at **No. 25** in this week's Class 6A state poll, the program's first top-25 spot of the season, after the 58-7 rout at Magnolia West. *Still an underdog Saturday morning. Just a ranked one.*\n\nCollins is led by **Adrian Mitchell**, in his ninth season with playoff berths in all eight and regional semifinal trips each of the last two years. The Tigers arrive with momentum: Texas HS Football named Collins its Week 4 6A Team of the Week after a **42\u201335** comeback win at Magnolia, sealed by **Brylon Jefferson's** 48-yard touchdown pass to **Tylan Penright** with just over a minute left. The Tigers followed that with a **49\u20130** shutout of Klein Forest on Friday night. James Clancy's Hurricanes counter with an offense that has topped 40 points in all four games.\n\nThe postseason picture is coming into focus, too. The top four teams in District 15-6A advance to the playoffs, and the Hurricanes hold **third place** at 2\u20130 in district play. The field then splits by enrollment: the two qualifiers with the largest enrollments land in **Division I**, each division playing for its own state title. At **3,784 students**, Cain is the district's largest school, so a playoff-bound Cain team is headed for Division I. Win Saturday morning and the Hurricanes are tied for first.",
+      "body": "Saturday morning finishes what Thursday night started. Klein Cain leads Klein Collins **14–7** in the second quarter of a first-place showdown at Klein Memorial Stadium, play resuming at **10:00 AM** after weather postponed Thursday's game. The Tigers sit **3–0 in District 15-6A** at **4–1** overall and the Hurricanes **2–0** in the district at **4–0**. A Collins win keeps the Tigers alone in first place; a Cain win pulls the Hurricanes even with Klein atop the district. Klein stayed perfect Saturday night, holding off Magnolia **28–21** to reach **5–0**.\n\nCain arrives off its most complete performance of the season, a **58–7** rout at Magnolia West that was **41–0** by halftime. The Hurricanes are averaging **50 points** per game through four weeks.\n\nDCTF's computer has Collins **No. 37** and Cain **No. 49**, and the model picks the Tigers **by 8** on Cain's home field. *An unbeaten home team as an eight-point underdog? We'll see about that Saturday morning.*\n\nThe voters like Cain more than the computer does. Dave Campbell's put the Hurricanes at **No. 25** in this week's Class 6A state poll, the program's first top-25 spot of the season, after the 58-7 rout at Magnolia West. *Still an underdog Saturday morning. Just a ranked one.*\n\nCollins is led by **Adrian Mitchell**, in his ninth season with playoff berths in all eight and regional semifinal trips each of the last two years. The Tigers arrive with momentum: Texas HS Football named Collins its Week 4 6A Team of the Week after a **42–35** comeback win at Magnolia, sealed by **Brylon Jefferson's** 48-yard touchdown pass to **Tylan Penright** with just over a minute left. The Tigers followed that with a **49–0** shutout of Klein Forest on Friday night. James Clancy's Hurricanes counter with an offense that has topped 40 points in all four games.\n\nThe postseason picture is coming into focus, too. The top four teams in District 15-6A advance to the playoffs, and the Hurricanes hold **third place** at 2–0 in district play. The field then splits by enrollment: the two qualifiers with the largest enrollments land in **Division I**, each division playing for its own state title. At **3,784 students**, Cain is the district's largest school, so a playoff-bound Cain team is headed for Division I. Win Saturday morning and the Hurricanes are tied for first.",
       "facts": [
         {
           "label": "Cain",
-          "value": "4\u20130 \u00b7 2\u20130 district \u00b7 50.0 points/game",
+          "value": "4–0 · 2–0 district · 50.0 points/game",
           "team": "school"
         },
         {
           "label": "Klein Collins",
-          "value": "4\u20131 \u00b7 3\u20130 district",
+          "value": "4–1 · 3–0 district",
           "team": "opponent"
         },
         {
@@ -96,7 +383,7 @@
         },
         {
           "label": "Klein Collins coach",
-          "value": "Adrian Mitchell \u00b7 9th season",
+          "value": "Adrian Mitchell · 9th season",
           "team": "opponent"
         }
       ]
@@ -107,29 +394,29 @@
         "number": "9",
         "name": "Jace Hanks",
         "image": "/players/jace-hanks.jpg",
-        "role": "QB \u00b7 Junior",
+        "role": "QB · Junior",
         "tag": "Eight passing touchdowns",
-        "rating": "8 TD passes \u00b7 130.1 QB rating",
-        "copy": "Hanks pilots an offense averaging 50 points a game. The junior has thrown eight touchdown passes with a 130.1 quarterback rating and 65.0 percent completions, and his legs are a weapon too: 73.5 rushing yards per game with four rushing scores. Friday's 30-yard touchdown run capped a 41\u20130 first half at Magnolia West."
+        "rating": "8 TD passes · 130.1 QB rating",
+        "copy": "Hanks pilots an offense averaging 50 points a game. The junior has thrown eight touchdown passes with a 130.1 quarterback rating and 65.0 percent completions, and his legs are a weapon too: 73.5 rushing yards per game with four rushing scores. Friday's 30-yard touchdown run capped a 41–0 first half at Magnolia West."
       },
       {
         "team": "CAIN",
         "number": "16",
         "name": "Eyan Johnson",
         "image": "/players/eyan-johnson.jpg",
-        "role": "RB / SB \u00b7 Senior",
+        "role": "RB / SB · Senior",
         "tag": "Cain rushing leader",
-        "rating": "120.8 rush Y/G \u00b7 9 total TDs",
-        "copy": "Johnson leads Cain at 120.8 rushing yards per game with nine total touchdowns, eight on the ground. He opened the second half Friday with a 59-yard touchdown run up the middle, and the senior has scored in every phase of this 4\u20130 start."
+        "rating": "120.8 rush Y/G · 9 total TDs",
+        "copy": "Johnson leads Cain at 120.8 rushing yards per game with nine total touchdowns, eight on the ground. He opened the second half Friday with a 59-yard touchdown run up the middle, and the senior has scored in every phase of this 4–0 start."
       },
       {
         "team": "CAIN",
         "number": "10",
         "name": "Cooper Karns",
         "image": "/players/cooper-karns.jpg",
-        "role": "WR \u00b7 Senior",
+        "role": "WR · Senior",
         "tag": "Receiving leader",
-        "rating": "83.0 rec Y/G \u00b7 2 rec TDs",
+        "rating": "83.0 rec Y/G · 2 rec TDs",
         "copy": "Karns leads Cain's receivers at 83.0 yards per game. The senior turned a short throw into a 45-yard touchdown against Magnolia West, breaking a tackle and taking it the distance on a night Cain scored 58."
       },
       {
@@ -137,9 +424,9 @@
         "number": "47",
         "name": "Easton Mizell",
         "image": "/players/easton-mizell.jpg",
-        "role": "DB / FS \u00b7 Junior",
+        "role": "DB / FS · Junior",
         "tag": "Pick-six vs Magnolia West",
-        "rating": "7.5 Tckl/G \u00b7 2 INTs",
+        "rating": "7.5 Tckl/G · 2 INTs",
         "copy": "Mizell leads the Hurricanes in tackles at 7.5 per game and in interceptions with two. His 43-yard pick-six just before halftime Friday turned a rout into a statement, and the junior safety is the tone-setter for a defense allowing 26.5 points a game."
       },
       {
@@ -147,9 +434,9 @@
         "number": "18",
         "name": "Brylon Jefferson",
         "image": "/player-placeholder.svg",
-        "role": "QB \u00b7 Senior",
+        "role": "QB · Senior",
         "tag": "Nine touchdown passes",
-        "rating": "9 TD passes \u00b7 68.1% comp",
+        "rating": "9 TD passes · 68.1% comp",
         "copy": "Jefferson leads the Tigers with nine touchdown passes, a 68.1% completion rate and a 144.5 quarterback rating. When Magnolia had Collins down 35-28, he tied it with a 31-yard touchdown run, then won it with a 48-yard strike to Tylan Penright with 1:09 left."
       },
       {
@@ -157,9 +444,9 @@
         "number": "4",
         "name": "Tyce Hudson",
         "image": "/player-placeholder.svg",
-        "role": "RB \u00b7 Senior",
+        "role": "RB · Senior",
         "tag": "Nine total touchdowns",
-        "rating": "58.4 rush Y/G \u00b7 66.8 rec Y/G",
+        "rating": "58.4 rush Y/G · 66.8 rec Y/G",
         "copy": "Hudson is one of the Tigers' key senior weapons: 58.4 rushing yards a game, 66.8 receiving, and a team-high nine total touchdowns. He found the end zone in the Magnolia comeback and gives Collins a back who can hurt Cain between the tackles or split wide."
       },
       {
@@ -167,9 +454,9 @@
         "number": "14",
         "name": "Tylan Penright",
         "image": "/player-placeholder.svg",
-        "role": "WR \u00b7 Junior",
+        "role": "WR · Junior",
         "tag": "The 48-yard game-winner",
-        "rating": "70.5 receiving Y/G \u00b7 team high",
+        "rating": "70.5 receiving Y/G · team high",
         "copy": "Penright leads Collins at 70.5 receiving yards a game with three touchdown catches, and he owns the biggest catch of the Tigers' season: the 48-yard touchdown from Jefferson that beat Magnolia with 1:09 to play."
       },
       {
@@ -177,7 +464,7 @@
         "number": "31",
         "name": "Jayden Guillory",
         "image": "/player-placeholder.svg",
-        "role": "DB \u00b7 Sophomore",
+        "role": "DB · Sophomore",
         "tag": "Pick-six vs Magnolia",
         "rating": "11 tackles vs Magnolia",
         "copy": "Guillory made his mark against Magnolia with 11 tackles and a pick-six. The sophomore gives Cain another player to track in a Tiger secondary that can change the game."
@@ -201,7 +488,7 @@
         },
         {
           "title": "Take it away",
-          "body": "Cain's defense forced turnovers all night Friday: Jerod Spraberry's interception set up the opening score, Mizell's pick-six broke it open, and Reggie Yarbough added another pick. Against a 4\u20131 Collins team, extra possessions decide first place."
+          "body": "Cain's defense forced turnovers all night Friday: Jerod Spraberry's interception set up the opening score, Mizell's pick-six broke it open, and Reggie Yarbough added another pick. Against a 4–1 Collins team, extra possessions decide first place."
         },
         {
           "title": "Win the wet ball",
@@ -214,11 +501,11 @@
       "facts": [
         {
           "label": "Kickoff",
-          "value": "Saturday 10:00 AM \u2014 resuming after Thursday's weather postponement"
+          "value": "Saturday 10:00 AM — resuming after Thursday's weather postponement"
         },
         {
           "label": "Site",
-          "value": "Klein Memorial Stadium \u00b7 Klein, TX"
+          "value": "Klein Memorial Stadium · Klein, TX"
         },
         {
           "label": "Watch",
@@ -226,15 +513,15 @@
         },
         {
           "label": "District",
-          "value": "15-6A \u00b7 first-place showdown"
+          "value": "15-6A · first-place showdown"
         },
         {
           "label": "The stakes",
-          "value": "Collins win: sole first at 4\u20130 \u00b7 Cain win: tied with Klein at 3\u20130"
+          "value": "Collins win: sole first at 4–0 · Cain win: tied with Klein at 3–0"
         },
         {
           "label": "Head coaches",
-          "value": "James Clancy \u00b7 Adrian Mitchell"
+          "value": "James Clancy · Adrian Mitchell"
         },
         {
           "label": "Conditions",
@@ -242,7 +529,7 @@
         },
         {
           "label": "Cain at home",
-          "value": "2\u20130 at Klein Memorial this season \u00b7 45\u201320 over Oak Ridge, 55\u201338 over Tomball"
+          "value": "2–0 at Klein Memorial this season · 45–20 over Oak Ridge, 55–38 over Tomball"
         }
       ],
       "links": [
@@ -296,9 +583,9 @@
     }
   },
   "final": {
-    "headline": "Klein Collins Rallies Past Klein Cain, 40\u201324, to Stay Alone in First",
-    "byline": "Cain Game Day desk \u00b7 Updated Oct 3, 2026",
-    "body": "**Klein Collins Rallies Past Klein Cain, 40\u201324, to Stay Alone in First**\n\nCAIN GAME DAY DESK \u00b7 UPDATED 12:30 PM CT\n\nSaturday morning finished what Thursday night started, and it finished with Klein Collins alone in first place.\n\nThe Tigers scored **33 points** after play resumed and beat Klein Cain **40\u201324** Saturday at Klein Memorial Stadium, erasing the 14\u20137 deficit they faced when weather postponed Thursday's game in the second quarter. Collins improved to **5\u20131** overall and **4\u20130** in District 15-6A. The Hurricanes fell to **4\u20131** and **2\u20131** in district play.\n\nCain led **24\u201314** at halftime Saturday. Collins outscored the Hurricanes **26\u20130** after the break. Dave Campbell's had picked the Tigers by 8. They won by 16.\n\n**Thursday night: the 14\u20137 start**\n\nCain's opening drive stalled on fourth down after **Tyson Freeman (#17)** made a five-yard catch on third-and-8, and the punt sailed into the end zone. Collins struck first on a long **Brylon Jefferson** touchdown pass to **Tylan Penright (#14)**, and the extra point made it 7\u20130 Tigers.\n\n**Eyan Johnson (#16)** answered immediately, returning the ensuing kickoff **80 yards** for a touchdown to tie it at 7\u20137. Asked afterward when he knew he was gone, Johnson said: *\"I knew as soon as the ball touched my hands!\"*\n\nCain took the lead in the second quarter. **Jace Hanks (#9)** ripped off a 23-yard keeper, **Israel Smith (#8)** caught a pass and carried it 20 yards to the 3, and **Earl Oguinn Jr. (#1)** scored from a direct snap. The extra point made it 14\u20137.\n\nThe defense did its part before the sky opened. **Jaemin Gilstrap (#42)** dropped a runner for a six-yard loss, and **Michael Rhodes Jr. (#49)** recorded a strip-sack that Collins managed to recover. Hanks added a 15-yard run and **Cooper Karns (#10)** took a catch-and-run to the Collins 15 before the weather delay ended the night.\n\n**Saturday morning: Cain stretches it to 24\u201314**\n\nPlay resumed at **10:00 AM** with 9:45 left in the second quarter and Cain facing first-and-goal. Collins kept the Hurricanes out of the end zone, but **Sage DesAutels (#4)** drilled a **22-yard** field goal to make it 17\u20137.\n\nCollins answered with its best drive of the half. **Easton Mizell (#47)** broke up a pass and **Lovell Christian (#45)** recorded a tackle for loss, but on third-and-long Penright hauled in a **40-yard** catch-and-run, **Demarcus Jones** added a 20-yard run on third-and-9, and Jefferson finished it with a touchdown run up the middle. The extra point cut it to 17\u201314 with 2:50 left in the half.\n\nAfter a 20-yard screen to Karns, a 35-yard screen to Oguinn, an intentional grounding flag and a false start, Cain faced second-and-25 from its own 42. Hanks escaped a near-sack, somehow got loose and ran for the first down.\n\nTwo Oguinn runs of five yards each moved the chains again, and on first-and-goal from the 9, Hanks tucked it and scored at the right pylon. The extra point made it **24\u201314**.\n\nPenright's big kickoff return gave Collins one last shot from the Cain 18. **Jaiden Pacheco (#28)** sacked Jefferson, the Tigers stalled, and with 12 seconds left Aldridge shanked a field-goal attempt. Halftime: Cain 24, Collins 14.\n\n**Second half: all Tigers**\n\nCollins took the second-half kickoff at its 20 and marched. **Harmon (#6)** carried the load, Penright made a contested grab over tight coverage from **Michael Elhindi (#2)**, and even with Gilstrap repeatedly disrupting the backfield and forcing two holding penalties, Jefferson found **#1** for the touchdown. The extra point made it 24\u201321 with 8:02 left in the third.\n\nCain's next drive stalled at its own 34, and after the punt Collins struck again. Harmon broke loose for a touchdown run of about **50 yards**, putting the Tigers ahead 28\u201324 with 5:18 left in the quarter.\n\nCain punted again, but the Hurricane defense kept swinging. Gilstrap's pressure helped force an incompletion on third down, and Collins eventually punted into the end zone on fourth-and-11. Karns' slant on third-and-10 moved the chains to end the quarter with Cain at its own 31, trailing 28\u201324.\n\nThe fourth quarter belonged to Jefferson and the Collins offense. After another Cain punt, an unsportsmanlike conduct penalty on the Hurricanes gave the Tigers an automatic first down. Harmon followed with a 25-yard keeper, Jefferson ran for another first down, and Jefferson eventually scored on a sneak from the 1.\n\nThe extra point was **blocked**, leaving Collins ahead 34\u201324 with 7:41 left. Pacheco was shaken up during the drive but walked off under his own power.\n\nHanks was intercepted under pressure down the right sideline, giving Collins the ball at the Cain 21. Penright moved the Tigers to the 11, Christian recorded another tackle for loss and Mizell blew up a Harmon keeper before Jefferson found Penright on fourth down from the 14 for another touchdown.\n\nRhodes blocked his second extra point of the game, keeping it 40\u201324 with 3:46 to play.\n\nFreeman added an 18-yard catch on Cain's next possession, but Hanks was intercepted again at midfield with 3:31 left. Collins tried to close it out on the ground, but Cain's defense produced one last stand. Mizell stuffed Jefferson on third-and-4, and Hudson was stopped on fourth-and-3.\n\nCain got the ball back with 1:40 left. Hanks scrambled for **30 yards** plus a 15-yard late-hit penalty, moving the Hurricanes to the Collins 34. Karns added a 15-yard catch on third-and-long, but fourth-and-5 fell incomplete with 37 seconds left.\n\nCollins kneeled it out.\n\n**The defense deserves its due**\n\nThe scoreboard says 40\u201324, but the Hurricane defense made plenty of plays in a hard-fought loss. Gilstrap spent much of the game disrupting the Collins backfield, forcing holding penalties and hurrying throws. Christian recorded multiple tackles for loss, while Mizell broke up a pass, blew up a keeper and helped produce the final fourth-down stand.\n\nRhodes blocked **two** extra points and added Thursday's strip-sack. Elhindi delivered a big breakup on Penright, and Pacheco's sack helped force the missed field goal at the end of the first half.\n\n*Even after Collins took control, Cain's defense kept competing through the final possession.*\n\n**What's next**\n\nThere isn't much time to dwell on this one. Cain travels Thursday to face unbeaten **Klein (5\u20130)**, which held off Magnolia 28\u201321 Friday night to stay perfect.\n\nKickoff is **7:00 PM CT** on Thursday, Oct. 8. The Hurricanes enter the week 4\u20131 overall and 2\u20131 in District 15-6A, looking to answer their first loss of the season on the road.",
+    "headline": "Klein Collins Rallies Past Klein Cain, 40–24, to Stay Alone in First",
+    "byline": "Cain Game Day desk · Updated Oct 3, 2026",
+    "body": "**Klein Collins Rallies Past Klein Cain, 40–24, to Stay Alone in First**\n\nCAIN GAME DAY DESK · UPDATED 12:30 PM CT\n\nSaturday morning finished what Thursday night started, and it finished with Klein Collins alone in first place.\n\nThe Tigers scored **33 points** after play resumed and beat Klein Cain **40–24** Saturday at Klein Memorial Stadium, erasing the 14–7 deficit they faced when weather postponed Thursday's game in the second quarter. Collins improved to **5–1** overall and **4–0** in District 15-6A. The Hurricanes fell to **4–1** and **2–1** in district play.\n\nCain led **24–14** at halftime Saturday. Collins outscored the Hurricanes **26–0** after the break. Dave Campbell's had picked the Tigers by 8. They won by 16.\n\n**Thursday night: the 14–7 start**\n\nCain's opening drive stalled on fourth down after **Tyson Freeman (#17)** made a five-yard catch on third-and-8, and the punt sailed into the end zone. Collins struck first on a long **Brylon Jefferson** touchdown pass to **Tylan Penright (#14)**, and the extra point made it 7–0 Tigers.\n\n**Eyan Johnson (#16)** answered immediately, returning the ensuing kickoff **80 yards** for a touchdown to tie it at 7–7. Asked afterward when he knew he was gone, Johnson said: *\"I knew as soon as the ball touched my hands!\"*\n\nCain took the lead in the second quarter. **Jace Hanks (#9)** ripped off a 23-yard keeper, **Israel Smith (#8)** caught a pass and carried it 20 yards to the 3, and **Earl Oguinn Jr. (#1)** scored from a direct snap. The extra point made it 14–7.\n\nThe defense did its part before the sky opened. **Jaemin Gilstrap (#42)** dropped a runner for a six-yard loss, and **Michael Rhodes Jr. (#49)** recorded a strip-sack that Collins managed to recover. Hanks added a 15-yard run and **Cooper Karns (#10)** took a catch-and-run to the Collins 15 before the weather delay ended the night.\n\n**Saturday morning: Cain stretches it to 24–14**\n\nPlay resumed at **10:00 AM** with 9:45 left in the second quarter and Cain facing first-and-goal. Collins kept the Hurricanes out of the end zone, but **Sage DesAutels (#4)** drilled a **22-yard** field goal to make it 17–7.\n\nCollins answered with its best drive of the half. **Easton Mizell (#47)** broke up a pass and **Lovell Christian (#45)** recorded a tackle for loss, but on third-and-long Penright hauled in a **40-yard** catch-and-run, **Demarcus Jones** added a 20-yard run on third-and-9, and Jefferson finished it with a touchdown run up the middle. The extra point cut it to 17–14 with 2:50 left in the half.\n\nAfter a 20-yard screen to Karns, a 35-yard screen to Oguinn, an intentional grounding flag and a false start, Cain faced second-and-25 from its own 42. Hanks escaped a near-sack, somehow got loose and ran for the first down.\n\nTwo Oguinn runs of five yards each moved the chains again, and on first-and-goal from the 9, Hanks tucked it and scored at the right pylon. The extra point made it **24–14**.\n\nPenright's big kickoff return gave Collins one last shot from the Cain 18. **Jaiden Pacheco (#28)** sacked Jefferson, the Tigers stalled, and with 12 seconds left Aldridge shanked a field-goal attempt. Halftime: Cain 24, Collins 14.\n\n**Second half: all Tigers**\n\nCollins took the second-half kickoff at its 20 and marched. **Harmon (#6)** carried the load, Penright made a contested grab over tight coverage from **Michael Elhindi (#2)**, and even with Gilstrap repeatedly disrupting the backfield and forcing two holding penalties, Jefferson found **#1** for the touchdown. The extra point made it 24–21 with 8:02 left in the third.\n\nCain's next drive stalled at its own 34, and after the punt Collins struck again. Harmon broke loose for a touchdown run of about **50 yards**, putting the Tigers ahead 28–24 with 5:18 left in the quarter.\n\nCain punted again, but the Hurricane defense kept swinging. Gilstrap's pressure helped force an incompletion on third down, and Collins eventually punted into the end zone on fourth-and-11. Karns' slant on third-and-10 moved the chains to end the quarter with Cain at its own 31, trailing 28–24.\n\nThe fourth quarter belonged to Jefferson and the Collins offense. After another Cain punt, an unsportsmanlike conduct penalty on the Hurricanes gave the Tigers an automatic first down. Harmon followed with a 25-yard keeper, Jefferson ran for another first down, and Jefferson eventually scored on a sneak from the 1.\n\nThe extra point was **blocked**, leaving Collins ahead 34–24 with 7:41 left. Pacheco was shaken up during the drive but walked off under his own power.\n\nHanks was intercepted under pressure down the right sideline, giving Collins the ball at the Cain 21. Penright moved the Tigers to the 11, Christian recorded another tackle for loss and Mizell blew up a Harmon keeper before Jefferson found Penright on fourth down from the 14 for another touchdown.\n\nRhodes blocked his second extra point of the game, keeping it 40–24 with 3:46 to play.\n\nFreeman added an 18-yard catch on Cain's next possession, but Hanks was intercepted again at midfield with 3:31 left. Collins tried to close it out on the ground, but Cain's defense produced one last stand. Mizell stuffed Jefferson on third-and-4, and Hudson was stopped on fourth-and-3.\n\nCain got the ball back with 1:40 left. Hanks scrambled for **30 yards** plus a 15-yard late-hit penalty, moving the Hurricanes to the Collins 34. Karns added a 15-yard catch on third-and-long, but fourth-and-5 fell incomplete with 37 seconds left.\n\nCollins kneeled it out.\n\n**The defense deserves its due**\n\nThe scoreboard says 40–24, but the Hurricane defense made plenty of plays in a hard-fought loss. Gilstrap spent much of the game disrupting the Collins backfield, forcing holding penalties and hurrying throws. Christian recorded multiple tackles for loss, while Mizell broke up a pass, blew up a keeper and helped produce the final fourth-down stand.\n\nRhodes blocked **two** extra points and added Thursday's strip-sack. Elhindi delivered a big breakup on Penright, and Pacheco's sack helped force the missed field goal at the end of the first half.\n\n*Even after Collins took control, Cain's defense kept competing through the final possession.*\n\n**What's next**\n\nThere isn't much time to dwell on this one. Cain travels Thursday to face unbeaten **Klein (5–0)**, which held off Magnolia 28–21 Friday night to stay perfect.\n\nKickoff is **7:00 PM CT** on Thursday, Oct. 8. The Hurricanes enter the week 4–1 overall and 2–1 in District 15-6A, looking to answer their first loss of the season on the road.\n\nSteven's 2nd-quarter notes (game resumed Saturday 10:00 AM CT, Oct 3):\n\n9:45 left in 2nd: Cain first down, 1st and goal. 3rd and goal from 5: stopped. 4th and goal: 22-yard field goal good by #4. Cain 17-7.\n\n7:53 left in 2nd: kickoff to Collins, returned to the 20.\n\nCollins 4th drive: pass breakup by Easton Mizell; TFL by #45; 3rd and long: 40-yard catch and run by Tyler Peneright (sp?); 3rd and 9: 20-yard run by Demarcus Jones; 1st and 10 at the 24; 3rd and 1 from the 15: first down on QB sneak; 1st down at the 13; run down to the 1 by #4; touchdown run up the middle by QB Brylon Jefferson. XP good. 17-14, 2:50 left in half.\n\nCain 4th drive: 2nd and 15: 20-yard screen pass to Karns; 35-yard screen pass to #1 Rico Oguinn; intentional grounding penalty; false start; 2nd and 25 from the 42: Jace Hanks escapes near-sack and runs for first down; 1st down at the 19; two Rico runs of 5 each, 1st down; 1st and goal from the 9: Hanks tucks and runs for TD to the right pylon. XP good. 24-14 Cain.\n\nBig return by #14 down to Cain's 18.\n\nCollins 5th drive: sack by #28 Pacheco; 2nd and 15: no gain on screen; 3rd down: incomplete, good coverage; offsides; 4th down from the 17, 12 seconds left: field goal attempt by #45 Aldridge shanked. Halftime: 24-14 Cain.\n\nSteven's 3rd-quarter notes (Saturday resumption):\n\nCain ball after kickoff at the 30 (5:11 in 3rd): false start; TFL by Collins on handoff to #1; 2nd and long: 10-yard catch by Karns; 3rd and about 5: Nicolette; incomplete pass; punt.\n\nCollins ball, 1st and 10 (6:47 left in 3rd): 10+ yard run by Collins; 1st down; 9-yard catch by #1; 2nd and 1: ~50-yard touchdown run by #6 Harmon; XP good. 28-24 Collins, 5:18 left.\n\nSteven's 4th-quarter notes:\n\nCain ball at their 20: incomplete; QB keeper stuffed; 3rd and 10: slant catch by Karns for first down. End of 3rd: Cain ball, 1st and 10 at the 31, down 24-28.\n\nCain: short pass to Eyan Johnson; Jace Hanks pressured into a 3-yard run; 3rd down incomplete under pressure; punt fair-caught at Collins 28. (10:30 left in 4th)\n\nCollins: Peneright catch broken up by #2 on a big hit; tackle brings up 3rd and long; personal foul (unsportsmanlike) on Cain #45, automatic first down; ball at Collins 45; timeout Collins (10:09 left); 25-yard QB keeper by #6 Harmon; 1st down at Cain 30; 6-yard gain by #5; Jefferson QB keeper for first down; Cain #28 Pacheco shaken up, injury timeout, walked off on his own; 1st-down run by #4 down to the 4; 1st and goal: carry by #5 Terry to the 1; 2nd and goal: Jefferson QB sneak TD. XP BLOCKED. 34-24 Collins, 7:41 left.\n\nCain ball at 15: incomplete to Karns; hands-to-face penalty on Cain on 3rd down; 3rd and long: Hanks pressured, hit as he threw, intercepted down the right sideline. Collins ball at Cain 21: pass to Peneright for first down at the 11; TFL by #45 Lovell; 2nd and 14: keeper by #6 blown up by #47 Easton Mizell; timeout (3:58 left); 3rd and 13: pass over #4's head; 4th down from the 14: Jefferson TD pass to #14 (Peneright, big game); XP BLOCKED by #49. 40-24 Collins, 3:46 left.\n\nCain ball at 20: 18-yard catch by #17; Hanks intercepted at the 50 by #31 (3:31 left). Collins: runs by Hudson for first down; 1st and 10 from Cain 39: 7-yard run by Terry; 2-minute warning. Short run by Tyce Hudson; timeout Cain; 3rd and 4: Jefferson stuffed on keeper (#47 on stop); 4th and 3: Tyce Hudson STUFFED. Cain ball, 1:40 left, 1st down: Hanks scrambles for 30 plus a 15-yard late hit; 1st down at Collins 34; pass incomplete; holding; 2nd and long: pass incomplete; 3rd and long: 15-yard catch by Karns; 4th and 5: pass incomplete. Turnover on downs, 37 seconds left. Collins kneels it out. FINAL: Collins 40, Cain 24. Steven: \"Hard fought game by Cain.\"\n\nDefensive standouts from Steven's notes: #42 (backfield havoc, forced holding penalties, pressure), #45 Lovell (TFLs), #47 Easton Mizell (blown-up keeper, stop on Jefferson), #49 (two blocked XPs), #2 Elhindi (pass breakup on big hit, coverage).",
     "socialPosts": [],
     "homeScore": 24,
     "awayScore": 40,
@@ -373,13 +660,13 @@
       "href": "https://www.instagram.com/p/Dd7Z8A0RnmJ/"
     }
   ],
-  "footerNote": "Independent fan publication \u00b7 Facts on this page refresh from public sources.",
+  "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
   "disclaimerEntities": [
     "Klein ISD",
     "Klein Cain High School",
     "Klein Collins High School",
     "MaxPreps",
-    "Dave Campbell\u2019s Texas Football"
+    "Dave Campbell’s Texas Football"
   ],
   "current": true,
   "recapNotes": [
