@@ -15,14 +15,14 @@
     "name": "Tomball Memorial",
     "mascot": "Wildcats",
     "logo": "/tomball-memorial-logo.png",
-    "record": "1\u20134",
+    "record": "1–4",
     "rank": 177
   },
   "away": {
     "name": "Klein Cain",
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
-    "record": "4\u20131",
+    "record": "4–1",
     "rank": 49
   },
   "pageTitle": "2026 Week 8 Preview: Klein Cain at Tomball Memorial",
@@ -32,13 +32,13 @@
   "ogImage": "",
   "prediction": {
     "margin": 12,
-    "source": "Dave Campbell\u2019s Texas Football",
+    "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
     "asOf": "2026-09-29T16:47:33.511Z"
   },
   "massey": null,
   "rankings": {
-    "source": "Dave Campbell\u2019s Texas Football computer rankings",
+    "source": "Dave Campbell’s Texas Football computer rankings",
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/29/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-6",
     "asOf": "2026-09-29T16:47:33.202Z"
   },
@@ -65,12 +65,12 @@
       "facts": [
         {
           "label": "Cain",
-          "value": "4\u20130 \u00b7 2\u20130 district \u00b7 50.0 points/game",
+          "value": "4–1 · 2–1 district · 44.8 points/game",
           "team": "school"
         },
         {
           "label": "Tomball Memorial",
-          "value": "1\u20134 \u00b7 0\u20133 district",
+          "value": "1–4 · 0–3 district",
           "team": "opponent"
         },
         {
@@ -80,7 +80,7 @@
         },
         {
           "label": "Tomball Memorial coach",
-          "value": "Joe Dale Cary \u00b7 3rd season",
+          "value": "Joe Dale Cary · 3rd season",
           "team": "opponent"
         }
       ]
@@ -92,13 +92,13 @@
   },
   "final": null,
   "sources": [],
-  "footerNote": "Independent fan publication \u00b7 Facts on this page refresh from public sources.",
+  "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
   "disclaimerEntities": [
     "Klein ISD",
     "Klein Cain High School",
     "Tomball Memorial High School",
     "MaxPreps",
-    "Dave Campbell\u2019s Texas Football"
+    "Dave Campbell’s Texas Football"
   ],
   "current": false
 }
