@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "slug": "2026-10-01-klein-collins",
-  "status": "postponed",
-  "statusLabel": "Postponed · Resumes Sat 10 AM",
-  "homeScore": 14,
-  "awayScore": 7,
+  "status": "live",
+  "statusLabel": "2nd Quarter",
+  "homeScore": 17,
+  "awayScore": 14,
   "homeRecord": "",
   "awayRecord": "",
-  "updatedAt": "2026-10-02T03:59:42.547Z",
+  "updatedAt": "2026-10-03T15:17:38.862Z",
   "source": "Manual update",
   "sourceUrl": "https://kleincain.gameday.report/"
 }
