@@ -2,6 +2,11 @@
 // edition file in content/editions. Nothing about an opponent belongs in a
 // component or a route. See docs/PROJECT-GUIDE.md for the publishing rules.
 
+import {
+  formatFavoriteMargin,
+  marginFromSchoolPerspective,
+} from './prediction-margin';
+
 export type Team = {
   name: string;
   mascot: string;
@@ -322,23 +327,52 @@ export function editionByWeek(week: number) {
  * show no prediction, which the validator enforces.
  */
 export function predictionFact(edition: Edition, schoolName: string): Fact | null {
-  const candidates: { label: string; margin: number; href?: string }[] = [
-    edition.rating && { label: 'Our rating', margin: edition.rating.margin },
-    edition.massey && { label: 'Massey', margin: edition.massey.margin, href: edition.massey.sourceUrl },
+  const candidates: {
+    label: string;
+    margin: number;
+    basis: 'home' | 'school';
+    href?: string;
+  }[] = [
+    edition.rating && {
+      label: 'Our rating',
+      margin: edition.rating.margin,
+      basis: 'home',
+    },
+    edition.massey && {
+      label: 'Massey',
+      margin: edition.massey.margin,
+      basis: 'school',
+      href: edition.massey.sourceUrl,
+    },
     // No href: this margin comes from Dave Campbell's data feed, which appears
     // to drive their Pick'Em contest, and is not displayed on any public page.
     // Linking it would send a reader somewhere the number is not shown.
-    edition.prediction && { label: 'Model prediction', margin: edition.prediction.margin },
-  ].filter((candidate): candidate is { label: string; margin: number; href?: string } => Boolean(candidate));
+    edition.prediction && {
+      label: 'Model prediction',
+      margin: edition.prediction.margin,
+      basis: 'school',
+    },
+  ].filter((candidate): candidate is {
+    label: string;
+    margin: number;
+    basis: 'home' | 'school';
+    href?: string;
+  } => Boolean(candidate));
 
   const chosen = candidates[0];
   if (!chosen) return null;
   const opponent = opponentOf(edition, schoolName);
-  const rounded = Math.round(chosen.margin);
-  const favorite = rounded === 0 ? null : rounded > 0 ? schoolName : opponent.name;
+  const schoolMargin = marginFromSchoolPerspective(
+    edition.home.name,
+    edition.away.name,
+    schoolName,
+    chosen.margin,
+    chosen.basis,
+  );
+  const { value } = formatFavoriteMargin(schoolMargin, schoolName, opponent.name);
   return {
     label: chosen.label,
-    value: favorite ? `${favorite} by ${Math.abs(rounded)}` : 'Even',
+    value,
     href: chosen.href,
   };
 }
