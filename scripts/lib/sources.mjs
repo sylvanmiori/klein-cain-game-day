@@ -316,7 +316,7 @@ function playerName(row, roster = []) {
 /** Parse the covered school's game-only totals and leaders from a MaxPreps
  * matchup Stats tab. A null team entry means the coaches have not posted data;
  * that is an unavailable result, never a page full of zeroes. */
-export function parseGameStats(html, { teamId, teamName, roster = [] }) {
+export function parseGameStats(html, { teamId, teamName, roster = [], slug = null }) {
   const stream = rscText(html);
   const byTeam = objectAfter(stream, '"statsByTeamId":');
   const team = byTeam?.[teamId];
@@ -432,7 +432,7 @@ export async function fetchGameStats({ scheduleUrl, date, teamId, teamName, rost
   if (!gameUrl) throw new Error(`No MaxPreps game page was linked for ${date}.`);
   const sourceUrl = `${gameUrl}&tab=Stats`;
   const html = await (await get(sourceUrl)).text();
-  const parsed = parseGameStats(html, { teamId, teamName, roster });
+  const parsed = parseGameStats(html, { teamId, teamName, roster, slug });
   return parsed ? { ...parsed, sourceUrl, asOf: new Date().toISOString() } : null;
 }
 
