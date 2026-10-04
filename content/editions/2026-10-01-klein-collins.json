@@ -669,5 +669,89 @@
     "Dave Campbell’s Texas Football"
   ],
   "current": true,
-  "recapNotes": null
+  "recapNotes": null,
+  "gameStats": {
+    "team": "Klein Cain",
+    "playerOfGame": {
+      "name": "Jace Hanks",
+      "number": "9",
+      "image": "/players/jace-hanks.jpg",
+      "headline": "316 yards of offense · 1 TD",
+      "rationale": "Hanks finished with 183 passing yards, 133 rushing yards and 1 rushing touchdown, and 1 receiving yard.",
+      "model": "Cain Impact v1"
+    },
+    "totals": [
+      {
+        "label": "Total offense",
+        "value": "341 yards",
+        "detail": "184 passing · 157 rushing"
+      },
+      {
+        "label": "Passing",
+        "value": "184 yards",
+        "detail": "15 of 32 · 0 TD · 2 INT"
+      },
+      {
+        "label": "Rushing",
+        "value": "157 yards",
+        "detail": "26 carries · 2 TD"
+      },
+      {
+        "label": "Defense",
+        "value": "62 tackles",
+        "detail": "33 solo · 7.0 TFL"
+      },
+      {
+        "label": "Punting",
+        "value": "35.3 average",
+        "detail": "3 punts · long 43"
+      },
+      {
+        "label": "Kicking",
+        "value": "6 points",
+        "detail": "3/3 PAT · 1/1 FG"
+      }
+    ],
+    "leaders": [
+      {
+        "category": "Passing",
+        "name": "Jace Hanks",
+        "number": "9",
+        "stat": "183 passing yards",
+        "detail": "14 of 31 · 0 TD · 2 INT"
+      },
+      {
+        "category": "Rushing",
+        "name": "Jace Hanks",
+        "number": "9",
+        "stat": "133 rushing yards",
+        "detail": "11 carries · 1 TD"
+      },
+      {
+        "category": "Receiving",
+        "name": "Cooper Karns",
+        "number": "10",
+        "stat": "85 receiving yards",
+        "detail": "6 catches"
+      },
+      {
+        "category": "Tackles",
+        "name": "Gage Hansberger",
+        "number": "34",
+        "stat": "12 total tackles",
+        "detail": "4 solo · 0 TFL"
+      },
+      {
+        "category": "Kicking",
+        "name": "Sage DesAutels",
+        "number": "4",
+        "stat": "6 kicking points",
+        "detail": "3/3 PAT · 1/1 FG"
+      }
+    ],
+    "updated": "2026-10-03T15:21:00",
+    "source": "MaxPreps",
+    "sourceUrl": "https://www.maxpreps.com/tx/football/game/klein-cain-houston-vs-klein-collins-spring/10-3-2026/?c=9c730f9f-31f8-433d-9ea8-9917e3c18bf0&tab=Stats",
+    "asOf": "2026-10-04T12:18:07.715Z"
+  }
 }

@@ -55,7 +55,7 @@ function rationale(player) {
   const recTds = value(player, 'receivingTouchdowns');
   if (passing) parts.push(`${passing} passing yards${passTds ? ` and ${plural(passTds, 'passing touchdown')}` : ''}`);
   if (rushing) parts.push(`${rushing} rushing yards${rushTds ? ` and ${plural(rushTds, 'rushing touchdown')}` : ''}`);
-  if (receiving) parts.push(`${receiving} receiving yards${recTds ? ` and ${plural(recTds, 'receiving touchdown')}` : ''}`);
+  if (receiving) parts.push(`${plural(receiving, 'receiving yard')}${recTds ? ` and ${plural(recTds, 'receiving touchdown')}` : ''}`);
 
   const tackles = value(player, 'totalTackles');
   const defense = [];
