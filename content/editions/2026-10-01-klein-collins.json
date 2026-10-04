@@ -681,11 +681,11 @@
   "gameStats": {
     "team": "Klein Cain",
     "playerOfGame": {
-      "name": "Jace Hanks",
-      "number": "9",
-      "image": "/players/jace-hanks.jpg",
-      "headline": "316 yards of offense · 1 TD",
-      "rationale": "Hanks finished with 183 passing yards, 133 rushing yards and 1 rushing touchdown, and 1 receiving yard.",
+      "name": "Jaemin Gilstrap",
+      "number": "42",
+      "image": "/players/jaemin-gilstrap.jpg",
+      "headline": "4 tackles · 2 impact plays",
+      "rationale": "Gilstrap finished with 4 tackles, 2 tackles for loss.",
       "model": "Cain Impact v1"
     },
     "totals": [

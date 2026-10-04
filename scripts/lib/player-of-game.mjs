@@ -1,5 +1,14 @@
 export const PLAYER_OF_GAME_MODEL = 'Cain Impact v1';
 
+// Editorial overrides, keyed by edition slug. The editor may overrule the
+// model's pick; the override selects the named player's verified game row and
+// the model still writes the headline/rationale from that row, so the card
+// stays reproducible and stat-backed. (Steven, 2026-10-04: Gilstrap over Hanks
+// for the Collins loss; two interceptions in a loss is the wrong look.)
+const PLAYER_OF_GAME_OVERRIDES = {
+  '2026-10-01-klein-collins': { number: '42' }, // Jaemin Gilstrap
+};
+
 const value = (player, key) => Number(player[key]) || 0;
 const plural = (count, singular, pluralForm = `${singular}s`) => `${count} ${count === 1 ? singular : pluralForm}`;
 
@@ -79,7 +88,20 @@ function rationale(player) {
  * reproducible. Ties go to touchdowns, yards from scrimmage, tackles, then
  * jersey number. No opponent data, season totals or recruiting ratings enter.
  */
-export function selectPlayerOfGame(players) {
+export function selectPlayerOfGame(players, opts = {}) {
+  const format = (winner) => ({
+    name: winner.name,
+    number: String(winner.number),
+    ...(winner.image ? { image: winner.image } : {}),
+    headline: headline(winner),
+    rationale: rationale(winner),
+    model: PLAYER_OF_GAME_MODEL,
+  });
+  const override = opts.slug ? PLAYER_OF_GAME_OVERRIDES[opts.slug] : null;
+  if (override) {
+    const pick = players.find((player) => String(player.number) === String(override.number));
+    if (pick && (score(pick) > 0 || value(pick, 'totalTackles') > 0)) return format(pick);
+  }
   const candidates = players
     .map((player) => ({ player, impact: score(player) }))
     .filter(({ impact }) => impact > 0)
@@ -90,13 +112,5 @@ export function selectPlayerOfGame(players) {
       || value(b.player, 'totalTackles') - value(a.player, 'totalTackles')
       || Number(a.player.number || 999) - Number(b.player.number || 999));
   if (!candidates.length) return null;
-  const winner = candidates[0].player;
-  return {
-    name: winner.name,
-    number: String(winner.number),
-    ...(winner.image ? { image: winner.image } : {}),
-    headline: headline(winner),
-    rationale: rationale(winner),
-    model: PLAYER_OF_GAME_MODEL,
-  };
+  return format(candidates[0].player);
 }

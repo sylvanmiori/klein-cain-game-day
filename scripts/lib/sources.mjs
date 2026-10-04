@@ -417,7 +417,7 @@ export function parseGameStats(html, { teamId, teamName, roster = [] }) {
   });
   collect(table('Sacks'), { sacks: 'Sacks' });
   collect(kicking, { kickingPoints: 'TotalKickingPoints' });
-  const playerOfGame = selectPlayerOfGame([...players.values()]);
+  const playerOfGame = selectPlayerOfGame([...players.values()], { slug });
 
   const updated = team.lastUpdated?.timeStamp;
   if (!updated) throw new Error('Game stats did not say when they were last updated.');
@@ -426,7 +426,7 @@ export function parseGameStats(html, { teamId, teamName, roster = [] }) {
   return { team: teamName, playerOfGame, totals, leaders, updated, ...MAXPREPS_ATTRIBUTION };
 }
 
-export async function fetchGameStats({ scheduleUrl, date, teamId, teamName, roster = [] }) {
+export async function fetchGameStats({ scheduleUrl, date, teamId, teamName, roster = [], slug = null }) {
   const scheduleHtml = await (await get(scheduleUrl)).text();
   const gameUrl = findMaxPrepsGameUrl(scheduleHtml, date);
   if (!gameUrl) throw new Error(`No MaxPreps game page was linked for ${date}.`);

@@ -123,6 +123,7 @@ for (const { name, edition } of editions) {
       teamId: publication.maxPrepsTeamId,
       teamName: publication.schoolName,
       roster: roster.players,
+      slug: name.replace(/\.json$/, ''),
     });
     if (!gameStats) {
       console.log(`${name}: game statistics not posted yet; leaving them for the next run.`);
