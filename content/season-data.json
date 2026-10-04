@@ -27,80 +27,80 @@
     }
   },
   "records": {
-    "Humble": "1\u20134",
-    "Oak Ridge": "1\u20133",
-    "Tomball": "3\u20131",
-    "Magnolia West": "2\u20133",
-    "Klein Collins": "5\u20131",
-    "Klein": "5\u20130",
-    "Klein Oak": "1\u20133",
-    "Tomball Memorial": "1\u20134",
-    "Magnolia": "1\u20134",
-    "Klein Forest": "1\u20134"
+    "Humble": "1–4",
+    "Oak Ridge": "1–3",
+    "Tomball": "3–1",
+    "Magnolia West": "2–3",
+    "Klein Collins": "5–1",
+    "Klein": "5–0",
+    "Klein Oak": "1–3",
+    "Tomball Memorial": "1–4",
+    "Magnolia": "1–4",
+    "Klein Forest": "1–4"
   },
   "standings": {
     "district": "District 15-6A",
     "rows": [
       {
         "team": "Klein Bearkats",
-        "district": "3\u20130",
-        "overall": "5\u20130",
-        "next": "Klein Forest Eagles"
-      },
-      {
-        "team": "Klein Collins Tigers",
-        "district": "4\u20130",
-        "overall": "5\u20131",
+        "district": "4–0",
+        "overall": "6–0",
         "next": "Klein Cain Hurricanes"
       },
       {
+        "team": "Klein Collins Tigers",
+        "district": "4–0",
+        "overall": "5–1",
+        "next": "Tomball Cougars"
+      },
+      {
         "team": "Klein Cain Hurricanes",
-        "district": "2\u20131",
-        "overall": "4\u20131",
+        "district": "2–1",
+        "overall": "4–1",
         "next": "Klein Bearkats"
       },
       {
         "team": "Klein Forest Eagles",
-        "district": "1\u20132",
-        "overall": "1\u20134",
-        "next": "Klein Bearkats"
+        "district": "1–3",
+        "overall": "1–5",
+        "next": "Klein Oak Panthers"
       },
       {
         "team": "Klein Oak Panthers",
-        "district": "1\u20131",
-        "overall": "1\u20133",
+        "district": "1–1",
+        "overall": "1–3",
         "next": "Magnolia Bulldogs"
       },
       {
         "team": "Magnolia Bulldogs",
-        "district": "1\u20132",
-        "overall": "1\u20134",
+        "district": "1–2",
+        "overall": "1–4",
         "next": "Klein Oak Panthers"
       },
       {
         "team": "Tomball Cougars",
-        "district": "1\u20131",
-        "overall": "3\u20131",
+        "district": "1–1",
+        "overall": "3–1",
         "next": "Magnolia West Mustangs"
       },
       {
         "team": "Magnolia West Mustangs",
-        "district": "0\u20133",
-        "overall": "2\u20133",
+        "district": "0–3",
+        "overall": "2–3",
         "next": "Tomball Cougars"
       },
       {
         "team": "Tomball Memorial Wildcats",
-        "district": "0\u20133",
-        "overall": "1\u20134",
+        "district": "0–3",
+        "overall": "1–4",
         "next": "Idle"
       }
     ],
-    "source": "Dave Campbell\u2019s Texas Football",
+    "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/team/klein-cain-hurricanes",
     "asOf": "2026-10-03T17:58:13.000Z"
   },
-  "source": "Dave Campbell\u2019s Texas Football",
+  "source": "Dave Campbell’s Texas Football",
   "sourceUrl": "https://www.texasfootball.com/scores/",
   "asOf": "2026-10-03T17:58:13.000Z"
 }
