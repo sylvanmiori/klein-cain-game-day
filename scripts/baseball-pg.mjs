@@ -38,7 +38,7 @@
 
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parsePoolStandingsPage } from '../cloudflare/baseball-standings.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -261,7 +261,10 @@ function parseGame(cell, tournamentStart) {
 function parseTournaments(html) {
   if (!/TEAM SCHEDULE/.test(html)) throw new Error('TEAM SCHEDULE section not found on the Perfect Game team page.');
 
-  const eventLinks = [...html.matchAll(/<a[^>]*id="[^"]*hlEvent"[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g)];
+  // PG wraps the event name in <b><font> inside the anchor (2026-10-02), so the
+  // link text may carry nested tags. Scope to the schedule grid (rgSchedule)
+  // so roster-history and footer hlEvent anchors can never match.
+  const eventLinks = [...html.matchAll(/<a[^>]*id="[^"]*rgSchedule[^"]*hlEvent"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)];
   const gameCells = [...html.matchAll(/<td class="nestedscheduleGridRow">([\s\S]*?)<\/td>/g)];
 
   const tournaments = [];
@@ -533,4 +536,9 @@ async function main() {
   for (const note of notes) console.log(`baseball-pg: note: ${note}`);
 }
 
-main();
+// Importable for the regression test without running the live scrape.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main();
+}
+
+export { parseTournaments, parseTeam, parseRoster, parseGame };

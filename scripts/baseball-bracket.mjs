@@ -43,18 +43,33 @@ const SNAPSHOT_DIR = join(OUT_DIR, 'pg-snapshots');
 const TIMEOUT = 45000;
 const ATTEMPTS = 3;
 
+// PG now serves an Azure WAF JS challenge (403) to browser-UA fetches
+// (observed 2026-10-02). Fall back to the identifying UA on later attempts,
+// mirroring scripts/baseball-pg.mjs, so the poller survives the challenge.
+const IDENTIFYING_UA = 'kleincain.gameday.report (contact: SylvanMiori@gmail.com)';
+const HEADER_SETS = [
+  {
+    'user-agent': BROWSER_UA,
+    accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'accept-language': 'en-US,en;q=0.9',
+  },
+  {
+    'user-agent': IDENTIFYING_UA,
+    accept: 'text/html,application/xhtml+xml',
+    'accept-language': 'en-US,en;q=0.9',
+    'cache-control': 'no-cache',
+  },
+];
+
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function get(url) {
   let lastError;
   for (let attempt = 1; attempt <= ATTEMPTS; attempt += 1) {
+    const headers = HEADER_SETS[Math.min(attempt - 1, HEADER_SETS.length - 1)];
     try {
       const response = await fetch(url, {
-        headers: {
-          'user-agent': BROWSER_UA,
-          accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-          'accept-language': 'en-US,en;q=0.9',
-        },
+        headers,
         signal: AbortSignal.timeout(TIMEOUT),
       });
       if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
