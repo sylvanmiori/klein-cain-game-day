@@ -67,10 +67,10 @@
   "resultFacts": [],
   "preview": {
     "playersHeading": "Players to watch",
-    "playersNote": "",
+    "playersNote": "Four Hurricanes and four Bearkats who will decide Thursday night.",
     "intro": {
       "heading": "The matchup",
-      "body": "Klein Cain plays at Klein on October 8, 2026 at 7:00 PM, at Klein Memorial Stadium. Records, the statewide ranking and the published forecast on this page update automatically as the season goes on. Player notes are added only when they can be checked against a named source.",
+      "body": "Thursday night is about first place. **Klein Cain (4–1, 2–1)** walks into Klein Memorial Stadium to face an unbeaten **Klein (6–0, 4–0)** team that just hung **52–0** on Klein Forest. The Bearkats sit tied with Klein Collins atop **District 15-6A**. A Cain win pulls the Hurricanes within a game of the lead; a Klein win gives the Bearkats sole possession of first.\n\nThe Hurricanes are coming off their worst half of the season. Last week's **40–24** loss to Collins saw a **24–14** halftime lead dissolve into a **26–0** second half, with two interceptions and no points after the break. The response starts with the run game: **Eyan Johnson (#16)** managed just 19 yards on nine carries against Collins, and this offense goes where he goes.\n\nDave Campbell's computer likes Klein **by 5** at home. The voters still believe in Cain: the Hurricanes held at **No. 25** in this week's Class 6A state poll. *An unbeaten team favored by less than a touchdown on its own field? We'll see about that Thursday night.*",
       "facts": [
         {
           "label": "Cain",
@@ -94,10 +94,151 @@
         }
       ]
     },
-    "players": [],
-    "recruiting": null,
-    "keys": null,
-    "gameInfo": null
+    "players": [
+      {
+        "team": "CAIN",
+        "number": "16",
+        "name": "Eyan Johnson",
+        "image": "/players/eyan-johnson.jpg",
+        "role": "RB / SB · Senior",
+        "tag": "100.4 rushing yards per game",
+        "rating": "9 total TDs",
+        "copy": "Johnson managed just 19 yards on nine carries against Collins, his quietest night of the season. The bounce-back spot is obvious: he still leads Cain at 100.4 rushing yards per game with nine total touchdowns, and his 80-yard kickoff return for a score last week was the highlight of the loss. When he gets going early, everything else opens up."
+      },
+      {
+        "team": "CAIN",
+        "number": "9",
+        "name": "Jace Hanks",
+        "image": "/players/jace-hanks.jpg",
+        "role": "QB · Junior",
+        "tag": "Eight passing touchdowns",
+        "rating": "8 TD passes · 5 rushing TDs",
+        "copy": "Hanks has thrown eight touchdown passes and run for five more, averaging 85.4 rushing yards a game. But the Collins loss turned on his two second-half interceptions, and Thursday demands a clean game. His legs remain Cain's best broken-play weapon; Klein has to account for him on every snap."
+      },
+      {
+        "team": "CAIN",
+        "number": "10",
+        "name": "Cooper Karns",
+        "image": "/players/cooper-karns.jpg",
+        "role": "WR · Senior",
+        "tag": "83.4 receiving yards per game",
+        "rating": "Team receiving leader",
+        "copy": "Karns leads the Hurricanes at 83.4 receiving yards per game and has been Hanks' most reliable target all season, including six catches for 85 yards against Collins. If Klein loads the box to stop Johnson, the outside throws to Karns become the release valve."
+      },
+      {
+        "team": "CAIN",
+        "number": "42",
+        "name": "Jaemin Gilstrap",
+        "image": "/players/jaemin-gilstrap.jpg",
+        "role": "DL · Senior",
+        "tag": "2 tackles for loss vs Collins",
+        "rating": "4 tackles · constant edge pressure",
+        "copy": "Gilstrap lived in Collins' backfield last week with four tackles and two for loss, and he was Cain's best defensive player in the loss. Against a Klein offense that wants to stay on schedule, his edge pressure is the most disruptive force the Hurricanes have."
+      },
+      {
+        "team": "KLEIN",
+        "number": "12",
+        "name": "Carter Lattelle",
+        "image": "/player-placeholder.svg",
+        "role": "QB · Senior",
+        "tag": "12 touchdown passes",
+        "rating": "12 TD passes",
+        "copy": "Lattelle is the engine of the 6–0 start with 12 touchdown passes, spreading the ball to a deep receiver group. He threw for 126 yards and two scores in the early win over Eisenhower and has kept the Bearkats on schedule all season. Pressure him and the whole offense tightens up."
+      },
+      {
+        "team": "KLEIN",
+        "number": "1",
+        "name": "Mike Brown",
+        "image": "/player-placeholder.svg",
+        "role": "WR · Junior",
+        "tag": "98.0 receiving yards per game",
+        "rating": "6 receiving TDs",
+        "copy": "Brown is Lattelle's first read and the district's most dangerous receiver at 98.0 yards per game with six touchdowns. His 75-yard catch against Eisenhower showed the home-run speed. Cain's corners have to know where he is on every snap."
+      },
+      {
+        "team": "KLEIN",
+        "number": "0",
+        "name": "Kendrick Brown",
+        "image": "/player-placeholder.svg",
+        "role": "FB / RB · Senior",
+        "tag": "65.3 rushing yards per game",
+        "rating": "Leads Klein ground game",
+        "copy": "Kendrick Brown leads a three-headed Klein ground game at 65.3 yards a contest, with Evan Juniel (41.8) and Bryne Johnson (41.2) rotating behind him. The Bearkats stay ahead of the chains running downhill; fitting the run is job one for Cain's front seven."
+      },
+      {
+        "team": "KLEIN",
+        "number": "21",
+        "name": "Dolan Guedry",
+        "image": "/player-placeholder.svg",
+        "role": "LB · Senior",
+        "tag": "7.7 tackles per game",
+        "rating": "1.0 sack",
+        "copy": "Guedry leads the Bearkat defense at 7.7 tackles a game with a sack, the quarterback of a unit that just pitched a 52–0 shutout. He'll be the man assigned to sort out Cain's run-pass conflict all night."
+      }
+    ],
+    "recruiting": {
+      "heading": "Klein recruiting notes",
+      "note": "A roster-wide check of the 2026-27 MaxPreps varsity list and On3's Klein roster page found no verified college commitments on the current Bearkats roster as of Oct. 4. Reported offers are not commitments.",
+      "rows": []
+    },
+    "keys": {
+      "heading": "Four keys for Klein Cain",
+      "items": [
+        {
+          "title": "Protect the football",
+          "body": "The Collins loss turned on two second-half interceptions, and Klein's secondary takes it away: **Cash Hines (#5)**, **Dyshon Washington (#26)** and **Ashton Vasser (#24)** each have a pick. Give this offense extra possessions and it scores; give them away and Thursday gets long."
+        },
+        {
+          "title": "Get Eyan Johnson going early",
+          "body": "Nineteen yards on nine carries was Johnson's quietest night of the year, and the offense stalled with him. Establish the run and **Jace Hanks (#9)** gets the play-action looks that produced **eight** touchdown passes. Everything flows downhill from there."
+        },
+        {
+          "title": "Make someone besides Mike Brown beat you",
+          "body": "**Carter Lattelle (#12)** looks Brown's way first for a reason: **98.0** yards a game and **six** touchdowns. Cloud the coverage his way, tackle the catch, and force the other Bearkat receivers to win one-on-one."
+        },
+        {
+          "title": "Fit the run",
+          "body": "Klein rotates three backs averaging over **40** yards a game behind a line opening holes for a **6–0** team. **Jaemin Gilstrap (#42)** set the edge against Collins; the whole front seven has to do it again or the Bearkats will shorten this game."
+        }
+      ]
+    },
+    "gameInfo": {
+      "heading": "Game information",
+      "facts": [
+        {
+          "label": "Kickoff",
+          "value": "Thursday, October 8 · 7:00 PM"
+        },
+        {
+          "label": "Site",
+          "value": "Klein Memorial Stadium · Klein, TX"
+        },
+        {
+          "label": "District",
+          "value": "15-6A"
+        },
+        {
+          "label": "The stakes",
+          "value": "Klein win: 5–0, alone in first · Cain win: 3–1, one game back"
+        },
+        {
+          "label": "Head coaches",
+          "value": "James Clancy (Cain) · David Perez (Klein)"
+        },
+        {
+          "label": "Conditions",
+          "value": "83°F · Mostly Cloudy · 7% rain (NWS)"
+        },
+        {
+          "label": "Cain form",
+          "value": "4–1 · 2–1 district · 44.8 points/game"
+        },
+        {
+          "label": "Klein form",
+          "value": "6–0 · 4–0 district · 52–0 over Klein Forest last week"
+        }
+      ]
+    }
   },
   "final": null,
   "sources": [],
