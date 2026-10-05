@@ -150,6 +150,64 @@ export function parseDistrictRecords(html) {
   return records;
 }
 
+export const MAXPREPS_DISTRICT_STANDINGS_URL =
+  'https://www.maxpreps.com/tx/football/26-27/district/6a-region-ii-district-15/?leagueid=af5271e6-8bb8-4df8-a493-0a3f59161a00';
+
+export const MAXPREPS_STANDINGS_ATTRIBUTION = {
+  source: 'MaxPreps',
+  sourceUrl: MAXPREPS_DISTRICT_STANDINGS_URL,
+};
+
+/**
+ * District standings from MaxPreps' district page, which is server rendered.
+ * Dave Campbell's new platform stopped serving its standings module in
+ * October 2026 (empty placeholder, login-walled API), so MaxPreps became the
+ * live source. MaxPreps prints short team names ("Klein Cain"); the district
+ * mascot map expands them to the site's "<name> <mascot>" record keys.
+ */
+const DISTRICT_MASCOTS = {
+  Klein: 'Bearkats',
+  'Klein Cain': 'Hurricanes',
+  'Klein Collins': 'Tigers',
+  'Klein Forest': 'Eagles',
+  'Klein Oak': 'Panthers',
+  Magnolia: 'Bulldogs',
+  'Magnolia West': 'Mustangs',
+  Tomball: 'Cougars',
+  'Tomball Memorial': 'Wildcats',
+};
+
+export function parseMaxPrepsStandings(html) {
+  const tables = [...html.matchAll(/<tbody>([\s\S]*?)<\/tbody>/g)].map(([, body]) => body);
+  const table = tables.find((body) => /class="[^"]*league-col/.test(body));
+  if (!table) throw new Error('Standings table not found on the MaxPreps district page.');
+  const rows = [];
+  for (const [, body] of table.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)) {
+    const cells = [...body.matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/g)].map(([, cell]) => stripTags(cell));
+    if (cells.length < 8) continue;
+    // rank, school, district W-L, district PCT, PF, PA, overall W-L, ...
+    const [, shortName, district, , , , overall] = cells;
+    const mascot = DISTRICT_MASCOTS[shortName];
+    const districtRecord = standingRecord(district);
+    const overallRecord = standingRecord(overall);
+    if (!mascot || !districtRecord || !overallRecord) continue;
+    rows.push({
+      team: `${shortName} ${mascot}`,
+      district: districtRecord,
+      overall: overallRecord,
+      next: '',
+    });
+  }
+  if (rows.length === 0) throw new Error('Standings table contained no readable records.');
+  return { district: 'District 15-6A', rows };
+}
+
+/** One request returns the district table in the site's record-key format. */
+export async function fetchMaxPrepsStandings() {
+  const html = await (await get(MAXPREPS_DISTRICT_STANDINGS_URL)).text();
+  return parseMaxPrepsStandings(html);
+}
+
 /**
  * Dave Campbell's publishes a weekly computer ranking of every Texas team as an
  * article. Team pages link the recent ones, so the newest is found by the date

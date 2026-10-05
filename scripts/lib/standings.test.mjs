@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { parseDistrictRecords, parseDistrictStandings } from './sources.mjs';
+import { parseDistrictRecords, parseDistrictStandings, parseMaxPrepsStandings } from './sources.mjs';
 
 const html = `
 <h3>District 15-6A Standings</h3>
@@ -46,4 +46,33 @@ test('a tie record is kept', () => {
 
 test('a missing table is a failure, not an empty standing', () => {
   assert.throws(() => parseDistrictStandings('<html></html>'), /Standings table not found/);
+});
+
+const maxprepsHtml = `
+<table><tbody>
+  <tr><td>1</td><td><div><span>Klein</span></div></td><td class="league-col">4-0</td><td class="league-col">1.000</td><td class="league-col">151</td><td class="league-col">48</td><td class="overall-col">6-0</td><td class="overall-col">1.000</td><td class="overall-col">210</td><td class="overall-col">51</td><td>6 W</td></tr>
+  <tr><td>3</td><td><div><span>Klein Cain</span></div></td><td class="league-col">2-1</td><td class="league-col">0.667</td><td class="league-col">137</td><td class="league-col">85</td><td class="overall-col">4-1</td><td class="overall-col">0.800</td><td class="overall-col">224</td><td class="overall-col">146</td><td>1 L</td></tr>
+  <tr><td>4</td><td><div><span>Some Unknown School</span></div></td><td class="league-col">0-4</td><td class="league-col">0.000</td><td class="league-col">10</td><td class="league-col">200</td><td class="overall-col">0-6</td><td class="overall-col">0.000</td><td class="overall-col">20</td><td class="overall-col">300</td><td>6 L</td></tr>
+</tbody></table>
+`;
+
+test('maxpreps standings expand short names to full record keys', () => {
+  const table = parseMaxPrepsStandings(maxprepsHtml);
+  assert.equal(table.district, 'District 15-6A');
+  assert.deepEqual(table.rows.map((row) => row.team), ['Klein Bearkats', 'Klein Cain Hurricanes']);
+  assert.deepEqual(table.rows[1], {
+    team: 'Klein Cain Hurricanes',
+    district: '2–1',
+    overall: '4–1',
+    next: '',
+  });
+});
+
+test('maxpreps standings drop schools outside the mascot map, never partial rows', () => {
+  const table = parseMaxPrepsStandings(maxprepsHtml);
+  assert.ok(table.rows.every((row) => row.team !== 'Some Unknown School'));
+});
+
+test('a missing maxpreps table is a failure, not an empty standing', () => {
+  assert.throws(() => parseMaxPrepsStandings('<html></html>'), /Standings table not found/);
 });

@@ -12,13 +12,14 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import {
+  fetchMaxPrepsStandings,
   fetchPick,
   fetchScoreRows,
   fetchStateRankings,
   fetchTeamPage,
   fetchWeather,
   findRankingsArticle,
-  parseDistrictStandings,
+  MAXPREPS_STANDINGS_ATTRIBUTION,
   recordFor,
 } from './lib/sources.mjs';
 import { buildPreviewIntroFacts } from './lib/preview-facts.mjs';
@@ -165,22 +166,30 @@ try {
   problems.push(`rating: ${error.message}`);
 }
 
-// One fetch of the team page serves the standings table, edition records, and
-// the link to the current statewide rankings article.
+// Standings now come from MaxPreps: Dave Campbell's new platform stopped
+// serving its standings module in October 2026 (empty placeholder, API
+// login-walled). Re-check davecampbells.com team pages occasionally; switch
+// back only once the standings section renders real rows.
 let records = null;
-let ranks = null;
-let ranksUrl = null;
 try {
-  const teamPage = await fetchTeamPage(publication.teamPageUrl);
-  const standings = parseDistrictStandings(teamPage);
+  const standings = await fetchMaxPrepsStandings();
   records = new Map(standings.rows.map((row) => [row.team, row.overall]));
   await writeStandings({
     district: standings.district,
     rows: standings.rows,
-    source: 'Dave Campbell’s Texas Football',
-    sourceUrl: publication.teamPageUrl,
+    ...MAXPREPS_STANDINGS_ATTRIBUTION,
     asOf: new Date().toISOString(),
   });
+} catch (error) {
+  problems.push(`standings: ${error.message}`);
+}
+
+// Statewide computer rank still comes from Dave Campbell's, when its team
+// page links a current rankings article.
+let ranks = null;
+let ranksUrl = null;
+try {
+  const teamPage = await fetchTeamPage(publication.teamPageUrl);
   ranksUrl = findRankingsArticle(teamPage);
   if (ranksUrl) {
     ranks = await fetchStateRankings(ranksUrl);
