@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "slug": "2026-10-01-klein-collins",
-  "status": "final",
-  "statusLabel": "Final",
-  "homeScore": 24,
-  "awayScore": 40,
-  "homeRecord": "4\u20131",
-  "awayRecord": "5\u20131",
-  "updatedAt": "2026-10-03T17:38:26.507Z",
-  "source": "Manual correction",
-  "sourceUrl": "https://github.com/sylvanmiori/klein-cain-game-day/actions"
+  "slug": "2026-10-08-klein",
+  "status": "scheduled",
+  "statusLabel": "7:00 PM",
+  "homeScore": null,
+  "awayScore": null,
+  "homeRecord": "6–0",
+  "awayRecord": "4–1",
+  "updatedAt": "2026-10-05T21:05:39.949Z",
+  "source": "Dave Campbell’s Texas Football",
+  "sourceUrl": "https://www.texasfootball.com/scores/"
 }
