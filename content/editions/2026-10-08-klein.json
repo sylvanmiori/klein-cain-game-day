@@ -238,6 +238,13 @@
           "value": "6–0 · 4–0 district · 52–0 over Klein Forest last week"
         }
       ]
+    },
+    "opponentRecruitingAudit": {
+      "source": "247Sports + MaxPreps recruiting check of featured Klein players",
+      "sourceUrl": "https://www.maxpreps.com/tx/klein/klein-bearkats/football/roster/",
+      "asOf": "2026-10-04T15:30:00-05:00",
+      "committedPlayers": [],
+      "eliteProspects": []
     }
   },
   "final": null,
