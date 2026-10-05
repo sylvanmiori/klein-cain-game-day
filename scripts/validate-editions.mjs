@@ -286,6 +286,20 @@ for (const file of files) {
     }
   }
 
+  // Poll claims must be dated, never "this week's". A state/media poll
+  // ranking asserted as current ships as fact; if the poll has not been
+  // published yet, the claim is false. (2026-10-05: the Week 6 preview
+  // claimed "held at No. 25 in this week's Class 6A state poll" before the
+  // polls updated, and had to be corrected after publishing.)
+  for (const [field, text] of [
+    ['preview.intro.body', edition.preview?.intro?.body],
+    ['recapNotes', edition.recapNotes],
+  ]) {
+    if (typeof text === 'string' && /this week's[^.]{0,60}poll/i.test(text)) {
+      fail(`${field} asserts a poll as "this week's" — date the poll (e.g. "the Sep 28 state poll") and verify it was actually published`);
+    }
+  }
+
   for (const fact of edition.preview?.intro?.facts ?? []) {
     if (fact.team !== undefined && !['school', 'opponent'].includes(fact.team)) {
       fail(`intro fact "${fact.label}" has team "${fact.team}"; use "school" or "opponent"`);

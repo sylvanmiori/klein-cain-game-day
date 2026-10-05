@@ -302,6 +302,8 @@ Sylvan is the site's full-time editor/manager, appointed with full publishing au
 
 The house rules stand regardless of who writes the copy: never invent player statistics, recruiting status, rankings, star ratings, records, results or postgame performance; never imply a pregame player performed well without verified postgame statistics; match team names exactly against source feed names; resolve identities through `content/roster-2026.json`; verify leadership against `config/coaches.json` and `config/publication.json`; store assets locally. A preview with player capsules must carry a team-by-team statistics audit completed within two days of kickoff, and a full opponent-player section must carry a dated, roster-wide recruiting audit naming every verified college commit and every source-specific top-10 position or top-100 national prospect.
 
+State/media poll claims in editorial copy must be dated and verified, never asserted as "this week's". A poll ranking presented as current ships as fact; if that week's poll has not been published yet, the claim is false. Write the poll's publication date ("the Sep 28 state poll"), check the actual published poll before writing, and drop the claim if no current poll exists. `npm run validate` fails the build on "this week's ... poll" phrasing. (2026-10-05: the Week 6 preview claimed "held at No. 25 in this week's Class 6A state poll" before the polls updated; corrected after publishing.)
+
 ## Open items
 
 - Week 3 (Tomball, September 18) was played and Klein Cain won 55–38 on homecoming night. The report at `/games/week-3` features an authored final recap, game statistics, Player of the Game (Maxwell 'Max' Hendricks), and a 38-frame photo gallery.
