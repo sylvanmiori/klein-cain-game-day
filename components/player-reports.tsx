@@ -2,6 +2,7 @@
 
 import { Fragment, useId, useState } from 'react';
 import type { EditionPlayer } from '../lib/edition';
+import { renderInlineMarkup } from './inline-markup';
 
 function Portrait({ player }: { player: EditionPlayer }) {
   return (
@@ -58,7 +59,7 @@ export function PlayerReports({ players }: { players: EditionPlayer[] }) {
               <Portrait player={player} />
               <Identity player={player} />
               <Rating player={player} />
-              <p className="player-copy">{player.copy}</p>
+              <p className="player-copy">{renderInlineMarkup(player.copy)}</p>
             </article>
 
             <article className={`player-card player-card-mobile ${teamClass} ${isOpen ? 'open' : ''}`}>
@@ -69,7 +70,7 @@ export function PlayerReports({ players }: { players: EditionPlayer[] }) {
               <div className="mobile-report">
                 <Rating player={player} />
                 <div className="mobile-copy" id={panelId}>
-                  <p className="player-copy">{player.copy}</p>
+                  <p className="player-copy">{renderInlineMarkup(player.copy)}</p>
                 </div>
                 <button
                   type="button"

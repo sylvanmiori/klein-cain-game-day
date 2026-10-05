@@ -108,7 +108,7 @@ export function PreviewView({ edition, preview }: { edition: Edition; preview: P
                 <strong>
                   {row.name} · {row.team}
                 </strong>
-                <p>{row.note}</p>
+                <p>{renderInlineMarkup(row.note)}</p>
               </div>
               <a href={row.href} target="_blank" rel="noreferrer">
                 {row.linkLabel}
@@ -130,7 +130,7 @@ export function PreviewView({ edition, preview }: { edition: Edition; preview: P
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 <div>
                   <h3>{key.title}</h3>
-                  <p>{key.body}</p>
+                  <p>{renderInlineMarkup(key.body)}</p>
                 </div>
               </li>
             ))}
@@ -232,25 +232,11 @@ function PlayerOfGame({ stats }: { stats: GameStats }) {
 
 /**
  * Shared renderer for long-form editorial copy (`preview.intro.body`,
- * `final.body`). Convention: blank lines separate paragraphs, and
- * `**double asterisks**` bold key numbers and phrases. Plain text with no
- * markup renders exactly as before. Content is author-written JSON, and
- * React escapes the text segments, so no HTML passes through.
+ * `final.body`). Re-exported here so existing imports keep working; the
+ * implementation lives in `./inline-markup` alongside the other
+ * section renderers that use it (keys, player capsules, recruiting notes).
  */
-function renderInlineMarkup(text: string): ReactNode {
-  const parts = text.split(/(\*\*[^*\n]+\*\*|\*[^*\n]+\*)/g);
-  if (parts.length === 1) return text;
-  return parts.map((part, index) => {
-    if (/^\*\*[^*]+\*\*$/.test(part)) {
-      return <strong key={index}>{part.slice(2, -2)}</strong>;
-    }
-    if (/^\*[^*]+\*$/.test(part)) {
-      return <em key={index}>{part.slice(1, -1)}</em>;
-    }
-    return part;
-  });
-}
-
+import { renderInlineMarkup } from './inline-markup';
 function EditorialCopy({ body, className }: { body: string; className?: string }) {
   const paragraphs = body.split(/\n\n+/).map((p) => p.trim()).filter(Boolean);
   return (
