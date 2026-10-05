@@ -175,6 +175,22 @@ for (const file of files) {
     const filled = edition.preview.players?.length > 0 || edition.preview.intro
       || edition.preview.recruiting || edition.preview.keys || edition.preview.gameInfo;
     if (!filled) fail('preview has no players and no other section; it would render an empty page');
+    // The renderer maps these arrays; a missing one 500s the page build
+    // (2026-10-05: week-6 gameInfo shipped without `links` and broke the
+    // Workers prerender for /games/week-6).
+    if (edition.preview.intro && !Array.isArray(edition.preview.intro.facts)) {
+      fail('preview.intro.facts must be an array (may be empty)');
+    }
+    if (edition.preview.gameInfo) {
+      if (!Array.isArray(edition.preview.gameInfo.facts)) fail('preview.gameInfo.facts must be an array (may be empty)');
+      if (!Array.isArray(edition.preview.gameInfo.links)) fail('preview.gameInfo.links must be an array (may be empty)');
+    }
+    if (edition.preview.keys && !Array.isArray(edition.preview.keys.items)) {
+      fail('preview.keys.items must be an array');
+    }
+    if (edition.preview.recruiting && !Array.isArray(edition.preview.recruiting.rows)) {
+      fail('preview.recruiting.rows must be an array');
+    }
   }
 
   if (edition.final) {

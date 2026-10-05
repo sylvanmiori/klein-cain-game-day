@@ -68,7 +68,7 @@ export function PreviewView({ edition, preview }: { edition: Edition; preview: P
               </figure>
             ))}
           </div>
-          {preview.intro.facts.length > 0 && (
+          {(preview.intro.facts ?? []).length > 0 && (
           <dl>
             {preview.intro.facts.map((fact) => (
               <div key={fact.label}>
@@ -152,9 +152,9 @@ export function PreviewView({ edition, preview }: { edition: Edition; preview: P
               </div>
             ))}
           </dl>
-          {preview.gameInfo.links.length > 0 && (
+          {(preview.gameInfo.links ?? []).length > 0 && (
             <div className="gameday-links">
-              {preview.gameInfo.links.map((link) => (
+              {(preview.gameInfo.links ?? []).map((link) => (
                 <a key={link.label} href={link.href} target="_blank" rel="noreferrer">
                   {link.label}
                 </a>
