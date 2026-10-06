@@ -10,7 +10,6 @@ import {
   editionPath,
   hasPreviewContent,
   predictionFact,
-  rankFact,
   statePollFact,
   weatherFact,
 } from '../lib/edition';
@@ -42,7 +41,7 @@ export function ProgramHomeSpotlight({
   previewHref: string;
   recap: RecapFeature | null;
 }) {
-  const autoFacts = [statePollFact(featured), rankFact(featured), predictionFact(featured, publication.schoolName), weatherFact(featured)]
+  const autoFacts = [statePollFact(featured), predictionFact(featured, publication.schoolName), weatherFact(featured)]
     .filter((fact): fact is NonNullable<typeof fact> => fact !== null);
   const facts = [...featured.scheduledFacts, ...autoFacts].slice(0, 4);
   const featuredIsFinal = Boolean(featured.finalScore || featured.final);

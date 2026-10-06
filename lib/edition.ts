@@ -406,7 +406,13 @@ export function groupedLeaders(edition: Edition) {
 /** A computer rank older than this is never presented as current. */
 const RANK_MAX_AGE_MS = 10 * 24 * 60 * 60 * 1000;
 
-/** Statewide computer rank for both teams, when it has been fetched. */
+/**
+ * Statewide computer rank for both teams, when it has been fetched.
+ * Not currently rendered on any card (2026-10-06): the DCTF computer article
+ * is paywalled so the number goes stale within a week, and the state poll
+ * covers the ranking slot. Kept as a guarded builder in case the source
+ * becomes refreshable again.
+ */
 export function rankFact(edition: Edition): Fact | null {
   const { home, away, rankings } = edition;
   if (home.rank === null || away.rank === null || !rankings) return null;

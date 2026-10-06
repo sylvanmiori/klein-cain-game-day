@@ -28,7 +28,6 @@ import {
   editions,
   opponentOf,
   predictionFact,
-  rankFact,
   statePollFact,
   weatherFact,
 } from '../lib/edition';
@@ -362,7 +361,6 @@ export function EditionPage({ edition }: { edition: Edition }) {
   // nothing rather than an empty slot.
   const autoFacts = [
     statePollFact(edition),
-    rankFact(edition),
     predictionFact(edition, publication.schoolName),
     weatherFact(edition),
   ].filter(
