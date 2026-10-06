@@ -42,6 +42,14 @@
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/29/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-6",
     "asOf": "2026-09-29T16:47:32.658Z"
   },
+  "poll": {
+    "source": "Dave Campbell's Texas Football Class 6A state poll",
+    "sourceUrl": "https://www.timesrecordnews.com/story/sports/high-school/football/2026/10/05/dave-campbells-texas-high-school-football-rankings-week-7/91923781007/",
+    "asOf": "2026-10-05",
+    "weekLabel": "Week 7",
+    "home": 25,
+    "away": null
+  },
   "stats": null,
   "finalScore": null,
   "rating": {

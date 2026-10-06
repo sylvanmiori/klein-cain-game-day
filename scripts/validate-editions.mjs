@@ -300,6 +300,20 @@ for (const file of files) {
     }
   }
 
+  // The matchup card renders the state poll from the structured poll field,
+  // so the current edition must carry a fresh one: DCTF publishes Mondays,
+  // and the Monday sweep writes this field alongside the intro copy.
+  // (2026-10-06: the card showed stale Sep-29 computer ranks while the Oct-5
+  // state poll lived only in the intro text.)
+  if (edition.current && edition.state === 'preview') {
+    const asOf = Date.parse(edition.poll?.asOf ?? '');
+    if (!Number.isFinite(asOf)) {
+      fail('current preview is missing the structured poll field — update it from the latest DCTF state poll (see the Monday sweep)');
+    } else if (Date.now() - asOf > 8 * 24 * 60 * 60 * 1000) {
+      fail(`current preview poll is stale (asOf ${edition.poll.asOf}) — refresh it from the latest DCTF state poll`);
+    }
+  }
+
   for (const fact of edition.preview?.intro?.facts ?? []) {
     if (fact.team !== undefined && !['school', 'opponent'].includes(fact.team)) {
       fail(`intro fact "${fact.label}" has team "${fact.team}"; use "school" or "opponent"`);

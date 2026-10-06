@@ -85,7 +85,7 @@ export function HomeNextGameCard({
   const cardKickoff = isPostponed
     ? (resumeKickoff || score.statusLabel || kickoff)
     : kickoff;
-  const rank = factValue(scheduledFacts, 'Texas rank');
+  const rank = factValue(scheduledFacts, 'State poll');
   const lastMeeting = factValue(scheduledFacts, 'Last meeting');
 
   const refresh = useCallback(async () => {
@@ -210,7 +210,7 @@ export function HomeNextGameCard({
             <strong>{lastMeeting?.value ?? '—'}</strong>
           </div>
           <div>
-            <span>Texas rank</span>
+            <span>State poll</span>
             {rank?.href ? (
               <a href={rank.href} target="_blank" rel="noreferrer">{rank.value}</a>
             ) : (

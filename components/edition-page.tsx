@@ -29,6 +29,7 @@ import {
   opponentOf,
   predictionFact,
   rankFact,
+  statePollFact,
   weatherFact,
 } from '../lib/edition';
 import { type CoachingMatchup, coachingMatchup } from '../lib/coaches';
@@ -360,6 +361,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
   // once a source has actually supplied them, so a missing forecast shows
   // nothing rather than an empty slot.
   const autoFacts = [
+    statePollFact(edition),
     rankFact(edition),
     predictionFact(edition, publication.schoolName),
     weatherFact(edition),

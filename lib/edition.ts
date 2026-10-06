@@ -202,6 +202,21 @@ export type Edition = {
   /** Attribution for the statewide ranks held on home.rank and away.rank. */
   rankings: { source: string; sourceUrl: string; asOf: string } | null;
   /**
+   * State/media poll standing for both teams. home/away hold the poll rank or
+   * null when unranked. The matchup card renders this row, so the Monday poll
+   * update must write this field, not just the intro copy. (2026-10-06: the
+   * card showed stale Sep-29 computer ranks while the Oct-5 state poll lived
+   * only in the intro text.)
+   */
+  poll: {
+    source: string;
+    sourceUrl: string;
+    asOf: string;
+    weekLabel: string;
+    home: number | null;
+    away: number | null;
+  } | null;
+  /**
    * Season stat leaders for the covered school, snapshotted once a game is
    * played and the source has been updated to include it. These are
    * season-to-date figures, never one game's box score, and the page says so.
@@ -388,14 +403,35 @@ export function groupedLeaders(edition: Edition) {
   return groups;
 }
 
+/** A computer rank older than this is never presented as current. */
+const RANK_MAX_AGE_MS = 10 * 24 * 60 * 60 * 1000;
+
 /** Statewide computer rank for both teams, when it has been fetched. */
 export function rankFact(edition: Edition): Fact | null {
   const { home, away, rankings } = edition;
   if (home.rank === null || away.rank === null || !rankings) return null;
+  // A computer rank goes stale fast and the source is paywalled, so an old
+  // one is dropped rather than shown as current. (2026-10-06: Sep-29 ranks
+  // were still on the card after the Oct-5 poll moved.)
+  const asOf = Date.parse(rankings.asOf);
+  if (!Number.isFinite(asOf) || Date.now() - asOf > RANK_MAX_AGE_MS) return null;
   return {
     label: 'Texas rank',
     value: `${away.name} ${away.rank} · ${home.name} ${home.rank}`,
     href: rankings.sourceUrl,
+  };
+}
+
+/** State/media poll standing for both teams, when the Monday update wrote it. */
+export function statePollFact(edition: Edition): Fact | null {
+  const { home, away, poll } = edition;
+  if (!poll) return null;
+  const side = (name: string, rank: number | null) =>
+    `${name} ${rank === null ? 'unranked' : `No. ${rank}`}`;
+  return {
+    label: 'State poll',
+    value: `${side(away.name, poll.away)} · ${side(home.name, poll.home)}`,
+    href: poll.sourceUrl,
   };
 }
 
