@@ -298,6 +298,14 @@ for (const file of files) {
     if (typeof text === 'string' && /this week's[^.]{0,60}poll/i.test(text)) {
       fail(`${field} asserts a poll as "this week's" — date the poll (e.g. "the Sep 28 state poll") and verify it was actually published`);
     }
+    // Klein ISD has FIVE high schools (Klein, Klein Cain, Klein Collins,
+    // Klein Oak, Klein Forest). "All three Klein schools" is wrong even when
+    // only three are ranked — write "three Klein ISD schools".
+    // (2026-10-06: the VYPE rankings post and preview intro both shipped the
+    // wrong phrasing and had to be corrected after publishing.)
+    if (typeof text === 'string' && /all three Klein( ISD)? schools/i.test(text)) {
+      fail(`${field} says "all three Klein schools" — Klein ISD has five high schools; write "three Klein ISD schools"`);
+    }
   }
 
   // The matchup card renders the state poll from the structured poll field,
