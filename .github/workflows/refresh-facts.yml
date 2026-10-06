@@ -35,6 +35,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          # Full history: the commit step rebases onto main before pushing,
+          # which a shallow clone cannot do.
+          fetch-depth: 0
       - uses: actions/setup-node@v5
         with:
           node-version: 24
@@ -68,4 +72,14 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add content/ public/live-score.json
           git diff --cached --quiet || git commit -m "Advance the season from public sources"
-          git push
+          # API pushes can move main between checkout and push (2026-10-06:
+          # the noon run died here). Rebase onto the latest main and retry
+          # rather than dropping the refresh. A rebase conflict still fails
+          # loudly so the CI notifier catches it.
+          pushed=false
+          for i in 1 2 3; do
+            if git pull --rebase && git push; then pushed=true; break; fi
+            git rebase --abort 2>/dev/null || true
+            sleep 20
+          done
+          if [ "$pushed" = false ]; then echo "push failed after 3 attempts"; exit 1; fi
