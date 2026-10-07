@@ -13,7 +13,7 @@ import {
   opponentOf,
 } from '../lib/edition';
 import { sitePath } from '../lib/site-path';
-import { XSocialLink } from './x-social-link';
+import { FooterSocialLinks } from './footer-social-links';
 
 /**
  * The program homepage: season record, schedule, links to the latest recap and
@@ -83,7 +83,7 @@ export function TeamPage() {
           <p>Independent fan publication · Data from MaxPreps and Dave Campbell’s Texas Football.</p>
         </div>
         <div className="compact-footer-social">
-          <XSocialLink />
+          <FooterSocialLinks />
         </div>
       </footer>
     </main>

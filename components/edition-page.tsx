@@ -13,7 +13,7 @@ import { MatchupCard } from './matchup-card';
 import { PlayerReports } from './player-reports';
 import { SeasonHub } from './season-hub';
 import { SeasonStats } from './team-sections';
-import { XSocialLink } from './x-social-link';
+import { FooterSocialLinks } from './footer-social-links';
 import {
   type Edition,
   type Fact,
@@ -487,7 +487,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
             Week {edition.week} · {opponent.name} · {apDate(edition.date, true)}
           </p>
           <div className="footer-social">
-            <XSocialLink />
+            <FooterSocialLinks />
           </div>
         </div>
         <div className="sources">

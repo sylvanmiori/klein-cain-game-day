@@ -486,6 +486,7 @@ article>section { border-bottom:1px solid var(--line); }
 .compact-footer p { margin:0; color:#686259; font-size:10px; }
 .compact-footer-brand { display:flex; flex-direction:column; gap:4px; }
 .footer-social { margin-top:14px; }
+.footer-social-links { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
 .footer-social-link { display:inline-flex; align-items:center; gap:7px; padding:6px 12px; background:#fff; color:#222; border:1px solid #cfc9bf; border-radius:6px; font-size:11px; font-weight:750; letter-spacing:.02em; text-decoration:none; transition:background .15s ease, color .15s ease, border-color .15s ease; box-shadow:0 1px 3px rgba(0,0,0,.04); }
 .footer-social-link:hover { background:var(--purple); color:#fff; border-color:var(--purple); }
 .footer-social-link svg { flex-shrink:0; }

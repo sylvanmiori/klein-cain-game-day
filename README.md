@@ -6,6 +6,7 @@ Start with [AGENTS.md](AGENTS.md) when handing the repository to an AI developer
 The [October 7 midseason QC report](docs/MIDSEASON-QC-2026-10-07.md) records verified Week 6 facts, fixes, visual checks and unresolved source/security follow-up.
 
 The approved purple-helmet avatar is the site's visual identity. Its master file is `public/brand/cain-helmet-avatar-source.png`; `npm run brand:assets` regenerates the favicon set, Apple/Android touch icons, homepage helmet images and fallback social-share card. The earlier [social kit](brand/social-2026/README.md) is archived and should not be used as the current logo.
+Football footer social destinations live in `config/publication.json` and render through `components/footer-social-links.tsx` on the homepage, game reports and photo gallery. Verify an account's actual profile before changing its URL.
 
 Standalone launch graphics are available as public files at `/launch/gameday-report-wide-1920x1080.png`, `/launch/gameday-report-square-1080x1080.png` and `/launch/gameday-report-vertical-1080x1920.png`. They are available by direct URL but are not displayed in site pages. The device screens are illustrative mockups showing the Week 4 matchup, so review their time-specific details before sharing later in the season.
 

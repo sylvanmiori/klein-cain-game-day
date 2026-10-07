@@ -38,12 +38,13 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `components/game-photos.tsx` | accessible photo gallery grid, native `<dialog>` lightbox modal with keyboard navigation, photographer credits |
 | `components/game-video.tsx` | game highlight video player with poster, duration, and credit |
 | `components/seo-schema.tsx` | Schema.org JSON-LD structured data generators (SportsTeam, SportsEvent, NewsArticle, BreadcrumbList, ImageGallery) |
+| `components/footer-social-links.tsx` | shared football footer links for X, Instagram and Facebook on home, game reports and photos |
 | `content/editions/*.json` | one file per game, schema v2, typed in `lib/edition.ts` |
 | `content/season-data.json` | machine-written: our results, opponent records, and district standings; schedule display takes district-team records from the standings table before the statewide-record fallback |
 | `content/roster-2026.json` | varsity roster synced from MaxPreps with `npm run roster`; local portrait paths are synced with `npm run photos` |
 | `config/season-2026.json` | the schedule; authority on date, opponent, venue, home/away, kickoff |
 | `config/opponent-logos.json` | exact MaxPreps profile used for each scheduled opponent's logo |
-| `config/publication.json` | school, wordmark, source URLs, homepage hero asset paths |
+| `config/publication.json` | school, wordmark, source URLs, verified footer social destinations, homepage hero asset paths |
 | `config/coaches.json` | head coaches for Klein Cain and every scheduled opponent, with bios and verified career stops; rendered on previews and the program page |
 | `config/program.json` | program history and past seasons |
 | `config/venues.json` | venue coordinates, for the forecast |
@@ -72,6 +73,8 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 The approved purple helmet is now the visual mark on the masthead and Klein Cain matchup cards through `publication.schoolLogo` (`/favicon.png`). Its master is local and unchanged; resizing/compositing only is done by `npm run brand:assets`. The same command produces a square 48px PNG for Google Search, 16/32/96/192/512px PNGs, a multi-size `/favicon.ico`, 180px Apple touch icon, web-app manifest icon, the general `/og.png` share image, and both homepage helmet hero files. `lib/site-icons.ts` is the single HTML metadata definition for all pages. Google Search's icon is eligible after recrawl, not guaranteed immediately; keep `/favicon-48x48.png` stable and crawlable. The older silver helmet imagery contained an incorrect Texas-like/Cain-script decal and must not be reused as the public identity.
 
 The `/launch/` graphics are separate social assets. They are image-generated mockups using the approved helmet and screenshots as references. The small device-screen text is illustrative and the visible Week 4 matchup is time-specific. These files are intentionally unlinked from site navigation and pages; share their direct URLs or download them for social posts.
+
+Football footers use the shared `FooterSocialLinks` component on `/`, `/photos`, and every game report. The account destinations are configured in `config/publication.json`: X `@CainGameday`, Instagram `@caingameday`, and the owner-provided Facebook Page URL (`profile.php?id=61594287467980`). Do not substitute the school's official football social account for this independent publication.
 
 ### Favicon contract
 

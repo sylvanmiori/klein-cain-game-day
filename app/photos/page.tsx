@@ -5,7 +5,7 @@ import { apDate, editionPath, opponentOf } from '../../lib/edition';
 import { sitePath } from '../../lib/site-path';
 import { PhotoGalleryGrid, CameraIcon } from '../../components/game-photos';
 import { JsonLd, photosJsonLd } from '../../components/seo-schema';
-import { XSocialLink } from '../../components/x-social-link';
+import { FooterSocialLinks } from '../../components/footer-social-links';
 
 export const dynamic = 'force-static';
 
@@ -117,7 +117,7 @@ export default function PhotosPage() {
           <p>Independent fan publication · Photography via Klein Cain Football Booster Club.</p>
         </div>
         <div className="compact-footer-social">
-          <XSocialLink />
+          <FooterSocialLinks />
         </div>
       </footer>
     </main>
