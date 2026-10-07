@@ -1,6 +1,6 @@
 # Midseason quality-control review — October 7, 2026
 
-This is a source-and-code snapshot before Week 6 (Klein Cain at Klein, Thursday October 8). It is not a substitute for the scheduled game-day and postgame checks. The audit branch is a handoff for the publishing owner; the review itself does not deploy the site.
+This is the source-and-code review for the Week 6 release (Klein Cain at Klein, Thursday October 8). It is not a substitute for the scheduled game-day and postgame checks. The release includes the reviewed football copy, facts-automation safeguards, public-page polish and dependency updates described below.
 
 ## Football facts checked
 
@@ -24,4 +24,4 @@ This is a source-and-code snapshot before Week 6 (Klein Cain at Klein, Thursday 
 2. Run a targeted recruiting verification for every *featured* opponent player each week. The roster-wide claim in the old copy was stronger than the evidence recorded. Store links, capture time, rating-system name and commitment status separately; never infer a commitment from an offer.
 3. Review the remaining transitive security advisories and scope a repo-wide lint baseline cleanup. The framework upgrade has been tested locally but not yet released; retest live Workers after publishing.
 4. Confirm the Thursday night score endpoint and Friday statistics import in their scheduled windows. The October 7 `/api/score/health` snapshot was still in the expected scheduled state, not evidence of a successful future ingest.
-5. Keep this audit as a single-writer handoff. The repo runbook names Sylvan as publish owner; merge/deploy only with that coordination, then confirm the live Week 6 page, homepage, and sitemap.
+5. Preserve the runbook's single-writer publishing rule for future work. After each deployment, confirm the live Week 6 page, homepage, sitemap and both GitHub deployment checks rather than treating a local build as proof of production.

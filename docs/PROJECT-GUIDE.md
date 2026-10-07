@@ -1,6 +1,7 @@
 # Game Day Report project guide
 
 Updated October 7, 2026. Written to be picked up cold: an AI developer should read repository-root `AGENTS.md`, then **Current status**, **Where things live** and **Traps worth knowing** here. Keep this file current when accounts, hosting, automation, sources, commands or data ownership change. Never store passwords, tokens or payment details here.
+The [October 7 midseason QC report](MIDSEASON-QC-2026-10-07.md) records the current Week 6 source checks, release fixes and remaining risks.
 
 ## Ownership and addresses
 
