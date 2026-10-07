@@ -27,6 +27,7 @@ New schedule opponents require one setup pass: add their exact MaxPreps profile 
 ## Development
 
 Node 24 is used in CI and recommended locally; the declared minimum is Node 22.13. Run `npm ci`, then `npm run dev`.
+The production-like local check is `npm run build:cloudflare` followed by `npm start -- --local --port 3317` (Wrangler serves the built Worker); `vinext start` is not the preview command for this Cloudflare output.
 
 - `npm run editions` creates a starter edition for any scheduled game that lacks one.
 - `npm run promote` sets which edition is current, captures final scores and season statistics, and writes the recap.

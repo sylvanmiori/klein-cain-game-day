@@ -74,6 +74,9 @@ for (const { edition, file } of pages) {
   if (disclaimer && !disclaimer.includes(opponent)) {
     problems.push(`${file}: the disclaimer does not name ${opponent}`);
   }
+  if (html.includes('class="player-of-game-model"') || html.includes('Cain Impact v1')) {
+    problems.push(`${file}: internal Player of the Game model language is public`);
+  }
 }
 
 if (problems.length) {

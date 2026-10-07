@@ -75,6 +75,7 @@ export function HomeNextGameCard({
   const [score, setScore] = useState(initialScore);
   const [refreshing, setRefreshing] = useState(false);
   const featuredName = publication.schoolName;
+  const matchupPreposition = home.name === featuredName ? 'vs.' : 'at';
   const featured = home.name === featuredName ? home : away;
   const opponent = home.name === featuredName ? away : home;
   const featuredScore = home.name === featuredName ? score.homeScore : score.awayScore;
@@ -132,7 +133,7 @@ export function HomeNextGameCard({
       : null;
 
   return (
-    <article className={`home-next-game ${score.status}`} aria-label={`Next game: ${featured.name} vs. ${opponent.name}`}>
+    <article className={`home-next-game ${score.status}`} aria-label={`Next game: ${featured.name} ${matchupPreposition} ${opponent.name}`}>
       <div className="home-next-game-feature">
         <div className="home-next-game-glow" aria-hidden="true" />
         <img
@@ -149,7 +150,7 @@ export function HomeNextGameCard({
           <p className="home-kicker">Next game</p>
           <h2>
             <span>{publication.schoolName}</span>
-            <span>vs. {opponent.name}</span>
+            <span>{matchupPreposition} {opponent.name}</span>
           </h2>
           <p className="home-next-game-meta">
             Week {week} · District 15-6A

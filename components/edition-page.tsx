@@ -1,5 +1,4 @@
 import { galleryForSlug } from '../lib/galleries';
-import type { ReactNode } from 'react';
 import { GamePhotoGallery, RecapPhotoStory } from './game-photos';
 import { GameHighlightVideo } from './game-video';
 import { SocialBuzz } from './tweet-embed';
@@ -225,7 +224,6 @@ function PlayerOfGame({ stats }: { stats: GameStats }) {
         </div>
       </div>
       <p className="player-of-game-rationale">{player.rationale}</p>
-      {player.model && <small className="player-of-game-model">{player.model}</small>}
     </div>
   );
 }
@@ -237,8 +235,14 @@ function PlayerOfGame({ stats }: { stats: GameStats }) {
  * section renderers that use it (keys, player capsules, recruiting notes).
  */
 import { renderInlineMarkup } from './inline-markup';
-function EditorialCopy({ body, className }: { body: string; className?: string }) {
+function EditorialCopy({ body, className, displayedHeadline }: { body: string; className?: string; displayedHeadline?: string }) {
   const paragraphs = body.split(/\n\n+/).map((p) => p.trim()).filter(Boolean);
+  // Some imported recaps include their own title and desk line. The page already
+  // renders those above the copy, so don't repeat them in the article body.
+  if (displayedHeadline && paragraphs[0]?.replace(/^\*\*(.*?)\*\*$/, '$1') === displayedHeadline) {
+    paragraphs.shift();
+    if (/^CAIN GAME DAY DESK\s*·\s*UPDATED\b/i.test(paragraphs[0] ?? '')) paragraphs.shift();
+  }
   return (
     <div className={className ?? 'editorial-copy'}>
       {paragraphs.map((paragraph, index) => (
@@ -267,7 +271,7 @@ export function FinalView({
         <div className="recap-body-column">
           <h2>{final.headline}</h2>
           {final.byline && <p className="byline">{final.byline}</p>}
-          <EditorialCopy body={final.body} className="recap-copy" />
+          <EditorialCopy body={final.body} className="recap-copy" displayedHeadline={final.headline} />
         </div>
 
         {hasSidebar && (
@@ -372,6 +376,12 @@ export function EditionPage({ edition }: { edition: Edition }) {
     ?? (edition.final && edition.final.homeScore !== null
       ? { home: edition.final.homeScore, away: edition.final.awayScore }
       : null);
+  const resumedOn = result
+    ? schedule.find((game) => game.date === edition.date)?.resume?.date
+    : null;
+  const playedDate = resumedOn
+    ? `${edition.dateLong} · resumed ${apDate(resumedOn, true)}`
+    : edition.dateLong;
 
   const report = preview && final
     ? (
@@ -417,7 +427,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
       <section className="game-overview" id="top">
         <div className="preview-title">
           <h1>{edition.pageTitle}</h1>
-          <p>{`${edition.dateLong} · ${edition.event || edition.venue}`}</p>
+          <p>{`${playedDate} · ${edition.event || edition.venue}`}</p>
         </div>
 
         {edition.current
@@ -438,7 +448,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
             <MatchupCard
               status={result ? 'final' : 'scheduled'}
               statusLabel={result ? 'Final' : 'Preview'}
-              statusDetail={<span>{result ? apDate(edition.date, true) : `${apDate(edition.date)} · ${edition.kickoff}`}</span>}
+              statusDetail={<span>{result && resumedOn ? `${apDate(edition.date)}–${apDate(resumedOn, true)}` : result ? apDate(edition.date, true) : `${apDate(edition.date)} · ${edition.kickoff}`}</span>}
               dateShort={edition.dateShort}
               kickoff={edition.kickoff}
               venue={edition.venue}

@@ -14,6 +14,7 @@ Updated October 7, 2026. Written to be picked up cold: an AI developer should re
 ## Current status
 
 Live at https://kleincain.gameday.report/, deployed by Cloudflare Workers Builds on every push to `main`. GitHub Pages remains a fallback.
+For local production visual QA, run `npm run build:cloudflare` and then `npm start -- --local --port 3317`. The `start` script uses Wrangler against `dist/server/wrangler.json`; `vinext start` is not a valid preview of this Cloudflare build after the October 7 vinext 1.0.1 upgrade.
 
 `/` is the Klein Cain program page with a unified Next Game card (hero + matchup strip) for the current edition (Week 6 at Klein), followed by a unified Latest Recap feature card (recap narrative, lead photo, Player of the Game spotlight, and gallery links) for the latest final (Week 5 vs. Klein Collins), then schedule and the rest of the program hub. Each of the ten games has its own report at `/games/week-<n>`, rendered from one JSON file in `content/editions/` by `components/edition-page.tsx`. All ten editions exist and are validated. Weeks 1–5 are finals with recaps (Week 1 includes game highlight video; Weeks 3–5 carry game statistics and photo galleries); Week 6 is the current preview with complete player capsules and audits; Weeks 7–10 are starter editions.
 

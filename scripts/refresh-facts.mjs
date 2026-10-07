@@ -331,6 +331,10 @@ else console.log('No changes; every value already matched its source.');
 
 if (problems.length) {
   console.warn(`\nKept the previous value for:\n${problems.map((line) => `  - ${line}`).join('\n')}`);
+  if (process.env.GITHUB_ACTIONS === 'true') {
+    const summary = `${problems.length} facts source issue(s); see refresh-facts log for details`;
+    console.warn(`::warning title=Partial facts refresh::${summary}`);
+  }
 }
 
 // A source outage must not fail the job; it simply publishes nothing new.

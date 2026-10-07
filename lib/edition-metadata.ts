@@ -4,10 +4,6 @@ import { galleryForSlug, photoWithUse } from './galleries';
 import { siteIcons } from './site-icons';
 import { sitePath } from './site-path';
 
-const siteUrl = process.env.DEPLOY_TARGET === 'cloudflare'
-  ? 'https://kleincain.gameday.report/'
-  : 'https://sylvanmiori.github.io/klein-cain-game-day/';
-
 export function resolveEditionImage(edition: Edition): { url: string; alt: string; width: number; height: number } {
   const authoritativeSiteUrl = 'https://kleincain.gameday.report';
   const gallery = galleryForSlug(edition.slug);
