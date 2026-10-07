@@ -62,14 +62,14 @@
     "asOf": "2026-09-29T16:47:32.768Z"
   },
   "weather": {
-    "tempF": 86,
+    "tempF": 87,
     "condition": "Mostly Clear",
     "precipPct": 0,
-    "humidityPct": 48,
+    "humidityPct": 38,
     "wind": "5 mph NE",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-10-06T18:06:01.783Z"
+    "asOf": "2026-10-07T17:42:17.934Z"
   },
   "scheduledFacts": [],
   "resultFacts": [],
