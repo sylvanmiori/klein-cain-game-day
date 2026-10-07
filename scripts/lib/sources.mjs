@@ -26,6 +26,7 @@ async function get(url, options = {}) {
       return response;
     } catch (error) {
       lastError = error;
+      if (/returned HTTP (401|403)$/.test(String(error.message))) throw error;
       if (attempt < ATTEMPTS) await wait(attempt * 2000);
     }
   }

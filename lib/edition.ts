@@ -338,22 +338,27 @@ export function editionByWeek(week: number) {
 /**
  * One prediction, chosen in a fixed order of preference: our own rating first,
  * then Massey, then the Dave Campbell's pick. The label names the source, so a
- * reader always knows whose number they are looking at. A game should never
- * show no prediction, which the validator enforces.
+ * reader always knows whose number they are looking at. A stale source is
+ * omitted, even if that leaves the game without a prediction.
  */
-export function predictionFact(edition: Edition, schoolName: string): Fact | null {
+export function predictionFact(edition: Edition, schoolName: string, now = Date.now()): Fact | null {
+  const isFresh = (asOf: string) => {
+    const timestamp = Date.parse(asOf);
+    const age = now - timestamp;
+    return Number.isFinite(timestamp) && age >= 0 && age <= 7 * 24 * 60 * 60 * 1000;
+  };
   const candidates: {
     label: string;
     margin: number;
     basis: 'home' | 'school';
     href?: string;
   }[] = [
-    edition.rating && {
+    edition.rating && isFresh(edition.rating.asOf) && {
       label: 'Our rating',
       margin: edition.rating.margin,
       basis: 'home',
     },
-    edition.massey && {
+    edition.massey && isFresh(edition.massey.asOf) && {
       label: 'Massey',
       margin: edition.massey.margin,
       basis: 'school',
@@ -362,7 +367,7 @@ export function predictionFact(edition: Edition, schoolName: string): Fact | nul
     // No href: this margin comes from Dave Campbell's data feed, which appears
     // to drive their Pick'Em contest, and is not displayed on any public page.
     // Linking it would send a reader somewhere the number is not shown.
-    edition.prediction && {
+    edition.prediction && isFresh(edition.prediction.asOf) && {
       label: 'Model prediction',
       margin: edition.prediction.margin,
       basis: 'school',

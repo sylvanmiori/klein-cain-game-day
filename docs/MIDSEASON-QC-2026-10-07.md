@@ -1,0 +1,27 @@
+# Midseason quality-control review — October 7, 2026
+
+This is a source-and-code snapshot before Week 6 (Klein Cain at Klein, Thursday October 8). It is not a substitute for the scheduled game-day and postgame checks. The audit branch is a handoff for the publishing owner; the review itself does not deploy the site.
+
+## Football facts checked
+
+- Klein Cain: 4–1 overall, 2–1 in District 15-6A after the 40–24 Klein Collins game, completed October 3 after a weather postponement. Klein: 6–0, 4–0. Klein Collins: 5–1, 4–0, with Tomball scheduled Saturday October 10. Accordingly, a Thursday Klein win gives it sole first place only until Collins plays, not necessarily for the whole week. Sources: [MaxPreps Klein](https://www.maxpreps.com/tx/klein/klein-bearkats/football/), [MaxPreps Cain–Collins matchup](https://www.maxpreps.com/tx/football/game/klein-cain-houston-vs-klein-collins-spring/10-3-2026/?c=9c730f9f-31f8-433d-9ea8-9917e3c18bf0&tab=Matchup), [Klein Collins schedule](https://www.kleincollinsfootball.com/schedule).
+- The scheduled Thursday matchup is at Klein Memorial Stadium at 7 PM. James Clancy and David Perez are the current Cain and Klein head coaches in the reviewed team sources. Source: [MaxPreps Klein](https://www.maxpreps.com/tx/klein/klein-bearkats/football/); Cain team listing and site schedule were also checked.
+- The UIL 2026–28 alignment lists Cain at 3,784 enrollment, the largest school in District 15-6A, supporting the Division I playoff-path statement if Cain qualifies. Source: [UIL alignment PDF](https://realignment.uiltexas.org/alignments/2026/Alpha_26-28.pdf).
+- Klein's Cash Hines, No. 5, was absent from the featured players. Klein High School calls the 2029 linebacker a nationally notable prospect but does not identify the ranking service; MaxPreps lists him at 6.8 tackles per game and one interception through its October 4 update. The revised preview attributes the ranking claim to the school and does not call offers commitments. Sources: [Klein High spotlight](https://kleinhs.kleinisd.net/o/kleinhs/live_feeds/12874478), [MaxPreps Klein stats](https://www.maxpreps.com/tx/klein/klein-bearkats/football/stats/).
+- The VYPE poll numbers in the preview were correct (Collins 14, Klein 18, Cain 25), but its published date is October 4, not October 6. Source: [VYPE's October 4 Houston-area poll](https://www.vype.com/amp/pearland-has-biggest-win-of-wet-week-5-new-vype-rankings-powered-by-lone-star-college-2677998621).
+
+## Automation and site findings
+
+- The daily facts workflow succeeds despite the Dave Campbell's statewide score-history endpoint returning HTTP 401. This blocks recomputation of the site rating and model picks; their last available data is September 29. The live-score Worker uses a different endpoint and should not be assumed broken by this finding. The audit branch hides predictions after seven days and stops repeated authorized-failure fetches while allowing standings and weather to refresh.
+- The Week 6 preview held an editorial 83°F/7% weather line beside a newer machine forecast. The static line was removed, and validation now rejects static weather rows in the current preview's `gameInfo.facts`.
+- Opponent schedule records could disagree with the adjacent, newer district standings because records came from the stalled statewide feed. District opponent records now render from the MaxPreps standings table when present, with the old record field only as fallback.
+- The public site rendered cleanly in desktop and phone-width checks of the homepage, Week 6 preview, and Week 5 final. The Week 5 final showed Player of the Game and game statistics in the expected order. These are spot checks, not an accessibility or cross-browser certification.
+- Two declared but unused packages (`shadcn` CLI and `nodemailer`, plus nodemailer types) were removed. Production `npm audit` then fell from 21 advisories (one critical) to 12 (zero critical); framework/toolchain advisories remain and require a dedicated tested upgrade. The repo-wide linter still fails on pre-existing issues across multiple modules. Typecheck, build, edition validation, and 135 tests pass on this branch.
+
+## Follow-up for the publishing owner
+
+1. Replace or obtain authorized access to the statewide game-results source for the rating and pick pipeline; otherwise continue suppressing stale predictions. Decide whether the site needs a different rating model or can live without it. Do not use the separate live-score endpoint as a statewide bulk feed without verifying its terms and coverage.
+2. Run a targeted recruiting verification for every *featured* opponent player each week. The roster-wide claim in the old copy was stronger than the evidence recorded. Store links, capture time, rating-system name and commitment status separately; never infer a commitment from an offer.
+3. Prioritize a tested `vinext`/React Server Components/Vite dependency upgrade and a scoped lint baseline cleanup after the Thursday game. Retest Workers and the build before release.
+4. Confirm the Thursday night score endpoint and Friday statistics import in their scheduled windows. The October 7 `/api/score/health` snapshot was still in the expected scheduled state, not evidence of a successful future ingest.
+5. Keep this audit as a single-writer handoff. The repo runbook names Sylvan as publish owner; merge/deploy only with that coordination, then confirm the live Week 6 page, homepage, and sitemap.

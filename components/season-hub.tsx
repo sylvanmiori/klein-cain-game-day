@@ -41,9 +41,9 @@ const atNoon = (date: string) => new Date(`${date}T12:00:00`);
 const weekday = (date: string) => atNoon(date).toLocaleDateString('en-US', { weekday: 'short' });
 const monthDay = (date: string) => atNoon(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
-/** Opponent records refresh with the rest of the season data. */
+/** District records share the standings source, which can refresh even when the
+ * statewide scores feed is unavailable. Non-district records use that feed. */
 const records: Record<string, string> = seasonData.records;
-const record = (opponent: string) => records[opponent] ?? '';
 
 const knownNames = [publication.schoolName, ...schedule.map((game) => game.opponent)].sort(
   (a, b) => b.length - a.length,
@@ -54,6 +54,11 @@ const knownNames = [publication.schoolName, ...schedule.map((game) => game.oppon
 function shortTeam(team: string) {
   return knownNames.find((name) => team === name || team.startsWith(`${name} `)) ?? team;
 }
+
+const districtRecords = new Map(
+  (seasonData.standings?.rows ?? []).map((row) => [shortTeam(row.team), row.overall]),
+);
+const record = (opponent: string) => districtRecords.get(opponent) ?? records[opponent] ?? '';
 
 function isSchool(team: string) {
   return team === publication.schoolName || team.startsWith(`${publication.schoolName} `);

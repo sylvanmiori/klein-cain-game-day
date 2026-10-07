@@ -75,10 +75,10 @@
   "resultFacts": [],
   "preview": {
     "playersHeading": "Players to watch",
-    "playersNote": "Four Hurricanes and four Bearkats who will decide Thursday night.",
+    "playersNote": "Four Hurricanes and five Bearkats who could shape Thursday night.",
     "intro": {
       "heading": "The matchup",
-      "body": "Thursday night is about first place. **Klein Cain (4–1, 2–1)** walks into Klein Memorial Stadium to face an unbeaten **Klein (6–0, 4–0)** team that just hung **52–0** on Klein Forest. The Bearkats sit tied with Klein Collins atop **District 15-6A**. A Cain win pulls the Hurricanes within a game of the lead; a Klein win gives the Bearkats sole possession of first.\n\nThe Hurricanes are coming off their roughest half of the season. Last week's **40–24** loss to Collins saw a **24–14** halftime lead dissolve into a **26–0** second half, with two interceptions and no points after the break. The response starts with the run game. **Eyan Johnson (#16)** managed just 19 yards on nine carries against Collins. Cain needs him back in the middle of things Thursday night.\n\nDave Campbell's computer likes Klein **by 5** at home. The voters weighed in Monday, too: Dave Campbell's Oct 5 Class 6A poll has Klein at **No. 25 (6-0)**, while the Hurricanes, **No. 25** in the Sep 28 poll, fell out after the Collins loss. VYPE's Houston-area 6A poll, released **Oct 6**, has three Klein ISD schools ranked: **Klein Collins** at **No. 14**, **Klein** at **No. 18**, and **Klein Cain** at **No. 25**. *An unbeaten team favored by less than a touchdown on its own field? We'll see about that Thursday night.*\n\nThe playoff math is friendly. Four teams get in from District 15-6A, and Cain sits third at **2–1** with the head-to-head over Tomball in its pocket. And since Cain's 3,784 students make it the district's largest school, a postseason run goes through **Division I**.",
+      "body": "Thursday night is about the district race. **Klein Cain (4–1, 2–1)** walks into Klein Memorial Stadium to face an unbeaten **Klein (6–0, 4–0)** team that just hung **52–0** on Klein Forest. The Bearkats sit tied with Klein Collins atop **District 15-6A**. A Cain win pulls the Hurricanes within a game of the leaders; a Klein win puts the Bearkats alone in first until Collins plays Tomball on Saturday.\n\nThe Hurricanes are coming off their roughest half of the season. Last week's **40–24** loss to Collins saw a **24–14** halftime lead dissolve into a **26–0** second half, with two interceptions and no points after the break. The response starts with the run game. **Eyan Johnson (#16)** managed just 19 yards on nine carries against Collins. Cain needs him back in the middle of things Thursday night.\n\nDave Campbell's Oct 5 Class 6A poll has Klein at **No. 25 (6-0)**, while the Hurricanes, **No. 25** in the Sep 28 poll, fell out after the Collins loss. VYPE's Houston-area 6A poll, published **Oct 4**, has three Klein ISD schools ranked: **Klein Collins** at **No. 14**, **Klein** at **No. 18**, and **Klein Cain** at **No. 25**.\n\nFour teams get in from District 15-6A, and Cain sits third at **2–1** with the head-to-head over Tomball in its pocket. And since Cain's 3,784 students make it the district's largest school, a postseason run goes through **Division I**.",
       "facts": [
         {
           "label": "Cain",
@@ -88,11 +88,6 @@
         {
           "label": "Klein",
           "value": "6–0 · 4–0 district",
-          "team": "opponent"
-        },
-        {
-          "label": "Pick",
-          "value": "Klein by 5",
           "team": "opponent"
         },
         {
@@ -121,7 +116,7 @@
         "role": "QB · Junior",
         "tag": "Eight passing touchdowns",
         "rating": "8 TD passes · 5 rushing TDs",
-        "copy": "Hanks has thrown eight touchdown passes and run for five more, averaging 85.4 rushing yards a game. But the Collins loss turned on his two second-half interceptions, Cain needs a cleaner game from him Thursday. His legs remain Cain's best broken-play weapon; Klein has to account for him on every snap."
+        "copy": "Hanks has thrown eight touchdown passes and run for five more, averaging 85.4 rushing yards a game. His two second-half interceptions helped turn the Collins game; Cain needs a cleaner night from him Thursday. His legs remain Cain's best broken-play weapon, and Klein has to account for him on every snap."
       },
       {
         "team": "CAIN",
@@ -141,7 +136,7 @@
         "role": "DL · Senior",
         "tag": "2 tackles for loss vs Collins",
         "rating": "4 tackles · constant edge pressure",
-        "copy": "Gilstrap lived in Collins' backfield last week with four tackles and two for loss, He was Cain's biggest problem for the Collins offense off the edge. Against a Klein offense that wants to stay on schedule, his edge pressure is the most disruptive force the Hurricanes have."
+        "copy": "Gilstrap spent plenty of time in Collins' backfield last week, finishing with four tackles and two for loss. Against a Klein offense that wants to stay on schedule, his edge pressure could be Cain's best disruptive force."
       },
       {
         "team": "KLEIN",
@@ -185,6 +180,16 @@
         "tag": "8.0 tackles per game",
         "rating": "1.0 sack",
         "copy": "Guedry leads the Bearkat defense at 8.0 tackles a game with a sack, the quarterback of a unit that just pitched a 52–0 shutout. He'll be the man assigned to sort out Cain's run-pass conflict all night."
+      },
+      {
+        "team": "KLEIN",
+        "number": "5",
+        "name": "Cash Hines",
+        "image": "/player-placeholder.svg",
+        "role": "LB / ATH · Sophomore",
+        "tag": "Klein High spotlight: No. 2 linebacker in 2029 class",
+        "rating": "6.8 tackles per game · 1 interception",
+        "copy": "Klein High School's Aug. 20 spotlight calls Hines the No. 2 linebacker and No. 18 player nationally in the 2029 class, but does not name the ranking service. MaxPreps lists him at 6.8 tackles a game with an interception. The sophomore gives Cain another defender to account for, not just a name on a recruiting list."
       }
     ],
     "playerStatsAudit": {
@@ -208,8 +213,17 @@
     },
     "recruiting": {
       "heading": "Klein recruiting notes",
-      "note": "A roster-wide check of the 2026-27 MaxPreps varsity list and On3's Klein roster page found no verified college commitments on the current Bearkats roster as of Oct. 4. Reported offers are not commitments.",
-      "rows": []
+      "note": "An offer is not a college commitment. Klein High School did not identify the ranking service behind its Cash Hines spotlight.",
+      "rows": [
+        {
+          "number": "5",
+          "name": "Cash Hines",
+          "team": "Klein",
+          "note": "Klein High School's Aug. 20 spotlight called Hines the No. 2 linebacker and No. 18 player nationally in the 2029 class. The school did not identify the ranking service; On3 lists offers, not a college commitment.",
+          "href": "https://kleinhs.kleinisd.net/o/kleinhs/live_feeds/12874478",
+          "linkLabel": "Klein High spotlight"
+        }
+      ]
     },
     "keys": {
       "heading": "Four keys for Klein Cain",
@@ -253,15 +267,11 @@
         },
         {
           "label": "The stakes",
-          "value": "Klein win: 5–0, alone in first · Cain win: 3–1, one game back"
+          "value": "Klein and Collins tied at 4–0; Collins plays Tomball Saturday"
         },
         {
           "label": "Head coaches",
           "value": "James Clancy (Cain) · David Perez (Klein)"
-        },
-        {
-          "label": "Conditions",
-          "value": "83°F · Mostly Cloudy · 7% rain (NWS)"
         },
         {
           "label": "Cain form",
@@ -275,11 +285,20 @@
       "links": []
     },
     "opponentRecruitingAudit": {
-      "source": "247Sports + MaxPreps recruiting check of featured Klein players",
+      "source": "MaxPreps varsity roster, On3 recruiting roster and Klein High School spotlight",
       "sourceUrl": "https://www.maxpreps.com/tx/klein/klein-bearkats/football/roster/",
-      "asOf": "2026-10-04T15:30:00-05:00",
+      "asOf": "2026-10-07T13:30:00-05:00",
       "committedPlayers": [],
-      "eliteProspects": []
+      "eliteProspects": [
+        {
+          "name": "Cash Hines",
+          "source": "Klein High School",
+          "sourceUrl": "https://kleinhs.kleinisd.net/o/kleinhs/live_feeds/12874478",
+          "classYear": 2029,
+          "positionRank": 2,
+          "nationalRank": 18
+        }
+      ]
     }
   },
   "final": null,

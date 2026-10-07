@@ -28,7 +28,7 @@ const coaches = {
   },
 };
 
-test('schoolShortLabel and PPG helpers', () => {
+void test('schoolShortLabel and PPG helpers', () => {
   assert.equal(schoolShortLabel('Klein Cain'), 'Cain');
   assert.equal(ordinalSeason(9), '9th season');
   assert.equal(ordinalSeason(1), '1st season');
@@ -36,11 +36,11 @@ test('schoolShortLabel and PPG helpers', () => {
   assert.equal(schoolPointsPerGame(seasonData.results), 50);
 });
 
-test('buildPreviewIntroFacts for Week 5-style preview', () => {
+void test('buildPreviewIntroFacts for Week 5-style preview', () => {
   const edition = {
     home: { name: 'Klein Cain', mascot: 'Hurricanes', record: '4–0' },
     away: { name: 'Klein Collins', mascot: 'Tigers', record: '4–1' },
-    prediction: { margin: -8 },
+    prediction: { margin: -8, asOf: '2026-09-30T12:00:00Z' },
   };
   const facts = buildPreviewIntroFacts({
     edition,
@@ -48,6 +48,7 @@ test('buildPreviewIntroFacts for Week 5-style preview', () => {
     seasonData,
     coaches,
     opponentKey: 'Klein Collins',
+    now: Date.parse('2026-10-01T12:00:00Z'),
   });
   assert.deepEqual(facts, [
     { label: 'Cain', value: '4–0 · 2–0 district · 50.0 points/game', team: 'school' },
@@ -55,4 +56,17 @@ test('buildPreviewIntroFacts for Week 5-style preview', () => {
     { label: 'Pick', value: 'Klein Collins by 8', team: 'opponent' },
     { label: 'Klein Collins coach', value: 'Adrian Mitchell · 9th season', team: 'opponent' },
   ]);
+});
+
+void test('an old model pick is omitted from the preview facts', () => {
+  const edition = {
+    home: { name: 'Klein Cain', mascot: 'Hurricanes', record: '4–0' },
+    away: { name: 'Klein Collins', mascot: 'Tigers', record: '4–1' },
+    prediction: { margin: -8, asOf: '2026-09-20T12:00:00Z' },
+  };
+  const facts = buildPreviewIntroFacts({
+    edition, publication, seasonData, coaches, opponentKey: 'Klein Collins',
+    now: Date.parse('2026-10-01T12:00:00Z'),
+  });
+  assert.equal(facts.some((fact) => fact.label === 'Pick'), false);
 });

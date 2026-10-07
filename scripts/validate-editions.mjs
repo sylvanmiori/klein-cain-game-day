@@ -184,6 +184,10 @@ for (const file of files) {
     if (edition.preview.gameInfo) {
       if (!Array.isArray(edition.preview.gameInfo.facts)) fail('preview.gameInfo.facts must be an array (may be empty)');
       if (!Array.isArray(edition.preview.gameInfo.links)) fail('preview.gameInfo.links must be an array (may be empty)');
+      if (edition.current && edition.state === 'preview'
+        && edition.preview.gameInfo.facts?.some((fact) => /^(conditions|forecast|weather)$/i.test(fact.label))) {
+        fail('current preview gameInfo must not hard-code weather; the matchup card uses the refreshed forecast');
+      }
     }
     if (edition.preview.keys && !Array.isArray(edition.preview.keys.items)) {
       fail('preview.keys.items must be an array');

@@ -93,6 +93,7 @@ function playedDates(games, day) {
 // Our own rating, from every Texas result so far. It publishes nothing until
 // both teams have enough games, so an early-season number is simply withheld.
 let model = null;
+let scoreFeedUnauthorized = false;
 try {
   const dates = playedDates(schedule, today);
   const rows = [];
@@ -103,12 +104,16 @@ try {
     } catch (error) {
       missing += 1;
       problems.push(`rating: ${date}: ${error.message}`);
+      if (/returned HTTP (401|403)$/.test(String(error.message))) {
+        scoreFeedUnauthorized = true;
+        break;
+      }
     }
   }
   // A rating built on part of the season is worse than none: a missing week
   // silently distorts every team that played in it. Publish nothing instead.
   if (missing > 0) {
-    problems.push(`rating: ${missing} of ${dates.length} dates unavailable, so no rating was computed`);
+    problems.push(`rating: score history unavailable, so no rating was computed`);
   } else {
     const played = buildGames(rows);
     if (played.length > 0) {
@@ -247,14 +252,16 @@ for (const { name, edition } of targets) {
   }
 
   // The published pick.
-  try {
-    const pick = await fetchPick(game, publication.schoolName);
-    if (pick && pick.margin !== edition.prediction?.margin) {
-      changes.push(`${name}: pick ${edition.prediction?.margin ?? '(none)'} -> ${pick.margin}`);
+  if (!scoreFeedUnauthorized) {
+    try {
+      const pick = await fetchPick(game, publication.schoolName);
+      if (pick && pick.margin !== edition.prediction?.margin) {
+        changes.push(`${name}: pick ${edition.prediction?.margin ?? '(none)'} -> ${pick.margin}`);
+      }
+      if (pick) edition.prediction = pick;
+    } catch (error) {
+      problems.push(`${name}: pick: ${error.message}`);
     }
-    if (pick) edition.prediction = pick;
-  } catch (error) {
-    problems.push(`${name}: pick: ${error.message}`);
   }
 
   // Our own rating for this matchup, when the season supports one.

@@ -62,7 +62,7 @@ function schoolSide(edition, schoolName) {
  *   opponentKey: string,
  * }} input
  */
-export function buildPreviewIntroFacts({ edition, publication, seasonData, coaches, opponentKey }) {
+export function buildPreviewIntroFacts({ edition, publication, seasonData, coaches, opponentKey, now = Date.now() }) {
   const facts = [];
   const schoolName = publication.schoolName;
   const schoolShort = schoolShortLabel(schoolName);
@@ -96,7 +96,10 @@ export function buildPreviewIntroFacts({ edition, publication, seasonData, coach
   }
 
   const rawMargin = edition.prediction?.margin;
-  if (Number.isFinite(rawMargin)) {
+  const pickAsOf = Date.parse(edition.prediction?.asOf ?? '');
+  const pickAge = now - pickAsOf;
+  const pickIsFresh = Number.isFinite(pickAsOf) && pickAge >= 0 && pickAge <= 7 * 24 * 60 * 60 * 1000;
+  if (pickIsFresh && Number.isFinite(rawMargin)) {
     const margin = Math.round(rawMargin);
     if (margin !== 0) {
       const schoolFavored = margin > 0;
