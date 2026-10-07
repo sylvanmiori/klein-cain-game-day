@@ -1,6 +1,6 @@
 # Game Day Report project guide
 
-Updated September 23, 2026. Written to be picked up cold: an AI developer should read repository-root `AGENTS.md`, then **Current status**, **Where things live** and **Traps worth knowing** here. Keep this file current when accounts, hosting, automation, sources, commands or data ownership change. Never store passwords, tokens or payment details here.
+Updated October 7, 2026. Written to be picked up cold: an AI developer should read repository-root `AGENTS.md`, then **Current status**, **Where things live** and **Traps worth knowing** here. Keep this file current when accounts, hosting, automation, sources, commands or data ownership change. Never store passwords, tokens or payment details here.
 
 ## Ownership and addresses
 
@@ -15,7 +15,9 @@ Updated September 23, 2026. Written to be picked up cold: an AI developer should
 
 Live at https://kleincain.gameday.report/, deployed by Cloudflare Workers Builds on every push to `main`. GitHub Pages remains a fallback.
 
-`/` is the Klein Cain program page with a unified Next Game card (hero + matchup strip) for the current edition (Week 4 at Magnolia West), followed by a unified Latest Recap feature card (recap narrative, lead photo, Player of the Game spotlight, and gallery links) for the latest final (Week 3 vs. Tomball), then schedule and the rest of the program hub. Each of the ten games has its own report at `/games/week-<n>`, rendered from one JSON file in `content/editions/` by `components/edition-page.tsx`. All ten editions exist and are validated. Weeks 1–3 are finals with recaps, game statistics, and photo galleries (Week 1 includes game highlight video); Week 4 is the current preview with complete player capsules and audits; Weeks 5–10 are starter editions.
+`/` is the Klein Cain program page with a unified Next Game card (hero + matchup strip) for the current edition (Week 6 at Klein), followed by a unified Latest Recap feature card (recap narrative, lead photo, Player of the Game spotlight, and gallery links) for the latest final (Week 5 vs. Klein Collins), then schedule and the rest of the program hub. Each of the ten games has its own report at `/games/week-<n>`, rendered from one JSON file in `content/editions/` by `components/edition-page.tsx`. All ten editions exist and are validated. Weeks 1–5 are finals with recaps (Week 1 includes game highlight video; Weeks 3–5 carry game statistics and photo galleries); Week 6 is the current preview with complete player capsules and audits; Weeks 7–10 are starter editions.
+
+Klein Cain is 4–1 (2–1 in District 15-6A) after the 40–24 Week 5 home loss to Klein Collins on October 3. Week 6 is Thursday, October 8, 7:00 PM at Klein Memorial Stadium (White Out).
 
 The season runs unattended. A scheduled workflow creates missing editions, promotes the current game, refreshes facts from public sources and writes a postgame recap. See **Running unattended**.
 
@@ -207,6 +209,8 @@ Watching the feed: cron attempts write ingest telemetry to KV under `<schoolId>:
 
 Manual corrections use `POST /api/score/override`, disabled unless the Worker secret `SCORE_ADMIN_TOKEN` is configured. Supply bearer authorization and JSON fields `date`, `status` (`live` or `final`), `homeScore` and `awayScore`. Scores follow venue order, not always Klein Cain first. A live override pauses source updates for 15 minutes; a final stops them. There is no public editing interface.
 
+Game-night editor overrides go through `scripts/push-manual-score.mjs`, which writes `manual-<slug>.json` to the `live-data` branch: the Worker's ingest treats a fresh file as an override that wins over the upstream feed even when the feed is healthy. Use it when the feed is wrong — e.g. Dave Campbell's wrongly marked the postponed Week 5 game "final" on 2026-10-01. Statuses are `live`, `final`, and `postponed` (with an optional resume label). Files older than 7 days are ignored as a safety net; delete the file when the override is no longer needed. After pushing, ALWAYS purge the jsDelivr CDN cache for the file (`https://purge.jsdelivr.net/gh/sylvanmiori/klein-cain-game-day@live-data/manual-<slug>.json`) or the public score API keeps serving the stale version for many minutes — the worker tries jsDelivr first and raw.githubusercontent second, and jsDelivr branch caching lags the branch. Verify against the jsDelivr URL before calling the page updated.
+
 ## Running unattended
 
 The season now advances without anyone opening an editor. At 6 AM Central daily, every three hours on Thursday and Friday, and three times on Saturday while postgame statistics are being entered, one workflow runs four steps in order:
@@ -306,11 +310,15 @@ The house rules stand regardless of who writes the copy: never invent player sta
 
 State/media poll claims in editorial copy must be dated and verified, never asserted as "this week's". A poll ranking presented as current ships as fact; if that week's poll has not been published yet, the claim is false. Write the poll's publication date ("the Sep 28 state poll"), check the actual published poll before writing, and drop the claim if no current poll exists. `npm run validate` fails the build on "this week's ... poll" phrasing. (2026-10-05: the Week 6 preview claimed "held at No. 25 in this week's Class 6A state poll" before the polls updated; corrected after publishing.)
 
+Klein ISD has five high schools: Klein (Bearkats), Klein Cain (Hurricanes), Klein Collins (Tigers), Klein Oak (Panthers), Klein Forest (Eagles). Never write "all three Klein schools" — when only three are ranked, say "three Klein ISD schools." `npm run validate` fails the build on "all three Klein schools" phrasing. (2026-10-06: the VYPE rankings post and the site intro shipped the error and had to be corrected after publishing.)
+
+Regional polls are separate from the statewide poll — label each with its scope and publication date and never blend them. The Week 6 intro covers both Dave Campbell's statewide Class 6A poll (Klein No. 25, Klein Cain unranked) and VYPE's Houston-area 6A top 25 (Klein Collins No. 14, Klein No. 18, Klein Cain No. 25, published Oct 6).
+
 ## Open items
 
-- Week 3 (Tomball, September 18) was played and Klein Cain won 55–38 on homecoming night. The report at `/games/week-3` features an authored final recap, game statistics, Player of the Game (Maxwell 'Max' Hendricks), and a 38-frame photo gallery.
-- Week 4 (Magnolia West, September 25) player statistics were rechecked against both MaxPreps team pages September 23; the published values and source update times had not changed. Klein Cain's capsules cover its three completed games; Magnolia West's cover all four. The opponent recruiting audit was completed September 20, with commit status and prospect distinctions verified.
-- Weeks 5 to 10 are generated starter pages: real facts, no player capsules or keys. They stay that way until the editor writes them.
+- Week 5 (Klein Collins, October 3) was played and Klein Cain lost 40–24 at home. The report at `/games/week-5` is in recap mode with game statistics, Player of the Game, and a 14-frame photo gallery.
+- Week 6 (at Klein, October 8, 7:00 PM, Klein Memorial Stadium, White Out) is the current preview with full editorial: players, keys, recruiting notes, game info, dated poll claims (Dave Campbell's state poll and VYPE Houston-area poll), and a player-stats audit current to October 6.
+- Weeks 7 to 10 are generated starter pages: real facts, no player capsules or keys. They stay that way until the editor writes them.
 - The opponent's season leaders could sit alongside ours; `fetchStatLeaders` works against any MaxPreps team stats URL.
 - `.github/workflows/deploy.yml` ignores `content/**`, so a facts-only commit refreshes Cloudflare but not the GitHub Pages fallback.
 - Confirm data-source permissions before any commercial use.
@@ -331,6 +339,7 @@ Each of these cost real debugging time. They are recorded so the next person doe
 - **Measuring a CSS transition in a hidden browser pane gives the start value forever**, because no animation frames run. A `max-height` read as a stuck 60px and looked exactly like a broken cascade. Disable the transition before measuring.
 - **Cloudflare's check-run registers a little after the push.** A wait loop that only counts completed checks can exit before Workers Builds appears and report success too early. Wait for the check by name.
 - **Asset sync is setup, not recurring automation.** The facts workflow does not run `npm run roster`, `npm run photos` or `npm run logos`. Add an exact opponent profile and run the logo sync before a new edition can pass validation; refresh the roster and portraits manually when MaxPreps changes.
+- **After `node scripts/push-manual-score.mjs`, purge the jsDelivr CDN cache for the file** (`https://purge.jsdelivr.net/gh/sylvanmiori/klein-cain-game-day@live-data/manual-<slug>.json`) or the public score API keeps serving the stale version for many minutes. The worker tries jsDelivr first and raw.githubusercontent second; jsDelivr branch caching lags behind the branch. Verify with the jsDelivr URL before telling anyone the page is updated.
 - **Homepage hero readability is a gradient problem, not a shrink-the-photo problem.** The Next Game feature photo should stay large and editorial. Solve hard edges and text contrast with crop, `object-position`, and a left-to-right black edge gradient over the image — not by anchoring a small corner sticker or lowering opacity until the subject disappears. Swap the asset through `publication.heroNextGameImage`; keep the file local under `public/`.
 
 ## Recovery and future schools
