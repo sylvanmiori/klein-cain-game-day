@@ -65,11 +65,11 @@
     "tempF": 86,
     "condition": "Mostly Clear",
     "precipPct": 0,
-    "humidityPct": 48,
+    "humidityPct": 46,
     "wind": "5 mph NE",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-10-06T18:06:01.783Z"
+    "asOf": "2026-10-08T17:42:31.044Z"
   },
   "scheduledFacts": [],
   "resultFacts": [],
@@ -88,11 +88,6 @@
         {
           "label": "Klein",
           "value": "6–0 · 4–0 district",
-          "team": "opponent"
-        },
-        {
-          "label": "Pick",
-          "value": "Klein by 5",
           "team": "opponent"
         },
         {
