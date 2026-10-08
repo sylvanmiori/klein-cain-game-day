@@ -75,7 +75,7 @@
   "resultFacts": [],
   "preview": {
     "playersHeading": "Players to watch",
-    "playersNote": "Four Hurricanes and four Bearkats who will decide Thursday night.",
+    "playersNote": "Four Hurricanes and five Bearkats who will decide Thursday night.",
     "intro": {
       "heading": "The matchup",
       "body": "Thursday night is about first place. **Klein Cain (4–1, 2–1)** walks into Klein Memorial Stadium to face an unbeaten **Klein (6–0, 4–0)** team that just hung **52–0** on Klein Forest. The Bearkats sit tied with Klein Collins atop **District 15-6A**. A Cain win pulls the Hurricanes within a game of the lead; a Klein win gives the Bearkats sole possession of first.\n\nThe Hurricanes are coming off their roughest half of the season. Last week's **40–24** loss to Collins saw a **24–14** halftime lead dissolve into a **26–0** second half, with two interceptions and no points after the break. The response starts with the run game. **Eyan Johnson (#16)** managed just 19 yards on nine carries against Collins. Cain needs him back in the middle of things Thursday night.\n\nDave Campbell's computer likes Klein **by 5** at home. The voters weighed in Monday, too: Dave Campbell's Oct 5 Class 6A poll has Klein at **No. 25 (6-0)**, while the Hurricanes, **No. 25** in the Sep 28 poll, fell out after the Collins loss. VYPE's Houston-area 6A poll, released **Oct 6**, has three Klein ISD schools ranked: **Klein Collins** at **No. 14**, **Klein** at **No. 18**, and **Klein Cain** at **No. 25**. *An unbeaten team favored by less than a touchdown on its own field? We'll see about that Thursday night.*\n\nThe playoff math is friendly. Four teams get in from District 15-6A, and Cain sits third at **2–1** with the head-to-head over Tomball in its pocket. And since Cain's 3,784 students make it the district's largest school, a postseason run goes through **Division I**.",
@@ -185,6 +185,16 @@
         "tag": "No. 2 linebacker in the 2029 class (247Sports)",
         "rating": "Top247 No. 18 overall · Texas offer",
         "copy": "Hines, who goes by \"Cash,\" is the highest-ranked recruit on either roster: 247Sports slots the 2029 linebacker No. 18 overall in the Top247 and No. 2 among linebackers nationally. The 6-foot-3 sophomore already holds a Texas offer and has the Longhorns in his top three. His production matches the pedigree: 41 tackles (6.8 per game, fifth in 15-6A) and an interception for the 6-0 Bearkats. Cain's offense has to know where No. 5 is on every snap."
+      },
+      {
+        "team": "KLEIN",
+        "number": "55",
+        "name": "Trenton Marshall",
+        "image": "/player-placeholder.svg",
+        "role": "DL · Senior",
+        "tag": "Army commit",
+        "rating": "Committed 8/17/2026 · 6-1, 280",
+        "copy": "Marshall is the only player on either roster with a college commitment, pledging to Army on August 17. The 6-foot-1, 280-pound senior plays both lines for the Bearkats. For a Cain front that wants to control the line of scrimmage, moving an Army-bound senior all night is the first problem to solve."
       }
     ],
     "playerStatsAudit": {
@@ -208,7 +218,7 @@
     },
     "recruiting": {
       "heading": "Klein recruiting notes",
-      "note": "A roster-wide check of the 2026-27 MaxPreps varsity list and On3's Klein roster page found no verified college commitments on the current Bearkats roster as of Oct. 8. Reported offers are not commitments. The exception is 2029 linebacker C'Ivion Hines, a 247Sports Top247 prospect detailed below.",
+      "note": "A roster-wide check of the 2026-27 MaxPreps varsity list, On3's Klein roster page, and 247Sports found one verified college commitment on the current Bearkats roster as of Oct. 8: senior DL Trenton Marshall (Army, 8/17/2026). Reported offers are not commitments. The uncommitted exception is 2029 linebacker C'Ivion Hines, a 247Sports Top247 prospect detailed below.",
       "rows": [
         {
           "name": "C'Ivion Hines",
@@ -219,6 +229,11 @@
           "name": "Mike Brown",
           "note": "The 2028 Klein receiver is unrated by the services but holds reported offers from SMU, Ole Miss, Arizona, Missouri State, and UNLV; On3's prediction machine favors SMU at 81%.",
           "href": "https://www.on3.com/rivals/mike-brown-289836"
+        },
+        {
+          "name": "Trenton Marshall",
+          "note": "The 6-1, 280-pound senior defensive lineman is an Army commit (August 17, 2026), the only commitment on either roster.",
+          "href": "https://247sports.com/player/trenton-marshall-46162256/"
         }
       ]
     },
@@ -284,8 +299,14 @@
     "opponentRecruitingAudit": {
       "source": "247Sports + MaxPreps roster-wide recruiting check",
       "sourceUrl": "https://www.maxpreps.com/tx/klein/klein-bearkats/football/roster/",
-      "asOf": "2026-10-08T08:30:00-05:00",
-      "committedPlayers": [],
+      "asOf": "2026-10-08T09:45:00-05:00",
+      "committedPlayers": [
+        {
+          "name": "Trenton Marshall",
+          "school": "Army",
+          "sourceUrl": "https://247sports.com/college/army/season/2027-football/commits/"
+        }
+      ],
       "eliteProspects": [
         {
           "name": "C'Ivion Hines",
