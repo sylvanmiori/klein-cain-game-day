@@ -178,13 +178,13 @@
       },
       {
         "team": "KLEIN",
-        "number": "21",
-        "name": "Dolan Guedry",
+        "number": "5",
+        "name": "C'Ivion Hines",
         "image": "/player-placeholder.svg",
-        "role": "LB · Senior",
-        "tag": "8.0 tackles per game",
-        "rating": "1.0 sack",
-        "copy": "Guedry leads the Bearkat defense at 8.0 tackles a game with a sack, the quarterback of a unit that just pitched a 52–0 shutout. He'll be the man assigned to sort out Cain's run-pass conflict all night."
+        "role": "LB · Sophomore",
+        "tag": "No. 2 linebacker in the 2029 class (247Sports)",
+        "rating": "Top247 No. 18 overall · Texas offer",
+        "copy": "Hines, who goes by \"Cash,\" is the highest-ranked recruit on either roster: 247Sports slots the 2029 linebacker No. 18 overall in the Top247 and No. 2 among linebackers nationally. The 6-foot-3 sophomore already holds a Texas offer and has the Longhorns in his top three. His production matches the pedigree: 41 tackles (6.8 per game, fifth in 15-6A) and an interception for the 6-0 Bearkats. Cain's offense has to know where No. 5 is on every snap."
       }
     ],
     "playerStatsAudit": {
@@ -208,8 +208,14 @@
     },
     "recruiting": {
       "heading": "Klein recruiting notes",
-      "note": "A roster-wide check of the 2026-27 MaxPreps varsity list and On3's Klein roster page found no verified college commitments on the current Bearkats roster as of Oct. 4. Reported offers are not commitments.",
-      "rows": []
+      "note": "A roster-wide check of the 2026-27 MaxPreps varsity list and On3's Klein roster page found no verified college commitments on the current Bearkats roster as of Oct. 8. Reported offers are not commitments. The exception is 2029 linebacker C'Ivion Hines, a 247Sports Top247 prospect detailed below.",
+      "rows": [
+        {
+          "name": "C'Ivion Hines",
+          "note": "247Sports ranks the 2029 Klein linebacker No. 2 at his position and No. 18 overall in the Top247. He holds a Texas offer with the Longhorns in his top three among 13 reported offers; uncommitted.",
+          "href": "https://247sports.com/player/civion-hines-46167923/"
+        }
+      ]
     },
     "keys": {
       "heading": "Four keys for Klein Cain",
@@ -260,10 +266,6 @@
           "value": "James Clancy (Cain) · David Perez (Klein)"
         },
         {
-          "label": "Conditions",
-          "value": "86°F · Mostly Clear · 0% rain (NWS)"
-        },
-        {
           "label": "Cain form",
           "value": "4–1 · 2–1 district · 44.8 points/game"
         },
@@ -275,11 +277,20 @@
       "links": []
     },
     "opponentRecruitingAudit": {
-      "source": "247Sports + MaxPreps recruiting check of featured Klein players",
+      "source": "247Sports + MaxPreps roster-wide recruiting check",
       "sourceUrl": "https://www.maxpreps.com/tx/klein/klein-bearkats/football/roster/",
-      "asOf": "2026-10-04T15:30:00-05:00",
+      "asOf": "2026-10-08T08:30:00-05:00",
       "committedPlayers": [],
-      "eliteProspects": []
+      "eliteProspects": [
+        {
+          "name": "C'Ivion Hines",
+          "source": "247Sports",
+          "sourceUrl": "https://247sports.com/player/civion-hines-46167923/",
+          "classYear": 2029,
+          "positionRank": 2,
+          "nationalRank": 18
+        }
+      ]
     }
   },
   "final": null,
