@@ -93,7 +93,6 @@ function playedDates(games, day) {
 // Our own rating, from every Texas result so far. It publishes nothing until
 // both teams have enough games, so an early-season number is simply withheld.
 let model = null;
-let scoreFeedUnauthorized = false;
 try {
   const dates = playedDates(schedule, today);
   const rows = [];
@@ -104,16 +103,12 @@ try {
     } catch (error) {
       missing += 1;
       problems.push(`rating: ${date}: ${error.message}`);
-      if (/returned HTTP (401|403)$/.test(String(error.message))) {
-        scoreFeedUnauthorized = true;
-        break;
-      }
     }
   }
   // A rating built on part of the season is worse than none: a missing week
   // silently distorts every team that played in it. Publish nothing instead.
   if (missing > 0) {
-    problems.push(`rating: score history unavailable, so no rating was computed`);
+    problems.push(`rating: ${missing} of ${dates.length} dates unavailable, so no rating was computed`);
   } else {
     const played = buildGames(rows);
     if (played.length > 0) {
@@ -252,16 +247,14 @@ for (const { name, edition } of targets) {
   }
 
   // The published pick.
-  if (!scoreFeedUnauthorized) {
-    try {
-      const pick = await fetchPick(game, publication.schoolName);
-      if (pick && pick.margin !== edition.prediction?.margin) {
-        changes.push(`${name}: pick ${edition.prediction?.margin ?? '(none)'} -> ${pick.margin}`);
-      }
-      if (pick) edition.prediction = pick;
-    } catch (error) {
-      problems.push(`${name}: pick: ${error.message}`);
+  try {
+    const pick = await fetchPick(game, publication.schoolName);
+    if (pick && pick.margin !== edition.prediction?.margin) {
+      changes.push(`${name}: pick ${edition.prediction?.margin ?? '(none)'} -> ${pick.margin}`);
     }
+    if (pick) edition.prediction = pick;
+  } catch (error) {
+    problems.push(`${name}: pick: ${error.message}`);
   }
 
   // Our own rating for this matchup, when the season supports one.
@@ -297,6 +290,21 @@ for (const { name, edition } of targets) {
           changes.push(`${name}: weather -> ${weather.tempF}F ${weather.condition} ${weather.precipPct}% rain`);
         }
         edition.weather = weather;
+        // Keep the Game information "Conditions" fact in lockstep with the
+        // weather block (2026-10-07: the fact row drifted stale while the
+        // block was refreshed, so the live page showed two forecasts).
+        const facts = edition.preview?.gameInfo?.facts;
+        if (Array.isArray(facts)) {
+          const conditions = facts.find((fact) => fact.label === 'Conditions');
+          if (conditions) {
+            const rain = weather.precipPct === null || weather.precipPct === undefined ? 'N/A' : `${weather.precipPct}%`;
+            const next = `${weather.tempF}°F · ${weather.condition} · ${rain} rain (NWS)`;
+            if (conditions.value !== next) {
+              changes.push(`${name}: gameInfo Conditions -> ${next}`);
+              conditions.value = next;
+            }
+          }
+        }
       } else if (!edition.weather) {
         console.log(`${name}: outside the forecast window; no weather published yet.`);
       }
@@ -331,10 +339,6 @@ else console.log('No changes; every value already matched its source.');
 
 if (problems.length) {
   console.warn(`\nKept the previous value for:\n${problems.map((line) => `  - ${line}`).join('\n')}`);
-  if (process.env.GITHUB_ACTIONS === 'true') {
-    const summary = `${problems.length} facts source issue(s); see refresh-facts log for details`;
-    console.warn(`::warning title=Partial facts refresh::${summary}`);
-  }
 }
 
 // A source outage must not fail the job; it simply publishes nothing new.

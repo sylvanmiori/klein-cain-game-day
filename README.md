@@ -3,10 +3,8 @@
 A football site with a program page, one report per game, live scores and season statistics. No subscription or email service is configured.
 
 Start with [AGENTS.md](AGENTS.md) when handing the repository to an AI developer, then read the [project guide](docs/PROJECT-GUIDE.md) for architecture, accounts, sources, automation, recovery and open work. Its **Traps worth knowing** section records the non-obvious failures already solved.
-The [October 7 midseason QC report](docs/MIDSEASON-QC-2026-10-07.md) records verified Week 6 facts, fixes, visual checks and unresolved source/security follow-up.
 
 The approved purple-helmet avatar is the site's visual identity. Its master file is `public/brand/cain-helmet-avatar-source.png`; `npm run brand:assets` regenerates the favicon set, Apple/Android touch icons, homepage helmet images and fallback social-share card. The earlier [social kit](brand/social-2026/README.md) is archived and should not be used as the current logo.
-Football footer social destinations live in `config/publication.json` and render through `components/footer-social-links.tsx` on the homepage, game reports and photo gallery. Verify an account's actual profile before changing its URL.
 
 Standalone launch graphics are available as public files at `/launch/gameday-report-wide-1920x1080.png`, `/launch/gameday-report-square-1080x1080.png` and `/launch/gameday-report-vertical-1080x1920.png`. They are available by direct URL but are not displayed in site pages. The device screens are illustrative mockups showing the Week 4 matchup, so review their time-specific details before sharing later in the season.
 
@@ -29,7 +27,6 @@ New schedule opponents require one setup pass: add their exact MaxPreps profile 
 ## Development
 
 Node 24 is used in CI and recommended locally; the declared minimum is Node 22.13. Run `npm ci`, then `npm run dev`.
-The production-like local check is `npm run build:cloudflare` followed by `npm start -- --local --port 3317` (Wrangler serves the built Worker); `vinext start` is not the preview command for this Cloudflare output.
 
 - `npm run editions` creates a starter edition for any scheduled game that lacks one.
 - `npm run promote` sets which edition is current, captures final scores and season statistics, and writes the recap.

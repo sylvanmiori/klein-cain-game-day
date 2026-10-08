@@ -1,7 +1,6 @@
 # Game Day Report project guide
 
 Updated October 7, 2026. Written to be picked up cold: an AI developer should read repository-root `AGENTS.md`, then **Current status**, **Where things live** and **Traps worth knowing** here. Keep this file current when accounts, hosting, automation, sources, commands or data ownership change. Never store passwords, tokens or payment details here.
-The [October 7 midseason QC report](MIDSEASON-QC-2026-10-07.md) records the current Week 6 source checks, release fixes and remaining risks.
 
 ## Ownership and addresses
 
@@ -15,7 +14,6 @@ The [October 7 midseason QC report](MIDSEASON-QC-2026-10-07.md) records the curr
 ## Current status
 
 Live at https://kleincain.gameday.report/, deployed by Cloudflare Workers Builds on every push to `main`. GitHub Pages remains a fallback.
-For local production visual QA, run `npm run build:cloudflare` and then `npm start -- --local --port 3317`. The `start` script uses Wrangler against `dist/server/wrangler.json`; `vinext start` is not a valid preview of this Cloudflare build after the October 7 vinext 1.0.1 upgrade.
 
 `/` is the Klein Cain program page with a unified Next Game card (hero + matchup strip) for the current edition (Week 6 at Klein), followed by a unified Latest Recap feature card (recap narrative, lead photo, Player of the Game spotlight, and gallery links) for the latest final (Week 5 vs. Klein Collins), then schedule and the rest of the program hub. Each of the ten games has its own report at `/games/week-<n>`, rendered from one JSON file in `content/editions/` by `components/edition-page.tsx`. All ten editions exist and are validated. Weeks 1–5 are finals with recaps (Week 1 includes game highlight video; Weeks 3–5 carry game statistics and photo galleries); Week 6 is the current preview with complete player capsules and audits; Weeks 7–10 are starter editions.
 
@@ -38,13 +36,12 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `components/game-photos.tsx` | accessible photo gallery grid, native `<dialog>` lightbox modal with keyboard navigation, photographer credits |
 | `components/game-video.tsx` | game highlight video player with poster, duration, and credit |
 | `components/seo-schema.tsx` | Schema.org JSON-LD structured data generators (SportsTeam, SportsEvent, NewsArticle, BreadcrumbList, ImageGallery) |
-| `components/footer-social-links.tsx` | shared football footer links for X, Instagram and Facebook on home, game reports and photos |
 | `content/editions/*.json` | one file per game, schema v2, typed in `lib/edition.ts` |
-| `content/season-data.json` | machine-written: our results, opponent records, and district standings; schedule display takes district-team records from the standings table before the statewide-record fallback |
+| `content/season-data.json` | machine-written: our results, every opponent's record, and district standings |
 | `content/roster-2026.json` | varsity roster synced from MaxPreps with `npm run roster`; local portrait paths are synced with `npm run photos` |
 | `config/season-2026.json` | the schedule; authority on date, opponent, venue, home/away, kickoff |
 | `config/opponent-logos.json` | exact MaxPreps profile used for each scheduled opponent's logo |
-| `config/publication.json` | school, wordmark, source URLs, verified footer social destinations, homepage hero asset paths |
+| `config/publication.json` | school, wordmark, source URLs, homepage hero asset paths |
 | `config/coaches.json` | head coaches for Klein Cain and every scheduled opponent, with bios and verified career stops; rendered on previews and the program page |
 | `config/program.json` | program history and past seasons |
 | `config/venues.json` | venue coordinates, for the forecast |
@@ -73,8 +70,6 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 The approved purple helmet is now the visual mark on the masthead and Klein Cain matchup cards through `publication.schoolLogo` (`/favicon.png`). Its master is local and unchanged; resizing/compositing only is done by `npm run brand:assets`. The same command produces a square 48px PNG for Google Search, 16/32/96/192/512px PNGs, a multi-size `/favicon.ico`, 180px Apple touch icon, web-app manifest icon, the general `/og.png` share image, and both homepage helmet hero files. `lib/site-icons.ts` is the single HTML metadata definition for all pages. Google Search's icon is eligible after recrawl, not guaranteed immediately; keep `/favicon-48x48.png` stable and crawlable. The older silver helmet imagery contained an incorrect Texas-like/Cain-script decal and must not be reused as the public identity.
 
 The `/launch/` graphics are separate social assets. They are image-generated mockups using the approved helmet and screenshots as references. The small device-screen text is illustrative and the visible Week 4 matchup is time-specific. These files are intentionally unlinked from site navigation and pages; share their direct URLs or download them for social posts.
-
-Football footers use the shared `FooterSocialLinks` component on `/`, `/photos`, and every game report. The account destinations are configured in `config/publication.json`: X `@CainGameday`, Instagram `@caingameday`, and the owner-provided Facebook Page URL (`profile.php?id=61594287467980`). Do not substitute the school's official football social account for this independent publication.
 
 ### Favicon contract
 
@@ -257,9 +252,7 @@ Sources, all free and unauthenticated:
 - **Opponent records** in the schedule are computed from the same complete season scan the rating uses, so they cost no extra requests, and are written to `content/season-data.json` alongside our own results, rather than into the hand-maintained schedule. Teams are matched on Dave Campbell's exact school name; `config/season-2026.json` carries a `dctfName` where it differs, which today is Oak Ridge, listed there as "Conroe Oak Ridge". Exact matching matters: the feed also contains "Arlington Oakridge", and a substring match on "Klein" would hit five different schools. As a cross-check, all eight district opponents agree exactly with the standings table, which is a separate source.
 - **Weather** comes from the National Weather Service (`api.weather.gov`), which needs no key. The hourly feed reaches about six days ahead, so a game further out gets no weather rather than an invented one. A forecast older than three days is dropped at build time instead of shown.
 
-Predictions follow a fixed order of preference: our own rating first, then Massey, then the Dave Campbell's pick. `predictionFact` picks the best available **recent** value and labels the fact with the source; a prediction older than seven days is withheld from the public card. The machine-built intro sidebar likewise omits a stale pick. The validator still requires a stored prediction before kickoff, but an upstream outage can mean no current prediction is displayed. Never present an old model value as a current pick. The `massey` field exists and is always null today, for the reason below; the slot keeps the preference order explicit so it can be filled the day a permitted route appears.
-
-**Oct. 7 source outage:** Dave Campbell's migrated `scoresGetJson` endpoint returns HTTP 401 to the scheduled GitHub runner. The statewide rating and its derived opponent-record snapshot, plus the Dave Campbell pick, have not refreshed since Sep. 29. The live Worker score path uses a separate public game-detail endpoint, and district standings/edition team records refresh from MaxPreps. The refresh job stops trying more score dates after an authorization failure, leaving time for weather and standings updates. A new permitted statewide results feed is needed before the rating can resume; do not authenticate by scraping a private session or silently substitute a different metric. The current Klein preview also no longer hard-codes conditions in `gameInfo`; weather is rendered only from the machine-owned forecast, and validation rejects a hard-coded weather row on the current preview.
+Predictions follow a fixed order of preference: our own rating first, then Massey, then the Dave Campbell's pick. `predictionFact` picks the best available and labels the fact with the source, so a reader always knows whose number they are seeing, and the validator fails the build if a game before kickoff has none at all. The `massey` field exists and is always null today, for the reason below; the slot keeps the preference order explicit so it can be filled the day a permitted route appears.
 
 Massey is deliberately not a source. `masseyratings.com` answers automated requests with a Cloudflare bot challenge, and its `robots.txt` disallows `/data/` and `/scores.php`. Getting around either would be bot-detection bypass, so the Dave Campbell's pick replaces it. The Massey numbers on the Week 2 page stay as authored editorial text.
 
