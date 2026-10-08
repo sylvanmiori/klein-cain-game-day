@@ -1,14 +1,40 @@
 name: 413 Baseball weekend schedule
 
-# Thursday evening: pull the weekend tournament schedule for 4:13 Baseball
-# (15U travel team, Spring TX) from the Perfect Game team page and commit it
-# to content/baseball/schedule.json. A commit here pushes to main, which
-# Cloudflare Workers Builds deploys.
+# Hardened schedule cadence for 4:13 Baseball (15U travel team, Spring TX).
+# The workflow pulls the weekend tournament schedule from the Perfect Game
+# team page and commits it to content/baseball/schedule.json. A commit here
+# pushes to main, which Cloudflare Workers Builds deploys.
+#
+# Known Perfect Game timing (Steven, 2026-10-08):
+# - New tournament schedules are released by Wednesday midnight CT.
+# - The Sunday schedule (bracket-day games) is updated by ~Saturday 10-11pm CT.
+#
+# Runs:
+# - Thursday 10:00 UTC (5:00am CDT / 4:00am CST): PRIMARY pull. PG releases
+#   by Wednesday midnight, so this lands the weekend schedule before anyone
+#   checks the site Thursday morning.
+# - Thursday 23:00 UTC (6:00pm CDT / 5:00pm CST): second-chance catch for late
+#   PG posts, corrections, or a failed morning run.
+# - Sunday 04:30 and 05:30 UTC: Saturday-night Sunday-schedule catch.
+#   04:30 UTC = 11:30pm Sat CDT / 10:30pm Sat CST; 05:30 UTC = 12:30am Sun
+#   CDT / 11:30pm Sat CST. At least one run lands at/after 11:30pm CT
+#   Saturday in both DST regimes, after PG's ~10-11pm Sunday update.
+#   This refreshes schedule.json (Home "This Weekend" cards + the Schedule
+#   tournament game list are build-time from this file) and the dated
+#   snapshot the bracket job merges into.
+#
+# Failure behavior: each run retries the scrape up to 3 times (5 minutes
+# apart) for transient PG/network failures. A single malformed tournament
+# row can never fail the run (scripts/baseball-pg.mjs skips bad rows with a
+# capture note). The commit step only commits when the file content actually
+# changed, so retries and extra runs never spam git history.
 
 on:
   schedule:
-    # 23:00 UTC Thursday = 6:00 PM Thursday CDT (5:00 PM in CST).
+    - cron: '0 10 * * 4'
     - cron: '0 23 * * 4'
+    - cron: '30 4 * * 0'
+    - cron: '30 5 * * 0'
   workflow_dispatch:
 
 permissions:
@@ -30,7 +56,21 @@ jobs:
       - run: npm ci
 
       - name: Refresh weekend schedule from Perfect Game
-        run: npm run baseball:schedule
+        run: |
+          attempt=1
+          while [ "$attempt" -le 3 ]; do
+            if npm run baseball:schedule; then
+              echo "Schedule refresh succeeded on attempt $attempt."
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              echo "Schedule refresh failed after 3 attempts."
+              exit 1
+            fi
+            echo "Attempt $attempt failed; retrying in 5 minutes."
+            sleep 300
+            attempt=$((attempt + 1))
+          done
 
       - name: Commit weekend schedule
         run: |

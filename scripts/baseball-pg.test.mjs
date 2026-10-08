@@ -66,3 +66,45 @@ describe('parseTournaments (decorated event anchor, 2026-10-02 markup)', () => {
     assert.equal(games[0].venue, 'Premier Baseball of Texas');
   });
 });
+
+// 2026-10-01 regression: the scheduled Thursday run died with
+// 'Tournament "..." is missing its id or date range' on a single malformed
+// row, so the whole weekend schedule never published. A bad row must be
+// skipped with a capture note while the good rows still parse.
+const MIXED_FIXTURE = `
+<div>TEAM SCHEDULE</div>
+<table>
+<tr class="rgRow" id="row_good">
+<input type="hidden" name="x$hfTournamentID" id="x_hfTournamentID" value="140434" />
+<input type="hidden" name="x$hfStartDate" id="x_hfStartDate" value="10/09/2026" />
+<input type="hidden" name="x$hfEndDate" id="x_hfEndDate" value="10/11/2026" />
+<a id="ctl00_rgSchedule_ctl00_hlEvent" href="/events/Default.aspx?event=140434">2026 15U PG Fall Classic</a>
+<br /><span>Oct 9-11</span><span>Tomball, TX</span>
+</tr>
+<tr class="rgRow" id="row_bad">
+<a id="ctl00_rgSchedule_ctl01_hlEvent" href="/events/Default.aspx?event=999999">Ghost Tournament Row</a>
+</tr>
+</table>
+`;
+
+describe('parseTournaments (one malformed row, 2026-10-01 failure)', () => {
+  const notes = [];
+  const tournaments = parseTournaments(MIXED_FIXTURE, notes);
+
+  it('keeps the good tournament', () => {
+    assert.equal(tournaments.length, 1);
+    assert.equal(tournaments[0].name, '2026 15U PG Fall Classic');
+    assert.equal(tournaments[0].event_id, '140434');
+    assert.equal(tournaments[0].start_date, '2026-10-09');
+  });
+
+  it('records the skipped row as a capture note instead of throwing', () => {
+    assert.equal(notes.length, 1);
+    assert.match(notes[0], /Ghost Tournament Row/);
+    assert.match(notes[0], /missing its id or date range/);
+  });
+
+  it('still throws when the TEAM SCHEDULE section itself is absent', () => {
+    assert.throws(() => parseTournaments('<div>no schedule here</div>'), /TEAM SCHEDULE section not found/);
+  });
+});

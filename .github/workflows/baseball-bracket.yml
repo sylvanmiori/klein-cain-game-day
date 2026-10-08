@@ -2,8 +2,11 @@ name: 413 Baseball bracket check
 
 # Bracket cadence for 4:13 Baseball (15U travel team, Spring TX) tournament weekends:
 #
-# - Thursday ~6pm CT: baseball-schedule.yml pulls the weekend schedule from the
-#   Perfect Game team page into content/baseball/schedule.json.
+# - Thursday ~5am CT (primary) + ~6pm CT (catch): baseball-schedule.yml pulls
+#   the weekend schedule from the Perfect Game team page into
+#   content/baseball/schedule.json.
+# - Saturday ~11:30pm-12:30am CT: the same workflow re-pulls to catch PG's
+#   ~10-11pm Sunday-schedule update.
 # - Saturday ~11pm CT: tournament brackets are expected to post. This workflow
 #   checks hourly from 11:00pm Saturday CT through 12:00pm Sunday CT.
 # - `npm run baseball:bracket` writes content/baseball/bracket.json on success

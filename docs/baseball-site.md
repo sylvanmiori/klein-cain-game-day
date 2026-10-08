@@ -102,7 +102,7 @@ Parents on iPhone often pick **HEIC/HEIF** from Photos. Workers AI vision does n
 
 ## Data and automation (summary)
 
-- Schedule (build-time): `npm run baseball:schedule` → `content/baseball/schedule.json` (Thursday GH Action). Powers Home "This Weekend" and the Schedule **tournament game list**.
+- Schedule (build-time): `npm run baseball:schedule` → `content/baseball/schedule.json` (GH Action: Thursday 5am CT primary + 6pm CT catch, Saturday ~11:30pm–12:30am CT Sunday-schedule catch). Powers Home "This Weekend" and the Schedule **tournament game list**.
 - Bracket file (build-time fallback only): `npm run baseball:bracket` / GH Action `baseball-bracket.yml` (hourly Sat 11pm–Sun noon CT) → `content/baseball/bracket.json`.
 - Live bracket: Worker cron `*/15` → KV `baseball:bracket:<event_id>` → `GET /api/baseball/bracket` → Schedule `<BracketLive>` **and** Home `<HomeBracketPath>` (see [bracket poller](baseball-bracket-poller.md)). No deploy when PG fills seeds/scores; Home Sunday path needs no `schedule.json` refresh.
 - Live pool standings: same `*/15` cron (independent try/catch) → KV `baseball:standings:<event_id>` → `GET /api/baseball/standings` → `/standings` via `<StandingsLive>` (see [standings poller](baseball-standings-poller.md)). No deploy when PG updates W-L/seeds. SSR may show stale build-time fallback until client hydrates.
@@ -124,7 +124,7 @@ Verified operating model for tournament weekends (e.g. event 140434, 2026 15U PG
 
 **What Steven does not need to babysit tonight:** standings seed/W-L and bracket structure/seeds/scores once Perfect Game publishes them. The Worker pollers handle that without an agent in the loop and without a docs-or-data deploy.
 
-**What still needs a human (or Thursday/manual scraper + deploy):** new **pool** games that appear only on the PG team schedule (still `schedule.json` + deploy). Sunday **bracket** opponent/time/path on Home comes from the live bracket API once Perfect Game names `4:13 Baseball` on a bracket game — no schedule.json redeploy for that section.
+**What still needs a human (or the automated scraper + deploy):** new **pool** games that appear only on the PG team schedule (the Thursday-morning pull, the Thursday-evening catch, or the Saturday-night Sunday-schedule refresh land these into `schedule.json` + deploy). Sunday **bracket** opponent/time/path on Home comes from the live bracket API once Perfect Game names `4:13 Baseball` on a bracket game — no schedule.json redeploy for that section.
 
 Point-in-time check (Sat Sep 26, 2026 ~10:15 PM CT): 4:13 named in Silver Bracket QF game #28 (Sun 10:20 AM Field 8 vs #6 Den Guys 15u); feeders SF #30 / Championship #31. Home Sunday path is wired to that live snapshot.
 

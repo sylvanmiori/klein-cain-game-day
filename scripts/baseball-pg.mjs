@@ -258,7 +258,56 @@ function parseGame(cell, tournamentStart) {
   };
 }
 
-function parseTournaments(html) {
+function parseTournament(html, eventLinks, gameCells, i) {
+  const link = eventLinks[i];
+  // The tournament id and date-range hidden fields sit earlier in the same
+  // header row, before the event link, so the block starts at the row.
+  const blockStart = html.lastIndexOf('<tr class="rgRow"', link.index);
+  const blockEnd = i + 1 < eventLinks.length ? eventLinks[i + 1].index : html.length;
+  const block = html.slice(blockStart, blockEnd);
+
+  const name = stripTags(link[2]);
+  const eventUrl = absolutize(link[1]);
+  const eventId = /event=(\d+)/.exec(link[1])?.[1] ?? null;
+  const tournamentId = hiddenValue(block, 'hfTournamentID') ?? eventId;
+  const startRaw = hiddenValue(block, 'hfStartDate');
+  const endRaw = hiddenValue(block, 'hfEndDate');
+  if (!tournamentId || !startRaw || !endRaw) {
+    throw new Error(`Tournament "${name}" is missing its id or date range.`);
+  }
+  const start = parseMMDDYYYY(startRaw);
+  const end = parseMMDDYYYY(endRaw);
+
+  const datesMatch = /<br\s*\/?>\s*<span>([^<]+)<\/span>\s*<span[^>]*>([^<]+)<\/span>/.exec(block);
+  const bracketMatch = /href="(\/events\/Brackets\.aspx\?event=\d+)"[^>]*>Bracket</.exec(block);
+
+  const games = gameCells
+    .filter((cell) => cell.index > blockStart && cell.index < blockEnd)
+    .map((cell) => parseGame(cell[1], start));
+
+  return {
+    name,
+    dates: datesMatch ? stripTags(datesMatch[1]) : null,
+    start_date: isoDate(start),
+    end_date: isoDate(end),
+    city: datesMatch ? stripTags(datesMatch[2]) : null,
+    venue: games.find((game) => game.venue)?.venue ?? null,
+    event_id: tournamentId,
+    event_url: eventUrl,
+    bracket_url: bracketMatch ? absolutize(bracketMatch[1]) : null,
+    games,
+    // Filled in from the tournament pages below (non-fatal if missing).
+    event_location: null,
+    event_address: null,
+    divisions: [],
+    standings_url: null,
+    pool_standings: null,
+    team_event_record: null,
+    scoreboard: null,
+  };
+}
+
+function parseTournaments(html, notes = []) {
   if (!/TEAM SCHEDULE/.test(html)) throw new Error('TEAM SCHEDULE section not found on the Perfect Game team page.');
 
   // PG wraps the event name in <b><font> inside the anchor (2026-10-02), so the
@@ -267,54 +316,18 @@ function parseTournaments(html) {
   const eventLinks = [...html.matchAll(/<a[^>]*id="[^"]*rgSchedule[^"]*hlEvent"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)];
   const gameCells = [...html.matchAll(/<td class="nestedscheduleGridRow">([\s\S]*?)<\/td>/g)];
 
+  // One malformed tournament row must never nuke the whole capture:
+  // on 2026-10-01 the scheduled Thursday run died on a single row missing its
+  // hidden id/date fields, so the weekend schedule never published and nobody
+  // was told. Bad rows are skipped with a capture note instead.
   const tournaments = [];
   for (let i = 0; i < eventLinks.length; i += 1) {
-    const link = eventLinks[i];
-    // The tournament id and date-range hidden fields sit earlier in the same
-    // header row, before the event link, so the block starts at the row.
-    const blockStart = html.lastIndexOf('<tr class="rgRow"', link.index);
-    const blockEnd = i + 1 < eventLinks.length ? eventLinks[i + 1].index : html.length;
-    const block = html.slice(blockStart, blockEnd);
-
-    const name = stripTags(link[2]);
-    const eventUrl = absolutize(link[1]);
-    const eventId = /event=(\d+)/.exec(link[1])?.[1] ?? null;
-    const tournamentId = hiddenValue(block, 'hfTournamentID') ?? eventId;
-    const startRaw = hiddenValue(block, 'hfStartDate');
-    const endRaw = hiddenValue(block, 'hfEndDate');
-    if (!tournamentId || !startRaw || !endRaw) {
-      throw new Error(`Tournament "${name}" is missing its id or date range.`);
+    try {
+      tournaments.push(parseTournament(html, eventLinks, gameCells, i));
+    } catch (error) {
+      const name = stripTags(eventLinks[i][2]) || `tournament row ${i + 1}`;
+      notes.push(`Tournament row skipped ("${name}"): ${error.message}`);
     }
-    const start = parseMMDDYYYY(startRaw);
-    const end = parseMMDDYYYY(endRaw);
-
-    const datesMatch = /<br\s*\/?>\s*<span>([^<]+)<\/span>\s*<span[^>]*>([^<]+)<\/span>/.exec(block);
-    const bracketMatch = /href="(\/events\/Brackets\.aspx\?event=\d+)"[^>]*>Bracket</.exec(block);
-
-    const games = gameCells
-      .filter((cell) => cell.index > blockStart && cell.index < blockEnd)
-      .map((cell) => parseGame(cell[1], start));
-
-    tournaments.push({
-      name,
-      dates: datesMatch ? stripTags(datesMatch[1]) : null,
-      start_date: isoDate(start),
-      end_date: isoDate(end),
-      city: datesMatch ? stripTags(datesMatch[2]) : null,
-      venue: games.find((game) => game.venue)?.venue ?? null,
-      event_id: tournamentId,
-      event_url: eventUrl,
-      bracket_url: bracketMatch ? absolutize(bracketMatch[1]) : null,
-      games,
-      // Filled in from the tournament pages below (non-fatal if missing).
-      event_location: null,
-      event_address: null,
-      divisions: [],
-      standings_url: null,
-      pool_standings: null,
-      team_event_record: null,
-      scoreboard: null,
-    });
   }
   return tournaments;
 }
@@ -494,7 +507,7 @@ async function main() {
   try {
     team = parseTeam(html);
     roster = parseRoster(html, notes);
-    tournaments = parseTournaments(html);
+    tournaments = parseTournaments(html, notes);
   } catch (error) {
     writeError(error);
     return;
@@ -541,4 +554,4 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   main();
 }
 
-export { parseTournaments, parseTeam, parseRoster, parseGame };
+export { parseTournaments, parseTournament, parseTeam, parseRoster, parseGame };

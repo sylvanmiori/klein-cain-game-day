@@ -103,17 +103,30 @@ latest snapshot.
 
 ## How the jobs consume the dataset
 
-- **Thursday ~6pm CT** (`baseball-schedule.yml`): `npm run baseball:schedule`
+- **Thursday 5:00am CT** (`baseball-schedule.yml`): `npm run baseball:schedule`
   rewrites `content/baseball/schedule.json` and the dated snapshot, then
   commits both (snapshots staged via `git add content/baseball/pg-snapshots`;
   commit only when staged content changed, same pattern as the schedule
-  file). The site's `components/baseball/data.ts` loader reads
-  `schedule.json`; its shape is backward-compatible (fields only added).
+  file). Perfect Game releases new tournament schedules by Wednesday
+  midnight, so this primary pull lands the weekend schedule before anyone
+  checks the site Thursday morning. The site's
+  `components/baseball/data.ts` loader reads `schedule.json`; its shape is
+  backward-compatible (fields only added).
   **Home "This Weekend" and the Schedule tournament game list are build-time
   from this file** — a Sunday opponent listed later on PG will not appear as
   Home cards until `schedule.json` is refreshed and Cloudflare is redeployed
   (the live bracket API does not feed Home). See
   [`docs/baseball-site.md` Weekend ops](baseball-site.md#weekend-ops--sunday-readiness).
+- **Thursday 6:00pm CT** (same workflow): second-chance catch for late PG
+  posts, corrections, or a failed morning run. The scrape retries up to 3
+  times per run, and one malformed tournament row can never fail a run
+  (bad rows are skipped with a capture note) — the 2026-10-01 failure mode.
+- **Saturday ~11:30pm–12:30am CT** (same workflow, two runs to straddle the
+  CDT/CST shift): Sunday-schedule catch. PG updates the Sunday schedule by
+  ~10-11pm Saturday; this refresh pulls those Sunday games into
+  `schedule.json` and the dated snapshot the bracket job merges into, so the
+  Home cards and Schedule game list carry Sunday without anyone touching
+  anything.
 - **Live standings + live bracket (Worker)**: cron `*/15` runs
   `pollBaseballPoolStandings()` and `pollBaseballBracket()` into KV (independent
   try/catch; last-good only). Site reads `GET /api/baseball/standings` and
