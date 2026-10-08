@@ -81,7 +81,16 @@ export function loadSchedule(): BaseballSchedule | null {
     bracketUrl: t.bracket_url,
   }));
   const games: ScheduleGame[] = raw.tournaments.flatMap((t, i) =>
-    (Array.isArray(t.games) ? t.games : []).map((g, j) => normalizeGame(g, `t${i}`, j)),
+    (Array.isArray(t.games) ? t.games : [])
+      // A game dated outside its tournament's date range is a scraper
+      // misattribution (2026-10-08: PG listed the Sep 27 bracket QF under the
+      // Oct 10-11 Octoberfest tournament). Never show it under the wrong
+      // event; the raw row stays in schedule.json.
+      .filter((g) => {
+        if (!g?.date || !t.start_date || !t.end_date) return true;
+        return g.date >= t.start_date && g.date <= t.end_date;
+      })
+      .map((g, j) => normalizeGame(g, `t${i}`, j)),
   );
   return { tournaments, games };
 }
