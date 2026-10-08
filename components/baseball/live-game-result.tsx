@@ -13,7 +13,7 @@ const resultBase: Record<ResultStyle, string> = {
 };
 
 /** Green for a 4:13 win, red for a loss ("W 5-1" / "L 0-7"), navy otherwise. */
-function resultOutcomeClass(result: string): string {
+export function resultOutcomeClass(result: string): string {
   const c = result.trim().charAt(0).toUpperCase();
   if (c === 'W') return 'bg-[#17804d]';
   if (c === 'L') return 'bg-[#c0392b]';

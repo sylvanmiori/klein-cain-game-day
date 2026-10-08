@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { BattingSeasonLine, PitchingSeasonLine, StatsResponse } from './types';
 import { PlayerNameLink } from './player-name-link';
+import { resultOutcomeClass } from './live-game-result';
 
 type State = 'loading' | 'ready' | 'empty' | 'error';
 
@@ -211,7 +212,7 @@ export function BaseballStatsTables() {
                     <span className="block truncate text-sm font-extrabold text-[#12324e]">vs {game.opponent}</span>
                     <span className="mt-0.5 block text-[12px] text-[#6e6e73]">{formatGameDate(game.date)}</span>
                   </span>
-                  <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#12324e] px-2.5 py-1 text-[12px] font-extrabold text-white tabular-nums">
+                  <span className={`inline-flex shrink-0 items-center gap-1 rounded-full ${game.result ? resultOutcomeClass(game.result) : 'bg-[#12324e]'} px-2.5 py-1 text-[12px] font-extrabold text-white tabular-nums`}>
                     {game.result || 'Box score'} <span aria-hidden="true">›</span>
                   </span>
                 </a>
