@@ -10,6 +10,7 @@ type State = 'loading' | 'ready' | 'empty' | 'error';
 const BATTING_COLS = [
   { key: 'name', label: 'Player', numeric: false },
   { key: 'gp', label: 'GP', numeric: true },
+  { key: 'ops', label: 'OPS', numeric: true, fmt: 3 },
   { key: 'ab', label: 'AB', numeric: true },
   { key: 'r', label: 'R', numeric: true },
   { key: 'h', label: 'H', numeric: true },
@@ -23,12 +24,12 @@ const BATTING_COLS = [
   { key: 'avg', label: 'AVG', numeric: true, fmt: 3 },
   { key: 'obp', label: 'OBP', numeric: true, fmt: 3 },
   { key: 'slg', label: 'SLG', numeric: true, fmt: 3 },
-  { key: 'ops', label: 'OPS', numeric: true, fmt: 3 },
 ] as const;
 
 const PITCHING_COLS = [
   { key: 'name', label: 'Player', numeric: false },
   { key: 'gp', label: 'GP', numeric: true },
+  { key: 'whip', label: 'WHIP', numeric: true, fmt: 2 },
   { key: 'ip', label: 'IP', numeric: true },
   { key: 'h', label: 'H', numeric: true },
   { key: 'r', label: 'R', numeric: true },
@@ -36,7 +37,6 @@ const PITCHING_COLS = [
   { key: 'bb', label: 'BB', numeric: true },
   { key: 'k', label: 'K', numeric: true },
   { key: 'era', label: 'ERA', numeric: true, fmt: 2 },
-  { key: 'whip', label: 'WHIP', numeric: true, fmt: 2 },
 ] as const;
 
 function ipToNumber(ip: string | number): number {
@@ -96,7 +96,7 @@ export function BaseballStatsTables() {
   const [state, setState] = useState<State>('loading');
   const [data, setData] = useState<StatsResponse | null>(null);
   const [batSort, setBatSort] = useState<{ key: string; dir: 'asc' | 'desc' }>({ key: 'ops', dir: 'desc' });
-  const [pitSort, setPitSort] = useState<{ key: string; dir: 'asc' | 'desc' }>({ key: 'era', dir: 'asc' });
+  const [pitSort, setPitSort] = useState<{ key: string; dir: 'asc' | 'desc' }>({ key: 'whip', dir: 'asc' });
 
   useEffect(() => {
     let alive = true;
