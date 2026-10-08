@@ -96,6 +96,14 @@ Layout (Yahoo Sports **structure**, 4:13 brand — navy `#12324e`, light cards; 
 
 Roster player names on `/stats`, `/box-score`, and `/roster` link through `PlayerNameLink` — same body text color, no default underline; hover underline + focus-visible ring. Opponent names and missing `player_id` stay plain text. Submit/edit grids intentionally do not link names (edit UX).
 
+### Stats page (`/baseball/stats`)
+
+- Batting table: **OPS is the second column (right after GP)** and the default sort is OPS descending (highest OPS first) — OPS is the story stat for who is hitting best.
+- Pitching table: **WHIP is the second column (right after GP)** and the default sort is WHIP ascending (lowest WHIP first) — WHIP is the story stat for who is pitching best.
+- All column headers are clickable to re-sort; the sort state lives locally in `BaseballStatsTables` (`components/baseball/stats-tables.tsx`).
+- The Game Box Scores list uses color-coded result pills shared with the schedule page (`resultOutcomeClass` exported from `components/baseball/live-game-result.tsx`): wins green `#17804d`, losses red `#c0392b`, unknown/non-result navy `#12324e`.
+- The per-game box-score view (`components/baseball/game-box-score.tsx`) has its own independent column layout and is unaffected by `/stats` column changes.
+
 ### Box-score photo formats (HEIC)
 
 Parents on iPhone often pick **HEIC/HEIF** from Photos. Workers AI vision does not reliably accept raw `image/heic`, so the submit UI (`components/baseball/boxscore-submit.tsx` + `heic-to-jpeg.ts`) **auto-converts HEIC/HEIF to JPEG in the browser** before `POST /api/baseball/boxscore`. On **Safari**, `heic2any` runs **first** (native HEIC decode can “succeed” with blank/odd JPEGs); elsewhere native decode runs first, then heic2any. JPEG/PNG/WebP are unchanged. The Worker returns `415` if a raw HEIC still arrives (stale client). Vision model is `@cf/meta/llama-4-scout-17b-16e-instruct` (see [boxscore handoff](413-BOXSCORE-UPLOAD-HANDOFF.md)).
