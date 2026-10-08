@@ -1,5 +1,5 @@
 {
-  "scraped_at": "2026-10-08T13:24:13.271Z",
+  "scraped_at": "2026-10-08T13:47:15.454Z",
   "snapshot_date": "2026-10-08",
   "source": "Perfect Game",
   "source_url": "https://www.perfectgame.org/PGBA/Team/default.aspx?orgid=69753&orgteamid=297202&Year=2027",
@@ -769,6 +769,40 @@
           "result_status": "Final",
           "runs_for": 0,
           "runs_against": 7
+        },
+        {
+          "date": "2026-10-10",
+          "time": "8:00 AM",
+          "opponent": "15U OFFSEASON BASEBALL - WESTBROOKS",
+          "opponent_record": null,
+          "opponent_url": null,
+          "home_away": "vs",
+          "pool": null,
+          "field": "Field 4",
+          "venue": "Schiel Road Park",
+          "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1596980",
+          "result": null,
+          "result_status": null,
+          "runs_for": null,
+          "runs_against": null,
+          "date_source": "event_scoreboard"
+        },
+        {
+          "date": "2026-10-10",
+          "time": "12:40 PM",
+          "opponent": "Scorpions Team Easton 2030 Black",
+          "opponent_record": null,
+          "opponent_url": null,
+          "home_away": "@",
+          "pool": null,
+          "field": "Field 4",
+          "venue": "Schiel Road Park",
+          "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1596983",
+          "result": null,
+          "result_status": null,
+          "runs_for": null,
+          "runs_against": null,
+          "date_source": "event_scoreboard"
         }
       ],
       "event_location": "Premier Baseball of Texas | Tomball, TX",
@@ -1348,5 +1382,8 @@
       ]
     }
   ],
-  "capture_notes": []
+  "capture_notes": [
+    "Game vs 15U OFFSEASON BASEBALL - WESTBROOKS (8:00 AM) added from the event scoreboard; the team page grid had no entry, so it is listed on 2026-10-10 (day 1 pool play).",
+    "Game vs Scorpions Team Easton 2030 Black (12:40 PM) added from the event scoreboard; the team page grid had no entry, so it is listed on 2026-10-10 (day 1 pool play)."
+  ]
 }
