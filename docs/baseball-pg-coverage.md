@@ -127,6 +127,16 @@ latest snapshot.
   `schedule.json` and the dated snapshot the bracket job merges into, so the
   Home cards and Schedule game list carry Sunday without anyone touching
   anything.
+- **Event-scoreboard merge:** the team page's schedule grid sometimes lags
+  the tournament event page (2026-10-08: Octoberfest pool-game times were on
+  the event scoreboard while the team grid was still empty). Scoreboard rows
+  naming 4:13 that have no team-grid entry (matched by DiamondKast game id)
+  are merged into the tournament's game list with `date_source:
+  "event_scoreboard"`. Scoreboard tiles carry times but no dates; pool games
+  in a multi-day PG event play on day 1 (Sunday's bracket is set from
+  Saturday's pool results), so merged games take the tournament's start
+  date and the capture note flags the assumption. Runs before result-joining,
+  so results attach to merged games the same way.
 - **Live standings + live bracket (Worker)**: cron `*/15` runs
   `pollBaseballPoolStandings()` and `pollBaseballBracket()` into KV (independent
   try/catch; last-good only). Site reads `GET /api/baseball/standings` and

@@ -409,6 +409,72 @@ function parsePoolStandings(html, standingsUrl, teamName) {
   return parsePoolStandingsPage(html, { standingsUrl, teamName });
 }
 
+/** Minutes since midnight for "h:mm AM/PM"; unparseable times sort first. */
+function timeMinutes(value) {
+  const m = /^(\d{1,2}):(\d{2})\s*([AP])M$/i.exec(String(value ?? '').trim());
+  if (!m) return 0;
+  let hours = Number(m[1]) % 12;
+  if (/p/i.test(m[3])) hours += 12;
+  return hours * 60 + Number(m[2]);
+}
+
+/**
+ * The team page's schedule grid sometimes lags the tournament event page:
+ * on 2026-10-08 PG had Octoberfest pool-game times on the event scoreboard
+ * while the team grid was still empty, so the site showed no games for the
+ * weekend. Merge scoreboard games naming our team into the tournament's
+ * game list when the grid has no entry for them (matched by DiamondKast
+ * game id, so grid games are never duplicated).
+ *
+ * Scoreboard tiles carry times but no dates. Pool games in a multi-day PG
+ * event play on day 1 (Sunday's bracket is set from Saturday's pool
+ * results), so merged games take the tournament's start date; the capture
+ * note flags the assumption. Runs BEFORE applyResults so results join
+ * onto merged games the same way.
+ */
+function mergeScoreboardGames(tournaments, captures, teamName, notes) {
+  for (const tournament of tournaments) {
+    const capture = captures.find((c) => c?.event_id === tournament.event_id);
+    const board = capture?.event?.scoreboard ?? [];
+    const gridIds = new Set(
+      (tournament.games ?? [])
+        .map((g) => /gameid=(\d+)/.exec(g.diamondkast_url ?? '')?.[1])
+        .filter(Boolean),
+    );
+    for (const sb of board) {
+      if (!sb.game_id || gridIds.has(sb.game_id)) continue;
+      const isVisitor = normName(sb.visitor) === normName(teamName);
+      const isHome = normName(sb.home) === normName(teamName);
+      if (!isVisitor && !isHome) continue; // never guess which side is ours
+      const opponent = isVisitor ? sb.home : sb.visitor;
+      if (!opponent) continue;
+      tournament.games.push({
+        date: tournament.start_date,
+        time: sb.datetime ?? null,
+        opponent,
+        opponent_record: null,
+        opponent_url: null,
+        home_away: isHome ? 'vs' : '@',
+        pool: null,
+        field: sb.field ?? null,
+        venue: sb.venue ?? null,
+        diamondkast_url: sb.diamondkast_url ?? null,
+        result: null,
+        result_status: null,
+        runs_for: null,
+        runs_against: null,
+        date_source: 'event_scoreboard',
+      });
+      notes.push(
+        `Game vs ${opponent} (${sb.datetime ?? 'time TBD'}) added from the event scoreboard; ` +
+        `the team page grid had no entry, so it is listed on ${tournament.start_date} (day 1 pool play).`,
+      );
+    }
+    tournament.games.sort((a, b) =>
+      (a.date ?? '').localeCompare(b.date ?? '') || timeMinutes(a.time) - timeMinutes(b.time));
+  }
+}
+
 /** Join event-scoreboard results onto the team's schedule games by game id. */
 function applyResults(tournaments, eventCaptures, teamName) {
   const byGameId = new Map();
@@ -519,6 +585,7 @@ async function main() {
     captures.push(await captureTournament(tournament, team.name, notes));
     await wait(FETCH_GAP_MS);
   }
+  mergeScoreboardGames(tournaments, captures, team.name, notes);
   applyResults(tournaments, captures.map((c) => c.event).filter(Boolean), team.name);
 
   const scrapedAt = new Date().toISOString();
@@ -554,4 +621,4 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   main();
 }
 
-export { parseTournaments, parseTournament, parseTeam, parseRoster, parseGame };
+export { parseTournaments, parseTournament, parseTeam, parseRoster, parseGame, mergeScoreboardGames };

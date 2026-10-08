@@ -108,3 +108,93 @@ describe('parseTournaments (one malformed row, 2026-10-01 failure)', () => {
     assert.throws(() => parseTournaments('<div>no schedule here</div>'), /TEAM SCHEDULE section not found/);
   });
 });
+
+// 2026-10-08: PG posted Octoberfest pool-game times on the event scoreboard
+// while the team page grid was still empty, so the site showed no games.
+// Scoreboard games naming our team must merge into the tournament's game
+// list (day 1 date), without duplicating grid games.
+import { mergeScoreboardGames } from './baseball-pg.mjs';
+
+describe('mergeScoreboardGames (event scoreboard ahead of team grid)', () => {
+  const tournaments = [
+    {
+      name: '2026 15U PG Octoberfest @ Premier',
+      start_date: '2026-10-10',
+      end_date: '2026-10-11',
+      event_id: '140496',
+      games: [],
+    },
+  ];
+  const captures = [
+    {
+      event_id: '140496',
+      event: {
+        scoreboard: [
+          {
+            game_id: '1596980',
+            diamondkast_url: 'https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1596980',
+            status: null,
+            datetime: '8:00 AM',
+            visitor: '15U OFFSEASON BASEBALL - WESTBROOKS',
+            visitor_runs: null,
+            home: '4:13 Baseball',
+            home_runs: null,
+            venue: 'Schiel Road Park',
+            field: 'Field 4',
+          },
+          {
+            game_id: '1596983',
+            diamondkast_url: 'https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1596983',
+            status: null,
+            datetime: '12:40 PM',
+            visitor: '4:13 Baseball',
+            visitor_runs: null,
+            home: 'Scorpions Team Easton 2030 Black',
+            home_runs: null,
+            venue: 'Schiel Road Park',
+            field: 'Field 4',
+          },
+          // Not our team: ignored.
+          {
+            game_id: '1596960',
+            diamondkast_url: 'https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1596960',
+            status: null,
+            datetime: '8:00 AM',
+            visitor: 'Loudboyz 2030',
+            visitor_runs: null,
+            home: 'Next Level Baseball',
+            home_runs: null,
+            venue: 'Schiel Road Park',
+            field: 'Field 1',
+          },
+        ],
+      },
+    },
+  ];
+  const notes = [];
+  mergeScoreboardGames(tournaments, captures, '4:13 Baseball', notes);
+  const games = tournaments[0].games;
+
+  it('adds the two pool games with day-1 dates', () => {
+    assert.equal(games.length, 2);
+    assert.equal(games[0].date, '2026-10-10');
+    assert.equal(games[0].time, '8:00 AM');
+    assert.equal(games[0].opponent, '15U OFFSEASON BASEBALL - WESTBROOKS');
+    assert.equal(games[0].home_away, 'vs');
+    assert.equal(games[1].time, '12:40 PM');
+    assert.equal(games[1].opponent, 'Scorpions Team Easton 2030 Black');
+    assert.equal(games[1].home_away, '@');
+  });
+
+  it('flags the date assumption in the capture notes', () => {
+    assert.equal(notes.length, 2);
+    assert.match(notes[0], /team page grid had no entry/);
+  });
+
+  it('never duplicates a game already in the grid', () => {
+    const notes2 = [];
+    mergeScoreboardGames(tournaments, captures, '4:13 Baseball', notes2);
+    assert.equal(tournaments[0].games.length, 2);
+    assert.equal(notes2.length, 0);
+  });
+});
