@@ -332,7 +332,7 @@ article>section { border-bottom:1px solid var(--line); }
 .season-card { overflow:hidden; }
 .season-card .season-head { max-width:none; margin:0; padding:24px 26px 20px; border-top:5px solid var(--purple); border-bottom:1px solid var(--line); }
 .season-card .season-head h2,.history-band h2,.standings-card h2 { font-size:27px; font-weight:850; letter-spacing:-.04em; }
-.season-card .season-head p { color:var(--ink); font-size:23px; font-variant-numeric:tabular-nums; }
+.season-card .season-head p { color:var(--ink); font-size:23px; font-variant-numeric:tabular-nums; white-space:nowrap; flex-shrink:0; }
 .season-card ol { margin:0; padding:0; list-style:none; }
 .season-card li { border-bottom:1px solid #e6e6e9; }
 .season-card li>a,.season-card li:not(:has(a)) { display:grid; grid-template-columns:88px 1fr auto; gap:16px; align-items:center; min-height:49px; padding:9px 24px; font-size:13px; }
