@@ -27,8 +27,8 @@
   },
   "pageTitle": "2026 Week 7 Preview: Klein Oak at Klein Cain",
   "metaTitle": "Week 7 Preview: Klein Oak at Klein Cain | Cain Game Day",
-  "metaDescription": "Matchup facts, records and the published forecast for Klein Cain's Week 7 game against Klein Oak on October 16, 2026.",
-  "socialDescription": "Records, ranking and forecast for Klein Oak at Klein Cain.",
+  "metaDescription": "Klein Cain (4-2) hosts Klein Oak (1-4) on Friday, October 16, looking to snap a two-game skid and stay in the District 15-6A playoff race.",
+  "socialDescription": "Cain hosts Klein Oak on Oct. 16. Two straight losses are in the mirror; the playoff race is straight ahead.",
   "ogImage": "",
   "prediction": {
     "margin": -1,
@@ -58,35 +58,270 @@
   "resultFacts": [],
   "preview": {
     "playersHeading": "Players to watch",
-    "playersNote": "",
+    "playersNote": "Five Hurricanes and five Panthers who will decide Friday night.",
     "intro": {
       "heading": "The matchup",
-      "body": "Klein Oak plays at Klein Cain on October 16, 2026 at 7:00 PM, at Klein Memorial Stadium. Records, the statewide ranking and the published forecast on this page update automatically as the season goes on. Player notes are added only when they can be checked against a named source.",
+      "body": "The Hurricanes come home hurting. Two straight losses have turned a **4-1** season into **4-2** and a first-place fight into a playoff scramble. The **40-24** second-half collapse against Collins was bad enough. Then Klein scored **22** unanswered after halftime in a **37-14** win that Dave Campbell's named one of its three big takeaways from Thursday night.\n\n**Klein Cain (4-2, 2-2)** hosts **Klein Oak (1-4, 1-2)** on Friday, October 16 at 7 PM at Klein Memorial Stadium. The Panthers play at Magnolia tonight, so that record is still moving. On3's projection has Cain **40-24** with a **76%** win probability. With four games left and Klein and Collins separating at the top of **District 15-6A**, Cain needs this one to stay in the thick of the playoff race. *The bounce-back starts at home.*",
       "facts": [
         {
           "label": "Cain",
-          "value": "4–2 · 2–2 district · 39.7 points/game",
+          "value": "4-2 · 2-2 district · 39.7 points/game",
           "team": "school"
         },
         {
           "label": "Klein Oak",
-          "value": "1–4 · 1–2 district",
+          "value": "1-4 · 1-2 district",
           "team": "opponent"
         },
         {
           "label": "Klein Oak coach",
           "value": "Brandon Carpenter · 6th season",
           "team": "opponent"
+        },
+        {
+          "label": "Tonight",
+          "value": "Klein Oak at Magnolia, 7 PM — Oak's record in flux",
+          "team": "opponent"
         }
       ]
     },
-    "players": [],
-    "recruiting": null,
-    "keys": null,
-    "gameInfo": null
+    "players": [
+      {
+        "team": "CAIN",
+        "number": "16",
+        "name": "Eyan Johnson",
+        "image": "/players/eyan-johnson.jpg",
+        "role": "RB / SB · Senior",
+        "tag": "100.4 rushing yards per game",
+        "rating": "9 total TDs",
+        "copy": "Johnson entered Thursday leading Cain at **100.4** rushing yards per game with **nine** total touchdowns. The Bearkats bottled him up; he never found room against a front keyed on him all night. Friday is the reset: when Johnson gets going early, everything else opens up."
+      },
+      {
+        "team": "CAIN",
+        "number": "9",
+        "name": "Jace Hanks",
+        "image": "/players/jace-hanks.jpg",
+        "role": "QB · Junior",
+        "tag": "8 passing touchdowns",
+        "rating": "8 TD passes · 5 rushing TDs",
+        "copy": "Hanks owns **eight** touchdown passes and **five** rushing scores, and his 35-yard touchdown run Thursday was Cain's brightest moment. But the Klein loss turned on his two interceptions and the empty red-zone trip. Take care of the ball first; the playmaking takes care of itself."
+      },
+      {
+        "team": "CAIN",
+        "number": "34",
+        "name": "Gage Hansberger",
+        "image": "/players/gage-hansberger.jpg",
+        "role": "LB · Senior",
+        "tag": "Cain's Player of the Game vs Klein",
+        "rating": "Team captain",
+        "copy": "Hansberger was Cain's Player of the Game against Klein: in on stops all night and the man who blew up the Bearkats' two-point try. The senior captain sets the tone for a front seven staring down a 4-star running back."
+      },
+      {
+        "team": "CAIN",
+        "number": "45",
+        "name": "Lovell Christian",
+        "image": "/players/lovell-christian.jpg",
+        "role": "DL · Senior",
+        "tag": "Team captain",
+        "rating": "Senior defensive lineman",
+        "copy": "Christian anchors the interior as a team captain. Oak's ground game runs through **Micah Rhodes** and a quarterback averaging **98.7** rushing yards; the fight starts with Christian's front winning the line of scrimmage."
+      },
+      {
+        "team": "CAIN",
+        "number": "8",
+        "name": "Israel Smith",
+        "image": "/players/israel-smith.jpg",
+        "role": "WR · Junior",
+        "tag": "117-yard game vs Tomball",
+        "rating": "Junior wide receiver",
+        "copy": "Smith's **117**-yard night against Tomball showed what happens when the ball finds him. With defenses keying on Johnson, the perimeter is where Cain's big plays live."
+      },
+      {
+        "team": "KLEIN OAK",
+        "number": "5",
+        "name": "Micah Rhodes",
+        "image": "/player-placeholder.svg",
+        "role": "RB · Junior",
+        "tag": "Texas commit (Oct. 8)",
+        "rating": "247 Sports' No. 8 RB, 2028 class",
+        "copy": "The headliner. Rhodes is a 4-star recruit and 247 Sports' No. 8 running back in the 2028 class who committed to **Texas** on Oct. 8 after decommitting from Oklahoma in April. He ran for **229** yards and a score in Oak's 45-7 win over Tomball Memorial and holds 34 major offers. Cain has to know where **Micah Rhodes (#5)** is on every snap."
+      },
+      {
+        "team": "KLEIN OAK",
+        "number": "2",
+        "name": "Andre Phillip II",
+        "image": "/player-placeholder.svg",
+        "role": "QB · Senior",
+        "tag": "98.7 rushing yards per game",
+        "rating": "6 passing TDs · 3 rushing TDs",
+        "copy": "Phillip is the dual-threat engine: MaxPreps has the senior at **98.7** rushing yards a game with **six** passing touchdowns and **three** rushing scores. Cain's ends and linebackers have to keep him in the pocket; when he gets loose, Oak's offense hums."
+      },
+      {
+        "team": "KLEIN OAK",
+        "number": "4",
+        "name": "Antonio Dural",
+        "image": "/player-placeholder.svg",
+        "role": "ATH / RB · Junior",
+        "tag": "106.3 rushing yards per game",
+        "rating": "3 total TDs",
+        "copy": "Dural leads Oak's ground game at **106.3** rushing yards a game per MaxPreps with **three** total touchdowns. Pair him with Rhodes and the Panthers can attack both edges; fitting the run is job one Friday."
+      },
+      {
+        "team": "KLEIN OAK",
+        "number": "17",
+        "name": "Carson Varro",
+        "image": "/player-placeholder.svg",
+        "role": "WR · Senior",
+        "tag": "67.7 receiving yards per game",
+        "rating": "4 receiving TDs",
+        "copy": "Varro is the top target outside: **67.7** receiving yards a game and **four** touchdown catches per MaxPreps. If Cain loads the box against the run, Phillip will look his way first."
+      },
+      {
+        "team": "KLEIN OAK",
+        "number": "8",
+        "name": "Zack Ruysenaars",
+        "image": "/player-placeholder.svg",
+        "role": "MLB / OLB · Senior",
+        "tag": "9.7 tackles per game",
+        "rating": "2.0 sacks",
+        "copy": "Ruysenaars is the heart of the Oak defense at **9.7** tackles a game with **two** sacks per MaxPreps. Cain's line has to find him before Johnson does."
+      }
+    ],
+    "recruiting": {
+      "heading": "Klein Oak recruiting notes",
+      "note": "A roster-wide check of On3's Klein Oak prospect list, 247Sports coverage, and Rivals coverage as of Oct. 9 found one verified commitment on the current Panthers roster: junior running back **Micah Rhodes** committed to Texas on Oct. 8 after decommitting from Oklahoma in April. No other commitments surfaced; reported offers are not commitments.",
+      "rows": [
+        {
+          "name": "Micah Rhodes",
+          "note": "The 2028 four-star running back committed to **Texas** on Oct. 8, flipping from Oklahoma (April decommit). SportCast Media cites 247 Sports' No. 8 running-back ranking; the 247Sports Composite has him No. 12 with 34 major offers. He ran for 229 yards and a score in Oak's 45-7 win over Tomball Memorial last week.",
+          "href": "https://longhornswire.usatoday.com/story/sports/college/longhorns/recruiting/2026/10/08/commitment-former-ou-commit-2028-4-star-rb-micah-rhodes-picks-texas/92151864007/"
+        },
+        {
+          "name": "Andre Phillip II",
+          "note": "The senior QB is On3's No. 2-rated Klein Oak prospect (85.20), a dual threat with six passing and three rushing TDs per MaxPreps.",
+          "href": "https://www.on3.com/high-school/scores/football/national/game/magnolia-vs-klein-oak-2026-10-02-1958657/"
+        },
+        {
+          "name": "Quincy Carter",
+          "note": "The senior safety is On3's No. 3-rated Panther (84.23) with a caused fumble on MaxPreps.",
+          "href": "https://www.on3.com/high-school/scores/football/national/game/magnolia-vs-klein-oak-2026-10-02-1958657/"
+        },
+        {
+          "name": "Max Farmer",
+          "note": "The 6-5, 285-pound junior lineman is On3's No. 4-rated Panther (82.33) with a sack and a caused fumble on MaxPreps.",
+          "href": "https://www.on3.com/high-school/scores/football/national/game/magnolia-vs-klein-oak-2026-10-02-1958657/"
+        }
+      ]
+    },
+    "keys": {
+      "heading": "Four keys for Klein Cain",
+      "items": [
+        {
+          "title": "Know where Micah Rhodes is",
+          "body": "The 4-star **Texas** commit ran for **229** yards and a score last week and holds 34 major offers. Fit the run, gang tackle, and make someone else beat you. **Gage Hansberger (#34)** and **Lovell Christian (#45)** set the tone."
+        },
+        {
+          "title": "Keep Andre Phillip II in the pocket",
+          "body": "**98.7** rushing yards a game with **six** touchdown passes: the senior quarterback hurts you both ways. Rush lanes, a spy, and no free first downs with his legs."
+        },
+        {
+          "title": "Rebuild the run game",
+          "body": "**Eyan Johnson (#16)** never found room against Klein, and the offense stalled with him. Oak's front is the reset button: establish the run early and **Jace Hanks (#9)** gets the play-action looks that produced **eight** touchdown passes."
+        },
+        {
+          "title": "Finish drives",
+          "body": "The Klein loss had an empty red-zone trip, a missed **39**-yard field goal, and two interceptions. Friday, touchdowns have to replace field-goal tries."
+        }
+      ]
+    },
+    "gameInfo": {
+      "heading": "Game information",
+      "facts": [
+        {
+          "label": "Kickoff",
+          "value": "Friday, October 16 · 7:00 PM"
+        },
+        {
+          "label": "Site",
+          "value": "Klein Memorial Stadium · Klein, TX"
+        },
+        {
+          "label": "District",
+          "value": "15-6A"
+        },
+        {
+          "label": "The stakes",
+          "value": "Cain win: 3-2 district, in the playoff pack · Oak win: 2-2, tiebreaker over Cain"
+        },
+        {
+          "label": "Head coaches",
+          "value": "James Clancy (Cain) · Brandon Carpenter (Klein Oak)"
+        },
+        {
+          "label": "Cain form",
+          "value": "4-2 · 2-2 district · 39.7 points/game"
+        },
+        {
+          "label": "Oak form",
+          "value": "1-4 · 1-2 district · at Magnolia tonight"
+        }
+      ],
+      "links": []
+    },
+    "opponentRecruitingAudit": {
+      "source": "On3 HS player ratings; 247Sports and Rivals indexed coverage",
+      "sourceUrl": "https://www.on3.com/high-school/scores/football/national/game/magnolia-vs-klein-oak-2026-10-02-1958657/",
+      "asOf": "2026-10-09T12:00:00Z",
+      "committedPlayers": [
+        {
+          "name": "Micah Rhodes",
+          "school": "Texas",
+          "sourceUrl": "https://longhornswire.usatoday.com/story/sports/college/longhorns/recruiting/2026/10/08/commitment-former-ou-commit-2028-4-star-rb-micah-rhodes-picks-texas/92151864007/"
+        }
+      ],
+      "eliteProspects": [
+        {
+          "name": "Micah Rhodes",
+          "source": "247 Sports",
+          "sourceUrl": "https://sportcastmedia.com/week-6-football-preview-capsule-klein-oak-at-magnolia/",
+          "classYear": 2028,
+          "positionRank": 8,
+          "nationalRank": null
+        }
+      ]
+    }
   },
   "final": null,
-  "sources": [],
+  "sources": [
+    {
+      "label": "MaxPreps: Klein Oak Panthers stats (26-27)",
+      "href": "https://www.maxpreps.com/tx/spring/klein-oak-panthers/football/stats/"
+    },
+    {
+      "label": "MaxPreps: Klein Oak Panthers roster (updated Oct 3, 2026)",
+      "href": "https://www.maxpreps.com/tx/spring/klein-oak-panthers/football/roster/"
+    },
+    {
+      "label": "On3: Klein Oak at Magnolia (Massey projection, players to watch)",
+      "href": "https://www.on3.com/high-school/scores/football/national/game/magnolia-vs-klein-oak-2026-10-02-1958657/"
+    },
+    {
+      "label": "SportCast Media: Week 6 capsule, Klein Oak at Magnolia (Rhodes 229 yards, 4-star)",
+      "href": "https://sportcastmedia.com/week-6-football-preview-capsule-klein-oak-at-magnolia/"
+    },
+    {
+      "label": "LonghornsWire: Micah Rhodes commits to Texas (Oct 8, 2026)",
+      "href": "https://longhornswire.usatoday.com/story/sports/college/longhorns/recruiting/2026/10/08/commitment-former-ou-commit-2028-4-star-rb-micah-rhodes-picks-texas/92151864007/"
+    },
+    {
+      "label": "Dave Campbell's: Three From Thursday — Eaton, Klein, Cy Ranch (Oct 9, 2026)",
+      "href": "https://www.davecampbells.com/articles/2026/10/08/three-from-thursday-eaton-klein-cy-ranch"
+    },
+    {
+      "label": "MaxPreps: District 15-6A standings",
+      "href": "https://www.maxpreps.com/tx/football/26-27/district/6a-region-ii-district-15/?leagueid=af5271e6-8bb8-4df8-a493-0a3f59161a00"
+    }
+  ],
   "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
   "disclaimerEntities": [
     "Klein ISD",
