@@ -65,22 +65,17 @@
       "facts": [
         {
           "label": "Cain",
-          "value": "4-2 · 2-2 district · 39.7 points/game",
+          "value": "4–2 · 2–2 district · 39.7 points/game",
           "team": "school"
         },
         {
           "label": "Klein Oak",
-          "value": "1-4 · 1-2 district",
+          "value": "1–4 · 1–2 district",
           "team": "opponent"
         },
         {
           "label": "Klein Oak coach",
           "value": "Brandon Carpenter · 6th season",
-          "team": "opponent"
-        },
-        {
-          "label": "Tonight",
-          "value": "Klein Oak at Magnolia, 7 PM — Oak's record in flux",
           "team": "opponent"
         }
       ]
