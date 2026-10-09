@@ -34,7 +34,12 @@ export function GameReportTabs({ initialStatus, finalView, previewView }: Props)
     const receiveScore = (event: Event) => {
       const nextStatus = (event as CustomEvent<LiveScore['status']>).detail;
       setStatus(nextStatus);
-      if (nextStatus !== 'final') setView('preview');
+      // When the game goes final, default to the recap view (2026-10-08:
+      // the page sat on Game Preview after the final because the view only
+      // ever synced toward preview, never toward final). An explicit
+      // #preview hash (shared link) still wins.
+      if (nextStatus === 'final' && window.location.hash !== '#preview') setView('final');
+      else if (nextStatus !== 'final') setView('preview');
     };
 
     selectFromHash();
