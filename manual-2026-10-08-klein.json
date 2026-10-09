@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "slug": "2026-10-08-klein",
   "status": "live",
-  "statusLabel": "Halftime",
-  "homeScore": 15,
+  "statusLabel": "Q3 ~10 mins",
+  "homeScore": 22,
   "awayScore": 7,
   "homeRecord": "",
   "awayRecord": "",
-  "updatedAt": "2026-10-09T01:12:37.093Z",
+  "updatedAt": "2026-10-09T01:56:15.594Z",
   "source": "Manual update",
   "sourceUrl": "https://kleincain.gameday.report/"
 }
