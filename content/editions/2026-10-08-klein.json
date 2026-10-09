@@ -3,32 +3,32 @@
   "slug": "2026-10-08-klein",
   "week": 6,
   "issue": "05",
-  "state": "preview",
+  "state": "final",
   "date": "2026-10-08",
   "dateLong": "October 8, 2026",
   "dateShort": "OCT 8, 2026",
   "kickoff": "7:00 PM",
   "venue": "Klein Memorial Stadium",
   "event": "",
-  "updated": "",
+  "updated": "2026-10-09T03:01:32Z",
   "home": {
     "name": "Klein",
     "mascot": "Bearkats",
     "logo": "/klein-logo.png",
-    "record": "6–0",
+    "record": "7–0",
     "rank": 53
   },
   "away": {
     "name": "Klein Cain",
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
-    "record": "4–1",
+    "record": "4–2",
     "rank": 49
   },
-  "pageTitle": "2026 Week 6 Preview: Klein Cain at Klein",
-  "metaTitle": "Week 6 Preview: Klein Cain at Klein | Cain Game Day",
-  "metaDescription": "Matchup facts, records and the published forecast for Klein Cain's Week 6 game against Klein on October 8, 2026.",
-  "socialDescription": "Records, ranking and forecast for Klein Cain at Klein.",
+  "pageTitle": "2026 Week 6 Final: Klein Cain at Klein",
+  "metaTitle": "Week 6 Final: Klein 37, Klein Cain 14 | Cain Game Day",
+  "metaDescription": "Klein stayed unbeaten with a 37-14 win over Klein Cain on October 8, 2026, taking sole possession of first place in District 15-6A.",
+  "socialDescription": "Klein 37, Klein Cain 14. The Bearkats stay perfect and take first place in 15-6A.",
   "ogImage": "",
   "prediction": {
     "margin": -5,
@@ -51,7 +51,13 @@
     "away": null
   },
   "stats": null,
-  "finalScore": null,
+  "finalScore": {
+    "home": 37,
+    "away": 14,
+    "source": "Klein Cain Gameday Report",
+    "sourceUrl": "https://kleincain.gameday.report/",
+    "asOf": "2026-10-09T03:01:32Z"
+  },
   "rating": {
     "home": 13.05,
     "away": 15.35,
@@ -314,7 +320,102 @@
       ]
     }
   },
-  "final": null,
+  "final": {
+    "headline": "Klein stays perfect, pulls away from Cain 37-14",
+    "byline": "Cain Game Day desk · Updated 10:15 PM CT",
+    "body": "The first half was a fight. The second half was a lesson.\n\n**Klein (7-0, 5-0)** stayed unbeaten Thursday night at Klein Memorial Stadium, beating **Klein Cain (4-2, 2-2) 37-14** to take sole possession of first place in **District 15-6A**. The Hurricanes led 7-6 after the first quarter and trailed just 15-7 at halftime. Then Klein scored 22 straight.\n\nCain had its moments early. After Klein punched in the opening touchdown, a **Jace Hanks (#9)** 35-yard keeper and the extra point put Cain up **7-6** with 4:23 left in the first. When Klein marched right back to the Cain 1, the Hurricane defense stuffed fourth-and-goal at the *inch line* to protect the lead. *That was the high-water mark.*\n\nThe backbreaker came with 2:25 left in the half. Down 9-7 after a Klein field goal, Cain saw the margin jump to **15-7** when Klein hit **Mike Brown (#1)** for an 86-yard touchdown, the Bearkat junior's biggest play on a night he finished with an estimated five catches for 127 yards. **Gage Hansberger (#34)** blew up the two-point try to keep it a one-score game. Cain answered with a drive to the Klein 24, but Hanks was picked off by **D. Thompson**, and Cain's 39-yard field goal attempt sailed wide left as the half expired.\n\nKlein took control in the third. **Brian Johnson (#4)** finished a long march with a touchdown run to make it **22-7**. Cain recovered the ensuing onside kick and drove to the Klein 5, but turned it over on downs. The Bearkats answered with another touchdown and a two-point conversion to stretch it to **30-7**.\n\nJohnson's 32-yard touchdown run in the fourth pushed it to **37-7** before **Trey Reyes** found **Tyson Freeman (#17)** for a 25-yard score with 57 seconds left to close it out.\n\nThe ground game told the story. Klein's rotation of Johnson, **Cortez (#23)** and **Kendrick Brown (#0)** wore the Cain front down, and the Bearkat line owned the second half, a far cry from the goal-line stand that defined Cain's early resistance. Hanks had his moments, including the 35-yard touchdown run and a 53-yard completion to **Earl Oguinn Jr. (#1)**, but two interceptions and the empty red-zone trip kept Cain from keeping pace. **Eyan Johnson (#16)** never found room against a Klein front keyed on him all night.\n\n**Mike Brown (#1)** is the overall Player of the Game, the Klein junior torching Cain for an estimated 127 yards and a touchdown on five catches, including the 86-yard backbreaker. **Gage Hansberger (#34)** is Cain's Player of the Game, the senior linebacker in on stops all night and the man who blew up Klein's two-point try.\n\nCain drops to **4-2** and **2-2** in district, now two back in the loss column behind unbeaten Klein with three to play. The Hurricanes visit Klein Oak next Friday needing a win to stay in the thick of the playoff race.",
+    "homeScore": 37,
+    "awayScore": 14,
+    "quarters": {
+      "labels": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "rows": [
+        {
+          "team": "Cain",
+          "scores": [
+            "7",
+            "0",
+            "0",
+            "7"
+          ],
+          "total": "14"
+        },
+        {
+          "team": "Klein",
+          "scores": [
+            "6",
+            "9",
+            "15",
+            "7"
+          ],
+          "total": "37"
+        }
+      ]
+    },
+    "notes": [
+      {
+        "heading": "The inch-line stand",
+        "paragraphs": [
+          "With Cain clinging to a 7-6 first-quarter lead, Klein drove to the Hurricane 1 and went for it on fourth-and-goal. The Cain front stuffed the try at the inch line, the defense’s best moment of the night and the play that kept the early lead intact."
+        ]
+      },
+      {
+        "heading": "The 86-yarder broke it open",
+        "paragraphs": [
+          "Leading just 9-7 with 2:25 left in the half, Klein hit Mike Brown (#1) for an 86-yard touchdown that pushed the margin to 15-7. Cain drove to the Klein 24 in response, but an interception and a missed 39-yard field goal as time expired sent the Hurricanes to the locker room chasing two scores."
+        ]
+      },
+      {
+        "heading": "Klein’s ground game took over",
+        "paragraphs": [
+          "The Bearkats’ rotation of Brian Johnson (#4), Cortez (#23) and Kendrick Brown (#0) wore the Cain front down after halftime. Klein scored on its opening third-quarter drive and never looked back, piling up 22 unanswered points before Cain’s late touchdown."
+        ]
+      }
+    ],
+    "leaders": {
+      "heading": "Game leaders",
+      "source": "Klein Cain Gameday Report game notes (estimates)",
+      "items": [
+        {
+          "name": "Mike Brown",
+          "number": "1",
+          "role": "WR · Junior (Klein)",
+          "image": "/players/klein-mike-brown.jpg",
+          "stat": "~127 receiving yards",
+          "detail": "5 catches · 1 TD (86-yard score)"
+        },
+        {
+          "name": "Brian Johnson",
+          "number": "4",
+          "role": "RB (Klein)",
+          "image": "/player-placeholder.svg",
+          "stat": "3 rushing touchdowns",
+          "detail": "Per game notes"
+        },
+        {
+          "name": "Jace Hanks",
+          "number": "9",
+          "role": "QB · Junior (Cain)",
+          "image": "/players/jace-hanks.jpg",
+          "stat": "35-yard TD run",
+          "detail": "53-yard completion · 2 INT"
+        },
+        {
+          "name": "Gage Hansberger",
+          "number": "34",
+          "role": "LB · Senior (Cain)",
+          "image": "/player-placeholder.svg",
+          "stat": "Cain Player of the Game",
+          "detail": "Blew up Klein 2-point try"
+        }
+      ]
+    },
+    "video": null
+  },
   "sources": [
     {
       "label": "MaxPreps: District 15-6A standings",
