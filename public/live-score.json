@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "slug": "2026-10-08-klein",
-  "status": "scheduled",
-  "statusLabel": "7:00 PM",
-  "homeScore": null,
-  "awayScore": null,
-  "homeRecord": "6–0",
-  "awayRecord": "4–1",
-  "updatedAt": "2026-10-05T21:05:39.949Z",
-  "source": "Dave Campbell’s Texas Football",
-  "sourceUrl": "https://www.texasfootball.com/scores/"
+  "status": "live",
+  "statusLabel": "1st Quarter 4:23",
+  "homeScore": 6,
+  "awayScore": 7,
+  "homeRecord": "6-0",
+  "awayRecord": "4-1",
+  "updatedAt": "2026-10-09T00:25:09.268Z",
+  "source": "Manual update",
+  "sourceUrl": "https://kleincain.gameday.report/"
 }
