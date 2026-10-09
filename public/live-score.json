@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "slug": "2026-10-08-klein",
-  "status": "live",
-  "statusLabel": "Q3 ~10 mins to go",
-  "homeScore": 22,
-  "awayScore": 7,
-  "homeRecord": "6-0",
-  "awayRecord": "4-1",
-  "updatedAt": "2026-10-09T02:11:45.381Z",
+  "status": "final",
+  "statusLabel": "Final",
+  "homeScore": 37,
+  "awayScore": 14,
+  "homeRecord": "7–0",
+  "awayRecord": "4–2",
+  "updatedAt": "2026-10-09T02:53:12.133Z",
   "source": "Manual correction",
   "sourceUrl": "https://github.com/sylvanmiori/klein-cain-game-day/actions"
 }

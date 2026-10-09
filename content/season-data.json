@@ -24,6 +24,11 @@
       "outcome": "L",
       "us": 24,
       "them": 40
+    },
+    "2026-10-08": {
+      "outcome": "L",
+      "us": 14,
+      "them": 37
     }
   },
   "records": {
@@ -32,7 +37,7 @@
     "Tomball": "3–1",
     "Magnolia West": "2–3",
     "Klein Collins": "5–1",
-    "Klein": "6–0",
+    "Klein": "7–0",
     "Klein Oak": "1–3",
     "Tomball Memorial": "1–4",
     "Magnolia": "1–4",
@@ -43,20 +48,14 @@
     "rows": [
       {
         "team": "Klein Bearkats",
-        "district": "4–0",
-        "overall": "6–0",
+        "district": "5–0",
+        "overall": "7–0",
         "next": ""
       },
       {
         "team": "Klein Collins Tigers",
         "district": "4–0",
         "overall": "5–1",
-        "next": ""
-      },
-      {
-        "team": "Klein Cain Hurricanes",
-        "district": "2–1",
-        "overall": "4–1",
         "next": ""
       },
       {
@@ -69,6 +68,12 @@
         "team": "Magnolia Bulldogs",
         "district": "2–2",
         "overall": "2–4",
+        "next": ""
+      },
+      {
+        "team": "Klein Cain Hurricanes",
+        "district": "2–2",
+        "overall": "4–2",
         "next": ""
       },
       {
@@ -98,7 +103,7 @@
     ],
     "source": "MaxPreps",
     "sourceUrl": "https://www.maxpreps.com/tx/football/26-27/district/6a-region-ii-district-15/?leagueid=af5271e6-8bb8-4df8-a493-0a3f59161a00",
-    "asOf": "2026-10-05T15:25:42.783Z"
+    "asOf": "2026-10-09T04:42:45.066Z"
   },
   "source": "Dave Campbell’s Texas Football",
   "sourceUrl": "https://www.texasfootball.com/scores/",
