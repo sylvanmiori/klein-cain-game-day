@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "slug": "2026-10-08-klein",
-  "status": "live",
-  "statusLabel": "Q4",
-  "homeScore": 22,
-  "awayScore": 7,
+  "status": "final",
+  "statusLabel": "Final",
+  "homeScore": 37,
+  "awayScore": 14,
   "homeRecord": "",
   "awayRecord": "",
-  "updatedAt": "2026-10-09T02:36:35.428Z",
+  "updatedAt": "2026-10-09T02:53:12.133Z",
   "source": "Manual update",
   "sourceUrl": "https://kleincain.gameday.report/"
 }
