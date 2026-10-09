@@ -97,7 +97,7 @@ export function BaseballRecordStrip({ fallback }: { fallback?: SeasonRecord | nu
       </p>
       {last && last.result && (
         <p className="mt-2 text-sm text-[#6e6e73]">
-          <span className="font-bold text-[#12324e]">Latest result:</span> vs {last.opponent} &mdash; {last.result}
+          <span className="font-bold text-[#12324e]">Latest result:</span> vs {last.opponent} &middot; {last.result}
         </p>
       )}
     </section>

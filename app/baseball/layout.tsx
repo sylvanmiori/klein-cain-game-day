@@ -4,7 +4,7 @@ import { BaseballSubnav } from '../../components/baseball/baseball-subnav';
 
 const baseballUrl = 'https://413baseball.gameday.report';
 const baseballDesc =
-  '4:13 Baseball 15U travel ball from Spring, TX — tournament schedules, results, roster, and season stats, covered by Game Day Report.';
+  '4:13 Baseball 15U travel ball from Spring, TX: tournament schedules, results, roster, and season stats, covered by Game Day Report.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseballUrl),

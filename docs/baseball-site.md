@@ -69,6 +69,10 @@ Home and Schedule render venue name + street address and wrap them in `mapsSearc
 
 If a tournament lacks `event_address`, fall back to venue + city; still link when a useful query string exists.
 
+**Team games at a different park than the event headline.** PG event names and `event_address` describe the headline complex (for example Octoberfest "@ Premier"), but 4:13's own games can be at another park (Oct 10, 2026: Schiel Road Park, Field 4). `loadSchedule()` checks each game's `venue`: if all of a tournament's games share one park that differs from the event venue, that park and its address (from `KNOWN_VENUE_ADDRESSES` in `data.ts`, copied from PG "Field Locations" pages) replace the tournament venue on Home and Schedule. If games are split across parks, each game's field line is prefixed with its park. Add new parks to `KNOWN_VENUE_ADDRESSES` when PG lists them.
+
+**Game order.** Games sort by date, then real clock time (`compareGames()` / `timeSortKey()` in `data.ts`). Do not string-compare times: "12:40 PM" sorts ahead of "8:00 AM".
+
 ## Routes
 
 | Public URL (413 host) | App route | Purpose |

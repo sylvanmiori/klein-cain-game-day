@@ -3,7 +3,7 @@ import { BaseballStatsTables } from '../../../components/baseball/stats-tables';
 
 export const metadata: Metadata = {
   title: 'Stats',
-  description: '4:13 Baseball 15U season stats — batting and pitching leaderboards for the 2026-2027 season.',
+  description: '4:13 Baseball 15U season stats: batting and pitching leaderboards for the 2026-2027 season.',
 };
 
 export default function BaseballStatsPage() {

@@ -65,6 +65,34 @@ function normalizeGame(raw: RawScheduleGame, tournamentId: string, index: number
   };
 }
 
+// Street addresses for ballparks, as listed on Perfect Game event "Field
+// Locations" pages. Used when a team's games are at a different park than the
+// event's headline venue (2026-10-10 Octoberfest "@ Premier": 4:13 plays at
+// Schiel Road Park), so Open in Maps sends parents to the right complex.
+const KNOWN_VENUE_ADDRESSES: Record<string, string> = {
+  'premier baseball of texas': '20230 Cypress Rosehill Road Tomball, TX',
+  'schiel road park': '22515 Schiel Road Cypress, TX 77433',
+};
+
+function venueKey(v?: string): string {
+  return (v ?? '').trim().toLowerCase();
+}
+
+/** Minutes after midnight for "8:00 AM" / "12:40 PM"; unknown times sort last.
+ *  Plain string compare put 12:40 PM ahead of 8:00 AM. */
+export function timeSortKey(time?: string): number {
+  const m = /^(\d{1,2}):(\d{2})\s*([AP])M$/i.exec((time ?? '').trim());
+  if (!m) return 24 * 60;
+  let h = Number(m[1]) % 12;
+  if (m[3].toUpperCase() === 'P') h += 12;
+  return h * 60 + Number(m[2]);
+}
+
+/** Date, then real clock time. */
+export function compareGames(a: { date: string; time?: string }, b: { date: string; time?: string }): number {
+  return a.date.localeCompare(b.date) || timeSortKey(a.time) - timeSortKey(b.time);
+}
+
 export function loadSchedule(): BaseballSchedule | null {
   const raw = scheduleJson as unknown as { tournaments?: RawScheduleTournament[] };
   if (!raw || !Array.isArray(raw.tournaments)) return null;
@@ -92,6 +120,25 @@ export function loadSchedule(): BaseballSchedule | null {
       })
       .map((g, j) => normalizeGame(g, `t${i}`, j)),
   );
+  // Show where 4:13 actually plays. If every game in a tournament is at one
+  // park other than the event's headline venue, that park (and its address)
+  // becomes the tournament venue. If games are split across parks, each
+  // game's field line names its park.
+  for (const t of tournaments) {
+    const own = games.filter((g) => g.tournamentId === t.id && g.venue);
+    const parks = [...new Set(own.map((g) => venueKey(g.venue)))];
+    if (parks.length === 1 && parks[0] !== venueKey(t.venue)) {
+      const park = own[0].venue as string;
+      const address = KNOWN_VENUE_ADDRESSES[parks[0]];
+      t.venue = park;
+      t.address = address;
+      if (!address) t.location = undefined;
+    } else if (parks.length > 1) {
+      for (const g of own) {
+        g.field = g.field ? `${g.venue} \u00B7 ${g.field}` : g.venue;
+      }
+    }
+  }
   return { tournaments, games };
 }
 
@@ -168,7 +215,7 @@ export function currentWeekend(schedule: BaseballSchedule, today = todayStr()): 
   const tournament = running ?? upcoming ?? recent;
   const games = [...schedule.games]
     .filter((g) => g.tournamentId === tournament.id)
-    .sort((a, b) => a.date.localeCompare(b.date) || (a.time ?? '').localeCompare(b.time ?? ''));
+    .sort(compareGames);
   return { tournament, games };
 }
 

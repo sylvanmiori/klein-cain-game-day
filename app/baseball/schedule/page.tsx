@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { formatGameDate, loadBracket, loadSchedule, mapsSearchUrl } from '../../../components/baseball/data';
+import { compareGames, formatGameDate, loadBracket, loadSchedule, mapsSearchUrl } from '../../../components/baseball/data';
 import { BracketLive } from '../../../components/baseball/bracket-live';
 import { LiveGameResult } from '../../../components/baseball/live-game-result';
 
@@ -21,14 +21,14 @@ export default async function BaseballSchedulePage() {
 
       {!schedule ? (
         <section className="rounded-2xl border border-[#dde7f0] bg-white p-5">
-          <p className="text-sm text-[#6e6e73]">Schedule loading &mdash; tournament details coming soon.</p>
+          <p className="text-sm text-[#6e6e73]">Schedule loading. Tournament details coming soon.</p>
         </section>
       ) : (
         <>
           {schedule.tournaments.map((t) => {
             const games = schedule.games
               .filter((g) => g.tournamentId === t.id)
-              .sort((a, b) => a.date.localeCompare(b.date) || (a.time ?? '').localeCompare(b.time ?? ''));
+              .sort(compareGames);
             return (
               <section key={t.id} className="overflow-hidden rounded-2xl border border-[#dde7f0] bg-white">
                 <div className="bg-[#12324e] px-5 py-4 text-white">

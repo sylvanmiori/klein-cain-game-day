@@ -441,7 +441,7 @@ export function PlayerSeasonPage() {
               </div>
             ) : null}
             {!batOk && !pitOk ? (
-              <p className="mt-3 text-sm text-[#6e6e73]">No season lines yet — stats appear after the first box score.</p>
+              <p className="mt-3 text-sm text-[#6e6e73]">No season lines yet. Stats appear after the first box score.</p>
             ) : null}
           </div>
         </div>

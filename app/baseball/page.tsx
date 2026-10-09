@@ -12,7 +12,7 @@ import {
 } from '../../components/baseball/data';
 
 const homeDesc =
-  "4:13 Baseball 15U travel ball from Spring, TX (2026-2027 season) — this weekend's tournament, results, roster, and box-score stats.";
+  "4:13 Baseball 15U travel ball from Spring, TX (2026-2027 season): this weekend's tournament, results, roster, and box-score stats.";
 
 export const metadata: Metadata = {
   title: {
@@ -93,7 +93,7 @@ export default async function BaseballHome() {
         </div>
         <div className="border-t border-white/10 px-4 py-3 sm:px-6 sm:py-4">
           <p className="text-sm leading-relaxed text-[#c8d8e8]">
-            Tournament coverage for the 15U travel ball club out of Spring, Texas — schedules, results,
+            Tournament coverage for the 15U travel ball club out of Spring, Texas: schedules, results,
             roster, and box-score stats, all season long.
           </p>
         </div>
@@ -107,7 +107,7 @@ export default async function BaseballHome() {
         <div className="px-4 pt-4 sm:px-5 sm:pt-5">
           <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">This Weekend</p>
           {!schedule || !window || !window.tournament ? (
-            <p className="mt-3 pb-4 text-sm text-[#6e6e73]">Schedule loading &mdash; tournament details coming soon.</p>
+            <p className="mt-3 pb-4 text-sm text-[#6e6e73]">Schedule loading. Tournament details coming soon.</p>
           ) : (
             <div className="mt-2">
               <h2 className="text-lg font-extrabold tracking-tight text-[#12324e] sm:text-2xl">

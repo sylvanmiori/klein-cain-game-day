@@ -4,7 +4,7 @@ import { RosterList } from '../../../components/baseball/roster-list';
 
 export const metadata: Metadata = {
   title: 'Roster',
-  description: '4:13 Baseball 15U roster for the 2026-2027 season — players, positions, and grad years.',
+  description: '4:13 Baseball 15U roster for the 2026-2027 season: players, positions, and grad years.',
 };
 
 export default function BaseballRosterPage() {
