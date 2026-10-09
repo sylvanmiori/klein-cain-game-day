@@ -1,13 +1,1 @@
-{
-  "schemaVersion": 1,
-  "slug": "2026-10-08-klein",
-  "status": "live",
-  "statusLabel": "1st Quarter 4:23",
-  "homeScore": 6,
-  "awayScore": 7,
-  "homeRecord": "6-0",
-  "awayRecord": "4-1",
-  "updatedAt": "2026-10-09T00:25:09.268Z",
-  "source": "Manual update",
-  "sourceUrl": "https://kleincain.gameday.report/"
-}
+{"awayRecord":"4-1","awayScore":7,"homeRecord":"6-0","homeScore":22,"schemaVersion":1,"slug":"2026-10-08-klein","source":"Manual update","sourceUrl":"https://kleincain.gameday.report/","status":"live","statusLabel":"Q3 ~10 mins","updatedAt":"2026-10-09T01:56:15.594Z"}
