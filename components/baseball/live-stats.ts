@@ -1,4 +1,5 @@
 import type { ApiGame, ScheduleGame, StatsResponse } from './types';
+import { opponentsMatch } from './opponent-match.mjs';
 
 let statsRequest: Promise<StatsResponse> | null = null;
 
@@ -32,28 +33,7 @@ export function loadLiveStats(): Promise<StatsResponse> {
   return statsRequest;
 }
 
-export function normalizeOpponent(value: string): string {
-  return value
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toUpperCase()
-    .replace(/[^A-Z0-9]/g, '');
-}
-
-function opponentsMatch(left: string, right: string): boolean {
-  const a = normalizeOpponent(left);
-  const b = normalizeOpponent(right);
-  if (!a || !b) return false;
-  if (a === b) return true;
-
-  // GameChanger often omits Perfect Game's age prefix or coach suffix, e.g.
-  // "Offseason Baseball" vs "15U OFFSEASON BASEBALL - WILLIAMS". Only allow
-  // containment for a substantial name; the one-to-one checks below still
-  // reject any matchup that could refer to more than one game.
-  const shorter = a.length < b.length ? a : b;
-  const longer = a.length < b.length ? b : a;
-  return shorter.length >= 8 && longer.includes(shorter);
-}
+export { normalizeOpponent, opponentsMatch } from './opponent-match.mjs';
 
 /**
  * Find the saved D1 result for one scheduled game. We require the same date
