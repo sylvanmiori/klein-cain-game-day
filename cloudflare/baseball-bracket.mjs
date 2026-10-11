@@ -122,6 +122,7 @@ export function parseBracketTable(tableHtml, tournament) {
     }
     const [fieldRaw, ...venueParts] = fieldVenue.split(/\s*@\s*/);
     const venue = venueParts.join(' @ ').trim() || null;
+    const pgGameId = /gameid=(\d+)/i.exec(cell)?.[1] ?? null;
     const home = boxes.get(slot)?.home ?? { seed: null, name: null, score: null };
     const away = boxes.get(slot)?.away ?? { seed: null, name: null, score: null };
     games.push({
@@ -130,6 +131,7 @@ export function parseBracketTable(tableHtml, tournament) {
       time: time.replace(/\s+/, ' '),
       field: fieldRaw.trim() || null,
       venue,
+      pg_game_id: pgGameId,
       home,
       away,
     });
@@ -228,6 +230,7 @@ export function buildSnapshot({ eventId, tournamentName, bracketUrl, tiers, scra
         time: game.time ?? null,
         field: game.field ?? null,
         venue: game.venue ?? null,
+        pg_game_id: game.pg_game_id ?? null,
         home: {
           seed: game.home?.seed ?? null,
           name: game.home?.name ?? null,

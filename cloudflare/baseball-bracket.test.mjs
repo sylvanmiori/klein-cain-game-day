@@ -214,6 +214,12 @@ describe('parseBracketsPage (Octoberfest 140496 live capture)', () => {
     assert.equal(deriveWinner(upcoming), null);
   });
 
+  it('captures DiamondKast game id from the bracket cell link (GM 39)', () => {
+    const bronze = tiers.find((t) => t.tier === 'Bronze Bracket');
+    const gm39 = bronze.games.find((g) => g.game_number === 39);
+    assert.equal(gm39?.pg_game_id, '1597473');
+  });
+
   it('parses winner seeds when PG wraps them in <b>', () => {
     const platinum = tiers.find((t) => t.tier === 'Platinum Bracket');
     const gm25 = platinum.games.find((g) => g.game_number === 25);

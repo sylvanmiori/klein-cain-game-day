@@ -75,6 +75,8 @@ export interface LiveBracketGame {
   time?: string | null;
   field?: string | null;
   venue?: string | null;
+  /** Perfect Game DiamondKast game id from the bracket cell link, when present. */
+  pg_game_id?: string | null;
   home: BracketTeam;
   away: BracketTeam;
   winner?: 'home' | 'away' | null;
