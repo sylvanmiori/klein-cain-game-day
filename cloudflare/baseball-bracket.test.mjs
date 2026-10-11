@@ -177,9 +177,9 @@ describe('parseBracketsPage (Octoberfest 140496 live capture)', () => {
 
   /** Completed games on PG as of 2026-10-11 ~12:40 CT capture; both scores and winner. */
   const COMPLETED = [
-    { tier: 'Silver Bracket', game_number: 25, home_score: 1, away_score: 5, winner: 'away' },
-    { tier: 'Silver Bracket', game_number: 26, home_score: 3, away_score: 15, winner: 'away' },
-    { tier: 'Silver Bracket', game_number: 27, home_score: 0, away_score: 3, winner: 'away' },
+    { tier: 'Platinum Bracket', game_number: 25, home_score: 1, away_score: 5, winner: 'away' },
+    { tier: 'Platinum Bracket', game_number: 26, home_score: 3, away_score: 15, winner: 'away' },
+    { tier: 'Platinum Bracket', game_number: 27, home_score: 0, away_score: 3, winner: 'away' },
     { tier: 'Gold Bracket', game_number: 32, home_score: 2, away_score: 3, winner: 'away' },
     { tier: 'Gold Bracket', game_number: 33, home_score: 3, away_score: 11, winner: 'away' },
     { tier: 'Gold Bracket', game_number: 34, home_score: 12, away_score: 1, winner: 'home' },
@@ -191,7 +191,7 @@ describe('parseBracketsPage (Octoberfest 140496 live capture)', () => {
 
   it('finds all three bracket tiers', () => {
     assert.equal(tiers.length, 3);
-    assert.deepEqual(tiers.map((t) => t.tier), ['Silver Bracket', 'Gold Bracket', 'Bronze Bracket']);
+    assert.deepEqual(tiers.map((t) => t.tier), ['Platinum Bracket', 'Gold Bracket', 'Bronze Bracket']);
   });
 
   it('parses both scores and winner for every completed game', () => {
@@ -207,12 +207,26 @@ describe('parseBracketsPage (Octoberfest 140496 live capture)', () => {
   });
 
   it('leaves winner null when only one side has posted a score', () => {
-    const silver = tiers.find((t) => t.tier === 'Silver Bracket');
-    const upcoming = silver.games.find((g) => g.game_number === 24);
+    const platinum = tiers.find((t) => t.tier === 'Platinum Bracket');
+    const upcoming = platinum.games.find((g) => g.game_number === 24);
     assert.equal(upcoming.home.score, null);
     assert.equal(upcoming.away.score, null);
     assert.equal(deriveWinner(upcoming), null);
   });
+
+  it('parses winner seeds when PG wraps them in <b>', () => {
+    const platinum = tiers.find((t) => t.tier === 'Platinum Bracket');
+    const gm25 = platinum.games.find((g) => g.game_number === 25);
+    assert.equal(gm25.home.seed, '#4');
+    assert.equal(gm25.away.seed, '#5');
+    assert.equal(gm25.away.name, 'Texas Standard- Crossley');
+    const gm26 = platinum.games.find((g) => g.game_number === 26);
+    assert.equal(gm26.away.seed, '#6');
+    const gold = tiers.find((t) => t.tier === 'Gold Bracket');
+    const gm32 = gold.games.find((g) => g.game_number === 32);
+    assert.equal(gm32.away.seed, '#5');
+  });
+
 });
 
 describe('buildSnapshot', () => {

@@ -7,8 +7,8 @@
  * the same way.
  *
  * Page facts (verified 2026-09-26 against event 140434):
- * - One <table id="..._gvBracket"> per tier ("Gold Bracket", "Silver Bracket",
- *   "Bronze Bracket" render as plain text before each table).
+ * - One <table id="..._gvBracket"> per tier ("Platinum Bracket", "Gold Bracket",
+ *   "Bronze Bracket", etc. render as plain text or a heading span before each table).
  * - Team boxes: <td class="HomeTeamBox"> / <td class="VisitorTeamBox">.
  *   Boxes and game cells pair by slot number (SeedPos{N} / GamePos{N} in the
  *   control ids); table row order is NOT a reliable pairing because both
@@ -80,11 +80,16 @@ export function parseBracketTable(tableHtml, tournament) {
     const cell = match[2];
     const slot = /SeedPos(\d+)_\d+"/.exec(cell)?.[1];
     if (!slot) continue;
-    const seed = stripTags(/SeedPos\d+_\d+"[^>]*>([^<]*)/.exec(cell)?.[1] ?? '').replace(/\s+/g, ' ').trim() || null;
+    const sideKey = side === 'home' ? 'Home' : 'Visitor';
+    // Seed spans use the same winner styling as scores (<b> or font-weight:bold).
+    const seedInner = new RegExp(
+      `lbl${sideKey}SeedPos\\d+_\\d+"[^>]*>([\\s\\S]*?)<\\/span>`,
+      'i',
+    ).exec(cell)?.[1] ?? '';
+    const seed = stripTags(seedInner).replace(/\s+/g, ' ').trim() || null;
     const name = stripTags(/hl(?:Home|Visitor)Pos\d+_\d+"[^>]*>([\s\S]*?)<\/a>/.exec(cell)?.[1] ?? '') || null;
     // Score spans may carry class="ScoreTxt", "&nbsp;N", and (for the winner)
     // nested <b> markup — capture the full span inner HTML, then strip tags.
-    const sideKey = side === 'home' ? 'Home' : 'Visitor';
     const scoreInner = new RegExp(
       `lbl${sideKey}ScorePos\\d+_\\d+"[^>]*>([\\s\\S]*?)<\\/span>`,
       'i',
@@ -132,6 +137,16 @@ export function parseBracketTable(tableHtml, tournament) {
   return games;
 }
 
+/** Tier heading immediately before a gvBracket table (e.g. "Platinum Bracket"). */
+function tierLabelBeforeTable(beforeHtml) {
+  const cleaned = beforeHtml.replace(/<(style|script)[\s\S]*?<\/\1>/gi, ' ');
+  const stripped = stripTags(cleaned);
+  const labels = [...stripped.matchAll(/\b([A-Za-z]+\s+Bracket)\b/g)]
+    .map((m) => m[1].replace(/\s+/g, ' ').trim())
+    .filter((label) => !/^event bracket$/i.test(label));
+  return labels.at(-1) ?? null;
+}
+
 /**
  * Parse the whole Brackets.aspx page. Returns
  * [{ tier: 'Gold Bracket' | ..., games: [...] }, ...].
@@ -140,12 +155,11 @@ export function parseBracketsPage(html, tournament) {
   const tiers = [];
   const tableMatches = [...html.matchAll(/<table cellspacing="0" id="[^"]*_gvBracket"[^>]*>([\s\S]*?)<\/table>/g)];
   for (const tableMatch of tableMatches) {
-    // The tier label ("Gold Bracket", ...) renders as plain text before the
-    // table, but a per-bracket <style> block sits between them, so look
-    // further back and strip style/script content first.
-    const before = html.slice(Math.max(0, tableMatch.index - 4000), tableMatch.index)
-      .replace(/<(style|script)[\s\S]*?<\/\1>/gi, ' ');
-    const tier = /((?:Gold|Silver|Bronze|Championship|Consolation)[^<]{0,20}Bracket)/i.exec(stripTags(before))?.[1] ?? null;
+    // The tier label ("Platinum Bracket", ...) renders as plain text or a
+    // heading span before the table, but a per-bracket <style> block can sit
+    // between them, so look further back and strip style/script content first.
+    const before = html.slice(Math.max(0, tableMatch.index - 4000), tableMatch.index);
+    const tier = tierLabelBeforeTable(before);
     tiers.push({ tier, games: parseBracketTable(tableMatch[1], tournament) });
   }
   return tiers;
