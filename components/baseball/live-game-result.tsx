@@ -1,6 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import {
+  findBracketResult,
+  flattenBracketGames,
+  loadLiveBracket,
+} from './live-bracket';
 import { findSavedGame, loadLiveStats } from './live-stats';
 import type { ScheduleGame } from './types';
 
@@ -48,16 +53,29 @@ export function LiveGameResult({
 
   useEffect(() => {
     let alive = true;
-    loadLiveStats()
-      .then((stats) => {
-        if (!alive || !Array.isArray(stats.games)) return;
-        const savedGame = findSavedGame(game, siblingGames, stats.games);
+    Promise.all([loadLiveStats(), loadLiveBracket()])
+      .then(([stats, bracket]) => {
+        if (!alive) return;
+        const savedGame = Array.isArray(stats.games)
+          ? findSavedGame(game, siblingGames, stats.games)
+          : null;
         if (savedGame?.result?.trim()) {
           setDisplay({ result: savedGame.result.trim(), gameId: savedGame.id });
+          return;
+        }
+        if (fallback) return;
+
+        const bracketResult = findBracketResult(
+          game,
+          siblingGames,
+          flattenBracketGames(bracket),
+        );
+        if (bracketResult) {
+          setDisplay({ result: bracketResult, gameId: null });
         }
       })
       .catch(() => {
-        // Keep the checked-in schedule fallback when live stats are unavailable.
+        // Keep the checked-in schedule fallback when live sources are unavailable.
       });
 
     return () => {

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Clock, ExternalLink, MapPin } from 'lucide-react';
 import { formatGameDate, mapsSearchUrl } from './data';
+import { isBracketGameFinal } from './live-bracket';
 import type { BracketTeam, LiveBracketGame, LiveBracketSnapshot, LiveBracketTier } from './types';
 
 /** Home Sunday path: client-fetches /api/baseball/bracket and, when 4:13 is a
@@ -114,14 +115,10 @@ function pickNextGame(path: LiveBracketGame[]): LiveBracketGame | null {
   for (const g of path) {
     const side = teamOnGame(g);
     if (side) {
-      // Named on this game: next if unfinished.
-      if (g.winner == null && !(Number.isInteger(g.home.score) && Number.isInteger(g.away.score))) {
-        return g;
-      }
+      if (!isBracketGameFinal(g)) return g;
       continue;
     }
-    // Feeder slot not yet named — still our path if we haven't lost earlier.
-    if (g.winner == null) return g;
+    if (!isBracketGameFinal(g)) return g;
   }
   return path[path.length - 1] ?? null;
 }
@@ -169,14 +166,32 @@ function PathStep({
   game,
   isOurs,
   isNext,
+  ourSide,
 }: {
   game: LiveBracketGame;
   isOurs: boolean;
   isNext: boolean;
+  ourSide: 'home' | 'away' | null;
 }) {
   const loc = pathLocationLabel(game);
   const home = teamLabel(game.home);
   const away = teamLabel(game.away);
+  const finished = isOurs && isBracketGameFinal(game);
+  const homeScore = game.home.score;
+  const awayScore = game.away.score;
+  let scoreTone = 'text-[#12324e]';
+  if (finished && ourSide && Number.isInteger(homeScore) && Number.isInteger(awayScore)) {
+    const weWon =
+      game.winner === ourSide || (ourSide === 'home' ? homeScore! > awayScore! : awayScore! > homeScore!);
+    const weLost =
+      game.winner != null
+        ? game.winner !== ourSide
+        : ourSide === 'home'
+          ? homeScore! < awayScore!
+          : awayScore! < homeScore!;
+    if (weWon) scoreTone = 'text-[#17804d]';
+    else if (weLost) scoreTone = 'text-[#c0392b]';
+  }
   return (
     <li
       className={
@@ -191,6 +206,11 @@ function PathStep({
           {game.game_number ? (
             <span className="ml-1.5 font-bold tracking-normal text-[#9a9aa2]">#{game.game_number}</span>
           ) : null}
+          {finished ? (
+            <span className="ml-2 rounded-md bg-[#12324e] px-1.5 py-0.5 text-[10px] font-extrabold tracking-[0.08em] text-white">
+              Final
+            </span>
+          ) : null}
         </p>
         {game.time ? <p className="text-[12px] font-semibold text-[#6e6e73]">{game.time}</p> : null}
       </div>
@@ -204,9 +224,21 @@ function PathStep({
             : 'mt-1 text-sm font-bold leading-snug text-[#12324e]'
         }
       >
-        {home}
-        <span className="font-semibold text-[#6e6e73]"> vs </span>
-        {away}
+        {finished && Number.isInteger(homeScore) && Number.isInteger(awayScore) ? (
+          <>
+            {home}{' '}
+            <span className={`font-extrabold tabular-nums ${scoreTone}`}>
+              {homeScore} &ndash; {awayScore}
+            </span>{' '}
+            {away}
+          </>
+        ) : (
+          <>
+            {home}
+            <span className="font-semibold text-[#6e6e73]"> vs </span>
+            {away}
+          </>
+        )}
       </p>
     </li>
   );
@@ -224,10 +256,7 @@ function BracketPathView({ snapshot }: { snapshot: LiveBracketSnapshot }) {
   const opponent = next ? opponentFor(next, nextSide) : null;
   // A finished game is not "next" — label it Final and show the score,
   // green for a 4:13 win, red for a loss.
-  const nextFinal =
-    next != null &&
-    (next.winner != null ||
-      (Number.isInteger(next.home.score) && Number.isInteger(next.away.score)));
+  const nextFinal = next != null && isBracketGameFinal(next);
   let finalScore: ReactNode = null;
   if (next && nextFinal) {
     const hs = next.home.score;
@@ -361,6 +390,7 @@ function BracketPathView({ snapshot }: { snapshot: LiveBracketSnapshot }) {
                 game={g}
                 isOurs={teamOnGame(g) != null}
                 isNext={next?.game_number === g.game_number}
+                ourSide={teamOnGame(g)}
               />
             ))}
           </ol>
