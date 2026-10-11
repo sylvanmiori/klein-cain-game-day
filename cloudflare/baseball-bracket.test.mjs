@@ -126,6 +126,20 @@ describe('scores and winners', () => {
     assert.equal(deriveWinner(gm20), 'home');
   });
 
+  it('parses winner scores wrapped in <b> (live 2026-10-11 Octoberfest markup)', () => {
+    const live = fixture
+      .replace('lblHomeScorePos1_0">', 'lblHomeScorePos1_0" class="ScoreTxt">&nbsp;1')
+      .replace(
+        'lblVisitorScorePos1_3">',
+        'lblVisitorScorePos1_3" class="ScoreTxt"><b>&nbsp;5</b>',
+      );
+    const games = parseBracketsPage(live, TOURNAMENT)[0].games;
+    const gm20 = games.find((g) => g.game_number === 20);
+    assert.equal(gm20.home.score, 1);
+    assert.equal(gm20.away.score, 5);
+    assert.equal(deriveWinner(gm20), 'away');
+  });
+
   it('derives the winner only from posted scores', () => {
     assert.equal(deriveWinner(gm20), 'home');
     const unplayed = games.find((g) => g.game_number === 21);
@@ -154,6 +168,50 @@ describe('pickWeekendTournament', () => {
   it('returns null when nothing covers the weekend', () => {
     assert.equal(pickWeekendTournament(tournaments, new Date('2026-10-03T14:00:00-05:00')), null);
     assert.equal(pickWeekendTournament([], new Date('2026-09-26T14:00:00-05:00')), null);
+  });
+});
+
+describe('parseBracketsPage (Octoberfest 140496 live capture)', () => {
+  const octfestFixture = readFileSync(join(ROOT, 'baseball-bracket-140496.fixture.html'), 'utf8');
+  const OCTFEST = { name: '2026 15U PG Octoberfest @ Premier', start_date: '2026-10-10', end_date: '2026-10-11', event_id: 140496 };
+
+  /** Completed games on PG as of 2026-10-11 ~12:40 CT capture; both scores and winner. */
+  const COMPLETED = [
+    { tier: 'Silver Bracket', game_number: 25, home_score: 1, away_score: 5, winner: 'away' },
+    { tier: 'Silver Bracket', game_number: 26, home_score: 3, away_score: 15, winner: 'away' },
+    { tier: 'Silver Bracket', game_number: 27, home_score: 0, away_score: 3, winner: 'away' },
+    { tier: 'Gold Bracket', game_number: 32, home_score: 2, away_score: 3, winner: 'away' },
+    { tier: 'Gold Bracket', game_number: 33, home_score: 3, away_score: 11, winner: 'away' },
+    { tier: 'Gold Bracket', game_number: 34, home_score: 12, away_score: 1, winner: 'home' },
+    { tier: 'Bronze Bracket', game_number: 38, home_score: 13, away_score: 3, winner: 'home' },
+    { tier: 'Bronze Bracket', game_number: 40, home_score: 8, away_score: 3, winner: 'home' },
+  ];
+
+  const tiers = parseBracketsPage(octfestFixture, OCTFEST);
+
+  it('finds all three bracket tiers', () => {
+    assert.equal(tiers.length, 3);
+    assert.deepEqual(tiers.map((t) => t.tier), ['Silver Bracket', 'Gold Bracket', 'Bronze Bracket']);
+  });
+
+  it('parses both scores and winner for every completed game', () => {
+    for (const expected of COMPLETED) {
+      const tier = tiers.find((t) => t.tier === expected.tier);
+      assert.ok(tier, expected.tier);
+      const game = tier.games.find((g) => g.game_number === expected.game_number);
+      assert.ok(game, `GM ${expected.game_number}`);
+      assert.equal(game.home.score, expected.home_score, `GM ${expected.game_number} home`);
+      assert.equal(game.away.score, expected.away_score, `GM ${expected.game_number} away`);
+      assert.equal(deriveWinner(game), expected.winner, `GM ${expected.game_number} winner`);
+    }
+  });
+
+  it('leaves winner null when only one side has posted a score', () => {
+    const silver = tiers.find((t) => t.tier === 'Silver Bracket');
+    const upcoming = silver.games.find((g) => g.game_number === 24);
+    assert.equal(upcoming.home.score, null);
+    assert.equal(upcoming.away.score, null);
+    assert.equal(deriveWinner(upcoming), null);
   });
 });
 

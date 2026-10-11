@@ -101,11 +101,11 @@ identically):
 
 - Team boxes pair with game cells by slot number (`SeedPos{N}` /
   `GamePos{N}`); table row order is not reliable.
-- Span regexes must tolerate attributes and entities: PG renders score spans
-  as `<span ... class="ScoreTxt">&nbsp;N</span>` (seen 2026-09-27; the
-  2026-09-26 fixture had bare spans). A regex requiring `">` right after the
-  span id silently drops every score — there is a regression test with the
-  decorated markup.
+- Score spans must tolerate attributes, entities, and nested markup: PG
+  renders loser scores as `<span class="ScoreTxt">&nbsp;N</span>` and winner
+  scores as `<span class="ScoreTxt"><b>&nbsp;N</b></span>` (Octoberfest
+  2026-10-11). The parser reads the full span inner HTML and strips tags; a
+  `[^<]*` capture after the opening `>` drops every winning score.
 - Round labels come from the page's own "Winner of Game #N" feeder
   references (depth 0 = Championship).
 - `winner` is derived only when the page shows both scores and they differ;
