@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import {
+  applyMultiParkFieldPrefix,
   findBracketGameForSchedule,
   findBracketResult,
   flattenBracketGames,
@@ -140,6 +141,107 @@ describe('bracket finals for schedule rows', () => {
     const sibling = { ...ampSchedule, id: 'oct-amp-2' };
     const games = flattenBracketGames(snapshot);
     assert.equal(findBracketResult(ampSchedule, [ampSchedule, sibling], games), null);
+  });
+
+  it('matches AMP and Canes SF when both bracket games are on the Octoberfest list (#16 regression)', () => {
+    const TOURNAMENT_ID = 't-octoberfest';
+    const rawOctoberfest: ScheduleGame[] = [
+      {
+        id: `${TOURNAMENT_ID}-westbrooks`,
+        date: '2026-10-10',
+        time: '8:00 AM',
+        opponent: '15U OFFSEASON BASEBALL - WESTBROOKS',
+        homeAway: 'home',
+        tournamentId: TOURNAMENT_ID,
+        venue: 'Schiel Road Park',
+        field: 'Field 4',
+        result: 'L 15-3',
+        diamondkastUrl:
+          'https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1596980',
+      },
+      {
+        id: `${TOURNAMENT_ID}-scorpions`,
+        date: '2026-10-10',
+        time: '12:40 PM',
+        opponent: 'Scorpions Team Easton 2030 Black',
+        homeAway: 'away',
+        tournamentId: TOURNAMENT_ID,
+        venue: 'Schiel Road Park',
+        field: 'Field 4',
+        result: 'T 2-2',
+        diamondkastUrl:
+          'https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1596983',
+      },
+      {
+        id: `${TOURNAMENT_ID}-amp`,
+        date: '2026-10-11',
+        time: '12:40 PM',
+        opponent: 'AMP Academy - 15u',
+        homeAway: 'home',
+        tournamentId: TOURNAMENT_ID,
+        venue: 'Premier Baseball of Texas',
+        field: 'Field 7',
+        result: null,
+        diamondkastUrl:
+          'https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1597473',
+      },
+      {
+        id: `${TOURNAMENT_ID}-canes`,
+        date: '2026-10-11',
+        time: '5:20 PM',
+        opponent: 'Canes Houston - 15U',
+        homeAway: 'home',
+        tournamentId: TOURNAMENT_ID,
+        venue: 'Premier Baseball of Texas',
+        field: 'Field 7',
+        result: null,
+        diamondkastUrl:
+          'https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1597476',
+      },
+    ];
+    const siblings = applyMultiParkFieldPrefix(rawOctoberfest);
+
+    const ampBracketFinal: LiveBracketGame = {
+      game_number: 39,
+      round: 'Quarterfinal',
+      date: '2026-10-11',
+      time: '12:40 PM',
+      field: 'GAME RECAP | Field 7',
+      venue: 'Premier Baseball of Texas',
+      pg_game_id: '1597473',
+      home: { seed: '#2', name: '4:13 Baseball', score: 9 },
+      away: { seed: '#7', name: 'AMP Academy - 15u', score: 8 },
+      winner: 'home',
+    };
+    const sfUpcoming: LiveBracketGame = {
+      game_number: 42,
+      round: 'Semifinal',
+      date: '2026-10-11',
+      time: '5:20 PM',
+      field: 'PLAY BY PLAY | Field 7',
+      venue: 'Premier Baseball of Texas',
+      pg_game_id: '1597476',
+      home: { seed: '#2', name: '4:13 Baseball', score: null },
+      away: { seed: '#3', name: 'Canes Houston - 15U', score: null },
+      winner: null,
+    };
+    const bracketLive = [ampBracketFinal, sfUpcoming];
+    const ampRow = siblings.find((g) => g.opponent.includes('AMP'));
+    const canesRow = siblings.find((g) => g.opponent.includes('Canes'));
+    assert.ok(ampRow && canesRow);
+
+    assert.equal(findBracketResult(ampRow, siblings, bracketLive), 'W 9-8');
+    assert.equal(findBracketResult(canesRow, siblings, bracketLive), null);
+
+    const sfFinal: LiveBracketGame = {
+      ...sfUpcoming,
+      field: 'GAME RECAP | Field 7',
+      home: { seed: '#2', name: '4:13 Baseball', score: 6 },
+      away: { seed: '#3', name: 'Canes Houston - 15U', score: 4 },
+      winner: 'home',
+    };
+    assert.equal(findBracketResult(canesRow, siblings, [ampBracketFinal, sfFinal]), 'W 6-4');
+    assert.equal(findBracketResult(ampRow, siblings, [ampBracketFinal, sfFinal]), 'W 9-8');
   });
 });
 

@@ -149,21 +149,35 @@ export function scheduleMatchesBracket(scheduleGame: ScheduleGame, bracketGame: 
 }
 
 /**
- * Match a schedule row to exactly one live bracket game (date/time/field +
- * opponent, with 4:13 on the other side). Rejects ambiguous doubleheaders.
+ * Match a schedule row to one live bracket game (PG game id, or date/time/field +
+ * opponent with 4:13 on the other side). Rejects only true collisions: two schedule
+ * rows tied to the same bracket game, or one row matching multiple bracket games.
  */
 export function findBracketGameForSchedule(
   scheduleGame: ScheduleGame,
   siblingScheduleGames: ScheduleGame[],
   bracketGames: LiveBracketGame[],
 ): LiveBracketGame | null {
+  const schedulePgId = parsePgGameId(scheduleGame.diamondkastUrl);
+  if (schedulePgId) {
+    const byGameId = bracketGames.filter((game) => {
+      const bracketPgId = game.pg_game_id ?? null;
+      return bracketPgId === schedulePgId && teamsMatchSchedule(scheduleGame, game);
+    });
+    if (byGameId.length === 1) return byGameId[0];
+    if (byGameId.length > 1) return null;
+  }
+
   const matches = bracketGames.filter((game) => scheduleMatchesBracket(scheduleGame, game));
   if (matches.length !== 1) return null;
 
-  const scheduledMatches = siblingScheduleGames.filter((game) =>
-    bracketGames.some((candidate) => scheduleMatchesBracket(game, candidate)),
+  const matched = matches[0];
+  const scheduleRowsForBracket = siblingScheduleGames.filter((row) =>
+    scheduleMatchesBracket(row, matched),
   );
-  return scheduledMatches.length === 1 ? matches[0] : null;
+  if (scheduleRowsForBracket.length > 1) return null;
+
+  return matched;
 }
 
 export function findBracketResult(
