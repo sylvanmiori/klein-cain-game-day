@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { compareGames, formatGameDate, loadBracket, loadSchedule, mapsSearchUrl } from '../../../components/baseball/data';
 import { BracketLive } from '../../../components/baseball/bracket-live';
 import { LiveGameResult } from '../../../components/baseball/live-game-result';
+import { ScheduleTournamentGames } from '../../../components/baseball/schedule-tournament-games';
 
 export const metadata: Metadata = {
   title: 'Schedule',
@@ -64,28 +65,11 @@ export default async function BaseballSchedulePage() {
                   })()}
                   {t.notes && <p className="mt-1 text-[13px] text-[#c8d8e8]">{t.notes}</p>}
                 </div>
-                {games.length === 0 ? (
-                  <p className="px-5 py-4 text-sm text-[#6e6e73]">Game times have not been posted yet.</p>
-                ) : (
-                  <ul className="divide-y divide-[#eef1f5] px-5">
-                    {games.map((g) => (
-                      <li key={g.id} className="flex items-center justify-between gap-3 py-3">
-                        <div className="min-w-0">
-                          <p className="truncate text-sm font-bold text-[#12324e]">
-                            {g.homeAway === 'home' ? 'vs' : g.homeAway === 'away' ? '@' : 'vs'} {g.opponent}{g.opponentRecord ? ` (${g.opponentRecord})` : ''}
-                          </p>
-                          <p className="text-[12px] text-[#6e6e73]">
-                            {formatGameDate(g.date)}
-                            {g.time ? ` \u00B7 ${g.time}` : ''}
-                            {g.field ? ` \u00B7 ${g.field}` : ''}
-                            {g.note ? ` \u00B7 ${g.note}` : ''}
-                          </p>
-                        </div>
-                        <LiveGameResult game={g} siblingGames={games} style="schedule" />
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <ScheduleTournamentGames
+                  games={games}
+                  tournamentId={t.id}
+                  bracketEventId={t.eventId}
+                />
               </section>
             );
           })}

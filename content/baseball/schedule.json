@@ -820,6 +820,23 @@
           "runs_for": null,
           "runs_against": null,
           "date_source": "event_scoreboard"
+        },
+        {
+          "date": "2026-10-11",
+          "time": "5:20 PM",
+          "opponent": "Canes Houston - 15U",
+          "opponent_record": null,
+          "opponent_url": null,
+          "home_away": "vs",
+          "pool": null,
+          "field": "Field 7",
+          "venue": "Premier Baseball of Texas",
+          "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1597476",
+          "result": null,
+          "result_status": null,
+          "runs_for": null,
+          "runs_against": null,
+          "date_source": "bracket"
         }
       ],
       "event_location": "Premier Baseball of Texas | Tomball, TX",

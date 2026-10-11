@@ -199,7 +199,7 @@ describe('mergeScoreboardGames (event scoreboard ahead of team grid)', () => {
   });
 });
 
-import { carryForwardFinals } from './baseball-pg.mjs';
+import { carryForwardBracketScheduleGames, carryForwardFinals } from './baseball-pg.mjs';
 
 describe('Sunday pull (2026-10-11 regression)', () => {
   const dk = (id) => `https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=${id}`;
@@ -239,6 +239,30 @@ describe('Sunday pull (2026-10-11 regression)', () => {
       ['2026-10-10', '12:40 PM', 'T 2-2'],
       ['2026-10-11', '12:40 PM', null],
     ]);
+    assert.equal(notes.length, 1);
+  });
+});
+
+describe('carryForwardBracketScheduleGames', () => {
+  it('keeps upcoming bracket-sourced rows PG team page omits', () => {
+    const tournaments = [{ event_id: '140496', games: [] }];
+    const previous = {
+      tournaments: [{
+        event_id: '140496',
+        games: [{
+          date: '2026-10-11',
+          time: '5:20 PM',
+          opponent: 'Canes Houston - 15U',
+          diamondkast_url: 'https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1597476',
+          date_source: 'bracket',
+          result: null,
+        }],
+      }],
+    };
+    const notes = [];
+    carryForwardBracketScheduleGames(tournaments, previous, notes);
+    assert.equal(tournaments[0].games.length, 1);
+    assert.equal(tournaments[0].games[0].opponent, 'Canes Houston - 15U');
     assert.equal(notes.length, 1);
   });
 });

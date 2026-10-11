@@ -28,6 +28,8 @@ export interface ScheduleTournament {
   notes?: string;
   pgUrl?: string;
   bracketUrl?: string;
+  /** Perfect Game event id (matches /api/baseball/bracket snapshot). */
+  eventId?: string;
 }
 
 export interface BaseballSchedule {

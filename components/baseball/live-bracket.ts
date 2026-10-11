@@ -124,7 +124,7 @@ function teamsMatchSchedule(
   return false;
 }
 
-function scheduleMatchesBracket(scheduleGame: ScheduleGame, bracketGame: LiveBracketGame): boolean {
+export function scheduleMatchesBracket(scheduleGame: ScheduleGame, bracketGame: LiveBracketGame): boolean {
   const schedulePgId = parsePgGameId(scheduleGame.diamondkastUrl);
   const bracketPgId = bracketGame.pg_game_id ?? null;
   if (schedulePgId && bracketPgId && schedulePgId === bracketPgId) {
@@ -173,4 +173,103 @@ export function findBracketResult(
 ): string | null {
   const match = findBracketGameForSchedule(scheduleGame, siblingScheduleGames, bracketGames);
   return match ? resultFromBracketFor413(scheduleGame, match) : null;
+}
+
+const PG_GAME_URL = (id: string) =>
+  `https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=${id}`;
+
+function displayField(raw?: string | null): string | undefined {
+  if (!raw) return undefined;
+  const key = normalizeFieldKey(raw);
+  if (key?.startsWith('field ')) return `Field ${key.slice(6)}`;
+  return raw.replace(/^(GAME RECAP|PLAY BY PLAY)\s*\|\s*/gi, '').trim() || undefined;
+}
+
+/** PG feeder placeholders — never list these unless 4:13 is already named on the row. */
+export function isBracketPlaceholderName(name: string | null | undefined): boolean {
+  const n = (name ?? '').replace(/\s+/g, ' ').trim();
+  if (!n) return true;
+  if (/^seed\s*#?\s*\d+$/i.test(n)) return true;
+  if (/^winner of game\s*#?\s*\d+/i.test(n)) return true;
+  return false;
+}
+
+function scheduleTimeSortKey(time?: string): number {
+  const m = /^(\d{1,2}):(\d{2})\s*([AP])M$/i.exec((time ?? '').trim());
+  if (!m) return 24 * 60;
+  let h = Number(m[1]) % 12;
+  if (m[3].toUpperCase() === 'P') h += 12;
+  return h * 60 + Number(m[2]);
+}
+
+function compareScheduleGames(a: ScheduleGame, b: ScheduleGame): number {
+  return a.date.localeCompare(b.date) || scheduleTimeSortKey(a.time) - scheduleTimeSortKey(b.time);
+}
+
+/** Same venue·field prefix loadSchedule() applies on multi-park weekends. */
+export function applyMultiParkFieldPrefix(games: ScheduleGame[]): ScheduleGame[] {
+  const parks = new Set(
+    games.map((g) => (g.venue ?? '').trim().toLowerCase()).filter(Boolean),
+  );
+  if (parks.size <= 1) return games;
+  return games.map((g) => {
+    if (!g.venue || !g.field || g.field.includes('\u00B7')) return g;
+    return { ...g, field: `${g.venue} \u00B7 ${g.field}` };
+  });
+}
+
+export function bracketGameToScheduleRow(
+  bracketGame: LiveBracketGame,
+  tournamentId: string,
+): ScheduleGame | null {
+  const homeUs = isOurTeamName(bracketGame.home.name);
+  const awayUs = isOurTeamName(bracketGame.away.name);
+  if (!homeUs && !awayUs) return null;
+
+  const opponentTeam = homeUs ? bracketGame.away : bracketGame.home;
+  const opponentName = opponentTeam?.name?.trim() ?? '';
+  if (!opponentName || isBracketPlaceholderName(opponentName)) return null;
+  if (homeUs && isBracketPlaceholderName(bracketGame.away.name)) return null;
+  if (awayUs && isBracketPlaceholderName(bracketGame.home.name)) return null;
+
+  const pgId = bracketGame.pg_game_id ?? null;
+  const note = bracketGame.round?.trim() || undefined;
+
+  return {
+    id: `bracket-gm-${bracketGame.game_number}`,
+    date: bracketGame.date ?? '',
+    time: bracketGame.time ?? undefined,
+    opponent: opponentName,
+    homeAway: homeUs ? 'home' : 'away',
+    tournamentId,
+    venue: bracketGame.venue ?? undefined,
+    field: displayField(bracketGame.field),
+    note,
+    result: null,
+    diamondkastUrl: pgId ? PG_GAME_URL(pgId) : undefined,
+  };
+}
+
+/** Append live bracket games where 4:13 is confirmed and not already on the schedule. */
+export function mergeScheduleWithBracketGames(
+  scheduleGames: ScheduleGame[],
+  snapshot: LiveBracketSnapshot | null | undefined,
+  bracketEventId: string | null | undefined,
+  tournamentId: string,
+): ScheduleGame[] {
+  if (!snapshot || !bracketEventId || snapshot.event_id !== bracketEventId) {
+    return scheduleGames;
+  }
+
+  const bracketGames = flattenBracketGames(snapshot);
+  const merged = [...scheduleGames];
+
+  for (const bracketGame of bracketGames) {
+    const alreadyListed = scheduleGames.some((row) => scheduleMatchesBracket(row, bracketGame));
+    if (alreadyListed) continue;
+    const row = bracketGameToScheduleRow(bracketGame, tournamentId);
+    if (row) merged.push(row);
+  }
+
+  return applyMultiParkFieldPrefix(merged.sort(compareScheduleGames));
 }
