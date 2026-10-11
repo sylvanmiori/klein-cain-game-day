@@ -22,6 +22,7 @@ interface RawScheduleGame {
 }
 
 interface RawScheduleTournament {
+  event_id?: number | string;
   name: string;
   dates?: string;
   start_date?: string;
@@ -107,6 +108,7 @@ export function loadSchedule(): BaseballSchedule | null {
     address: (t.event_address || '').trim() || undefined,
     pgUrl: t.event_url,
     bracketUrl: t.bracket_url,
+    eventId: t.event_id != null ? String(t.event_id) : undefined,
   }));
   const games: ScheduleGame[] = raw.tournaments.flatMap((t, i) =>
     (Array.isArray(t.games) ? t.games : [])

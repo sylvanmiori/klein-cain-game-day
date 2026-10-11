@@ -522,6 +522,32 @@ function carryForwardFinals(tournaments, previous, notes) {
   }
 }
 
+/**
+ * PG's team schedule grid omits bracket-only rows (semifinals, championship).
+ * Keep upcoming games we added from the bracket (date_source: bracket) when the
+ * next scrape does not list them yet.
+ */
+function carryForwardBracketScheduleGames(tournaments, previous, notes) {
+  const prevTournaments = Array.isArray(previous?.tournaments) ? previous.tournaments : [];
+  for (const tournament of tournaments) {
+    const prev = prevTournaments.find((t) => t?.event_id && t.event_id === tournament.event_id);
+    if (!prev || !Array.isArray(prev.games)) continue;
+    tournament.games ??= [];
+    const byId = new Map(tournament.games.map((g) => [dkGameId(g), g]).filter(([id]) => id));
+    for (const old of prev.games) {
+      if (old?.date_source !== 'bracket' || old?.result) continue;
+      const id = dkGameId(old);
+      if (!id || byId.has(id)) continue;
+      tournament.games.push({ ...old });
+      notes.push(
+        `Kept bracket game vs ${old.opponent} (${old.date}) from the previous schedule; PG team page does not list it yet.`,
+      );
+    }
+    tournament.games.sort((a, b) =>
+      (a.date ?? '').localeCompare(b.date ?? '') || timeMinutes(a.time) - timeMinutes(b.time));
+  }
+}
+
 /** Join event-scoreboard results onto the team's schedule games by game id. */
 function applyResults(tournaments, eventCaptures, teamName) {
   const byGameId = new Map();
@@ -641,6 +667,7 @@ async function main() {
     // No previous schedule (first run): nothing to carry forward.
   }
   carryForwardFinals(tournaments, previous, notes);
+  carryForwardBracketScheduleGames(tournaments, previous, notes);
 
   const scrapedAt = new Date().toISOString();
   const snapshotDate = chicagoDate();
@@ -675,4 +702,4 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   main();
 }
 
-export { parseTournaments, parseTournament, parseTeam, parseRoster, parseGame, mergeScoreboardGames, carryForwardFinals };
+export { parseTournaments, parseTournament, parseTeam, parseRoster, parseGame, mergeScoreboardGames, carryForwardFinals, carryForwardBracketScheduleGames };
