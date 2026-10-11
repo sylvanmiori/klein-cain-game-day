@@ -745,11 +745,11 @@
   "gameStats": {
     "team": "Klein Cain",
     "playerOfGame": {
-      "name": "Jace Hanks",
-      "number": "9",
-      "image": "/players/jace-hanks.jpg",
-      "headline": "186 yards of offense · 1 TD",
-      "rationale": "Hanks finished with 119 passing yards, and 67 rushing yards and 1 rushing touchdown.",
+      "name": "Gage Hansberger",
+      "number": "34",
+      "image": "/players/gage-hansberger.jpg",
+      "headline": "11 tackles · two-point stop",
+      "rationale": "Hansberger finished with 11 total tackles, 6 solo, and blew up Klein's two-point try to keep it a one-score game at halftime.",
       "model": "Cain Impact v1"
     },
     "totals": [

@@ -223,6 +223,15 @@ for (const file of files) {
     if (edition.final.body && /Nicole\s+Patin/i.test(edition.final.body)) {
       fail('recap body refers to Nicole Patin; the current Klein Cain Principal is Lauren Marti');
     }
+    // The Cain Player of the Game card (gameStats.playerOfGame, machine-generated) must
+    // match the pick named in the recap body; an editorial override in the body wins and
+    // the card must be updated to match (2026-10-11: Week 6 card said Hanks, recap said Hansberger).
+    if (edition.final.body && edition.gameStats?.playerOfGame?.name) {
+      const pick = edition.final.body.match(/\*\*([^*]+?)\s*\(#\d+\)\*\*\s+is Cain's Player of the Game/);
+      if (pick && pick[1].trim() !== edition.gameStats.playerOfGame.name) {
+        fail(`gameStats.playerOfGame.name is "${edition.gameStats.playerOfGame.name}" but final.body names ${pick[1].trim()} as Cain's Player of the Game; the card must match the recap`);
+      }
+    }
   }
 
   for (const player of edition.preview?.players ?? []) {
