@@ -13,18 +13,18 @@
     },
     {
       "round": "Quarterfinal",
-      "matchup": "#4 Premier Baseball 2030 Ruiz vs #5 Texas Standard- Crossley",
+      "matchup": "#4 Premier Baseball 2030 Ruiz vs Texas Standard- Crossley",
       "date": "2026-10-11",
       "time": "8:00 AM",
-      "field": "PLAY BY PLAY | Field 2",
+      "field": "GAME RECAP | Field 2",
       "venue": "Schiel Road Park"
     },
     {
       "round": "Quarterfinal",
-      "matchup": "#3 GP31 15U vs #6 USA Prime South Houston - 2030 Red",
+      "matchup": "#3 GP31 15U vs USA Prime South Houston - 2030 Red",
       "date": "2026-10-11",
       "time": "8:00 AM",
-      "field": "PLAY BY PLAY | Field 1",
+      "field": "GAME RECAP | Field 1",
       "venue": "Schiel Road Park"
     },
     {
@@ -37,7 +37,7 @@
     },
     {
       "round": "Semifinal",
-      "matchup": "Winner of Game #24 vs Winner of Game #25",
+      "matchup": "Winner of Game #24 vs #5 Texas Standard- Crossley",
       "date": "2026-10-11",
       "time": "5:20 PM",
       "field": "PLAY BY PLAY | Field 2",
@@ -45,7 +45,7 @@
     },
     {
       "round": "Semifinal",
-      "matchup": "Winner of Game #26 vs Winner of Game #27",
+      "matchup": "#6 USA Prime South Houston - 2030 Red vs Winner of Game #27",
       "date": "2026-10-11",
       "time": "3:00 PM",
       "field": "PLAY BY PLAY | Field 2",
@@ -71,19 +71,19 @@
     {
       "tier": "Gold Bracket",
       "round": "Quarterfinal",
-      "matchup": "#4 15U OFFSEASON BASEBALL - WESTBROOKS vs #5 Texas Standard- Williams",
+      "matchup": "#4 15U OFFSEASON BASEBALL - WESTBROOKS vs Texas Standard- Williams",
       "date": "2026-10-11",
       "time": "8:00 AM",
-      "field": "PLAY BY PLAY | Field 5",
+      "field": "GAME RECAP | Field 5",
       "venue": "Premier Baseball of Texas"
     },
     {
       "tier": "Gold Bracket",
       "round": "Quarterfinal",
-      "matchup": "#3 True Journey Elite vs #6 Bull Pen Sandoval 15u",
+      "matchup": "#3 True Journey Elite vs Bull Pen Sandoval 15u",
       "date": "2026-10-11",
       "time": "8:00 AM",
-      "field": "PLAY BY PLAY | Field 6",
+      "field": "GAME RECAP | Field 6",
       "venue": "Premier Baseball of Texas"
     },
     {
@@ -98,7 +98,7 @@
     {
       "tier": "Gold Bracket",
       "round": "Semifinal",
-      "matchup": "Winner of Game #31 vs Winner of Game #32",
+      "matchup": "Winner of Game #31 vs #5 Texas Standard- Williams",
       "date": "2026-10-11",
       "time": "5:20 PM",
       "field": "PLAY BY PLAY | Field 5",
@@ -107,7 +107,7 @@
     {
       "tier": "Gold Bracket",
       "round": "Semifinal",
-      "matchup": "Winner of Game #33 vs Winner of Game #34",
+      "matchup": "#6 Bull Pen Sandoval 15u vs Winner of Game #34",
       "date": "2026-10-11",
       "time": "3:00 PM",
       "field": "PLAY BY PLAY | Field 5",
@@ -125,10 +125,10 @@
     {
       "tier": "Bronze Bracket",
       "round": "Quarterfinal",
-      "matchup": "#4 WF Nation TX vs #5 Next Level Baseball",
+      "matchup": "WF Nation TX vs #5 Next Level Baseball",
       "date": "2026-10-11",
       "time": "8:00 AM",
-      "field": "PLAY BY PLAY | Field 7",
+      "field": "GAME RECAP | Field 7",
       "venue": "Premier Baseball of Texas"
     },
     {
@@ -152,7 +152,7 @@
     {
       "tier": "Bronze Bracket",
       "round": "Semifinal",
-      "matchup": "#1 Scorpions Team Easton 2030 Black vs Winner of Game #38",
+      "matchup": "#1 Scorpions Team Easton 2030 Black vs #4 WF Nation TX",
       "date": "2026-10-11",
       "time": "3:00 PM",
       "field": "PLAY BY PLAY | Field 7",
@@ -177,5 +177,5 @@
       "venue": "Premier Baseball of Texas"
     }
   ],
-  "scraped_at": "2026-10-11T10:43:06.660Z"
+  "scraped_at": "2026-10-11T16:36:15.955Z"
 }
