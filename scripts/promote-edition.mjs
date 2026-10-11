@@ -117,7 +117,7 @@ for (const { name, edition } of editions) {
   const ageDays = Math.floor((Date.parse(`${today}T12:00:00Z`) - Date.parse(`${edition.date}T12:00:00Z`)) / 86400000);
   if (edition.gameStats?.playerOfGame && ageDays > 3) continue;
   try {
-    const gameStats = await fetchGameStats({
+    let gameStats = await fetchGameStats({
       scheduleUrl: publication.maxPrepsScheduleUrl,
       date: edition.date,
       teamId: publication.maxPrepsTeamId,
@@ -132,6 +132,17 @@ for (const { name, edition } of editions) {
     if (gameStats.updated.slice(0, 10) <= edition.date) {
       console.log(`${name}: game statistics predate the final; leaving them for the next run.`);
       continue;
+    }
+    // An editorial Player of the Game override named in the recap body wins over
+    // the model selection (e.g. Week 6: the recap names Hansberger, the model
+    // picks Hanks). Keep the authored card; the refreshed stat rows still land.
+    // Without this, every re-capture inside the 3-day window silently reverts
+    // the card and the validator then fails the run (2026-10-11).
+    const bodyPick = edition.final?.body
+      ?.match(/\*\*([^*]+?)\s*\(#\d+\)\*\*\s+is Cain's Player of the Game/)?.[1]?.trim();
+    if (bodyPick && bodyPick !== gameStats.playerOfGame.name
+      && edition.gameStats?.playerOfGame?.name === bodyPick) {
+      gameStats = { ...gameStats, playerOfGame: edition.gameStats.playerOfGame };
     }
     const sameSourceVersion = edition.gameStats?.updated === gameStats.updated;
     const sameSelection = JSON.stringify(edition.gameStats?.playerOfGame) === JSON.stringify(gameStats.playerOfGame);
