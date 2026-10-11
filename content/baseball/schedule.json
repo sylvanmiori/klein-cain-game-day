@@ -781,10 +781,10 @@
           "field": "Field 4",
           "venue": "Schiel Road Park",
           "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1596980",
-          "result": null,
-          "result_status": null,
-          "runs_for": null,
-          "runs_against": null,
+          "result": "L 15-3",
+          "result_status": "Final",
+          "runs_for": 3,
+          "runs_against": 15,
           "date_source": "event_scoreboard"
         },
         {
@@ -798,10 +798,10 @@
           "field": "Field 4",
           "venue": "Schiel Road Park",
           "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1596983",
-          "result": null,
-          "result_status": null,
-          "runs_for": null,
-          "runs_against": null,
+          "result": "T 2-2",
+          "result_status": "Final",
+          "runs_for": 2,
+          "runs_against": 2,
           "date_source": "event_scoreboard"
         }
       ],
@@ -1094,13 +1094,13 @@
       ],
       "team_event_record": {
         "pool": "Pool A",
-        "seed": 3,
+        "seed": 18,
         "w": 0,
-        "l": 0,
-        "t": 0,
-        "pct": 0,
-        "ra": 0,
-        "rs": 0
+        "l": 1,
+        "t": 1,
+        "pct": 0.25,
+        "ra": 17,
+        "rs": 5
       },
       "scoreboard": [
         {
@@ -1142,12 +1142,12 @@
         {
           "game_id": "1596980",
           "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1596980",
-          "status": null,
+          "status": "Final",
           "datetime": "8:00 AM",
           "visitor": "15U OFFSEASON BASEBALL - WESTBROOKS",
-          "visitor_runs": null,
+          "visitor_runs": 15,
           "home": "4:13 Baseball",
-          "home_runs": null,
+          "home_runs": 3,
           "venue": "Schiel Road Park",
           "field": "Field 4"
         },
@@ -1262,12 +1262,12 @@
         {
           "game_id": "1596983",
           "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1596983",
-          "status": null,
+          "status": "Final",
           "datetime": "12:40 PM",
           "visitor": "4:13 Baseball",
-          "visitor_runs": null,
+          "visitor_runs": 2,
           "home": "Scorpions Team Easton 2030 Black",
-          "home_runs": null,
+          "home_runs": 2,
           "venue": "Schiel Road Park",
           "field": "Field 4"
         },
