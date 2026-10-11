@@ -44,11 +44,18 @@ export function normalizeBracketTime(time?: string | null): string {
   return `${hour}:${minute} ${m[3].toUpperCase()}M`;
 }
 
-function normalizeField(field?: string | null): string {
-  return (field ?? '')
-    .replace(/^(GAME RECAP|PLAY BY PLAY)\s*\|\s*/i, '')
-    .trim()
-    .toLowerCase();
+/** Compare schedule + bracket locations on "Field N" (ignores venue / recap prefixes). */
+export function normalizeFieldKey(field?: string | null): string | null {
+  let text = (field ?? '').trim();
+  if (!text) return null;
+  text = text.replace(/^(GAME RECAP|PLAY BY PLAY)\s*\|\s*/gi, '');
+  if (text.includes('\u00B7')) {
+    const parts = text.split('\u00B7').map((part) => part.trim());
+    text = parts[parts.length - 1] ?? text;
+  }
+  const match = /\bfield\s*(\d+)\b/i.exec(text);
+  if (match) return `field ${match[1]}`;
+  return text.toLowerCase();
 }
 
 export function isOurTeamName(name: string | null | undefined): boolean {
@@ -97,21 +104,10 @@ export function resultFromBracketFor413(
   return `T ${ourScore}-${theirScore}`;
 }
 
-function scheduleMatchesBracket(scheduleGame: ScheduleGame, bracketGame: LiveBracketGame): boolean {
-  if (scheduleGame.date && bracketGame.date && scheduleGame.date !== bracketGame.date) {
-    return false;
-  }
-  if (scheduleGame.time && bracketGame.time) {
-    if (normalizeBracketTime(scheduleGame.time) !== normalizeBracketTime(bracketGame.time)) {
-      return false;
-    }
-  }
-  if (scheduleGame.field && bracketGame.field) {
-    if (normalizeField(scheduleGame.field) !== normalizeField(bracketGame.field)) {
-      return false;
-    }
-  }
-
+function teamsMatchSchedule(
+  scheduleGame: ScheduleGame,
+  bracketGame: LiveBracketGame,
+): boolean {
   const homeIsUs = isOurTeamName(bracketGame.home.name);
   const awayIsUs = isOurTeamName(bracketGame.away.name);
   if (homeIsUs && opponentsMatch(scheduleGame.opponent, bracketGame.away.name ?? '')) {
@@ -126,6 +122,30 @@ function scheduleMatchesBracket(scheduleGame: ScheduleGame, bracketGame: LiveBra
   if (homeOpp && !awayOpp) return true;
   if (awayOpp && !homeOpp) return true;
   return false;
+}
+
+function scheduleMatchesBracket(scheduleGame: ScheduleGame, bracketGame: LiveBracketGame): boolean {
+  const schedulePgId = parsePgGameId(scheduleGame.diamondkastUrl);
+  const bracketPgId = bracketGame.pg_game_id ?? null;
+  if (schedulePgId && bracketPgId && schedulePgId === bracketPgId) {
+    return teamsMatchSchedule(scheduleGame, bracketGame);
+  }
+
+  if (scheduleGame.date && bracketGame.date && scheduleGame.date !== bracketGame.date) {
+    return false;
+  }
+  if (scheduleGame.time && bracketGame.time) {
+    if (normalizeBracketTime(scheduleGame.time) !== normalizeBracketTime(bracketGame.time)) {
+      return false;
+    }
+  }
+  const scheduleField = normalizeFieldKey(scheduleGame.field);
+  const bracketField = normalizeFieldKey(bracketGame.field);
+  if (scheduleField && bracketField && scheduleField !== bracketField) {
+    return false;
+  }
+
+  return teamsMatchSchedule(scheduleGame, bracketGame);
 }
 
 /**
