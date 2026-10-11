@@ -5,7 +5,6 @@ import baseballSchedule from '../content/baseball/schedule.json' with { type: 'j
 import { activeGame, gameSlug, fetchGameScore } from './score.mjs';
 import {
   BRACKET_URL_FOR,
-  BROWSER_UA,
   assignRounds,
   buildSnapshot,
   parseBracketsPage,
@@ -574,16 +573,25 @@ function chicagoTimeParts(ts) {
   };
 }
 
+/**
+ * Perfect Game's Azure WAF returns 403 to requests that claim to be Chrome but
+ * are not a real browser (UA/TLS mismatch; observed 2026-10-02 and again
+ * 2026-10-10). A plain, honest identifying User-Agent is served normally, so
+ * the Worker identifies itself instead of impersonating a browser. Same UA the
+ * GitHub Action scrapers already fall back to (scripts/baseball-pg.mjs).
+ */
+const PG_FETCH_UA = 'kleincain.gameday.report (contact: SylvanMiori@gmail.com)';
+
 async function fetchBracketHtml(url, timeoutMs = 45000) {
   const response = await fetch(url, {
     headers: {
-      'user-agent': BROWSER_UA,
+      'user-agent': PG_FETCH_UA,
       accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
       'accept-language': 'en-US,en;q=0.9',
     },
     signal: AbortSignal.timeout(timeoutMs),
   });
-  if (!response.ok) throw new Error(`Bracket page returned HTTP ${response.status}`);
+  if (!response.ok) throw new Error(`Perfect Game page returned HTTP ${response.status} (${url})`);
   return response.text();
 }
 
