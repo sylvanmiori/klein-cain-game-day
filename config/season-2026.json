@@ -63,7 +63,8 @@
     "venue": "Klein Memorial Stadium",
     "location": "Klein, TX",
     "home": true,
-    "kickoff": "7:00 PM"
+    "kickoff": "7:00 PM",
+    "event": "Senior Night"
   },
   {
     "date": "2026-10-23",

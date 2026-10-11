@@ -9,7 +9,7 @@
   "dateShort": "OCT 16, 2026",
   "kickoff": "7:00 PM",
   "venue": "Klein Memorial Stadium",
-  "event": "",
+  "event": "Senior Night",
   "updated": "2026-10-09T21:35:00Z",
   "home": {
     "name": "Klein Cain",
@@ -144,7 +144,7 @@
         "team": "KLEIN OAK",
         "number": "5",
         "name": "Micah Rhodes",
-        "image": "/player-placeholder.svg",
+        "image": "/players/micah-rhodes.jpg",
         "role": "RB · Junior",
         "tag": "Texas commit (Oct. 8)",
         "rating": "247 Sports' No. 8 RB, 2028 class",
@@ -154,11 +154,11 @@
         "team": "KLEIN OAK",
         "number": "2",
         "name": "Andre Phillip II",
-        "image": "/player-placeholder.svg",
+        "image": "/players/andre-phillip-ii.jpg",
         "role": "QB · Senior",
         "tag": "98.7 rushing yards per game",
         "rating": "6 passing TDs · 3 rushing TDs",
-        "copy": "Phillip is the dual-threat engine: MaxPreps has the senior at **98.7** rushing yards a game with **six** passing touchdowns and **three** rushing scores. Cain's ends and linebackers have to keep him in the pocket; when he gets loose, Oak's offense hums."
+        "copy": "Phillip is the dual-threat engine: MaxPreps has the senior at **98.7** rushing yards a game with **six** passing touchdowns and **three** rushing scores. Cain's ends and linebackers have to keep him in the pocket; when he gets loose, Oak's offense hums. He has been committed to **West Virginia** since May."
       },
       {
         "team": "KLEIN OAK",
@@ -193,7 +193,7 @@
     ],
     "recruiting": {
       "heading": "Klein Oak recruiting notes",
-      "note": "A roster-wide check of On3's Klein Oak prospect list, 247Sports coverage, and Rivals coverage as of Oct. 9 found one verified commitment on the current Panthers roster: junior running back **Micah Rhodes** committed to Texas on Oct. 8 after decommitting from Oklahoma in April. No other commitments surfaced; reported offers are not commitments.",
+      "note": "A roster-wide check of On3's Klein Oak prospect list, 247Sports coverage, and Rivals coverage as of Oct. 10 found two verified commitments on the current Panthers roster: junior running back **Micah Rhodes** committed to Texas on Oct. 8 after decommitting from Oklahoma in April, and senior quarterback **Andre Phillip II** has been committed to West Virginia since May 8, 2026. Reported offers are not commitments.",
       "rows": [
         {
           "name": "Micah Rhodes",
@@ -202,8 +202,8 @@
         },
         {
           "name": "Andre Phillip II",
-          "note": "The senior QB is On3's No. 2-rated Klein Oak prospect (85.20), a dual threat with six passing and three rushing TDs per MaxPreps.",
-          "href": "https://www.on3.com/high-school/scores/football/national/game/magnolia-vs-klein-oak-2026-10-02-1958657/"
+          "note": "The senior QB is On3's No. 2-rated Klein Oak prospect (85.20), a dual threat with six passing and three rushing TDs per MaxPreps. He committed to **West Virginia** on May 8, 2026, choosing the Mountaineers over Iowa State, Army, Air Force, and Navy.",
+          "href": "https://247sports.com/article/andre-phillip-ii-commits-to-west-virginia-mountaineers-land-dynamic-quarterback-out-of-texas-284437820/"
         },
         {
           "name": "Quincy Carter",
@@ -275,12 +275,17 @@
     "opponentRecruitingAudit": {
       "source": "On3 HS player ratings; 247Sports and Rivals indexed coverage",
       "sourceUrl": "https://www.on3.com/high-school/scores/football/national/game/magnolia-vs-klein-oak-2026-10-02-1958657/",
-      "asOf": "2026-10-09T12:00:00Z",
+      "asOf": "2026-10-10T16:45:00Z",
       "committedPlayers": [
         {
           "name": "Micah Rhodes",
           "school": "Texas",
           "sourceUrl": "https://longhornswire.usatoday.com/story/sports/college/longhorns/recruiting/2026/10/08/commitment-former-ou-commit-2028-4-star-rb-micah-rhodes-picks-texas/92151864007/"
+        },
+        {
+          "name": "Andre Phillip II",
+          "school": "West Virginia",
+          "sourceUrl": "https://247sports.com/article/andre-phillip-ii-commits-to-west-virginia-mountaineers-land-dynamic-quarterback-out-of-texas-284437820/"
         }
       ],
       "eliteProspects": [
@@ -293,7 +298,13 @@
           "nationalRank": null
         }
       ]
-    }
+    },
+    "sources": [
+      {
+        "label": "247Sports: Andre Phillip II commits to West Virginia (May 8, 2026)",
+        "href": "https://247sports.com/article/andre-phillip-ii-commits-to-west-virginia-mountaineers-land-dynamic-quarterback-out-of-texas-284437820/"
+      }
+    ]
   },
   "final": null,
   "sources": [
