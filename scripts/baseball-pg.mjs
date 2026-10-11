@@ -36,7 +36,7 @@
  * Source: https://www.perfectgame.org/PGBA/Team/default.aspx?orgid=69753&orgteamid=297202&Year=2027
  */
 
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parsePoolStandingsPage } from '../cloudflare/baseball-standings.mjs';
@@ -426,13 +426,15 @@ function timeMinutes(value) {
  * game list when the grid has no entry for them (matched by DiamondKast
  * game id, so grid games are never duplicated).
  *
- * Scoreboard tiles carry times but no dates. Pool games in a multi-day PG
- * event play on day 1 (Sunday's bracket is set from Saturday's pool
- * results), so merged games take the tournament's start date; the capture
- * note flags the assumption. Runs BEFORE applyResults so results join
- * onto merged games the same way.
+ * Scoreboard tiles carry times but no dates. PG's event scoreboard shows the
+ * current day's games, so a merged game takes today's Chicago date clamped
+ * into the tournament range: before the event (Thursday pull) that is day 1,
+ * on Sunday it is Sunday. (Always using start_date mislabeled the Sunday
+ * bracket game vs AMP Academy as Sat Oct 10 on 2026-10-11.) The capture
+ * note flags the assumption. Runs BEFORE applyResults so results join onto
+ * merged games the same way.
  */
-function mergeScoreboardGames(tournaments, captures, teamName, notes) {
+function mergeScoreboardGames(tournaments, captures, teamName, notes, today = chicagoDate()) {
   for (const tournament of tournaments) {
     const capture = captures.find((c) => c?.event_id === tournament.event_id);
     const board = capture?.event?.scoreboard ?? [];
@@ -448,8 +450,9 @@ function mergeScoreboardGames(tournaments, captures, teamName, notes) {
       if (!isVisitor && !isHome) continue; // never guess which side is ours
       const opponent = isVisitor ? sb.home : sb.visitor;
       if (!opponent) continue;
+      const date = clampDate(today, tournament.start_date, tournament.end_date);
       tournament.games.push({
-        date: tournament.start_date,
+        date,
         time: sb.datetime ?? null,
         opponent,
         opponent_record: null,
@@ -467,8 +470,52 @@ function mergeScoreboardGames(tournaments, captures, teamName, notes) {
       });
       notes.push(
         `Game vs ${opponent} (${sb.datetime ?? 'time TBD'}) added from the event scoreboard; ` +
-        `the team page grid had no entry, so it is listed on ${tournament.start_date} (day 1 pool play).`,
+        `the team page grid had no entry, so it is listed on ${date} (scoreboard capture day).`,
       );
+    }
+    tournament.games.sort((a, b) =>
+      (a.date ?? '').localeCompare(b.date ?? '') || timeMinutes(a.time) - timeMinutes(b.time));
+  }
+}
+
+/** Clamp a YYYY-MM-DD date into [start, end] (either bound may be missing). */
+function clampDate(day, start, end) {
+  if (start && day < start) return start;
+  if (end && day > end) return end;
+  return day;
+}
+
+const dkGameId = (game) => /gameid=(\d+)/.exec(game?.diamondkast_url ?? '')?.[1] ?? null;
+
+/**
+ * PG drops a day's tiles from the event scoreboard once the next day starts,
+ * and the team grid can lag, so a Sunday pull no longer sees Saturday's
+ * finals (2026-10-11 wiped L 15-3 / T 2-2). Carry forward every game from the
+ * previous schedule.json that already has a final result and is missing
+ * from this capture, and never downgrade a known final back to null.
+ * Only verified finals are carried; nothing is invented.
+ */
+function carryForwardFinals(tournaments, previous, notes) {
+  const prevTournaments = Array.isArray(previous?.tournaments) ? previous.tournaments : [];
+  for (const tournament of tournaments) {
+    const prev = prevTournaments.find((t) => t?.event_id && t.event_id === tournament.event_id);
+    if (!prev || !Array.isArray(prev.games)) continue;
+    tournament.games ??= [];
+    const byId = new Map(tournament.games.map((g) => [dkGameId(g), g]).filter(([id]) => id));
+    for (const old of prev.games) {
+      if (!old?.result) continue;
+      const id = dkGameId(old);
+      if (!id) continue;
+      const current = byId.get(id);
+      if (!current) {
+        tournament.games.push({ ...old });
+        notes.push(`Kept final ${old.result} vs ${old.opponent} (${old.date}) from the previous schedule; PG no longer lists it.`);
+      } else if (!current.result) {
+        current.result = old.result;
+        current.result_status = old.result_status;
+        current.runs_for = old.runs_for;
+        current.runs_against = old.runs_against;
+      }
     }
     tournament.games.sort((a, b) =>
       (a.date ?? '').localeCompare(b.date ?? '') || timeMinutes(a.time) - timeMinutes(b.time));
@@ -587,6 +634,13 @@ async function main() {
   }
   mergeScoreboardGames(tournaments, captures, team.name, notes);
   applyResults(tournaments, captures.map((c) => c.event).filter(Boolean), team.name);
+  let previous = null;
+  try {
+    previous = JSON.parse(readFileSync(OUT_PATH, 'utf8'));
+  } catch {
+    // No previous schedule (first run): nothing to carry forward.
+  }
+  carryForwardFinals(tournaments, previous, notes);
 
   const scrapedAt = new Date().toISOString();
   const snapshotDate = chicagoDate();
@@ -621,4 +675,4 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   main();
 }
 
-export { parseTournaments, parseTournament, parseTeam, parseRoster, parseGame, mergeScoreboardGames };
+export { parseTournaments, parseTournament, parseTeam, parseRoster, parseGame, mergeScoreboardGames, carryForwardFinals };

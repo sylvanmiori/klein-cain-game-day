@@ -172,7 +172,7 @@ describe('mergeScoreboardGames (event scoreboard ahead of team grid)', () => {
     },
   ];
   const notes = [];
-  mergeScoreboardGames(tournaments, captures, '4:13 Baseball', notes);
+  mergeScoreboardGames(tournaments, captures, '4:13 Baseball', notes, '2026-10-08');
   const games = tournaments[0].games;
 
   it('adds the two pool games with day-1 dates', () => {
@@ -193,8 +193,52 @@ describe('mergeScoreboardGames (event scoreboard ahead of team grid)', () => {
 
   it('never duplicates a game already in the grid', () => {
     const notes2 = [];
-    mergeScoreboardGames(tournaments, captures, '4:13 Baseball', notes2);
+    mergeScoreboardGames(tournaments, captures, '4:13 Baseball', notes2, '2026-10-08');
     assert.equal(tournaments[0].games.length, 2);
     assert.equal(notes2.length, 0);
+  });
+});
+
+import { carryForwardFinals } from './baseball-pg.mjs';
+
+describe('Sunday pull (2026-10-11 regression)', () => {
+  const dk = (id) => `https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=${id}`;
+  const amp = {
+    game_id: '1597473', diamondkast_url: dk('1597473'), status: null, datetime: '12:40 PM',
+    visitor: 'AMP Academy - 15u', visitor_runs: null, home: '4:13 Baseball', home_runs: null,
+    venue: 'Premier Baseball of Texas', field: 'Field 7',
+  };
+  const fresh = () => [{ start_date: '2026-10-10', end_date: '2026-10-11', event_id: '140496', games: [] }];
+
+  it('dates a Sunday scoreboard game on Sunday, not day 1', () => {
+    const tournaments = fresh();
+    mergeScoreboardGames(tournaments, [{ event_id: '140496', event: { scoreboard: [amp] } }], '4:13 Baseball', [], '2026-10-11');
+    assert.equal(tournaments[0].games[0].date, '2026-10-11');
+  });
+
+  it('clamps a capture after the event to the end date', () => {
+    const tournaments = fresh();
+    mergeScoreboardGames(tournaments, [{ event_id: '140496', event: { scoreboard: [amp] } }], '4:13 Baseball', [], '2026-10-13');
+    assert.equal(tournaments[0].games[0].date, '2026-10-11');
+  });
+
+  it('keeps Saturday finals PG dropped and never downgrades a final', () => {
+    const tournaments = fresh();
+    tournaments[0].games.push({ date: '2026-10-11', time: '12:40 PM', opponent: 'AMP Academy - 15u', diamondkast_url: dk('1597473'), result: null });
+    tournaments[0].games.push({ date: '2026-10-10', time: '8:00 AM', opponent: 'X', diamondkast_url: dk('1'), result: null, result_status: null, runs_for: null, runs_against: null });
+    const previous = { tournaments: [{ event_id: '140496', games: [
+      { date: '2026-10-10', time: '8:00 AM', opponent: 'X', diamondkast_url: dk('1'), result: 'L 15-3', result_status: 'Final', runs_for: 3, runs_against: 15 },
+      { date: '2026-10-10', time: '12:40 PM', opponent: 'Y', diamondkast_url: dk('2'), result: 'T 2-2', result_status: 'Final', runs_for: 2, runs_against: 2 },
+      { date: '2026-10-10', time: '3:00 PM', opponent: 'Z', diamondkast_url: dk('3'), result: null },
+    ] }] };
+    const notes = [];
+    carryForwardFinals(tournaments, previous, notes);
+    const g = tournaments[0].games;
+    assert.deepEqual(g.map((x) => [x.date, x.time, x.result]), [
+      ['2026-10-10', '8:00 AM', 'L 15-3'],
+      ['2026-10-10', '12:40 PM', 'T 2-2'],
+      ['2026-10-11', '12:40 PM', null],
+    ]);
+    assert.equal(notes.length, 1);
   });
 });
