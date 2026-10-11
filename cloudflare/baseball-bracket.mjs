@@ -15,7 +15,8 @@
  *   bracket halves render side by side.
  * - Each box carries a seed label (lbl...SeedPos{N}_{i}, e.g. "#4"), a team
  *   link (hl...Pos{N}_{i}; "Seed #4" placeholder until pool play seeds it),
- *   and a score span (lbl...ScorePos{N}_{i}; empty until the game is final).
+ *   and a score span (lbl...ScorePos{N}_{i}; empty until final; winners use
+ *   nested <b> inside the span, often with a leading &nbsp;).
  * - Game cells: <td class="GameTopBox"> with a span like
  *   "GM: 20 | 9/27 | 8:00 AM<br />Field 7 @ Premier Baseball of Texas".
  * - Later rounds reference feeders as "Winner of Game #N" inside team names.
@@ -81,10 +82,14 @@ export function parseBracketTable(tableHtml, tournament) {
     if (!slot) continue;
     const seed = stripTags(/SeedPos\d+_\d+"[^>]*>([^<]*)/.exec(cell)?.[1] ?? '').replace(/\s+/g, ' ').trim() || null;
     const name = stripTags(/hl(?:Home|Visitor)Pos\d+_\d+"[^>]*>([\s\S]*?)<\/a>/.exec(cell)?.[1] ?? '') || null;
-    // Score spans may carry attributes (PG renders class="ScoreTxt") and
-    // values arrive as "&nbsp;N" — tolerate both so scores actually parse.
-    const scoreText = (/lbl(?:Home|Visitor)ScorePos\d+_\d+"[^>]*>([^<]*)/.exec(cell)?.[1] ?? '').replace(/&nbsp;/gi, '');
-    const score = parseScore(scoreText);
+    // Score spans may carry class="ScoreTxt", "&nbsp;N", and (for the winner)
+    // nested <b> markup — capture the full span inner HTML, then strip tags.
+    const sideKey = side === 'home' ? 'Home' : 'Visitor';
+    const scoreInner = new RegExp(
+      `lbl${sideKey}ScorePos\\d+_\\d+"[^>]*>([\\s\\S]*?)<\\/span>`,
+      'i',
+    ).exec(cell)?.[1] ?? '';
+    const score = parseScore(stripTags(scoreInner));
     const entry = boxes.get(slot) ?? {};
     entry[side] = { seed, name, score };
     boxes.set(slot, entry);
