@@ -4,51 +4,44 @@ import { useEffect, useState } from 'react';
 // Plain <a>, not next/link: the baseball host rewrite breaks the App
 // Router's client-side navigation (taps silently swallowed). Full-page
 // loads always work.
-import type { SeasonRecord, StatsResponse } from './types';
+import { computeSeasonRecord, loadLiveBracket } from './live-bracket';
 import { loadLiveStats } from './live-stats';
+import type { BaseballSchedule, SeasonRecord } from './types';
 
-function parseRecord(games: StatsResponse['games']): SeasonRecord | null {
-  let w = 0, l = 0, t = 0;
-  let lastDate = '';
-  let last: SeasonRecord['last'] = null;
-  for (const g of games) {
-    if (!g.result) continue;
-    const c = g.result.trim().charAt(0).toUpperCase();
-    if (c !== 'W' && c !== 'L' && c !== 'T') continue;
-    if (c === 'W') w += 1; else if (c === 'L') l += 1; else t += 1;
-    if ((g.date ?? '') >= lastDate) {
-      lastDate = g.date ?? '';
-      last = { opponent: g.opponent, result: g.result };
-    }
-  }
-  if (w + l + t === 0) return null;
-  return { w, l, t, last };
-}
-
-/** Season record strip. Live D1 box-score data wins when it loads; the
- *  server-rendered Perfect Game fallback covers the gap (D1 not yet
- *  provisioned, no box scores submitted yet, or a fetch failure). */
-export function BaseballRecordStrip({ fallback }: { fallback?: SeasonRecord | null }) {
-  const [live, setLive] = useState<SeasonRecord | null>(null);
+/** Season record strip. Merges schedule finals, D1 box scores, and live bracket
+ *  results (same rules as each game row). The server-rendered schedule fallback
+ *  covers the gap until client sources load or if a fetch fails. */
+export function BaseballRecordStrip({
+  schedule,
+  fallback,
+}: {
+  schedule: BaseballSchedule;
+  fallback?: SeasonRecord | null;
+}) {
+  const [record, setRecord] = useState<SeasonRecord | null>(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let alive = true;
-    loadLiveStats()
-      .then((data) => {
+    Promise.all([loadLiveStats(), loadLiveBracket()])
+      .then(([stats, bracket]) => {
         if (!alive) return;
-        setLive(data && Array.isArray(data.games) ? parseRecord(data.games) : null);
+        const savedGames = stats && Array.isArray(stats.games) ? stats.games : null;
+        setRecord(computeSeasonRecord(schedule, savedGames, bracket));
         setLoaded(true);
       })
       .catch(() => {
-        if (alive) setLoaded(true);
+        if (alive) {
+          setRecord(null);
+          setLoaded(true);
+        }
       });
     return () => {
       alive = false;
     };
-  }, []);
+  }, [schedule]);
 
-  const record = live ?? fallback ?? null;
+  const display = loaded ? (record ?? fallback ?? null) : null;
 
   if (!loaded) {
     return (
@@ -59,7 +52,7 @@ export function BaseballRecordStrip({ fallback }: { fallback?: SeasonRecord | nu
     );
   }
 
-  if (!record) {
+  if (!display) {
     return (
       <section className="min-w-0 rounded-2xl border border-[#dde7f0] bg-white px-4 py-4 sm:px-5 sm:py-5">
         <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">Season Record</p>
@@ -83,7 +76,7 @@ export function BaseballRecordStrip({ fallback }: { fallback?: SeasonRecord | nu
     );
   }
 
-  const { w, l, t, last } = record;
+  const { w, l, t, last } = display;
   return (
     <section className="min-w-0 rounded-2xl border border-[#dde7f0] bg-white px-4 py-4 sm:px-5 sm:py-5">
       <div className="flex items-baseline justify-between gap-3">

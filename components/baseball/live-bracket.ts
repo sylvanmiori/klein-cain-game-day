@@ -1,5 +1,12 @@
-import type { LiveBracketGame, LiveBracketSnapshot, ScheduleGame } from './types';
-import { normalizeOpponent, opponentsMatch } from './opponent-match.mjs';
+import type {
+  ApiGame,
+  BaseballSchedule,
+  LiveBracketGame,
+  LiveBracketSnapshot,
+  ScheduleGame,
+  SeasonRecord,
+} from './types';
+import { findSavedGame, normalizeOpponent, opponentsMatch } from './opponent-match.mjs';
 
 let bracketRequest: Promise<LiveBracketSnapshot> | null = null;
 
@@ -286,4 +293,97 @@ export function mergeScheduleWithBracketGames(
   }
 
   return applyMultiParkFieldPrefix(merged.sort(compareScheduleGames));
+}
+
+/** Final W/L/T for one scheduled row — same precedence as `LiveGameResult`. */
+export function resolveGameResult(
+  game: ScheduleGame,
+  siblingGames: ScheduleGame[],
+  savedGames: ApiGame[] | null | undefined,
+  bracketGames: LiveBracketGame[] | null | undefined,
+): string | null {
+  const saved = savedGames?.length
+    ? findSavedGame(game, siblingGames, savedGames)
+    : null;
+  if (saved?.result?.trim()) return saved.result.trim();
+
+  const scheduleResult = game.result?.trim();
+  if (scheduleResult) return scheduleResult;
+
+  if (bracketGames?.length) {
+    const bracketResult = findBracketResult(game, siblingGames, bracketGames);
+    if (bracketResult) return bracketResult;
+  }
+
+  return null;
+}
+
+function resultOutcome(result: string): 'W' | 'L' | 'T' | null {
+  const c = result.trim().charAt(0).toUpperCase();
+  if (c === 'W' || c === 'L' || c === 'T') return c;
+  return null;
+}
+
+/** Aggregate wins/losses/ties and the chronologically latest final. */
+export function seasonRecordFromResolvedGames(
+  entries: Array<{ date: string; time?: string; opponent: string; result: string }>,
+): SeasonRecord | null {
+  let w = 0;
+  let l = 0;
+  let t = 0;
+  let lastSortKey = '';
+  let last: SeasonRecord['last'] = null;
+
+  for (const entry of entries) {
+    const outcome = resultOutcome(entry.result);
+    if (!outcome) continue;
+    if (outcome === 'W') w += 1;
+    else if (outcome === 'L') l += 1;
+    else t += 1;
+
+    const sortKey = `${entry.date}\0${String(scheduleTimeSortKey(entry.time)).padStart(5, '0')}`;
+    if (sortKey >= lastSortKey) {
+      lastSortKey = sortKey;
+      last = { opponent: entry.opponent, result: entry.result };
+    }
+  }
+
+  if (w + l + t === 0) return null;
+  return { w, l, t, last };
+}
+
+/** Season record from the full schedule, D1 box scores, and live bracket finals. */
+export function computeSeasonRecord(
+  schedule: BaseballSchedule,
+  savedGames: ApiGame[] | null | undefined,
+  bracketSnapshot: LiveBracketSnapshot | null | undefined,
+): SeasonRecord | null {
+  const bracketGames = flattenBracketGames(bracketSnapshot);
+  const resolved: Array<{ date: string; time?: string; opponent: string; result: string }> = [];
+
+  for (const tournament of schedule.tournaments) {
+    const tournamentGames = schedule.games
+      .filter((g) => g.tournamentId === tournament.id)
+      .sort(compareScheduleGames);
+    const siblingGames = mergeScheduleWithBracketGames(
+      tournamentGames,
+      bracketSnapshot,
+      tournament.eventId,
+      tournament.id,
+    );
+
+    for (const game of siblingGames) {
+      const result = resolveGameResult(game, siblingGames, savedGames, bracketGames);
+      if (result) {
+        resolved.push({
+          date: game.date,
+          time: game.time,
+          opponent: game.opponent,
+          result,
+        });
+      }
+    }
+  }
+
+  return seasonRecordFromResolvedGames(resolved);
 }
