@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "slug": "2026-10-08-klein",
-  "status": "final",
-  "statusLabel": "Final",
-  "homeScore": 37,
-  "awayScore": 14,
-  "homeRecord": "7–0",
-  "awayRecord": "4–2",
-  "updatedAt": "2026-10-09T02:53:12.133Z",
-  "source": "Manual correction",
-  "sourceUrl": "https://github.com/sylvanmiori/klein-cain-game-day/actions"
+  "slug": "2026-10-16-klein-oak",
+  "status": "scheduled",
+  "statusLabel": "7:00 PM",
+  "homeScore": null,
+  "awayScore": null,
+  "homeRecord": "4–2",
+  "awayRecord": "2–4",
+  "updatedAt": "2026-10-12T20:06:27.366Z",
+  "source": "Dave Campbell’s Texas Football",
+  "sourceUrl": "https://www.texasfootball.com/scores/"
 }
