@@ -815,10 +815,10 @@
           "field": "Field 7",
           "venue": "Premier Baseball of Texas",
           "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1597473",
-          "result": null,
-          "result_status": null,
-          "runs_for": null,
-          "runs_against": null,
+          "result": "W 9-8",
+          "result_status": "Final",
+          "runs_for": 9,
+          "runs_against": 8,
           "date_source": "event_scoreboard"
         },
         {
@@ -832,10 +832,10 @@
           "field": "Field 7",
           "venue": "Premier Baseball of Texas",
           "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1597476",
-          "result": null,
-          "result_status": null,
-          "runs_for": null,
-          "runs_against": null,
+          "result": "L 8-9",
+          "result_status": "Final",
+          "runs_for": 8,
+          "runs_against": 9,
           "date_source": "bracket"
         }
       ],
@@ -1260,12 +1260,12 @@
         {
           "game_id": "1597473",
           "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1597473",
-          "status": null,
+          "status": "Final",
           "datetime": "12:40 PM",
           "visitor": "AMP Academy - 15u",
-          "visitor_runs": null,
+          "visitor_runs": 8,
           "home": "4:13 Baseball",
-          "home_runs": null,
+          "home_runs": 9,
           "venue": "Premier Baseball of Texas",
           "field": "Field 7"
         },
@@ -1308,12 +1308,12 @@
         {
           "game_id": "1597476",
           "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1597476",
-          "status": null,
+          "status": "Final",
           "datetime": "5:20 PM",
-          "visitor": "Visitor",
-          "visitor_runs": null,
-          "home": "Home",
-          "home_runs": null,
+          "visitor": "Canes Houston - 15U",
+          "visitor_runs": 9,
+          "home": "4:13 Baseball",
+          "home_runs": 8,
           "venue": "Premier Baseball of Texas",
           "field": "Field 7"
         },

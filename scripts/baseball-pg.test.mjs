@@ -241,6 +241,57 @@ describe('Sunday pull (2026-10-11 regression)', () => {
     ]);
     assert.equal(notes.length, 1);
   });
+
+  it('keeps Sunday finals when PG scoreboard still shows null (2026-10-11 AMP + Canes)', () => {
+    const tournaments = fresh();
+    tournaments[0].games.push({
+      date: '2026-10-11',
+      time: '12:40 PM',
+      opponent: 'AMP Academy - 15u',
+      diamondkast_url: dk('1597473'),
+      result: null,
+    });
+    tournaments[0].games.push({
+      date: '2026-10-11',
+      time: '5:20 PM',
+      opponent: 'Canes Houston - 15U',
+      diamondkast_url: dk('1597476'),
+      result: null,
+      date_source: 'bracket',
+    });
+    const previous = {
+      tournaments: [{
+        event_id: '140496',
+        games: [
+          {
+            date: '2026-10-11',
+            time: '12:40 PM',
+            opponent: 'AMP Academy - 15u',
+            diamondkast_url: dk('1597473'),
+            result: 'W 9-8',
+            result_status: 'Final',
+            runs_for: 9,
+            runs_against: 8,
+          },
+          {
+            date: '2026-10-11',
+            time: '5:20 PM',
+            opponent: 'Canes Houston - 15U',
+            diamondkast_url: dk('1597476'),
+            result: 'L 8-9',
+            result_status: 'Final',
+            runs_for: 8,
+            runs_against: 9,
+            date_source: 'bracket',
+          },
+        ],
+      }],
+    };
+    carryForwardFinals(tournaments, previous, []);
+    const byId = (id) => tournaments[0].games.find((g) => g.diamondkast_url.includes(id));
+    assert.equal(byId('1597473')?.result, 'W 9-8');
+    assert.equal(byId('1597476')?.result, 'L 8-9');
+  });
 });
 
 describe('carryForwardBracketScheduleGames', () => {
