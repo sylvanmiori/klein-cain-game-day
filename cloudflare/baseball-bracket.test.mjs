@@ -9,6 +9,7 @@ import {
   deriveWinner,
   parseBracketsPage,
   pickWeekendTournament,
+  pickBracketTournament,
   roundLabel,
   sideLabel,
 } from './baseball-bracket.mjs';
@@ -168,6 +169,23 @@ describe('pickWeekendTournament', () => {
   it('returns null when nothing covers the weekend', () => {
     assert.equal(pickWeekendTournament(tournaments, new Date('2026-10-03T14:00:00-05:00')), null);
     assert.equal(pickWeekendTournament([], new Date('2026-09-26T14:00:00-05:00')), null);
+  });
+});
+
+describe('pickBracketTournament', () => {
+  const tournaments = [
+    { name: 'Backyard Brawl', start_date: '2026-09-26', end_date: '2026-09-27', event_id: 140434 },
+    { name: 'Octoberfest', start_date: '2026-10-10', end_date: '2026-10-11', event_id: 140496 },
+  ];
+
+  it('prefers the active weekend tournament', () => {
+    const t = pickBracketTournament(tournaments, new Date('2026-10-11T14:00:00-05:00'));
+    assert.equal(t?.event_id, 140496);
+  });
+
+  it('falls back to the most recently ended tournament after the weekend', () => {
+    const t = pickBracketTournament(tournaments, new Date('2026-10-12T10:00:00-05:00'));
+    assert.equal(t?.event_id, 140496);
   });
 });
 

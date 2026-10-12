@@ -535,9 +535,25 @@ function carryForwardBracketScheduleGames(tournaments, previous, notes) {
     tournament.games ??= [];
     const byId = new Map(tournament.games.map((g) => [dkGameId(g), g]).filter(([id]) => id));
     for (const old of prev.games) {
-      if (old?.date_source !== 'bracket' || old?.result) continue;
+      if (old?.date_source !== 'bracket') continue;
       const id = dkGameId(old);
-      if (!id || byId.has(id)) continue;
+      if (!id) continue;
+      const current = byId.get(id);
+      if (old.result) {
+        if (!current) {
+          tournament.games.push({ ...old });
+          notes.push(
+            `Kept bracket final ${old.result} vs ${old.opponent} (${old.date}) from the previous schedule; PG team page no longer lists it.`,
+          );
+        } else if (!current.result) {
+          current.result = old.result;
+          current.result_status = old.result_status;
+          current.runs_for = old.runs_for;
+          current.runs_against = old.runs_against;
+        }
+        continue;
+      }
+      if (byId.has(id)) continue;
       tournament.games.push({ ...old });
       notes.push(
         `Kept bracket game vs ${old.opponent} (${old.date}) from the previous schedule; PG team page does not list it yet.`,

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Clock, ExternalLink, MapPin } from 'lucide-react';
 import { formatGameDate, mapsSearchUrl } from './data';
-import { isBracketGameFinal } from './live-bracket';
+import { eliminationLabel, isBracketGameFinal } from './live-bracket';
 import type { BracketTeam, LiveBracketGame, LiveBracketSnapshot, LiveBracketTier } from './types';
 
 /** Home Sunday path: client-fetches /api/baseball/bracket and, when 4:13 is a
@@ -251,6 +251,7 @@ function BracketPathView({ snapshot }: { snapshot: LiveBracketSnapshot }) {
   const path = buildPath(found.tier, found.seedGames);
   if (path.length === 0) return null;
 
+  const eliminatedIn = eliminationLabel(path);
   const next = pickNextGame(path);
   const nextSide = next ? teamOnGame(next) : null;
   const opponent = next ? opponentFor(next, nextSide) : null;
@@ -307,7 +308,17 @@ function BracketPathView({ snapshot }: { snapshot: LiveBracketSnapshot }) {
       </div>
 
       <div className="px-4 py-4 sm:px-5 sm:py-5">
-        {next && opponent ? (
+        {eliminatedIn ? (
+          <div className="rounded-xl border border-[#f5d0cc] bg-[#fdf6f5] px-3.5 py-3.5 sm:px-4">
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">
+              Tournament
+            </p>
+            <p className="mt-2 text-base font-extrabold leading-snug text-[#c0392b]">
+              Eliminated in {eliminatedIn}
+            </p>
+          </div>
+        ) : null}
+        {next && opponent && !eliminatedIn ? (
           <div className="rounded-xl border border-[#dde7f0] bg-[#f7fafc] px-3.5 py-3.5 sm:px-4">
             <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a9aa2]">
               {nextFinal ? 'Final' : 'Next game'}
@@ -420,7 +431,11 @@ function BracketPathView({ snapshot }: { snapshot: LiveBracketSnapshot }) {
   );
 }
 
-export function HomeBracketPath() {
+export function HomeBracketPath({
+  fallbackSnapshot = null,
+}: {
+  fallbackSnapshot?: LiveBracketSnapshot | null;
+}) {
   const [live, setLive] = useState<LiveBracketSnapshot | null>(null);
 
   useEffect(() => {
@@ -435,14 +450,15 @@ export function HomeBracketPath() {
         if (data && Array.isArray(data.tiers) && data.tiers.length > 0) setLive(data);
       })
       .catch(() => {
-        // Hide section on failure — do not invent.
+        // Fall back to build-time snapshot when the API is unavailable.
       });
     return () => {
       alive = false;
     };
   }, []);
 
-  if (!live) return null;
-  if (!findOurTier(live)) return null;
-  return <BracketPathView snapshot={live} />;
+  const snapshot = live ?? fallbackSnapshot ?? null;
+  if (!snapshot) return null;
+  if (!findOurTier(snapshot)) return null;
+  return <BracketPathView snapshot={snapshot} />;
 }

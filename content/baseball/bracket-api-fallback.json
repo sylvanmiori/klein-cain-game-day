@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "event_id": "140496",
+  "tournament": "2026 15U PG Octoberfest @ Premier",
+  "bracket_url": "https://www.perfectgame.org/events/Brackets.aspx?event=140496",
+  "tiers": [
+    {
+      "tier": "Bronze Bracket",
+      "games": [
+        {
+          "game_number": 39,
+          "round": "Quarterfinal",
+          "date": "2026-10-11",
+          "time": "12:40 PM",
+          "field": "GAME RECAP | Field 7",
+          "venue": "Premier Baseball of Texas",
+          "pg_game_id": "1597473",
+          "home": { "seed": "#2", "name": "4:13 Baseball", "score": 9 },
+          "away": { "seed": "#7", "name": "AMP Academy - 15u", "score": 8 },
+          "winner": "home"
+        },
+        {
+          "game_number": 42,
+          "round": "Semifinal",
+          "date": "2026-10-11",
+          "time": "5:20 PM",
+          "field": "GAME RECAP | Field 7",
+          "venue": "Premier Baseball of Texas",
+          "pg_game_id": "1597476",
+          "home": { "seed": "#2", "name": "4:13 Baseball", "score": 8 },
+          "away": { "seed": "#3", "name": "Canes Houston - 15U", "score": 9 },
+          "winner": "away"
+        }
+      ]
+    }
+  ],
+  "game_count": 2,
+  "scraped_at": "2026-10-11T23:30:00.000Z",
+  "source": "Perfect Game"
+}

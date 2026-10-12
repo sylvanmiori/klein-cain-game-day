@@ -70,6 +70,40 @@ export function isOurTeamName(name: string | null | undefined): boolean {
   return n.includes('413BASEBALL') || n === '413';
 }
 
+function bracketRoundShort(round: string | null | undefined): string {
+  const r = (round ?? '').trim().toLowerCase();
+  if (r.includes('quarter')) return 'QF';
+  if (r.includes('semi')) return 'SF';
+  if (r.includes('champ')) return 'Championship';
+  if (r.includes('final') && !r.includes('semi') && !r.includes('quarter')) return 'Championship';
+  return round?.trim() || 'Game';
+}
+
+function weWonBracketGame(game: LiveBracketGame, ourSide: 'home' | 'away'): boolean {
+  const homeScore = game.home.score;
+  const awayScore = game.away.score;
+  if (game.winner === 'home' || game.winner === 'away') {
+    return game.winner === ourSide;
+  }
+  if (!Number.isInteger(homeScore) || !Number.isInteger(awayScore)) return false;
+  return ourSide === 'home' ? homeScore! > awayScore! : awayScore! > homeScore!;
+}
+
+/** When our last bracket game is a final loss, e.g. "SF #42". */
+export function eliminationLabel(path: LiveBracketGame[]): string | null {
+  const ours = path.filter((g) => isOurTeamName(g.home.name) || isOurTeamName(g.away.name));
+  const last = ours[ours.length - 1];
+  if (!last) return null;
+  const side: 'home' | 'away' | null = isOurTeamName(last.home.name)
+    ? 'home'
+    : isOurTeamName(last.away.name)
+      ? 'away'
+      : null;
+  if (!side || !isBracketGameFinal(last)) return null;
+  if (weWonBracketGame(last, side)) return null;
+  return `${bracketRoundShort(last.round)} #${last.game_number}`;
+}
+
 /** True when PG posted both scores or named a winner. */
 export function isBracketGameFinal(game: LiveBracketGame): boolean {
   if (game.winner === 'home' || game.winner === 'away') return true;

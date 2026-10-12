@@ -9,6 +9,7 @@ import {
   buildSnapshot,
   parseBracketsPage,
   pickWeekendTournament,
+  pickBracketTournament,
 } from './baseball-bracket.mjs';
 import {
   STANDINGS_URL_FOR,
@@ -1348,7 +1349,7 @@ const worker = {
     if (url.pathname === '/api/baseball/bracket') {
       if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
       const tournaments = Array.isArray(baseballSchedule?.tournaments) ? baseballSchedule.tournaments : [];
-      const tournament = pickWeekendTournament(tournaments, new Date());
+      const tournament = pickBracketTournament(tournaments, new Date());
       if (!tournament?.event_id) return json({ error: 'No tournament this weekend' }, 404);
       const key = `${BRACKET_KV_PREFIX}${tournament.event_id}`;
       let live = null;

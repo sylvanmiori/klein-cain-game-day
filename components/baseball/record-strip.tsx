@@ -23,18 +23,18 @@ export function BaseballRecordStrip({
 
   useEffect(() => {
     let alive = true;
-    Promise.all([loadLiveStats(), loadLiveBracket()])
-      .then(([stats, bracket]) => {
+    Promise.allSettled([loadLiveStats(), loadLiveBracket()])
+      .then(([statsOutcome, bracketOutcome]) => {
         if (!alive) return;
+        const stats = statsOutcome.status === 'fulfilled' ? statsOutcome.value : null;
+        const bracket =
+          bracketOutcome.status === 'fulfilled' ? bracketOutcome.value : null;
         const savedGames = stats && Array.isArray(stats.games) ? stats.games : null;
-        setRecord(computeSeasonRecord(schedule, savedGames, bracket));
+        setRecord(computeSeasonRecord(schedule, savedGames, bracket ?? null));
         setLoaded(true);
       })
       .catch(() => {
-        if (alive) {
-          setRecord(null);
-          setLoaded(true);
-        }
+        if (alive) setLoaded(true);
       });
     return () => {
       alive = false;
