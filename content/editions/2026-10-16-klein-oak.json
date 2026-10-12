@@ -42,6 +42,14 @@
     "sourceUrl": "https://www.texasfootball.com/article/2026/09/29/exclusive-computer-rankings-for-all-1500-txhsfb-teams-week-6",
     "asOf": "2026-09-29T16:47:32.829Z"
   },
+  "poll": {
+    "source": "Dave Campbell's Texas Football Class 6A state poll",
+    "sourceUrl": "https://www.timesrecordnews.com/story/sports/high-school/football/2026/10/05/dave-campbells-texas-high-school-football-rankings-week-7/91923781007/",
+    "asOf": "2026-10-05",
+    "weekLabel": "Week 7",
+    "home": null,
+    "away": null
+  },
   "stats": null,
   "finalScore": null,
   "rating": {
@@ -191,6 +199,25 @@
         "copy": "Ruysenaars is the heart of the Oak defense at **9.7** tackles a game with **two** sacks per MaxPreps. Cain's line has to find him before Johnson does."
       }
     ],
+    "playerStatsAudit": {
+      "asOf": "2026-10-11",
+      "sources": [
+        {
+          "team": "Klein Cain",
+          "games": 6,
+          "source": "MaxPreps",
+          "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/",
+          "sourceUpdated": "2026-10-11T14:14:36Z"
+        },
+        {
+          "team": "Klein Oak",
+          "games": 6,
+          "source": "MaxPreps",
+          "sourceUrl": "https://www.maxpreps.com/tx/spring/klein-oak-panthers/football/stats/",
+          "sourceUpdated": "2026-10-10T10:52:06Z"
+        }
+      ]
+    },
     "recruiting": {
       "heading": "Klein Oak recruiting notes",
       "note": "A roster-wide check of On3's Klein Oak prospect list, 247Sports coverage, and Rivals coverage as of Oct. 10 found two verified commitments on the current Panthers roster: junior running back **Micah Rhodes** committed to Texas on Oct. 8 after decommitting from Oklahoma in April, and senior quarterback **Andre Phillip II** has been committed to West Virginia since May 8, 2026. Reported offers are not commitments.",
