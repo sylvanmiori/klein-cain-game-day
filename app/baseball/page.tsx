@@ -6,6 +6,7 @@ import { BaseballRecordStrip } from '../../components/baseball/record-strip';
 import {
   currentWeekend,
   getSeasonRecord,
+  loadBracketApiFallback,
   loadSchedule,
   mapsSearchUrl,
 } from '../../components/baseball/data';
@@ -68,6 +69,7 @@ export default async function BaseballHome() {
   const window = schedule ? currentWeekend(schedule) : null;
   const fallbackRecord = schedule ? getSeasonRecord(schedule) : null;
   const scheduleForRecord = schedule ?? { tournaments: [], games: [] };
+  const bracketPathFallback = loadBracketApiFallback();
 
   return (
     <div className="flex flex-col gap-4 sm:gap-5">
@@ -95,7 +97,7 @@ export default async function BaseballHome() {
       </section>
 
       {/* Sunday bracket path — live from /api/baseball/bracket (hides until 4:13 is named) */}
-      <HomeBracketPath />
+      <HomeBracketPath fallbackSnapshot={bracketPathFallback} />
 
       {/* This Weekend — single card; hairline rows only, no nested boxes */}
       <section aria-label="This weekend" className="min-w-0 overflow-hidden rounded-2xl border border-[#dde7f0] bg-white">

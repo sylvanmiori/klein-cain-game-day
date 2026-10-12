@@ -815,11 +815,11 @@
           "field": "Field 7",
           "venue": "Premier Baseball of Texas",
           "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1597473",
-          "result": null,
-          "result_status": null,
-          "runs_for": null,
-          "runs_against": null,
-          "date_source": "event_scoreboard"
+          "result": "W 9-8",
+          "result_status": "Final",
+          "runs_for": 9,
+          "runs_against": 8,
+          "date_source": "bracket"
         },
         {
           "date": "2026-10-11",
@@ -832,10 +832,10 @@
           "field": "Field 7",
           "venue": "Premier Baseball of Texas",
           "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1597476",
-          "result": null,
-          "result_status": null,
-          "runs_for": null,
-          "runs_against": null,
+          "result": "L 8-9",
+          "result_status": "Final",
+          "runs_for": 8,
+          "runs_against": 9,
           "date_source": "bracket"
         }
       ],

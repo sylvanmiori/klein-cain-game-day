@@ -5,7 +5,8 @@
 
 import scheduleJson from '../../content/baseball/schedule.json';
 import bracketJson from '../../content/baseball/bracket.json';
-import type { BaseballBracket, BaseballPoolStandingsFallback, BaseballSchedule, BracketGame, RosterPlayer, ScheduleGame, ScheduleTournament, SeasonRecord, StandingsPool } from './types';
+import bracketApiFallbackJson from '../../content/baseball/bracket-api-fallback.json';
+import type { BaseballBracket, BaseballPoolStandingsFallback, BaseballSchedule, BracketGame, LiveBracketSnapshot, RosterPlayer, ScheduleGame, ScheduleTournament, SeasonRecord, StandingsPool } from './types';
 
 // ---- Raw scraper shapes ----
 interface RawScheduleGame {
@@ -163,6 +164,13 @@ export function getSeasonRecord(schedule: BaseballSchedule): SeasonRecord | null
   }
   if (w + l + t === 0) return null;
   return { w, l, t, last };
+}
+
+/** Build-time fallback for Home bracket path when GET /api/baseball/bracket fails. */
+export function loadBracketApiFallback(): LiveBracketSnapshot | null {
+  const raw = bracketApiFallbackJson as unknown as LiveBracketSnapshot;
+  if (!raw || !Array.isArray(raw.tiers) || raw.tiers.length === 0) return null;
+  return raw;
 }
 
 export function loadBracket(): BaseballBracket | null {

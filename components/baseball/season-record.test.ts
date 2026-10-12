@@ -67,7 +67,7 @@ const octGames: ScheduleGame[] = [
     venue: 'Premier Baseball of Texas',
     field: 'Field 7',
     diamondkastUrl: 'https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1597473',
-    result: null,
+    result: 'W 9-8',
   },
   {
     id: 'oct-canes',
@@ -79,7 +79,7 @@ const octGames: ScheduleGame[] = [
     venue: 'Premier Baseball of Texas',
     field: 'Field 7',
     diamondkastUrl: 'https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1597476',
-    result: null,
+    result: 'L 8-9',
   },
 ];
 
@@ -109,49 +109,55 @@ const ampBracketFinal: LiveBracketGame = {
   winner: 'home',
 };
 
-const canesSf: LiveBracketGame = {
+const canesSfFinal: LiveBracketGame = {
   game_number: 42,
   round: 'Semifinal',
   date: '2026-10-11',
   time: '5:20 PM',
-  field: 'PLAY BY PLAY | Field 7',
+  field: 'GAME RECAP | Field 7',
   venue: 'Premier Baseball of Texas',
   pg_game_id: '1597476',
-  home: { name: '4:13 Baseball', score: null },
-  away: { name: 'Canes Houston - 15U', score: null },
-  winner: null,
+  home: { name: '4:13 Baseball', score: 8 },
+  away: { name: 'Canes Houston - 15U', score: 9 },
+  winner: 'away',
 };
 
 const bracketSnapshot: LiveBracketSnapshot = {
   schemaVersion: 1,
   event_id: OCT_EVENT,
-  tiers: [{ tier: 'Bronze Bracket', games: [ampBracketFinal, canesSf] }],
+  tiers: [{ tier: 'Bronze Bracket', games: [ampBracketFinal, canesSfFinal] }],
   game_count: 2,
   scraped_at: '2026-10-11T20:00:00.000Z',
   source: 'Perfect Game',
 };
 
 describe('computeSeasonRecord', () => {
-  it('merges D1 September box scores, schedule October finals, and bracket AMP win', () => {
+  it('merges D1 September box scores with Octoberfest finals (2-4-1, latest vs Canes)', () => {
     const record = computeSeasonRecord(schedule, d1SeptemberOnly, bracketSnapshot);
     assert.ok(record);
     assert.equal(record.w, 2);
-    assert.equal(record.l, 3);
+    assert.equal(record.l, 4);
     assert.equal(record.t, 1);
-    assert.equal(record.last?.opponent, 'AMP Academy - 15u');
-    assert.equal(record.last?.result, 'W 9-8');
+    assert.equal(record.last?.opponent, 'Canes Houston - 15U');
+    assert.equal(record.last?.result, 'L 8-9');
   });
 
   it('counts a game in both D1 and schedule once (Den Guys QF)', () => {
     const record = computeSeasonRecord(schedule, d1SeptemberOnly, bracketSnapshot);
     assert.ok(record);
-    assert.equal(record.l, 3);
+    assert.equal(record.l, 4);
   });
 
-  it('ignores upcoming bracket rows (Canes semifinal)', () => {
-    const record = computeSeasonRecord(schedule, d1SeptemberOnly, bracketSnapshot);
+  it('keeps Sep 26 W/L from D1 when bracket API is unavailable', () => {
+    const record = computeSeasonRecord(schedule, d1SeptemberOnly, null);
     assert.ok(record);
-    assert.notEqual(record.last?.opponent, 'Canes Houston - 15U');
+    assert.equal(record.w, 2);
+    assert.equal(record.l, 4);
+    assert.equal(record.t, 1);
+    const tsb = d1SeptemberOnly.find((g) => g.opponent === 'TSB');
+    assert.equal(tsb?.result, 'W 7-5');
+    const williams = d1SeptemberOnly.find((g) => g.opponent === 'Offseason Baseball');
+    assert.equal(williams?.result, 'L 3-4');
   });
 
   it('does not let partial D1 alone shrink the record (Sep-only D1 vs full schedule)', () => {

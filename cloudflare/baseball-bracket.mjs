@@ -52,6 +52,22 @@ export function pickWeekendTournament(tournaments, now = new Date()) {
   return list.find((t) => t.start_date && t.end_date && t.start_date <= today && today <= t.end_date) ?? null;
 }
 
+/**
+ * Tournament for bracket API reads: active weekend first, else the most recently
+ * ended event (last `end_date` on or before today in Chicago). Keeps KV snapshots
+ * available after the weekend ends.
+ */
+export function pickBracketTournament(tournaments, now = new Date()) {
+  const active = pickWeekendTournament(tournaments, now);
+  if (active) return active;
+  const today = chicagoDateString(now);
+  const list = Array.isArray(tournaments) ? tournaments : [];
+  const ended = list
+    .filter((t) => t?.event_id && t.end_date && t.end_date <= today)
+    .sort((a, b) => String(b.end_date).localeCompare(String(a.end_date)));
+  return ended[0] ?? null;
+}
+
 /* ------------------------------------------------------- bracket extraction */
 
 const ROUND_LABELS = { 0: 'Championship', 1: 'Semifinal', 2: 'Quarterfinal', 3: 'Round of 16', 4: 'Round of 32' };

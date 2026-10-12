@@ -265,4 +265,29 @@ describe('carryForwardBracketScheduleGames', () => {
     assert.equal(tournaments[0].games[0].opponent, 'Canes Houston - 15U');
     assert.equal(notes.length, 1);
   });
+
+  it('keeps bracket finals when PG drops the row', () => {
+    const tournaments = [{ event_id: '140496', games: [] }];
+    const previous = {
+      tournaments: [{
+        event_id: '140496',
+        games: [{
+          date: '2026-10-11',
+          time: '5:20 PM',
+          opponent: 'Canes Houston - 15U',
+          diamondkast_url: 'https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1597476',
+          date_source: 'bracket',
+          result: 'L 8-9',
+          result_status: 'Final',
+          runs_for: 8,
+          runs_against: 9,
+        }],
+      }],
+    };
+    const notes = [];
+    carryForwardBracketScheduleGames(tournaments, previous, notes);
+    assert.equal(tournaments[0].games.length, 1);
+    assert.equal(tournaments[0].games[0].result, 'L 8-9');
+    assert.equal(notes.length, 1);
+  });
 });

@@ -53,25 +53,32 @@ export function LiveGameResult({
 
   useEffect(() => {
     let alive = true;
-    Promise.all([loadLiveStats(), loadLiveBracket()])
-      .then(([stats, bracket]) => {
+    Promise.allSettled([loadLiveStats(), loadLiveBracket()])
+      .then(([statsOutcome, bracketOutcome]) => {
         if (!alive) return;
-        const savedGame = Array.isArray(stats.games)
-          ? findSavedGame(game, siblingGames, stats.games)
-          : null;
+        const stats = statsOutcome.status === 'fulfilled' ? statsOutcome.value : null;
+        const bracket =
+          bracketOutcome.status === 'fulfilled' ? bracketOutcome.value : null;
+
+        const savedGame =
+          stats && Array.isArray(stats.games)
+            ? findSavedGame(game, siblingGames, stats.games)
+            : null;
         if (savedGame?.result?.trim()) {
           setDisplay({ result: savedGame.result.trim(), gameId: savedGame.id });
           return;
         }
         if (fallback) return;
 
-        const bracketResult = findBracketResult(
-          game,
-          siblingGames,
-          flattenBracketGames(bracket),
-        );
-        if (bracketResult) {
-          setDisplay({ result: bracketResult, gameId: null });
+        if (bracket) {
+          const bracketResult = findBracketResult(
+            game,
+            siblingGames,
+            flattenBracketGames(bracket),
+          );
+          if (bracketResult) {
+            setDisplay({ result: bracketResult, gameId: null });
+          }
         }
       })
       .catch(() => {
