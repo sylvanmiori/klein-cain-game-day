@@ -67,6 +67,7 @@ export default async function BaseballHome() {
   const schedule = await loadSchedule();
   const window = schedule ? currentWeekend(schedule) : null;
   const fallbackRecord = schedule ? getSeasonRecord(schedule) : null;
+  const scheduleForRecord = schedule ?? { tournaments: [], games: [] };
 
   return (
     <div className="flex flex-col gap-4 sm:gap-5">
@@ -190,7 +191,7 @@ export default async function BaseballHome() {
         ) : null}
       </section>
 
-      <BaseballRecordStrip fallback={fallbackRecord} />
+      <BaseballRecordStrip schedule={scheduleForRecord} fallback={fallbackRecord} />
 
       <p className="text-[12px] text-[#8a8a92]">
         Team page on Perfect Game:{' '}
