@@ -10,7 +10,7 @@
   "kickoff": "7:00 PM",
   "venue": "Klein Memorial Stadium",
   "event": "Senior Night",
-  "updated": "2026-10-09T21:35:00Z",
+  "updated": "2026-10-12T12:40:00Z",
   "home": {
     "name": "Klein Cain",
     "mascot": "Hurricanes",
@@ -78,7 +78,7 @@
     "playersNote": "Five Hurricanes and five Panthers who will decide Friday night.",
     "intro": {
       "heading": "The matchup",
-      "body": "The Hurricanes come home hurting. Two straight losses have turned a **4-1** season into **4-2** and a first-place fight into a playoff scramble. The **40-24** second-half collapse against Collins was bad enough. Then Klein scored **22** unanswered after halftime in a **37-14** win that Dave Campbell's named one of its three big takeaways from Thursday night.\n\n**Klein Cain (4-2, 2-2)** hosts **Klein Oak (2-4, 2-2)** on Friday, October 16 at 7 PM at Klein Memorial Stadium. The Panthers just hung **59** on Klein Forest in a 59-3 Friday night rout, and they arrive with momentum. On3's projection has Cain **40-24** with a **76%** win probability. With four games left and Klein and Collins separating at the top of **District 15-6A**, Cain needs this one to stay in the thick of the playoff race. *The bounce-back starts at home.*",
+      "body": "The Hurricanes come home hurting. Two straight losses have turned a **4-1** season into **4-2** and a first-place fight into a playoff scramble. The **40-24** second-half collapse against Collins was bad enough. Then Klein scored **22** unanswered after halftime in a **37-14** win that Dave Campbell's named one of its three big takeaways from Thursday night.\n\n**Klein Cain (4-2, 2-2)** hosts **Klein Oak (2-4, 2-2)** on Friday, October 16 at 7 PM at Klein Memorial Stadium. The Panthers just hung **59** on Klein Forest in a 59-3 Friday night rout, and they arrive with momentum. On3's projection has Cain **40-24** with a **76%** win probability. With four games left and Klein and Collins separating at the top of **District 15-6A**, Cain needs this one to stay in the thick of the playoff race. *The bounce-back starts at home.*\n\nThe district table tells the story. **Klein (5-0)** and **Klein Collins (4-1)** sit at the top, Tomball is third at **3-1**, and Magnolia holds the fourth and final playoff spot at **3-2**. Cain and Oak are tied right behind at **2-2**, so Friday's winner moves to **3-2**, takes the head-to-head edge, and jumps into the playoff pack. The top four advance, and Cain's road stays in its own hands: Magnolia, the team in fourth, comes to Klein Memorial on October 29. And if Cain gets in, it goes **Division I**: at **3,784** students Cain is the largest school in the district, and the two largest qualifiers play in Division I.",
       "facts": [
         {
           "label": "Cain",
@@ -282,7 +282,11 @@
         },
         {
           "label": "The stakes",
-          "value": "Cain win: 3-2 district, in the playoff pack · Oak win: 3-2 district, tiebreaker over Cain"
+          "value": "Both 2-2, tied behind Magnolia (3-2) for the final playoff spot · Winner to 3-2 with the head-to-head edge"
+        },
+        {
+          "label": "Playoff path",
+          "value": "Top 4 advance · A playoff-bound Cain team plays Division I as the district's largest school (3,784)"
         },
         {
           "label": "Head coaches",
@@ -360,8 +364,12 @@
       "href": "https://www.davecampbells.com/articles/2026/10/08/three-from-thursday-eaton-klein-cy-ranch"
     },
     {
-      "label": "MaxPreps: District 15-6A standings",
+      "label": "MaxPreps: District 15-6A standings (checked Oct 12, 2026)",
       "href": "https://www.maxpreps.com/tx/football/26-27/district/6a-region-ii-district-15/?leagueid=af5271e6-8bb8-4df8-a493-0a3f59161a00"
+    },
+    {
+      "label": "UIL: 2026-2028 realignment enrollments (Klein Cain 3,784, largest in District 15-6A)",
+      "href": "https://realignment.uiltexas.org/alignments/2026/26-28_Rank.pdf"
     }
   ],
   "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
