@@ -18,6 +18,9 @@ const OVERRIDES = {
   // #13: MaxPreps has no position or class. Class of 2029 (freshman)
   // confirmed by Steven Miori 2026-09-23. Position still unknown.
   13: { class: 'Fr.' },
+  // #45: MaxPreps has the name reversed as "Lovell Christian". Correct
+  // name is Christian Lovell, confirmed by Steven Miori 2026-10-12.
+  45: { name: 'Christian Lovell', image: '/players/christian-lovell.jpg' },
 };
 
 const normalize = (value) => String(value).toLowerCase().replace(/[^a-z0-9]/g, '');
