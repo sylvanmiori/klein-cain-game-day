@@ -13,8 +13,9 @@ const USER_AGENT = 'kleincain.gameday.report (contact: SylvanMiori@gmail.com)';
  */
 const OVERRIDES = {
   // #8: MaxPreps has no position or class. WR per game stats and photo
-  // captions; Jr. confirmed by Steven Miori 2026-09-23.
-  8: { position: 'WR', class: 'Jr.' },
+  // captions. Class is So. (sophomore), corrected by Steven Miori
+  // 2026-10-13; an earlier Jr. note (2026-09-23) was wrong.
+  8: { position: 'WR', class: 'So.' },
   // #13: MaxPreps has no position or class. Class of 2029 (freshman)
   // confirmed by Steven Miori 2026-09-23. Position still unknown.
   13: { class: 'Fr.' },
