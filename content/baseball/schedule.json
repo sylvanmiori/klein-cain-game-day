@@ -285,10 +285,10 @@
           "field": "Field 7",
           "venue": "Premier Baseball of Texas",
           "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1584457",
-          "result": null,
-          "result_status": null,
-          "runs_for": null,
-          "runs_against": null
+          "result": "W 7-5",
+          "result_status": "Final",
+          "runs_for": 7,
+          "runs_against": 5
         },
         {
           "date": "2026-09-26",
@@ -301,10 +301,10 @@
           "field": "Field 7",
           "venue": "Premier Baseball of Texas",
           "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1584458",
-          "result": null,
-          "result_status": null,
-          "runs_for": null,
-          "runs_against": null
+          "result": "L 3-4",
+          "result_status": "Final",
+          "runs_for": 3,
+          "runs_against": 4
         },
         {
           "date": "2026-09-27",
@@ -593,6 +593,30 @@
           "visitor": "PTX Reserves 2030 - Towles",
           "visitor_runs": 5,
           "home": "AD BASEBALL 15U GOLD",
+          "home_runs": 3,
+          "venue": "Premier Baseball of Texas",
+          "field": "Field 7"
+        },
+        {
+          "game_id": "1584457",
+          "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1584457",
+          "status": "Final",
+          "datetime": "3:00 PM",
+          "visitor": "4:13 Baseball",
+          "visitor_runs": 7,
+          "home": "TSB",
+          "home_runs": 5,
+          "venue": "Premier Baseball of Texas",
+          "field": "Field 7"
+        },
+        {
+          "game_id": "1584458",
+          "diamondkast_url": "https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1584458",
+          "status": "Final",
+          "datetime": "5:20 PM",
+          "visitor": "15U OFFSEASON BASEBALL - WILLIAMS",
+          "visitor_runs": 4,
+          "home": "4:13 Baseball",
           "home_runs": 3,
           "venue": "Premier Baseball of Texas",
           "field": "Field 7"

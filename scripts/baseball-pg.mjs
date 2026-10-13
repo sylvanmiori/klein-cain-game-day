@@ -582,10 +582,13 @@ function applyResults(tournaments, eventCaptures, teamName) {
       if (!isVisitor && !isHome) continue; // never guess which side is ours
       const runsFor = isVisitor ? sb.visitor_runs : sb.home_runs;
       const runsAgainst = isVisitor ? sb.home_runs : sb.visitor_runs;
+      const hasFinalScores = sb.status === 'Final' && runsFor !== null && runsAgainst !== null;
+      // PG often keeps scoreboard rows after finals but with null runs; never downgrade a checked-in final.
+      if (game.result && game.result_status === 'Final' && !hasFinalScores) continue;
       game.result_status = sb.status;
       game.runs_for = runsFor;
       game.runs_against = runsAgainst;
-      if (sb.status === 'Final' && runsFor !== null && runsAgainst !== null) {
+      if (hasFinalScores) {
         const outcome = runsFor > runsAgainst ? 'W' : runsFor < runsAgainst ? 'L' : 'T';
         game.result = `${outcome} ${runsFor}-${runsAgainst}`;
       }
@@ -675,13 +678,14 @@ async function main() {
     await wait(FETCH_GAP_MS);
   }
   mergeScoreboardGames(tournaments, captures, team.name, notes);
-  applyResults(tournaments, captures.map((c) => c.event).filter(Boolean), team.name);
   let previous = null;
   try {
     previous = JSON.parse(readFileSync(OUT_PATH, 'utf8'));
   } catch {
     // No previous schedule (first run): nothing to carry forward.
   }
+  carryForwardFinals(tournaments, previous, notes);
+  applyResults(tournaments, captures.map((c) => c.event).filter(Boolean), team.name);
   carryForwardFinals(tournaments, previous, notes);
   carryForwardBracketScheduleGames(tournaments, previous, notes);
 
@@ -718,4 +722,4 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   main();
 }
 
-export { parseTournaments, parseTournament, parseTeam, parseRoster, parseGame, mergeScoreboardGames, carryForwardFinals, carryForwardBracketScheduleGames };
+export { parseTournaments, parseTournament, parseTeam, parseRoster, parseGame, mergeScoreboardGames, applyResults, carryForwardFinals, carryForwardBracketScheduleGames };
