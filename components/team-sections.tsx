@@ -4,8 +4,9 @@ import { type Edition, apDate, groupedLeaders } from '../lib/edition';
 import { sitePath } from '../lib/site-path';
 
 /**
- * Season totals for the covered school. Shared by the team page and the final
- * view of a game, and never presented as one game's box score.
+ * Season totals for the covered school. Shared by the team page, the final
+ * view of a game, and game previews (which fall back to the latest edition
+ * carrying a stats capture), and never presented as one game's box score.
  */
 export function SeasonStats({ edition, note }: { edition: Edition; note?: string }) {
   const stats = edition.stats;

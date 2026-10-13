@@ -25,6 +25,7 @@ import {
   apDate,
   editionPath,
   editions,
+  latestEditionWithStats,
   opponentOf,
   predictionFact,
   statePollFact,
@@ -356,6 +357,10 @@ export function EditionPage({ edition }: { edition: Edition }) {
   const { preview, final } = edition;
   const opponent = opponentOf(edition, publication.schoolName);
   const matchup = coachingMatchup(opponent.name, opponent.mascot);
+  // A preview edition has no stats capture of its own until the game is
+  // played, so its season leaders fall back to the latest edition that has
+  // one, the same fallback the team page uses.
+  const statsEdition = edition.stats ? edition : latestEditionWithStats();
   const home = sitePath('/');
   const rosterHash = sitePath('/#roster-heading');
   const nextFact = nextGameFact(edition);
@@ -388,13 +393,13 @@ export function EditionPage({ edition }: { edition: Edition }) {
       <GameReportTabs
         initialStatus={edition.current ? (liveScore as LiveScore).status : 'final'}
         finalView={<><FinalView final={final} gameStats={edition.gameStats} matchup={matchup} gallery={galleryForSlug(edition.slug)} /><SeasonStats edition={edition} /></>}
-        previewView={<PreviewView edition={edition} preview={preview} />}
+        previewView={<><PreviewView edition={edition} preview={preview} />{statsEdition && <SeasonStats edition={statsEdition} />}</>}
       />
     )
     : final
       ? <><FinalView final={final} gameStats={edition.gameStats} matchup={matchup} gallery={galleryForSlug(edition.slug)} /><SeasonStats edition={edition} /></>
       : preview
-        ? <PreviewView edition={edition} preview={preview} />
+        ? <><PreviewView edition={edition} preview={preview} />{statsEdition && <SeasonStats edition={statsEdition} />}</>
         : null;
 
   return (
@@ -406,6 +411,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
         </a>
         <nav aria-label="Site navigation">
           {preview && preview.players.length > 0 && <a href="#players">Players</a>}
+          {preview && !final && statsEdition && <a href="#stats">Stats</a>}
           {matchup && <a href="#coaching">Coaches</a>}
           {final && !(preview && preview.players.length > 0) && <a href="#final">Recap</a>}
           {galleryForSlug(edition.slug) && <a href="#photos">Photos</a>}
