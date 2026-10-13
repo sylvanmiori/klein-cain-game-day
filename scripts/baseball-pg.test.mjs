@@ -199,7 +199,58 @@ describe('mergeScoreboardGames (event scoreboard ahead of team grid)', () => {
   });
 });
 
-import { carryForwardBracketScheduleGames, carryForwardFinals } from './baseball-pg.mjs';
+import { applyResults, carryForwardBracketScheduleGames, carryForwardFinals } from './baseball-pg.mjs';
+
+describe('Backyard Brawl pool finals (2026-09-26 regression)', () => {
+  const dk = (id) => `https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=${id}`;
+  const emptyScoreboardTile = (id, visitor, home) => ({
+    game_id: id,
+    diamondkast_url: dk(id),
+    status: null,
+    datetime: null,
+    visitor,
+    visitor_runs: null,
+    home,
+    home_runs: null,
+    venue: 'Premier Baseball of Texas',
+    field: 'Field 7',
+  });
+
+  it('keeps Sep 26 pool finals when PG scoreboard tiles have null runs', () => {
+    const tournaments = [{
+      event_id: '140434',
+      games: [
+        { date: '2026-09-26', opponent: 'TSB', home_away: '@', diamondkast_url: dk('1584457'), result: null },
+        { date: '2026-09-26', opponent: '15U OFFSEASON BASEBALL - WILLIAMS', home_away: 'vs', diamondkast_url: dk('1584458'), result: null },
+        { date: '2026-09-27', opponent: 'Den Guys 15u', diamondkast_url: dk('1584583'), result: 'L 0-7', result_status: 'Final', runs_for: 0, runs_against: 7 },
+      ],
+    }];
+    const previous = {
+      tournaments: [{
+        event_id: '140434',
+        games: [
+          { date: '2026-09-26', opponent: 'TSB', diamondkast_url: dk('1584457'), result: 'W 7-5', result_status: 'Final', runs_for: 7, runs_against: 5 },
+          { date: '2026-09-26', opponent: '15U OFFSEASON BASEBALL - WILLIAMS', diamondkast_url: dk('1584458'), result: 'L 3-4', result_status: 'Final', runs_for: 3, runs_against: 4 },
+          { date: '2026-09-27', opponent: 'Den Guys 15u', diamondkast_url: dk('1584583'), result: 'L 0-7', result_status: 'Final', runs_for: 0, runs_against: 7 },
+        ],
+      }],
+    };
+    const captures = [{
+      scoreboard: [
+        emptyScoreboardTile('1584457', '4:13 Baseball', 'TSB'),
+        emptyScoreboardTile('1584458', '15U OFFSEASON BASEBALL - WILLIAMS', '4:13 Baseball'),
+      ],
+    }];
+    const notes = [];
+    carryForwardFinals(tournaments, previous, notes);
+    applyResults(tournaments, captures, '4:13 Baseball');
+    carryForwardFinals(tournaments, previous, notes);
+    const g = tournaments[0].games;
+    assert.equal(g[0].result, 'W 7-5');
+    assert.equal(g[1].result, 'L 3-4');
+    assert.equal(g[2].result, 'L 0-7');
+  });
+});
 
 describe('Sunday pull (2026-10-11 regression)', () => {
   const dk = (id) => `https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=${id}`;
