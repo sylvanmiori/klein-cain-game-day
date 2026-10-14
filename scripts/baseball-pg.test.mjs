@@ -199,7 +199,14 @@ describe('mergeScoreboardGames (event scoreboard ahead of team grid)', () => {
   });
 });
 
-import { applyResults, carryForwardBracketScheduleGames, carryForwardFinals } from './baseball-pg.mjs';
+import {
+  applyResults,
+  assertScheduleResultsConsistent,
+  carryForwardBracketScheduleGames,
+  carryForwardFinals,
+  ensureResultMatchesRuns,
+  formatResultFromRuns,
+} from './baseball-pg.mjs';
 
 describe('Backyard Brawl pool finals (2026-09-26 regression)', () => {
   const dk = (id) => `https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=${id}`;
@@ -286,11 +293,44 @@ describe('Sunday pull (2026-10-11 regression)', () => {
     carryForwardFinals(tournaments, previous, notes);
     const g = tournaments[0].games;
     assert.deepEqual(g.map((x) => [x.date, x.time, x.result]), [
-      ['2026-10-10', '8:00 AM', 'L 15-3'],
+      ['2026-10-10', '8:00 AM', 'L 3-15'],
       ['2026-10-10', '12:40 PM', 'T 2-2'],
       ['2026-10-11', '12:40 PM', null],
     ]);
     assert.equal(notes.length, 1);
+  });
+});
+
+describe('formatResultFromRuns / result consistency', () => {
+  it('formats team-first W/L/T from runs_for and runs_against', () => {
+    assert.equal(formatResultFromRuns(7, 5), 'W 7-5');
+    assert.equal(formatResultFromRuns(3, 15), 'L 3-15');
+    assert.equal(formatResultFromRuns(2, 2), 'T 2-2');
+  });
+
+  it('assertScheduleResultsConsistent throws when result disagrees with runs', () => {
+    const tournaments = [{
+      games: [{
+        date: '2026-10-10',
+        opponent: 'X',
+        result: 'L 15-3',
+        runs_for: 3,
+        runs_against: 15,
+      }],
+    }];
+    assert.throws(() => assertScheduleResultsConsistent(tournaments), /disagrees with runs_for/);
+  });
+
+  it('ensureResultMatchesRuns repairs visitor-home result strings on carry-forward', () => {
+    const game = {
+      result: 'L 15-3',
+      result_status: 'Final',
+      runs_for: 3,
+      runs_against: 15,
+    };
+    ensureResultMatchesRuns(game);
+    assert.equal(game.result, 'L 3-15');
+    assert.doesNotThrow(() => assertScheduleResultsConsistent([{ games: [game] }]));
   });
 });
 

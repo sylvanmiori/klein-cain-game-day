@@ -155,7 +155,7 @@ describe('bracket finals for schedule rows', () => {
         tournamentId: TOURNAMENT_ID,
         venue: 'Schiel Road Park',
         field: 'Field 4',
-        result: 'L 15-3',
+        result: 'L 3-15',
         diamondkastUrl:
           'https://www.perfectgame.org/DiamondKast/Game.aspx?gameid=1596980',
       },
