@@ -164,9 +164,9 @@
         "name": "Andre Phillip II",
         "image": "/players/andre-phillip-ii.jpg",
         "role": "QB · Senior",
-        "tag": "98.7 rushing yards per game",
+        "tag": "95.7 rushing yards per game",
         "rating": "6 passing TDs · 3 rushing TDs",
-        "copy": "Phillip is the dual-threat engine: MaxPreps has the senior at **98.7** rushing yards a game with **six** passing touchdowns and **three** rushing scores. Cain's ends and linebackers have to keep him in the pocket; when he gets loose, Oak's offense hums. He has been committed to **West Virginia** since May."
+        "copy": "Phillip is the dual-threat engine: MaxPreps has the senior at **95.7** rushing yards a game with **six** passing touchdowns and **three** rushing scores. Cain's ends and linebackers have to keep him in the pocket; when he gets loose, Oak's offense hums. He has been committed to **West Virginia** since May."
       },
       {
         "team": "KLEIN OAK",
@@ -174,9 +174,9 @@
         "name": "Antonio Dural",
         "image": "/player-placeholder.svg",
         "role": "ATH / RB · Junior",
-        "tag": "106.3 rushing yards per game",
-        "rating": "3 total TDs",
-        "copy": "Dural leads Oak's ground game at **106.3** rushing yards a game per MaxPreps with **three** total touchdowns. Pair him with Rhodes and the Panthers can attack both edges; fitting the run is job one Friday."
+        "tag": "65.0 rushing yards per game",
+        "rating": "4 total TDs",
+        "copy": "Dural is Oak's No. 2 rusher behind Rhodes at **65.0** rushing yards a game per MaxPreps, with **four** rushing touchdowns. Pair him with Rhodes and the Panthers can attack both edges; fitting the run is job one Friday."
       },
       {
         "team": "KLEIN OAK",
@@ -184,9 +184,9 @@
         "name": "Carson Varro",
         "image": "/player-placeholder.svg",
         "role": "WR · Senior",
-        "tag": "67.7 receiving yards per game",
+        "tag": "45.0 receiving yards per game",
         "rating": "4 receiving TDs",
-        "copy": "Varro is the top target outside: **67.7** receiving yards a game and **four** touchdown catches per MaxPreps. If Cain loads the box against the run, Phillip will look his way first."
+        "copy": "Varro is the top target outside: **45.0** receiving yards a game and **four** touchdown catches per MaxPreps. If Cain loads the box against the run, Phillip will look his way first."
       },
       {
         "team": "KLEIN OAK",
@@ -194,9 +194,9 @@
         "name": "Zack Ruysenaars",
         "image": "/player-placeholder.svg",
         "role": "MLB / OLB · Senior",
-        "tag": "9.7 tackles per game",
-        "rating": "2.0 sacks",
-        "copy": "Ruysenaars is the heart of the Oak defense at **9.7** tackles a game with **two** sacks per MaxPreps. Cain's line has to find him before Johnson does."
+        "tag": "11.0 tackles per game",
+        "rating": "4.0 sacks",
+        "copy": "Ruysenaars is the heart of the Oak defense at **11.0** tackles a game with **four** sacks per MaxPreps. Cain's line has to find him before Johnson does."
       }
     ],
     "playerStatsAudit": {
