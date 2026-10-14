@@ -47,32 +47,22 @@ async function readScore(env, slug) {
  * usable. The file lives at live-data/manual-<slug>.json.
  */
 async function readManualScore(slug) {
-  // Fetch every mirror and keep the newest updatedAt. jsDelivr is usually
-  // fresher than raw.githubusercontent.com, but a purge can leave it empty
-  // (HTTP 200 / 1-byte) and GitHub raw can lag — first-success break then
-  // left KV stuck behind a stale tip on 2026-10-01.
-  const urls = [
-    `https://cdn.jsdelivr.net/gh/sylvanmiori/klein-cain-game-day@live-data/manual-${slug}.json?t=${Date.now()}`,
-    `https://raw.githubusercontent.com/sylvanmiori/klein-cain-game-day/live-data/manual-${slug}.json?t=${Date.now()}`,
-  ];
+  // jsDelivr tracks the live-data branch tip; cache-bust on every read.
+  // Never use raw.githubusercontent.com here: its CDN ignores cache-busters and
+  // has served a stale manual file with the same updatedAt as KV, which made
+  // the cron fallback think there was nothing newer to apply (seen 2026-10-01).
+  const url = `https://cdn.jsdelivr.net/gh/sylvanmiori/klein-cain-game-day@live-data/manual-${slug}.json?t=${Date.now()}`;
   let data = null;
-  let bestTs = -1;
-  for (const url of urls) {
-    try {
-      const res = await fetch(url, { cf: { cacheTtl: 0 } });
-      if (!res.ok) continue;
+  try {
+    const res = await fetch(url, { cf: { cacheTtl: 0 } });
+    if (res.ok) {
       const text = await res.text();
-      if (!text || text.trim().length < 2 || text.trimStart().startsWith('<')) continue;
-      const candidate = JSON.parse(text);
-      const ts = Date.parse(candidate?.updatedAt || 0);
-      if (!Number.isFinite(ts)) continue;
-      if (ts >= bestTs) {
-        bestTs = ts;
-        data = candidate;
+      if (text && text.trim().length >= 2 && !text.trimStart().startsWith('<')) {
+        data = JSON.parse(text);
       }
-    } catch {
-      // Try the next mirror.
     }
+  } catch {
+    // No manual file available.
   }
   if (!data) return null;
   if (!data || data.schemaVersion !== 1 || data.slug !== slug) return null;
@@ -101,6 +91,39 @@ export function scoreIsStale(score, now = Date.now()) {
   if (!score || score.status !== 'live') return false;
   const updated = Date.parse(score.updatedAt);
   return Number.isFinite(updated) && now - updated > STALE_AFTER_MS;
+}
+
+/** When to promote a live-data manual file over KV (cron or /api/score). */
+export function shouldApplyManual(previous, manual) {
+  if (!manual) return false;
+  const manualUpdated = Date.parse(manual.updatedAt || 0);
+  if (!Number.isFinite(manualUpdated)) return false;
+  if (!previous) return true;
+  const prevUpdated = Date.parse(previous.updatedAt || 0);
+  if (manualUpdated > prevUpdated) return true;
+  const scoresDiffer = previous.homeScore !== manual.homeScore
+    || previous.awayScore !== manual.awayScore;
+  // Stale live KV with matching timestamp but wrong totals (stale CDN mirror).
+  if (scoresDiffer && previous.status === 'live' && scoreIsStale(previous)) return true;
+  return false;
+}
+
+async function resolveScoreForSlug(env, slug) {
+  const stored = await readScore(env, slug);
+  try {
+    const manual = await readManualScore(slug);
+    if (manual && shouldApplyManual(stored, manual)) {
+      try {
+        await env.SCORES.put(keyFor(slug), JSON.stringify(manual));
+      } catch {
+        // Best-effort KV sync; still return manual for this response.
+      }
+      return manual;
+    }
+  } catch {
+    // Keep the stored score.
+  }
+  return stored;
 }
 
 /** Heartbeat cadence for successful ingests; failures and recoveries always record. */
@@ -742,7 +765,7 @@ const worker = {
       const slug = url.searchParams.get('game') || snapshot.slug;
       if (!schedule.some(game => gameSlug(game) === slug)) return json({ error: 'Game not found' }, 404);
       try {
-        const score = await readScore(env, slug);
+        const score = await resolveScoreForSlug(env, slug);
         if (!score) return json({ error: 'Score not available yet' }, 404);
         // `stale` lets the frontend and any watcher see a frozen feed instead
         // of silently serving an old live score as current.
@@ -794,9 +817,12 @@ const worker = {
       }
       const slug = gameSlug(game);
       const previous = await readScore(env, slug);
+      const statusLabel = typeof input.statusLabel === 'string' && input.statusLabel.trim()
+        ? input.statusLabel.trim()
+        : (input.status === 'final' ? 'Final' : 'Live');
       const score = {
         schemaVersion: 1, slug, status: input.status,
-        statusLabel: input.status === 'final' ? 'Final' : 'Live',
+        statusLabel,
         homeScore: input.homeScore, awayScore: input.awayScore,
         homeRecord: previous?.homeRecord || '', awayRecord: previous?.awayRecord || '',
         updatedAt: new Date().toISOString(), source: 'Manual correction',
@@ -1434,8 +1460,7 @@ const worker = {
       // recovered feed takes over again automatically.
       try {
         const manual = await readManualScore(slug);
-        const prevUpdated = Date.parse(previous?.updatedAt || 0);
-        if (manual && Date.parse(manual.updatedAt) > prevUpdated) {
+        if (manual && shouldApplyManual(previous, manual)) {
           await env.SCORES.put(keyFor(slug), JSON.stringify(manual));
           await recordIngestAttempt(env, slug, true, manual.updatedAt);
           return;

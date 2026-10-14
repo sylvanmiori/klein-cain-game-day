@@ -15,11 +15,9 @@
 //   node scripts/push-manual-score.mjs --slug 2026-10-01-klein-collins \
 //     --status postponed --home 14 --away 7 --label "Postponed · Resumes Sat 10 AM"
 //
-// Requires the github skill's ghapi.py for authenticated GitHub API access.
+// Requires `gh` with a token that can push to the live-data branch.
 
 import { execFileSync } from 'node:child_process';
-
-const GHAPI = '/home/hatch/workspace/skills/github/bin/ghapi.py';
 const REPO = 'sylvanmiori/klein-cain-game-day';
 const BRANCH = 'live-data';
 
@@ -30,10 +28,12 @@ function arg(name, def = null) {
 }
 
 function api(method, path, data) {
-  const args = [method, `/repos/${REPO}${path}`];
-  if (data !== undefined) args.push('--data', JSON.stringify(data));
-  const out = execFileSync(GHAPI, args, { encoding: 'utf8', maxBuffer: 10 * 1024 * 1024 });
-  return JSON.parse(out);
+  const args = ['api', '-X', method, `repos/${REPO}${path}`];
+  const opts = { encoding: 'utf8', maxBuffer: 10 * 1024 * 1024 };
+  const out = data === undefined
+    ? execFileSync('gh', args, opts)
+    : execFileSync('gh', [...args, '--input', '-'], { ...opts, input: JSON.stringify(data) });
+  return out ? JSON.parse(out) : {};
 }
 
 const slug = arg('slug');
