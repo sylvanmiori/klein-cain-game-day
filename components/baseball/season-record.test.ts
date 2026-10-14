@@ -46,7 +46,7 @@ const octGames: ScheduleGame[] = [
     opponent: '15U OFFSEASON BASEBALL - WESTBROOKS',
     homeAway: 'home',
     tournamentId: OCT_ID,
-    result: 'L 15-3',
+    result: 'L 3-15',
   },
   {
     id: 'oct-scorp',

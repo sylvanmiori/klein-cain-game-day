@@ -487,6 +487,43 @@ function clampDate(day, start, end) {
 
 const dkGameId = (game) => /gameid=(\d+)/.exec(game?.diamondkast_url ?? '')?.[1] ?? null;
 
+/** Team-first result chip: W/L/T with 4:13 runs before opponent runs. */
+function formatResultFromRuns(runsFor, runsAgainst) {
+  if (typeof runsFor !== 'number' || typeof runsAgainst !== 'number') return null;
+  const outcome = runsFor > runsAgainst ? 'W' : runsFor < runsAgainst ? 'L' : 'T';
+  return `${outcome} ${runsFor}-${runsAgainst}`;
+}
+
+/** Rebuild `result` from numeric runs whenever a final (or scored) row carries both. */
+function ensureResultMatchesRuns(game) {
+  const built = formatResultFromRuns(game.runs_for, game.runs_against);
+  if (!built) return;
+  if (game.result_status === 'Final' || game.result) game.result = built;
+}
+
+function assertScheduleResultsConsistent(tournaments) {
+  for (const tournament of tournaments) {
+    for (const game of tournament.games ?? []) {
+      if (typeof game.runs_for !== 'number' || typeof game.runs_against !== 'number') continue;
+      if (!game.result) continue;
+      const expected = formatResultFromRuns(game.runs_for, game.runs_against);
+      if (expected && game.result !== expected) {
+        throw new Error(
+          `Result "${game.result}" disagrees with runs_for ${game.runs_for} / runs_against ${game.runs_against} ` +
+          `(expected "${expected}") for vs ${game.opponent} on ${game.date}`,
+        );
+      }
+    }
+  }
+}
+
+function normalizeScheduleResults(tournaments) {
+  for (const tournament of tournaments) {
+    for (const game of tournament.games ?? []) ensureResultMatchesRuns(game);
+  }
+  assertScheduleResultsConsistent(tournaments);
+}
+
 /**
  * PG drops a day's tiles from the event scoreboard once the next day starts,
  * and the team grid can lag, so a Sunday pull no longer sees Saturday's
@@ -508,13 +545,16 @@ function carryForwardFinals(tournaments, previous, notes) {
       if (!id) continue;
       const current = byId.get(id);
       if (!current) {
-        tournament.games.push({ ...old });
-        notes.push(`Kept final ${old.result} vs ${old.opponent} (${old.date}) from the previous schedule; PG no longer lists it.`);
+        const carried = { ...old };
+        ensureResultMatchesRuns(carried);
+        tournament.games.push(carried);
+        notes.push(`Kept final ${carried.result} vs ${old.opponent} (${old.date}) from the previous schedule; PG no longer lists it.`);
       } else if (!current.result) {
         current.result = old.result;
         current.result_status = old.result_status;
         current.runs_for = old.runs_for;
         current.runs_against = old.runs_against;
+        ensureResultMatchesRuns(current);
       }
     }
     tournament.games.sort((a, b) =>
@@ -541,15 +581,18 @@ function carryForwardBracketScheduleGames(tournaments, previous, notes) {
       const current = byId.get(id);
       if (old.result) {
         if (!current) {
-          tournament.games.push({ ...old });
+          const carried = { ...old };
+          ensureResultMatchesRuns(carried);
+          tournament.games.push(carried);
           notes.push(
-            `Kept bracket final ${old.result} vs ${old.opponent} (${old.date}) from the previous schedule; PG team page no longer lists it.`,
+            `Kept bracket final ${carried.result} vs ${old.opponent} (${old.date}) from the previous schedule; PG team page no longer lists it.`,
           );
         } else if (!current.result) {
           current.result = old.result;
           current.result_status = old.result_status;
           current.runs_for = old.runs_for;
           current.runs_against = old.runs_against;
+          ensureResultMatchesRuns(current);
         }
         continue;
       }
@@ -589,8 +632,7 @@ function applyResults(tournaments, eventCaptures, teamName) {
       game.runs_for = runsFor;
       game.runs_against = runsAgainst;
       if (hasFinalScores) {
-        const outcome = runsFor > runsAgainst ? 'W' : runsFor < runsAgainst ? 'L' : 'T';
-        game.result = `${outcome} ${runsFor}-${runsAgainst}`;
+        game.result = formatResultFromRuns(runsFor, runsAgainst);
       }
     }
   }
@@ -688,6 +730,7 @@ async function main() {
   applyResults(tournaments, captures.map((c) => c.event).filter(Boolean), team.name);
   carryForwardFinals(tournaments, previous, notes);
   carryForwardBracketScheduleGames(tournaments, previous, notes);
+  normalizeScheduleResults(tournaments);
 
   const scrapedAt = new Date().toISOString();
   const snapshotDate = chicagoDate();
@@ -722,4 +765,18 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   main();
 }
 
-export { parseTournaments, parseTournament, parseTeam, parseRoster, parseGame, mergeScoreboardGames, applyResults, carryForwardFinals, carryForwardBracketScheduleGames };
+export {
+  parseTournaments,
+  parseTournament,
+  parseTeam,
+  parseRoster,
+  parseGame,
+  mergeScoreboardGames,
+  applyResults,
+  carryForwardFinals,
+  carryForwardBracketScheduleGames,
+  formatResultFromRuns,
+  ensureResultMatchesRuns,
+  assertScheduleResultsConsistent,
+  normalizeScheduleResults,
+};
