@@ -115,7 +115,7 @@ export function PreviewView({ edition, preview }: { edition: Edition; preview: P
               </a>
             </div>
           ))}
-          {preview.recruiting.note && <p className="fineprint">{preview.recruiting.note}</p>}
+          {preview.recruiting.note && <p className="fineprint">{renderInlineMarkup(preview.recruiting.note)}</p>}
         </section>
       )}
 
