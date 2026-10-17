@@ -47,22 +47,32 @@ async function readScore(env, slug) {
  * usable. The file lives at live-data/manual-<slug>.json.
  */
 async function readManualScore(slug) {
-  // jsDelivr tracks the live-data branch tip; cache-bust on every read.
-  // Never use raw.githubusercontent.com here: its CDN ignores cache-busters and
-  // has served a stale manual file with the same updatedAt as KV, which made
-  // the cron fallback think there was nothing newer to apply (seen 2026-10-01).
-  const url = `https://cdn.jsdelivr.net/gh/sylvanmiori/klein-cain-game-day@live-data/manual-${slug}.json?t=${Date.now()}`;
+  // Read the manual file from several GitHub mirrors and keep the copy with
+  // the newest updatedAt. A single CDN can wedge on a stale branch snapshot:
+  // jsDelivr served a 20+ minute old manual file on 2026-10-16 (and kept
+  // serving it after the file was deleted), while raw.githubusercontent.com
+  // was current; on 2026-10-01 the reverse happened (raw stale, same
+  // updatedAt as KV). Newest-wins across mirrors survives either one wedging.
+  const bust = Date.now();
+  const urls = [
+    `https://cdn.jsdelivr.net/gh/sylvanmiori/klein-cain-game-day@live-data/manual-${slug}.json?t=${bust}`,
+    `https://raw.githubusercontent.com/sylvanmiori/klein-cain-game-day/live-data/manual-${slug}.json?t=${bust}`,
+    `https://cdn.statically.io/gh/sylvanmiori/klein-cain-game-day/live-data/manual-${slug}.json?t=${bust}`,
+  ];
   let data = null;
-  try {
-    const res = await fetch(url, { cf: { cacheTtl: 0 } });
-    if (res.ok) {
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, { cf: { cacheTtl: 0 } });
+      if (!res.ok) continue;
       const text = await res.text();
-      if (text && text.trim().length >= 2 && !text.trimStart().startsWith('<')) {
-        data = JSON.parse(text);
+      if (!text || text.trim().length < 2 || text.trimStart().startsWith('<')) continue;
+      const parsed = JSON.parse(text);
+      if (!data || Date.parse(parsed?.updatedAt || 0) > Date.parse(data?.updatedAt || 0)) {
+        data = parsed;
       }
+    } catch {
+      // Mirror unavailable; the others may still answer.
     }
-  } catch {
-    // No manual file available.
   }
   if (!data) return null;
   if (!data || data.schemaVersion !== 1 || data.slug !== slug) return null;
@@ -1431,6 +1441,10 @@ const worker = {
     if (!game) return;
     const slug = gameSlug(game);
     const previous = await readScore(env, slug);
+    // An authorized /api/score/override write sets manualUntil; while it is
+    // active it outranks the file-based override below (which can lag behind
+    // a wedged CDN mirror).
+    if (previous?.manualUntil > Date.now()) return;
     // Editor override: a fresh manual file on the live-data branch wins over
     // the upstream feed even when the feed is healthy. The old
     // fallback-only-when-upstream-fails logic let a wrong-but-healthy feed
@@ -1445,7 +1459,7 @@ const worker = {
     } catch {
       // Fall through to the normal ingest path.
     }
-    if (previous?.status === 'final' || previous?.manualUntil > Date.now()) return;
+    if (previous?.status === 'final') return;
     // A failed attempt keeps the previous (last good) value in KV, records the
     // failure for watchers, and rethrows so the invocation still shows as
     // failed in the Cloudflare dashboard. Nothing fails silently.
