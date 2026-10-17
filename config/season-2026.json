@@ -64,6 +64,7 @@
     "location": "Klein, TX",
     "home": true,
     "kickoff": "7:00 PM",
+    "dctfGameId": "e878622d-d81d-4d62-9410-4c5a3c7c361c",
     "event": "Senior Night"
   },
   {
@@ -72,7 +73,8 @@
     "venue": "Tomball ISD Stadium",
     "location": "Tomball, TX",
     "home": false,
-    "kickoff": "7:00 PM"
+    "kickoff": "7:00 PM",
+    "dctfGameId": "aa4580a0-14db-4458-99a2-01de3c12bca0"
   },
   {
     "date": "2026-10-29",
@@ -80,7 +82,8 @@
     "venue": "Klein Memorial Stadium",
     "location": "Klein, TX",
     "home": true,
-    "kickoff": "7:00 PM"
+    "kickoff": "7:00 PM",
+    "dctfGameId": "7cbd978c-5a14-4143-bb67-35d67b8ef302"
   },
   {
     "date": "2026-11-06",
@@ -88,6 +91,7 @@
     "venue": "Klein Memorial Stadium",
     "location": "Klein, TX",
     "home": false,
-    "kickoff": "7:00 PM"
+    "kickoff": "7:00 PM",
+    "dctfGameId": "82f9ed19-9196-48b0-a229-b3c206e37d64"
   }
 ]
