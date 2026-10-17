@@ -3,32 +3,32 @@
   "slug": "2026-10-16-klein-oak",
   "week": 7,
   "issue": "06",
-  "state": "preview",
+  "state": "final",
   "date": "2026-10-16",
   "dateLong": "October 16, 2026",
   "dateShort": "OCT 16, 2026",
   "kickoff": "7:00 PM",
   "venue": "Klein Memorial Stadium",
   "event": "Senior Night",
-  "updated": "2026-10-16T12:50:00Z",
+  "updated": "2026-10-17T03:14:03Z",
   "home": {
     "name": "Klein Cain",
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
-    "record": "4–2",
+    "record": "4–3",
     "rank": 49
   },
   "away": {
     "name": "Klein Oak",
     "mascot": "Panthers",
     "logo": "/klein-oak-logo.png",
-    "record": "2–4",
+    "record": "3–4",
     "rank": 59
   },
-  "pageTitle": "2026 Week 7 Preview: Klein Oak at Klein Cain",
-  "metaTitle": "Week 7 Preview: Klein Oak at Klein Cain | Cain Game Day",
-  "metaDescription": "Klein Cain (4-2) hosts Klein Oak (2-4) on Friday, October 16, looking to snap a two-game skid and stay in the District 15-6A playoff race.",
-  "socialDescription": "Cain hosts Klein Oak on Oct. 16. Two straight losses are in the mirror; the playoff race is straight ahead.",
+  "pageTitle": "2026 Week 7 Final: Klein Oak at Klein Cain",
+  "metaTitle": "Week 7 Final: Klein Oak at Klein Cain | Cain Game Day",
+  "metaDescription": "Klein Oak beat Klein Cain 56-7 on October 16, 2026, building a 35-0 halftime lead without throwing a pass in the first half.",
+  "socialDescription": "Final: Klein Oak 56, Klein Cain 7. The Panthers scored five first-half touchdowns on Senior Night.",
   "ogImage": "",
   "prediction": {
     "margin": -1,
@@ -51,7 +51,13 @@
     "away": null
   },
   "stats": null,
-  "finalScore": null,
+  "finalScore": {
+    "home": 7,
+    "away": 56,
+    "source": "Klein Cain Gameday Report",
+    "sourceUrl": "https://kleincain.gameday.report/",
+    "asOf": "2026-10-17T03:14:03Z"
+  },
   "rating": {
     "home": 15.35,
     "away": 7.53,
@@ -62,14 +68,14 @@
     "asOf": "2026-09-29T16:47:33.146Z"
   },
   "weather": {
-    "tempF": 67,
+    "tempF": 65,
     "condition": "Partly Cloudy",
     "precipPct": 0,
-    "humidityPct": 32,
+    "humidityPct": 40,
     "wind": "20 mph N",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-10-16T18:34:06.896Z"
+    "asOf": "2026-10-16T07:47:42.288Z"
   },
   "scheduledFacts": [],
   "resultFacts": [],
@@ -337,7 +343,102 @@
       }
     ]
   },
-  "final": null,
+  "final": {
+    "headline": "Klein Oak runs over Cain 56-7 on Senior Night",
+    "byline": "Cain Game Day desk · Updated 10:35 PM CT",
+    "body": "Klein Oak did not throw a pass in the first half. It did not need to.\n\n**Klein Oak (3-4, 3-2)** scored on the ground, on a blocked punt, and on a fumble recovery in the end zone, building a **35-0** halftime lead on its way to a **56-7** win over **Klein Cain (4-3, 2-3)** Friday night at Klein Memorial Stadium. It was Cain's third straight loss, and Senior Night turned into a showcase for the Panthers' running game.\n\nCain's defense opened with a fourth-down stop at its own 25, but things unraveled quickly. The Hurricanes' second punt was blocked into the end zone and recovered by Oak for a **7-0** lead. Cain then muffed the ensuing kickoff, and the Panthers recovered. Sophomore quarterback **Bryce Evins (#6)** finished the short field with a keeper for the touchdown. Oak led **14-0** after one quarter without attempting a pass. Evins took every snap for Oak; senior **Andre Phillip II (#2)** has not played since September 11.\n\nThe second quarter was all Panthers. Oak's No. 3 back scored on a 33-yard end around on fourth-and-1, then broke a **45-yard** touchdown run without a Cain defender laying a hand on him. **Jackson Luark (#96)** recorded a tackle for loss, and Cain forced Oak's only punt of the half. But with 53 seconds left before halftime, **Jace Hanks (#9)** was sacked and lost the ball. Oak recovered in the end zone for its **fifth touchdown**.\n\nCain's best stretch came right after halftime. The defense forced a punt, with **Jaemin Gilstrap (#42)** and **Christian Redeo (#7)** in on the stops, and the offense finally got moving. **Eyan Johnson (#16)** ran for a first down, **Cooper Karns (#10)** picked up **17 yards** on a reverse, and two pass interference flags moved Cain to the Oak 10. Hanks found **Tyson Freeman (#17)** on the right side of the end zone, putting Cain on the board at **35-7**. Karns left the field during that drive after an injury timeout but walked off under his own power.\n\n**Micah Rhodes (#5)** made sure there would be no comeback. The Oak junior answered Cain's touchdown with a 1-yard score, then broke a **50-yard run** in the fourth quarter and scored from 12 yards out two plays later. Oak added one more late touchdown to make it **56-7**.\n\n**Micah Rhodes (#5)** gets the overall Player of the Game nod after leading an Oak rushing attack that controlled the night from the second quarter on. **Tyson Freeman (#17)** is Cain's Player of the Game, the senior catching the Hurricanes' only touchdown on their best drive of the night.\n\nElsewhere in the district, two big results shook up the standings. Tomball handed Klein its first loss, **30-20**, and Magnolia West stunned Klein Collins **18-15**.\n\nCain now sits sixth in **District 15-6A** at 2-3. The Hurricanes have three straight must-win games ahead: at Tomball Memorial on October 23, Magnolia at home on October 29, and at Klein Forest on November 6. And even winning all three won't be enough without some help from the teams ahead of them.",
+    "homeScore": 7,
+    "awayScore": 56,
+    "quarters": {
+      "labels": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "rows": [
+        {
+          "team": "Cain",
+          "scores": [
+            "0",
+            "0",
+            "7",
+            "0"
+          ],
+          "total": "7"
+        },
+        {
+          "team": "Klein Oak",
+          "scores": [
+            "14",
+            "21",
+            "7",
+            "14"
+          ],
+          "total": "56"
+        }
+      ]
+    },
+    "notes": [
+      {
+        "heading": "Special teams broke it open",
+        "paragraphs": [
+          "Two first-quarter mistakes put Cain in a hole it never climbed out of. A blocked punt recovered in the end zone opened the scoring, and a muffed kickoff gave Oak a short field for its second touchdown. Before Cain could get anything going offensively, the Hurricanes were down two scores to a team that didn’t need to throw the ball."
+        ]
+      },
+      {
+        "heading": "No passes needed",
+        "paragraphs": [
+          "Klein Oak didn’t attempt a single pass in the first half and still led 35-0. Between Micah Rhodes, the quarterback keepers from Bryce Evins, and two long touchdown runs by Oak’s No. 3 back, the Panthers’ rushing attack produced touchdowns in every quarter and controlled the clock all night."
+        ]
+      },
+      {
+        "heading": "One drive to build on",
+        "paragraphs": [
+          "Cain’s third-quarter touchdown drive was its most complete stretch of football in weeks. The defense forced a punt, Cooper Karns broke a 17-yard reverse, two pass interference flags moved the ball downfield, and Jace Hanks found Tyson Freeman for the touchdown. It cut the deficit to 35-7 and finally gave the home crowd something to cheer about on Senior Night."
+        ]
+      }
+    ],
+    "leaders": {
+      "heading": "Game leaders",
+      "source": "Klein Cain Gameday Report game notes (estimates)",
+      "items": [
+        {
+          "name": "Micah Rhodes",
+          "number": "5",
+          "role": "RB · Junior (Klein Oak)",
+          "image": "/players/micah-rhodes.jpg",
+          "stat": "2 rushing touchdowns",
+          "detail": "1-yard TD · 12-yard TD after a 50-yard run"
+        },
+        {
+          "name": "Bryce Evins",
+          "number": "6",
+          "role": "QB · Sophomore (Klein Oak)",
+          "image": "/player-placeholder.svg",
+          "stat": "1 rushing touchdown",
+          "detail": "Took every snap · Oak attempted no passes in the first half"
+        },
+        {
+          "name": "Tyson Freeman",
+          "number": "17",
+          "role": "WR · Senior (Cain)",
+          "image": "/players/tyson-freeman.jpg",
+          "stat": "1 receiving touchdown",
+          "detail": "Cain’s lone score, third quarter"
+        },
+        {
+          "name": "Jace Hanks",
+          "number": "9",
+          "role": "QB · Junior (Cain)",
+          "image": "/players/jace-hanks.jpg",
+          "stat": "1 TD pass",
+          "detail": "Lost fumble recovered by Oak for a touchdown"
+        }
+      ]
+    },
+    "video": null
+  },
   "sources": [
     {
       "label": "MaxPreps: Klein Oak Panthers stats (26-27)",

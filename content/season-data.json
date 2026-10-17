@@ -29,6 +29,11 @@
       "outcome": "L",
       "us": 14,
       "them": 37
+    },
+    "2026-10-16": {
+      "outcome": "L",
+      "us": 7,
+      "them": 56
     }
   },
   "records": {
@@ -48,20 +53,20 @@
     "rows": [
       {
         "team": "Klein Bearkats",
-        "district": "5–0",
-        "overall": "7–0",
-        "next": ""
-      },
-      {
-        "team": "Klein Collins Tigers",
-        "district": "4–1",
-        "overall": "5–2",
+        "district": "5–1",
+        "overall": "7–1",
         "next": ""
       },
       {
         "team": "Tomball Cougars",
-        "district": "3–1",
-        "overall": "5–1",
+        "district": "4–1",
+        "overall": "6–1",
+        "next": ""
+      },
+      {
+        "team": "Klein Collins Tigers",
+        "district": "4–2",
+        "overall": "5–3",
         "next": ""
       },
       {
@@ -72,14 +77,14 @@
       },
       {
         "team": "Klein Oak Panthers",
-        "district": "2–2",
-        "overall": "2–4",
+        "district": "3–2",
+        "overall": "3–4",
         "next": ""
       },
       {
         "team": "Klein Cain Hurricanes",
-        "district": "2–2",
-        "overall": "4–2",
+        "district": "2–3",
+        "overall": "4–3",
         "next": ""
       },
       {
@@ -89,15 +94,15 @@
         "next": ""
       },
       {
-        "team": "Klein Forest Eagles",
-        "district": "1–5",
-        "overall": "1–7",
+        "team": "Magnolia West Mustangs",
+        "district": "1–4",
+        "overall": "3–4",
         "next": ""
       },
       {
-        "team": "Magnolia West Mustangs",
-        "district": "0–4",
-        "overall": "2–4",
+        "team": "Klein Forest Eagles",
+        "district": "1–5",
+        "overall": "1–7",
         "next": ""
       }
     ],
@@ -107,5 +112,5 @@
   },
   "source": "Dave Campbell’s Texas Football",
   "sourceUrl": "https://www.texasfootball.com/scores/",
-  "asOf": "2026-10-03T17:58:13.000Z"
+  "asOf": "2026-10-17T03:14:03Z"
 }
