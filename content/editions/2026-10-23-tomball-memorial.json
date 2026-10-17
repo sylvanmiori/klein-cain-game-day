@@ -53,7 +53,16 @@
     "sourceUrl": "https://kleincain.gameday.report/",
     "asOf": "2026-09-29T16:47:33.511Z"
   },
-  "weather": null,
+  "weather": {
+    "tempF": 82,
+    "condition": "Mostly Clear",
+    "precipPct": 0,
+    "humidityPct": 44,
+    "wind": "5 mph SE",
+    "source": "National Weather Service",
+    "sourceUrl": "https://www.weather.gov/",
+    "asOf": "2026-10-17T14:03:46.008Z"
+  },
   "scheduledFacts": [],
   "resultFacts": [],
   "preview": {
