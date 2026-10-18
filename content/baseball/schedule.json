@@ -1,6 +1,6 @@
 {
-  "scraped_at": "2026-10-16T01:01:09.894Z",
-  "snapshot_date": "2026-10-15",
+  "scraped_at": "2026-10-18T09:00:25.599Z",
+  "snapshot_date": "2026-10-18",
   "source": "Perfect Game",
   "source_url": "https://www.perfectgame.org/PGBA/Team/default.aspx?orgid=69753&orgteamid=297202&Year=2027",
   "team": {
@@ -330,7 +330,7 @@
           "date": "2026-09-26",
           "time": null,
           "opponent": "TSB",
-          "opponent_record": "1-8-0",
+          "opponent_record": "2-9-0",
           "opponent_url": "https://www.perfectgame.org/PGBA/Team/default.aspx?orgid=83829&orgteamid=313350&team=1181719&year=2027",
           "home_away": "@",
           "pool": "A",
@@ -346,7 +346,7 @@
           "date": "2026-09-26",
           "time": null,
           "opponent": "15U OFFSEASON BASEBALL - WILLIAMS",
-          "opponent_record": "4-3-0",
+          "opponent_record": "4-5-0",
           "opponent_url": "https://www.perfectgame.org/PGBA/Team/default.aspx?orgid=35176&orgteamid=306313&team=1164660&year=2027",
           "home_away": "vs",
           "pool": "A",
