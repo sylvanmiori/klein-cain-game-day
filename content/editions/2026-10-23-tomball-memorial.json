@@ -27,8 +27,8 @@
   },
   "pageTitle": "2026 Week 8 Preview: Klein Cain at Tomball Memorial",
   "metaTitle": "Week 8 Preview: Klein Cain at Tomball Memorial | Cain Game Day",
-  "metaDescription": "Matchup facts, records and the published forecast for Klein Cain's Week 8 game against Tomball Memorial on October 23, 2026.",
-  "socialDescription": "Records, ranking and forecast for Klein Cain at Tomball Memorial.",
+  "metaDescription": "Klein Cain (4-3, 2-3) plays a must-win game at Tomball Memorial (2-5, 1-4) on October 23, 2026, sitting sixth in District 15-6A with three Fridays left.",
+  "socialDescription": "Must-win Friday: Klein Cain (4-3, 2-3, sixth in District 15-6A) at Tomball Memorial (2-5, 1-4) on October 23.",
   "ogImage": "",
   "prediction": {
     "margin": 12,
@@ -75,10 +75,10 @@
   "resultFacts": [],
   "preview": {
     "playersHeading": "Players to watch",
-    "playersNote": "",
+    "playersNote": "Five Hurricanes and five Wildcats who will decide Friday night. Cain numbers are from MaxPreps season leaders updated October 17. Tomball Memorial numbers are from MaxPreps leaders last updated October 1, through five games, the freshest the Wildcats have published.",
     "intro": {
       "heading": "The matchup",
-      "body": "Klein Cain plays at Tomball Memorial on October 23, 2026 at 7:00 PM, at Tomball ISD Stadium. Records, the statewide ranking and the published forecast on this page update automatically as the season goes on. Player notes are added only when they can be checked against a named source.\n\nThe district table leaves Cain no room to breathe. **Klein Cain (4-3, 2-3)** sits **sixth** in District 15-6A, one game behind the playoff line: Magnolia holds fourth at **3-2**, and Klein Oak is fifth at the same mark. Klein (5-1), Tomball (4-1) and Klein Collins (4-2) hold the top three spots, and only the **top four** advance.\n\nThe road back is clear, and it is narrow. Cain closes at Tomball Memorial, at home against Magnolia on October 29, and at Klein Forest on November 6. The Hurricanes have to **win all three** and still get help from the teams in front of them, and the Magnolia game is the lever: beat the team sitting fourth and Cain takes the head-to-head edge over it. And if Cain gets in, it goes **Division I**: at **3,784** students Cain is the largest school in the district, and the two qualifiers with the largest enrollments play in Division I while the other two play in Division II, each division chasing its own state title.",
+      "body": "The margin is gone. **Klein Cain (4-3, 2-3)** sits **sixth** in **District 15-6A** with three Fridays left, and every one of them is a must-win. The run starts on the road: Cain at **Tomball Memorial (2-5, 1-4)** on Friday, October 23 at 7:00 PM at Tomball ISD Stadium.\n\nCain comes off Senior Night against Klein Oak, a **56-7** game where both teams played hard and the Panthers' running game controlled the night. The same evening shook up the table: Tomball handed Klein its first loss, **30-20**, and Magnolia West beat Klein Collins **18-15**. Klein (5-1) and Tomball (4-1) hold the top two spots in the district standings, Collins (4-2) is third, and Magnolia and Klein Oak sit at **3-2** in the last two playoff spots. Cain is one game back at **2-3**, with Magnolia at home on October 29 and Klein Forest on the road on November 6 still to come.\n\nMemorial arrives with life: the Wildcats just posted their best night of the season, a **42-6** win at Klein Forest on October 15. Neither team appeared in the **October 12** Class 6A state poll from Dave Campbell's Texas Football. *Win Friday, and the playoff chase stays alive. Lose, and it effectively ends in October.*",
       "facts": [
         {
           "label": "Cain",
@@ -97,13 +97,241 @@
         }
       ]
     },
-    "players": [],
-    "recruiting": null,
-    "keys": null,
-    "gameInfo": null
+    "players": [
+      {
+        "team": "CAIN",
+        "number": "16",
+        "name": "Eyan Johnson",
+        "image": "/players/eyan-johnson.jpg",
+        "role": "RB / SB · Senior",
+        "tag": "80.6 rushing yards per game",
+        "rating": "9 total TDs",
+        "copy": "Johnson leads Cain at **80.6** rushing yards per game with **nine** total touchdowns per MaxPreps. He ran for **51** yards on 12 carries against Klein Oak, and the offense is at its best when he touches the ball early and Cain plays in front of the chains."
+      },
+      {
+        "team": "CAIN",
+        "number": "9",
+        "name": "Jace Hanks",
+        "image": "/players/jace-hanks.jpg",
+        "role": "QB · Junior",
+        "tag": "9 passing touchdowns",
+        "rating": "9 TD passes · 6 rushing TDs",
+        "copy": "Hanks has thrown **nine** touchdown passes and run for **six** more, and his touchdown throw to **Tyson Freeman (#17)** was Cain's lone score against Klein Oak. His legs are part of the run game too: **72.7** rushing yards per game, second on the team."
+      },
+      {
+        "team": "CAIN",
+        "number": "17",
+        "name": "Tyson Freeman",
+        "image": "/players/tyson-freeman.jpg",
+        "role": "WR · Senior",
+        "tag": "Cain's Player of the Game vs Klein Oak",
+        "rating": "Team-high 3 receiving TDs",
+        "copy": "Freeman was Cain's Player of the Game on Senior Night: two catches, **31** yards, and the Hurricanes' only touchdown. He leads Cain with **three** receiving touchdowns this season and keeps making the catch that moves a drive."
+      },
+      {
+        "team": "CAIN",
+        "number": "3",
+        "name": "Wes Young",
+        "image": "/players/wes-young.jpg",
+        "role": "TE / LS · Senior",
+        "tag": "8 tackles vs Klein Oak",
+        "rating": "1 caused fumble · 1 fumble recovery",
+        "copy": "Young led the Cain defense against Klein Oak with **eight** tackles and a tackle for loss, per the game's MaxPreps box score. The senior also handles tight end and long snapping, and his special teams snaps matter after last Friday's punt trouble."
+      },
+      {
+        "team": "CAIN",
+        "number": "34",
+        "name": "Gage Hansberger",
+        "image": "/players/gage-hansberger.jpg",
+        "role": "LB · Senior",
+        "tag": "7.7 tackles per game",
+        "rating": "Team captain",
+        "copy": "Hansberger, a senior captain, leads Cain at **7.7** tackles per game per MaxPreps. Memorial wants to run the ball and shorten the game; the middle of Cain's defense starts with him."
+      },
+      {
+        "team": "TOMBALL MEMORIAL",
+        "number": "3",
+        "name": "Carter Hamilton",
+        "image": "/player-placeholder.svg",
+        "role": "WR · Senior",
+        "tag": "62.6 receiving yards per game",
+        "rating": "313 receiving yards · 2 TDs",
+        "copy": "Hamilton is Memorial's clearest downfield threat: **313** receiving yards and two touchdowns per SportCast Media, and a team-high **62.6** receiving yards per game on MaxPreps' leader page. He caught a fourth-quarter touchdown pass against Magnolia on October 9. Cain's secondary has to keep him in front of it."
+      },
+      {
+        "team": "TOMBALL MEMORIAL",
+        "number": "7",
+        "name": "Carson West",
+        "image": "/player-placeholder.svg",
+        "role": "RB · Senior",
+        "tag": "41.0 rushing yards per game",
+        "rating": "Preseason second-team all-district",
+        "copy": "West leads the Wildcats' rushing attack at **41.0** yards per game per MaxPreps and was a preseason second-team all-district pick in VYPE's District 15-6A preview. Memorial's offense runs through its ground game first."
+      },
+      {
+        "team": "TOMBALL MEMORIAL",
+        "number": "12",
+        "name": "Jacob Kubeczka",
+        "image": "/player-placeholder.svg",
+        "role": "QB · Senior",
+        "tag": "Threw both Memorial TD passes vs Magnolia",
+        "rating": "Senior quarterback",
+        "copy": "**Jacob Kubeczka (#12)** threw both of Memorial's touchdown passes against Magnolia on October 9, per SportCast Media's recap. Junior **Aiden Adams (#8)** led the passing categories on MaxPreps' October 1 leader page with six touchdown passes, so the Wildcats have used both quarterbacks and Cain has to prepare for both."
+      },
+      {
+        "team": "TOMBALL MEMORIAL",
+        "number": "9",
+        "name": "Noah Asher",
+        "image": "/player-placeholder.svg",
+        "role": "MLB · Senior",
+        "tag": "9.0 tackles per game",
+        "rating": "2 caused fumbles",
+        "copy": "Asher is the heart of the Memorial defense: a team-high **9.0** tackles per game with a sack and **two** caused fumbles per MaxPreps. Where he lines up tells Cain's offense where the pressure is coming from."
+      },
+      {
+        "team": "TOMBALL MEMORIAL",
+        "number": "38",
+        "name": "Justus Loucks",
+        "image": "/player-placeholder.svg",
+        "role": "OLB · Junior",
+        "tag": "8.0 tackles per game",
+        "rating": "Team-high 2.0 sacks",
+        "copy": "Loucks is second on the Wildcats at **8.0** tackles per game and owns a team-high **2.0** sacks per MaxPreps. The junior edge rusher is the name Cain's tackles have to find on passing downs."
+      }
+    ],
+    "recruiting": {
+      "heading": "Tomball Memorial recruiting notes",
+      "note": "There is no star-rating headline in this matchup, and that is the honest note. A roster-wide check of On3, 247Sports and Rivals indexed coverage, first run October 17 and rechecked October 19, found no rated or committed prospect on Tomball Memorial's current roster, a real contrast with Klein Oak last week (a Texas commit and a West Virginia commit). Memorial's threat is production, not rankings. On3's direct database is Cloudflare-walled, so this audit rests on indexed coverage, stated plainly.",
+      "rows": [
+        {
+          "name": "Carter Hamilton",
+          "note": "Memorial's leading receiver with 313 yards and two touchdowns per SportCast Media. No rating or commitment for him was found in On3, 247Sports or Rivals indexed coverage as of October 19.",
+          "href": "https://sportcastmedia.com/week-7-football-preview-capsule-magnolia-at-tomball-memorial/"
+        },
+        {
+          "name": "Noah Asher",
+          "note": "Memorial's defensive leader at 9.0 tackles per game per MaxPreps. No rating or commitment for him was found in On3, 247Sports or Rivals indexed coverage as of October 19.",
+          "href": "https://www.maxpreps.com/tx/tomball/tomball-memorial-wildcats/football/stats/"
+        },
+        {
+          "name": "Jacob Kubeczka",
+          "note": "The senior quarterback threw both of Memorial's touchdown passes against Magnolia on October 9 per SportCast Media. No rating or commitment for him was found in On3, 247Sports or Rivals indexed coverage as of October 19.",
+          "href": "https://sportcastmedia.com/magnolia-pulls-away-in-second-half-at-tomball-memorial/"
+        }
+      ]
+    },
+    "keys": {
+      "heading": "Four keys for Klein Cain",
+      "items": [
+        {
+          "title": "Protect the ball and the punt",
+          "body": "Against Klein Oak, a blocked punt recovered in the end zone, a muffed kickoff, and a fumble recovered in the end zone handed the Panthers three scores before the game settled. A clean night on special teams and ball security changes the math of this game more than any single matchup."
+        },
+        {
+          "title": "Get Eyan Johnson going early",
+          "body": "**Eyan Johnson (#16)** leads Cain at **80.6** rushing yards per game, and Memorial has allowed **268** points in seven games. Establish the run early, play in front of the chains, and the play-action looks that produced **nine** touchdown passes for **Jace Hanks (#9)** open up."
+        },
+        {
+          "title": "Keep Carter Hamilton in front",
+          "body": "**Carter Hamilton (#3)** is the one Memorial receiver who has hurt teams downfield, at **62.6** receiving yards per game per MaxPreps. Keep him in front of the secondary, tackle the catch, and make the Wildcats drive the long field."
+        },
+        {
+          "title": "Finish drives",
+          "body": "Cain moved the ball in stretches against Klein Oak and scored once. On the road against a team playing its best football of the season, red-zone trips have to end in touchdowns, not punts and field goal tries."
+        }
+      ]
+    },
+    "gameInfo": {
+      "heading": "Game information",
+      "facts": [
+        {
+          "label": "Kickoff",
+          "value": "Friday, October 23 · 7:00 PM"
+        },
+        {
+          "label": "Site",
+          "value": "Tomball ISD Stadium · Tomball, TX"
+        },
+        {
+          "label": "District",
+          "value": "15-6A"
+        },
+        {
+          "label": "The stakes",
+          "value": "Cain sixth at 2-3, one game behind Magnolia and Klein Oak (both 3-2) for the final playoff spots · Three straight must-win games to close the season"
+        },
+        {
+          "label": "Playoff path",
+          "value": "Top 4 advance · A playoff-bound Cain team plays Division I as the district's largest school (3,784)"
+        },
+        {
+          "label": "Head coaches",
+          "value": "James Clancy (Cain) · Joe Dale Cary (Tomball Memorial)"
+        },
+        {
+          "label": "Cain form",
+          "value": "4-3 · 2-3 district · 35.0 points/game"
+        },
+        {
+          "label": "Memorial form",
+          "value": "2-5 · 1-4 district · beat Klein Forest 42-6 on October 15"
+        }
+      ],
+      "links": []
+    },
+    "playerStatsAudit": {
+      "asOf": "2026-10-19",
+      "sources": [
+        {
+          "team": "Klein Cain",
+          "games": 7,
+          "source": "MaxPreps",
+          "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/",
+          "sourceUpdated": "2026-10-17T18:56:03Z"
+        },
+        {
+          "team": "Tomball Memorial",
+          "games": 5,
+          "source": "MaxPreps",
+          "sourceUrl": "https://www.maxpreps.com/tx/tomball/tomball-memorial-wildcats/football/stats/",
+          "sourceUpdated": "2026-10-01T12:29:00Z"
+        }
+      ]
+    },
+    "opponentRecruitingAudit": {
+      "source": "On3, 247Sports and Rivals indexed coverage checked against the MaxPreps Tomball Memorial roster",
+      "sourceUrl": "https://www.maxpreps.com/tx/tomball/tomball-memorial-wildcats/football/roster/",
+      "asOf": "2026-10-19T12:00:00Z",
+      "committedPlayers": [],
+      "eliteProspects": []
+    }
   },
   "final": null,
   "sources": [
+    {
+      "label": "MaxPreps: Tomball Memorial Wildcats stats (leaders last updated Oct 1, 2026)",
+      "href": "https://www.maxpreps.com/tx/tomball/tomball-memorial-wildcats/football/stats/"
+    },
+    {
+      "label": "MaxPreps: Tomball Memorial Wildcats roster (updated Oct 1, 2026)",
+      "href": "https://www.maxpreps.com/tx/tomball/tomball-memorial-wildcats/football/roster/"
+    },
+    {
+      "label": "MaxPreps: Tomball Memorial Wildcats schedule (updated Oct 16, 2026)",
+      "href": "https://www.maxpreps.com/tx/tomball/tomball-memorial-wildcats/football/schedule/"
+    },
+    {
+      "label": "SportCast Media: Magnolia pulls away in second half at Tomball Memorial (Oct 10, 2026)",
+      "href": "https://sportcastmedia.com/magnolia-pulls-away-in-second-half-at-tomball-memorial/"
+    },
+    {
+      "label": "SportCast Media: Week 7 preview capsule, Magnolia at Tomball Memorial",
+      "href": "https://sportcastmedia.com/week-7-football-preview-capsule-magnolia-at-tomball-memorial/"
+    },
+    {
+      "label": "MaxPreps: Klein Cain Hurricanes stats (updated Oct 17, 2026)",
+      "href": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/"
+    },
     {
       "label": "MaxPreps: District 15-6A standings (checked Oct 19, 2026)",
       "href": "https://www.maxpreps.com/tx/football/26-27/district/6a-region-ii-district-15/?leagueid=af5271e6-8bb8-4df8-a493-0a3f59161a00"
@@ -111,10 +339,6 @@
     {
       "label": "UIL: 2026-2028 realignment enrollments (Klein Cain 3,784, largest in District 15-6A)",
       "href": "https://realignment.uiltexas.org/alignments/2026/26-28_Rank.pdf"
-    },
-    {
-      "label": "UIL: Football Postseason Packet (top four per district advance; two largest qualifiers to Division I)",
-      "href": "https://www.uiltexas.org/files/athletics/2025_Footbal_Postseason_Packet_(1).pdf"
     }
   ],
   "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
@@ -125,5 +349,5 @@
     "MaxPreps",
     "Dave Campbell’s Texas Football"
   ],
-  "current": false
+  "current": true
 }
