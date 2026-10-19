@@ -78,7 +78,7 @@
     "playersNote": "",
     "intro": {
       "heading": "The matchup",
-      "body": "Klein Cain plays at Tomball Memorial on October 23, 2026 at 7:00 PM, at Tomball ISD Stadium. Records, the statewide ranking and the published forecast on this page update automatically as the season goes on. Player notes are added only when they can be checked against a named source.",
+      "body": "Klein Cain plays at Tomball Memorial on October 23, 2026 at 7:00 PM, at Tomball ISD Stadium. Records, the statewide ranking and the published forecast on this page update automatically as the season goes on. Player notes are added only when they can be checked against a named source.\n\nThe district table leaves Cain no room to breathe. **Klein Cain (4-3, 2-3)** sits **sixth** in District 15-6A, one game behind the playoff line: Magnolia holds fourth at **3-2**, and Klein Oak is fifth at the same mark. Klein (5-1), Tomball (4-1) and Klein Collins (4-2) hold the top three spots, and only the **top four** advance.\n\nThe road back is clear, and it is narrow. Cain closes at Tomball Memorial, at home against Magnolia on October 29, and at Klein Forest on November 6. The Hurricanes have to **win all three** and still get help from the teams in front of them, and the Magnolia game is the lever: beat the team sitting fourth and Cain takes the head-to-head edge over it. And if Cain gets in, it goes **Division I**: at **3,784** students Cain is the largest school in the district, and the two qualifiers with the largest enrollments play in Division I while the other two play in Division II, each division chasing its own state title.",
       "facts": [
         {
           "label": "Cain",
@@ -103,7 +103,20 @@
     "gameInfo": null
   },
   "final": null,
-  "sources": [],
+  "sources": [
+    {
+      "label": "MaxPreps: District 15-6A standings (checked Oct 19, 2026)",
+      "href": "https://www.maxpreps.com/tx/football/26-27/district/6a-region-ii-district-15/?leagueid=af5271e6-8bb8-4df8-a493-0a3f59161a00"
+    },
+    {
+      "label": "UIL: 2026-2028 realignment enrollments (Klein Cain 3,784, largest in District 15-6A)",
+      "href": "https://realignment.uiltexas.org/alignments/2026/26-28_Rank.pdf"
+    },
+    {
+      "label": "UIL: Football Postseason Packet (top four per district advance; two largest qualifiers to Division I)",
+      "href": "https://www.uiltexas.org/files/athletics/2025_Footbal_Postseason_Packet_(1).pdf"
+    }
+  ],
   "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
   "disclaimerEntities": [
     "Klein ISD",
