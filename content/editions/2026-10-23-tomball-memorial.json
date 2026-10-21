@@ -155,8 +155,8 @@
         "image": "/player-placeholder.svg",
         "role": "WR · Senior",
         "tag": "62.6 receiving yards per game",
-        "rating": "313 receiving yards · 2 TDs",
-        "copy": "Hamilton is Memorial's clearest downfield threat: **313** receiving yards and two touchdowns per SportCast Media, and a team-high **62.6** receiving yards per game on MaxPreps' leader page. He caught a fourth-quarter touchdown pass against Magnolia on October 9. Cain's secondary has to keep him in front of it."
+        "rating": "2 TDs vs Magnolia on Oct. 9",
+        "copy": "**Carter Hamilton (#3)** is Memorial's clearest downfield threat: a team-high **62.6** receiving yards per game on MaxPreps' leader page, last updated October 1. He scored twice against Magnolia on October 9, on a 4-yard run and a fourth-quarter touchdown catch, so his season touchdown total is at least four, not the two the October 1 page shows. Cain's secondary has to keep him in front of it."
       },
       {
         "team": "TOMBALL MEMORIAL",
@@ -176,7 +176,7 @@
         "role": "QB · Senior",
         "tag": "Threw both Memorial TD passes vs Magnolia",
         "rating": "Senior quarterback",
-        "copy": "**Jacob Kubeczka (#12)** threw both of Memorial's touchdown passes against Magnolia on October 9, per SportCast Media's recap. Junior **Aiden Adams (#8)** led the passing categories on MaxPreps' October 1 leader page with six touchdown passes, so the Wildcats have used both quarterbacks and Cain has to prepare for both."
+        "copy": "**Jacob Kubeczka (#12)** has run Memorial's offense for two straight games. He threw both of Memorial's touchdown passes against Magnolia on October 9, and he played quarterback again in the 42-6 win at Klein Forest on October 15. Junior **Aiden Adams (#8)** led the passing categories on MaxPreps' October 1 leader page with six touchdown passes. Nothing public says why the change happened, so Cain's week is built around Kubeczka."
       },
       {
         "team": "TOMBALL MEMORIAL",
@@ -205,7 +205,7 @@
       "rows": [
         {
           "name": "Carter Hamilton",
-          "note": "Memorial's leading receiver with 313 yards and two touchdowns per SportCast Media. No rating or commitment for him was found in On3, 247Sports or Rivals indexed coverage as of October 19.",
+          "note": "Memorial's leading receiver at 62.6 receiving yards per game through MaxPreps' October 1 update, with two more touchdowns against Magnolia on October 9. No rating or commitment for him was found in On3, 247Sports or Rivals indexed coverage as of October 19.",
           "href": "https://sportcastmedia.com/week-7-football-preview-capsule-magnolia-at-tomball-memorial/"
         },
         {
@@ -280,14 +280,14 @@
       "links": []
     },
     "playerStatsAudit": {
-      "asOf": "2026-10-19",
+      "asOf": "2026-10-21",
       "sources": [
         {
           "team": "Klein Cain",
           "games": 7,
           "source": "MaxPreps",
           "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/",
-          "sourceUpdated": "2026-10-17T18:56:03Z"
+          "sourceUpdated": "2026-10-17T10:12:00Z"
         },
         {
           "team": "Tomball Memorial",
