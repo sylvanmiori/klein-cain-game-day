@@ -53,8 +53,8 @@
     "rows": [
       {
         "team": "Klein Bearkats",
-        "district": "5–1",
-        "overall": "7–1",
+        "district": "6–1",
+        "overall": "8–1",
         "next": ""
       },
       {
@@ -94,21 +94,21 @@
         "next": ""
       },
       {
-        "team": "Magnolia West Mustangs",
-        "district": "1–4",
-        "overall": "3–4",
-        "next": ""
-      },
-      {
         "team": "Klein Forest Eagles",
         "district": "1–5",
         "overall": "1–7",
+        "next": ""
+      },
+      {
+        "team": "Magnolia West Mustangs",
+        "district": "1–5",
+        "overall": "3–5",
         "next": ""
       }
     ],
     "source": "MaxPreps",
     "sourceUrl": "https://www.maxpreps.com/tx/football/26-27/district/6a-region-ii-district-15/?leagueid=af5271e6-8bb8-4df8-a493-0a3f59161a00",
-    "asOf": "2026-10-16T07:47:41.221Z"
+    "asOf": "2026-10-23T08:09:56.160Z"
   },
   "source": "Dave Campbell’s Texas Football",
   "sourceUrl": "https://www.texasfootball.com/scores/",
