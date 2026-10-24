@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "slug": "2026-10-23-tomball-memorial",
   "status": "live",
-  "statusLabel": "Q2 ~10 mins to go",
-  "homeScore": 14,
-  "awayScore": 9,
+  "statusLabel": "Q2",
+  "homeScore": 0,
+  "awayScore": 28,
   "homeRecord": "",
   "awayRecord": "",
-  "updatedAt": "2026-10-24T00:38:32.879236Z",
+  "updatedAt": "2026-10-24T00:41:16.832530Z",
   "source": "Manual update",
   "sourceUrl": "https://kleincain.gameday.report/"
 }
