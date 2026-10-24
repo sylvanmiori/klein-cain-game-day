@@ -3,32 +3,32 @@
   "slug": "2026-10-23-tomball-memorial",
   "week": 8,
   "issue": "07",
-  "state": "preview",
+  "state": "final",
   "date": "2026-10-23",
   "dateLong": "October 23, 2026",
   "dateShort": "OCT 23, 2026",
   "kickoff": "7:00 PM",
   "venue": "Tomball ISD Stadium",
   "event": "",
-  "updated": "",
+  "updated": "2026-10-24T02:52:18.495289Z",
   "home": {
     "name": "Tomball Memorial",
     "mascot": "Wildcats",
     "logo": "/tomball-memorial-logo.png",
-    "record": "2–5",
+    "record": "2–6",
     "rank": 177
   },
   "away": {
     "name": "Klein Cain",
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
-    "record": "4–3",
+    "record": "5–3",
     "rank": 49
   },
-  "pageTitle": "2026 Week 8 Preview: Klein Cain at Tomball Memorial",
+  "pageTitle": "2026 Week 8 Final: Klein Cain at Tomball Memorial",
   "metaTitle": "Week 8 Preview: Klein Cain at Tomball Memorial | Cain Game Day",
-  "metaDescription": "Klein Cain (4-3, 2-3) plays a must-win game at Tomball Memorial (2-5, 1-4) on October 23, 2026, sitting sixth in District 15-6A with three Fridays left.",
-  "socialDescription": "Must-win Friday: Klein Cain (4-3, 2-3, sixth in District 15-6A) at Tomball Memorial (2-5, 1-4) on October 23.",
+  "metaDescription": "Klein Cain beat Tomball Memorial 44-10 on October 23, 2026, scoring on its first play from scrimmage and building a 37-0 halftime lead behind four takeaways.",
+  "socialDescription": "Final: Klein Cain 44, Tomball Memorial 10. Cain scored on its first play from scrimmage and never looked back.",
   "ogImage": "",
   "prediction": {
     "margin": 12,
@@ -51,7 +51,13 @@
     "away": null
   },
   "stats": null,
-  "finalScore": null,
+  "finalScore": {
+    "home": 10,
+    "away": 44,
+    "source": "Klein Cain Gameday Report",
+    "sourceUrl": "https://kleincain.gameday.report/",
+    "asOf": "2026-10-24T02:52:18.495289Z"
+  },
   "rating": {
     "home": -9.49,
     "away": 15.35,
@@ -314,7 +320,110 @@
       "eliteProspects": []
     }
   },
-  "final": null,
+  "final": {
+    "headline": "Cain strikes on the first play and rolls to a 44-10 win at Tomball Memorial",
+    "byline": "Cain Game Day desk · Updated 9:52 PM CT",
+    "body": "This one was over before it settled in. **Klein Cain (5-3, 3-3)** scored on its first play from scrimmage, forced **four turnovers** and built a **37-0** halftime lead on the way to a **44-10** win over **Tomball Memorial (2-6, 1-5)** Friday night. The win snaps a three-game skid and keeps the Hurricanes alive in the **District 15-6A** playoff chase with two games left.\n\n**Israel Smith (#8)** took an end around **75 yards** for a touchdown on Cain's first play from scrimmage. Memorial answered with its best drive of the half, reaching the Cain 25, before **Christian Lovell (#45)** wrapped up a third-down play and **Easton Mizell (#47)** flew in and knocked the ball loose. Cain recovered, and the rout was on.\n\nA **15-yard** catch by **Cooper Karns (#10)** opened Cain's second drive. Memorial jumped offside, Cain took the free play, and **Jace Hanks (#9)** found **Hank Aguirre (#13)** down the right sideline for a **31-yard touchdown** and a **14-0** lead. **Jaemin Gilstrap (#42)** forced another fumble on Memorial's next possession, and on fourth-and-8, Hanks hit Karns over the middle for a **38-yard touchdown**. **Colby Braxton (#31)** intercepted a third-down pass late in the quarter to set up one more score.\n\n**Eyan Johnson (#16)** opened the second quarter with a **1-yard touchdown run** to make it **28-0**. **Deaunte Barr (#18)** turned a short catch into a **35-yard** gain to set up **Rico O'Guinn Jr. (#1)**'s 1-yard touchdown, and a Memorial punt snap sailed over the punter's head into the end zone for a **safety** and a **37-0** lead. O'Guinn returned the ensuing free kick for an apparent touchdown, but the score was called back for holding. The Cain defense then slammed the door before halftime, converging for a sack on third-and-long and forcing an incompletion on fourth down at the Cain 20.\n\nThe third quarter slowed down. The teams traded punts, a Cain drive died on a fourth-down sack near midfield, and Mizell broke up a pass in the end zone to stall Memorial's best drive of the half. The Wildcats settled for a **44-yard field goal** in the final minute of the quarter, their first points of the night. Cain answered in one play. With **Trey Reyes (#5)** in at quarterback, Johnson took a handoff, got loose down the left sideline and went **80 yards** for his second touchdown. **Christian Redeo (#7)** intercepted Memorial on the final snap of the quarter to keep the score at **44-3**.\n\nMemorial's lone touchdown came in the fourth quarter, when **Aiden Adams** found **Harper Hanes (#6)** for a score that made it **44-10** with **5:50** left. Cain's defense closed it out from there, with **Mason Stovall (#91)** and **Jhonny Vilchez (#30)** each recording a tackle for loss on Memorial's final drives before the Hurricanes ran out the clock.\n\n**Eyan Johnson (#16)** gets the overall Player of the Game nod. The senior ran for **two touchdowns**, and his 80-yard score, one play after Memorial finally got on the board, ended any thought of a comeback. **Easton Mizell (#47)** is Cain's Player of the Game: the junior forced the fumble that killed Memorial's best first-half drive and broke up a pass in the end zone in the third quarter.\n\nThe win sets up the biggest game of Cain's season. **Magnolia** comes to Klein Memorial Stadium on **Thursday night, October 29**, and the winner takes the head-to-head edge in the race for the district's final playoff spots. Cain closes the regular season at Klein Forest on November 6.",
+    "homeScore": 10,
+    "awayScore": 44,
+    "quarters": {
+      "labels": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "rows": [
+        {
+          "team": "Cain",
+          "scores": [
+            "21",
+            "16",
+            "7",
+            "0"
+          ],
+          "total": "44"
+        },
+        {
+          "team": "Tomball Memorial",
+          "scores": [
+            "0",
+            "0",
+            "3",
+            "7"
+          ],
+          "total": "10"
+        }
+      ]
+    },
+    "notes": [
+      {
+        "heading": "Four takeaways",
+        "paragraphs": [
+          "The Cain defense set the tone on Memorial's first possession and never let up. Easton Mizell knocked the ball loose at the Cain 25 to kill the Wildcats' best first-half drive, Jaemin Gilstrap forced a second fumble, and Colby Braxton and Christian Redeo added interceptions. Memorial reached the Cain 20 once before halftime and came away with nothing, stopped on a sack and a fourth-down incompletion."
+        ]
+      },
+      {
+        "heading": "The 80-yard answer",
+        "paragraphs": [
+          "Memorial finally scored late in the third quarter, a 44-yard field goal at the end of its longest drive of the night. Cain needed one play to answer. With Trey Reyes in at quarterback, Eyan Johnson took a handoff, broke loose down the left sideline and went 80 yards for his second touchdown of the night, pushing the lead back to 44-3."
+        ]
+      },
+      {
+        "heading": "Thursday is the season",
+        "paragraphs": [
+          "Cain is 5-3 overall and 3-3 in District 15-6A with two games left, and the path is simple to say and hard to walk: beat Magnolia at home on Thursday night and the Hurricanes own the head-to-head edge over the team directly in their way, then finish at Klein Forest on November 6. Lose Thursday, and Cain needs help it may not get."
+        ]
+      }
+    ],
+    "leaders": {
+      "heading": "Game leaders",
+      "source": "Klein Cain Gameday Report game notes (estimates)",
+      "items": [
+        {
+          "name": "Eyan Johnson",
+          "number": "16",
+          "role": "RB · Senior (Cain)",
+          "image": "/players/eyan-johnson.jpg",
+          "stat": "2 rushing touchdowns",
+          "detail": "1-yard TD in the second quarter · 80-yard TD in the third"
+        },
+        {
+          "name": "Jace Hanks",
+          "number": "9",
+          "role": "QB · Junior (Cain)",
+          "image": "/players/jace-hanks.jpg",
+          "stat": "2 TD passes",
+          "detail": "31 yards to Hank Aguirre · 38 yards to Cooper Karns"
+        },
+        {
+          "name": "Israel Smith",
+          "number": "8",
+          "role": "WR · Sophomore (Cain)",
+          "image": "/players/israel-smith.jpg",
+          "stat": "1 rushing touchdown",
+          "detail": "75-yard end around on Cain's first play from scrimmage"
+        },
+        {
+          "name": "Easton Mizell",
+          "number": "47",
+          "role": "DB · Junior (Cain)",
+          "image": "/players/easton-mizell.jpg",
+          "stat": "Forced fumble · pass breakup",
+          "detail": "Knocked the ball loose on Memorial's first drive · broke up a pass in the end zone"
+        },
+        {
+          "name": "Harper Hanes",
+          "number": "6",
+          "role": "WR (Tomball Memorial)",
+          "image": "/player-placeholder.svg",
+          "stat": "1 receiving touchdown",
+          "detail": "Memorial's lone TD, from Aiden Adams in the fourth quarter"
+        }
+      ]
+    },
+    "video": null
+  },
   "sources": [
     {
       "label": "MaxPreps: Tomball Memorial Wildcats stats (leaders last updated Oct 1, 2026)",

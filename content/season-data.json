@@ -34,6 +34,11 @@
       "outcome": "L",
       "us": 7,
       "them": 56
+    },
+    "2026-10-23": {
+      "outcome": "W",
+      "us": 44,
+      "them": 10
     }
   },
   "records": {
@@ -83,14 +88,14 @@
       },
       {
         "team": "Klein Cain Hurricanes",
-        "district": "2–3",
-        "overall": "4–3",
+        "district": "3–3",
+        "overall": "5–3",
         "next": ""
       },
       {
         "team": "Tomball Memorial Wildcats",
-        "district": "1–4",
-        "overall": "2–5",
+        "district": "1–5",
+        "overall": "2–6",
         "next": ""
       },
       {
@@ -112,5 +117,5 @@
   },
   "source": "Dave Campbell’s Texas Football",
   "sourceUrl": "https://www.texasfootball.com/scores/",
-  "asOf": "2026-10-17T03:14:03Z"
+  "asOf": "2026-10-24T02:49:17.323948Z"
 }
