@@ -63,9 +63,15 @@
         "next": ""
       },
       {
-        "team": "Tomball Cougars",
-        "district": "4–1",
-        "overall": "6–1",
+        "team": "Klein Oak Panthers",
+        "district": "4–2",
+        "overall": "4–4",
+        "next": ""
+      },
+      {
+        "team": "Magnolia Bulldogs",
+        "district": "4–2",
+        "overall": "4–4",
         "next": ""
       },
       {
@@ -75,15 +81,9 @@
         "next": ""
       },
       {
-        "team": "Magnolia Bulldogs",
-        "district": "3–2",
-        "overall": "3–4",
-        "next": ""
-      },
-      {
-        "team": "Klein Oak Panthers",
-        "district": "3–2",
-        "overall": "3–4",
+        "team": "Tomball Cougars",
+        "district": "4–2",
+        "overall": "6–2",
         "next": ""
       },
       {
@@ -99,21 +99,21 @@
         "next": ""
       },
       {
-        "team": "Klein Forest Eagles",
-        "district": "1–5",
-        "overall": "1–7",
-        "next": ""
-      },
-      {
         "team": "Magnolia West Mustangs",
         "district": "1–5",
         "overall": "3–5",
+        "next": ""
+      },
+      {
+        "team": "Klein Forest Eagles",
+        "district": "1–6",
+        "overall": "1–8",
         "next": ""
       }
     ],
     "source": "MaxPreps",
     "sourceUrl": "https://www.maxpreps.com/tx/football/26-27/district/6a-region-ii-district-15/?leagueid=af5271e6-8bb8-4df8-a493-0a3f59161a00",
-    "asOf": "2026-10-23T08:09:56.160Z"
+    "asOf": "2026-10-24T12:41:05.383Z"
   },
   "source": "Dave Campbell’s Texas Football",
   "sourceUrl": "https://www.texasfootball.com/scores/",

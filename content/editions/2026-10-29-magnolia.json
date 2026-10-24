@@ -15,26 +15,34 @@
     "name": "Klein Cain",
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
-    "record": "4–3",
+    "record": "5–3",
     "rank": 49
   },
   "away": {
     "name": "Magnolia",
     "mascot": "Bulldogs",
     "logo": "/magnolia-logo.png",
-    "record": "3–4",
+    "record": "4–4",
     "rank": 75
   },
   "pageTitle": "2026 Week 9 Preview: Magnolia at Klein Cain",
   "metaTitle": "Week 9 Preview: Magnolia at Klein Cain | Cain Game Day",
-  "metaDescription": "Matchup facts, records and the published forecast for Klein Cain's Week 9 game against Magnolia on October 29, 2026.",
-  "socialDescription": "Records, ranking and forecast for Magnolia at Klein Cain.",
+  "metaDescription": "Klein Cain (5-3, 3-3) hosts Magnolia (4-4, 4-2) on Thursday, October 29, 2026, one game behind the Bulldogs in the District 15-6A playoff race with two games left.",
+  "socialDescription": "Thursday night decides it: Klein Cain (5-3, 3-3) hosts Magnolia (4-4, 4-2) on October 29, one game back in the District 15-6A playoff race.",
   "ogImage": "",
   "prediction": {
     "margin": 7,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
     "asOf": "2026-09-29T16:47:33.962Z"
+  },
+  "poll": {
+    "source": "Dave Campbell's Texas Football Class 6A state poll",
+    "sourceUrl": "https://www.timesrecordnews.com/story/sports/high-school/football/2026/10/19/check-out-dave-campbells-week-9-texas-high-school-football-rankings-wfisd-uil-memorial-legacy/92157329007/",
+    "asOf": "2026-10-19",
+    "weekLabel": "Week 9",
+    "home": null,
+    "away": null
   },
   "massey": null,
   "rankings": {
@@ -56,12 +64,12 @@
   "weather": {
     "tempF": 78,
     "condition": "Mostly Cloudy",
-    "precipPct": 4,
+    "precipPct": 7,
     "humidityPct": 56,
-    "wind": "5 mph E",
+    "wind": "5 mph SE",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-10-24T02:49:05.053Z"
+    "asOf": "2026-10-24T12:41:06.646Z"
   },
   "scheduledFacts": [],
   "resultFacts": [],
@@ -70,16 +78,16 @@
     "playersNote": "",
     "intro": {
       "heading": "The matchup",
-      "body": "Magnolia plays at Klein Cain on October 29, 2026 at 7:00 PM, at Klein Memorial Stadium. Records, the statewide ranking and the published forecast on this page update automatically as the season goes on. Player notes are added only when they can be checked against a named source.",
+      "body": "The season comes down to Thursday night. **Klein Cain (5-3, 3-3)** hosts **Magnolia (4-4, 4-2)** on Thursday, October 29 at 7:00 PM at Klein Memorial Stadium, and the math is plain: Cain sits **sixth** in **District 15-6A**, one game behind a four-team tie at 4-2, and Magnolia is one of those four teams. Win, and Cain pulls even with the Bulldogs and takes the **head-to-head edge**. Lose, and the playoff chase ends with a week to spare.\n\nCain earned this shot on Friday night at Tomball Memorial. **Israel Smith (#8)** scored on a **75-yard** end around on the first play from scrimmage, the defense forced **four turnovers**, and Cain led **37-0** at halftime on the way to a **44-10** win that snapped a three-game skid. **Eyan Johnson (#16)** ran for two touchdowns, including an **80-yard** score in the third quarter, and **Jace Hanks (#9)** threw touchdown passes to **Hank Aguirre (#13)** and **Cooper Karns (#10)**.\n\nMagnolia arrives just as hot. The Bulldogs have won **three straight**, capped by a **48-20** win over Klein Forest on Friday where they led **35-0** after one quarter and rested their starters early. Senior quarterback **Chase Lowery** drives everything: he ran for two touchdowns and threw a 39-yard touchdown pass against Forest, and through the bye week he had **12 rushing touchdowns** with **763 rushing yards** and **1,060 passing yards**. Senior back **Cash Ferrell** added a rushing score against Forest after entering the night with a rushing touchdown in **six straight games**.\n\nThe rest of Friday shook the table up. Klein Oak edged Tomball **42-41**, so Klein (6-1) stands alone at the top and Klein Oak, Magnolia, Klein Collins and Tomball are all tied at **4-2**, fighting for the other three playoff spots. Only the **top four** advance. Cain closes at Klein Forest on November 6, and if Cain gets in, it goes **Division I**: at **3,784** students Cain is the largest school in the district, and the two qualifiers with the largest enrollments play in Division I while the other two play in Division II, each division chasing its own state title. Neither team appeared in the **October 19** Class 6A state poll from Dave Campbell's Texas Football. *Thursday night decides whether the chase lives to the final week.*",
       "facts": [
         {
           "label": "Cain",
-          "value": "4–3 · 2–3 district · 35.0 points/game",
+          "value": "5–3 · 3–3 district · 36.1 points/game",
           "team": "school"
         },
         {
           "label": "Magnolia",
-          "value": "3–4 · 3–2 district",
+          "value": "4–4 · 4–2 district",
           "team": "opponent"
         },
         {
@@ -92,10 +100,60 @@
     "players": [],
     "recruiting": null,
     "keys": null,
-    "gameInfo": null
+    "gameInfo": {
+      "heading": "Game information",
+      "facts": [
+        {
+          "label": "Kickoff",
+          "value": "Thursday, October 29 · 7:00 PM"
+        },
+        {
+          "label": "Site",
+          "value": "Klein Memorial Stadium · Klein, TX"
+        },
+        {
+          "label": "District",
+          "value": "15-6A"
+        },
+        {
+          "label": "The stakes",
+          "value": "Cain sixth at 3-3, one game behind Magnolia, Klein Oak, Klein Collins and Tomball (all 4-2) for the final playoff spots · Cain must win to stay alive"
+        },
+        {
+          "label": "Playoff path",
+          "value": "Top 4 advance · A playoff-bound Cain team plays Division I as the district's largest school (3,784)"
+        },
+        {
+          "label": "Head coaches",
+          "value": "James Clancy (Klein Cain) · Craig Martin (Magnolia)"
+        }
+      ],
+      "links": []
+    }
   },
   "final": null,
-  "sources": [],
+  "sources": [
+    {
+      "label": "SportCast Media: Magnolia puts away Klein Forest early for 3rd straight win (Oct 24, 2026)",
+      "href": "https://sportcastmedia.com/magnolia-puts-away-klein-forest-early-for-3rd-straight-win/"
+    },
+    {
+      "label": "SportCast Media: Magnolia enters bye week with a little swagger after consecutive wins (Oct 2026)",
+      "href": "https://sportcastmedia.com/magnolia-enters-bye-week-with-a-little-swagger-after-consecutive-wins/"
+    },
+    {
+      "label": "High School on SI: Texas high school football final scores, October 23, 2026",
+      "href": "https://www.si.com/high-school/texas/texas-high-school-football-final-scores-results-october-23-01m5mzcsazsr"
+    },
+    {
+      "label": "Dave Campbell's Texas Football Class 6A state poll, Week 9 (via Times Record News, Oct 19, 2026)",
+      "href": "https://www.timesrecordnews.com/story/sports/high-school/football/2026/10/19/check-out-dave-campbells-week-9-texas-high-school-football-rankings-wfisd-uil-memorial-legacy/92157329007/"
+    },
+    {
+      "label": "MaxPreps: District 15-6A standings",
+      "href": "https://www.maxpreps.com/tx/football/26-27/district/6a-region-ii-district-15/?leagueid=af5271e6-8bb8-4df8-a493-0a3f59161a00"
+    }
+  ],
   "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
   "disclaimerEntities": [
     "Klein ISD",
