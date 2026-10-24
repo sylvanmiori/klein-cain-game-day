@@ -7,6 +7,7 @@ export const PLAYER_OF_GAME_MODEL = 'Cain Impact v1';
 // for the Collins loss; two interceptions in a loss is the wrong look.)
 const PLAYER_OF_GAME_OVERRIDES = {
   '2026-10-01-klein-collins': { number: '42' }, // Jaemin Gilstrap
+  '2026-10-23-tomball-memorial': { number: '47' }, // Easton Mizell: the recap names him Cain's Player of the Game (forced fumble, end-zone PBU); the model picks Johnson, whose overall-POTG nod lives in the recap body and the leaders, not this card.
 };
 
 const value = (player, key) => Number(player[key]) || 0;

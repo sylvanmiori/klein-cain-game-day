@@ -30,6 +30,24 @@ test('reads a leader into a flat, attributed row', () => {
   }]);
 });
 
+test('a name the source stores reversed is corrected to the roster name', () => {
+  const roster = [{ name: 'Christian Lovell' }, { name: 'Cooper Karns' }];
+  const { leaders } = parseStatLeaders(
+    wrap([leader({ athleteFirstName: 'Lovell', athleteLastName: 'Christian' })]),
+    roster,
+  );
+  assert.equal(leaders[0].name, 'Christian Lovell');
+});
+
+test('a reversed name with no unique roster match is left for the validator to reject', () => {
+  const roster = [{ name: 'Cooper Karns' }];
+  const { leaders } = parseStatLeaders(
+    wrap([leader({ athleteFirstName: 'Lovell', athleteLastName: 'Christian' })]),
+    roster,
+  );
+  assert.equal(leaders[0].name, 'Lovell Christian');
+});
+
 test('a zero value is kept, because zero is a real statistic', () => {
   const { leaders } = parseStatLeaders(wrap([leader({ stat: { header: 'Int', displayName: 'Interceptions', value: 0 } })]));
   assert.equal(leaders[0].value, '0');

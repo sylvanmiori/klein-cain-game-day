@@ -95,7 +95,7 @@ const lastPlayed = editions
 for (const { name, edition } of lastPlayed ? [lastPlayed] : []) {
   if (edition.stats) continue;
   try {
-    const stats = await fetchStatLeaders(publication.statsUrl);
+    const stats = await fetchStatLeaders(publication.statsUrl, roster.players);
     if (stats.updated.slice(0, 10) <= edition.date) {
       console.log(`${name}: statistics not yet updated for this game; leaving them for tomorrow.`);
       continue;

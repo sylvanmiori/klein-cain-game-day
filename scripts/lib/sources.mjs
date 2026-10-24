@@ -256,13 +256,38 @@ export const MAXPREPS_ATTRIBUTION = {
  * label them that way. MaxPreps enters a Friday game the following morning, so
  * a snapshot taken too early would describe the season before the game.
  */
-export async function fetchStatLeaders(statsUrl) {
+export async function fetchStatLeaders(statsUrl, rosterPlayers = null) {
   const html = await (await get(statsUrl)).text();
-  return { ...parseStatLeaders(html), sourceUrl: statsUrl, asOf: new Date().toISOString() };
+  return { ...parseStatLeaders(html, rosterPlayers), sourceUrl: statsUrl, asOf: new Date().toISOString() };
+}
+
+const nameWordSet = (name) => name.toLowerCase().replace(/[^a-z\s]/g, '').split(/\s+/).filter(Boolean).sort().join(' ');
+
+/**
+ * MaxPreps stores at least one Cain athlete with first and last names swapped
+ * (Christian Lovell appears there as "Lovell Christian"), and its leader rows
+ * inherit the swap. The site roster is the authority: when a leader's name is
+ * not a roster name but its word set matches exactly one roster player,
+ * publish the roster name. Ambiguous or unmatched names pass through and the
+ * edition validator rejects them loudly rather than shipping a wrong name.
+ */
+export function correctStatLeaderNames(leaders, rosterPlayers) {
+  if (!Array.isArray(rosterPlayers) || rosterPlayers.length === 0) return leaders;
+  const exact = new Set(rosterPlayers.map((player) => player.name));
+  const byWordSet = new Map();
+  for (const player of rosterPlayers) {
+    const key = nameWordSet(player.name);
+    byWordSet.set(key, byWordSet.has(key) ? null : player.name);
+  }
+  return leaders.map((leader) => {
+    if (exact.has(leader.name)) return leader;
+    const canonical = byWordSet.get(nameWordSet(leader.name));
+    return canonical ? { ...leader, name: canonical } : leader;
+  });
 }
 
 /** Split out from the fetch so the parsing can be tested without a network. */
-export function parseStatLeaders(html) {
+export function parseStatLeaders(html, rosterPlayers = null) {
   const blob = /<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/.exec(html);
   if (!blob) throw new Error('Stats page did not contain the expected data block.');
 
@@ -296,7 +321,7 @@ export function parseStatLeaders(html) {
   const updated = data?.lastUpdated?.timeStamp ?? null;
   if (!updated) throw new Error('Stats page did not say when it was last updated.');
 
-  return { leaders, updated, ...MAXPREPS_ATTRIBUTION };
+  return { leaders: correctStatLeaderNames(leaders, rosterPlayers), updated, ...MAXPREPS_ATTRIBUTION };
 }
 
 /* ----------------------------------------------------------- game statistics */

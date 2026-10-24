@@ -50,7 +50,302 @@
     "home": null,
     "away": null
   },
-  "stats": null,
+  "stats": {
+    "leaders": [
+      {
+        "category": "Receiving Yards Per Game",
+        "header": "Y/G",
+        "name": "Cooper Karns",
+        "position": "WR",
+        "value": "74.9",
+        "rank": 1
+      },
+      {
+        "category": "Receiving Yards Per Game",
+        "header": "Y/G",
+        "name": "Tyson Freeman",
+        "position": "WR",
+        "value": "34.4",
+        "rank": 2
+      },
+      {
+        "category": "Receiving Yards Per Game",
+        "header": "Y/G",
+        "name": "Israel Smith",
+        "position": "",
+        "value": "33.6",
+        "rank": 3
+      },
+      {
+        "category": "Rushing Yards Per Game",
+        "header": "Y/G",
+        "name": "Eyan Johnson",
+        "position": "RB, SB",
+        "value": "84.3",
+        "rank": 1
+      },
+      {
+        "category": "Rushing Yards Per Game",
+        "header": "Y/G",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "69.4",
+        "rank": 2
+      },
+      {
+        "category": "Rushing Yards Per Game",
+        "header": "Y/G",
+        "name": "Earl Oguinn Jr.",
+        "position": "RB, WR",
+        "value": "35.1",
+        "rank": 3
+      },
+      {
+        "category": "Total TDs",
+        "header": "Tot",
+        "name": "Eyan Johnson",
+        "position": "RB, SB",
+        "value": "11",
+        "rank": 1
+      },
+      {
+        "category": "Total TDs",
+        "header": "Tot",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "7",
+        "rank": 2
+      },
+      {
+        "category": "Total TDs",
+        "header": "Tot",
+        "name": "Earl Oguinn Jr.",
+        "position": "RB, WR",
+        "value": "6",
+        "rank": 3
+      },
+      {
+        "category": "Tackles Per Game",
+        "header": "Tckl/G",
+        "name": "Gage Hansberger",
+        "position": "LB",
+        "value": "7.1",
+        "rank": 1
+      },
+      {
+        "category": "Tackles Per Game",
+        "header": "Tckl/G",
+        "name": "Easton Mizell",
+        "position": "DB, FS",
+        "value": "7.0",
+        "rank": 2
+      },
+      {
+        "category": "Tackles Per Game",
+        "header": "Tckl/G",
+        "name": "Christian Redeo",
+        "position": "DB",
+        "value": "5.4",
+        "rank": 3
+      },
+      {
+        "category": "Sacks",
+        "header": "Sak",
+        "name": "Michael Rhodes Jr.",
+        "position": "DE, DT",
+        "value": "2.0",
+        "rank": 1
+      },
+      {
+        "category": "Sacks",
+        "header": "Sak",
+        "name": "Jackson Luark",
+        "position": "DL",
+        "value": "1.5",
+        "rank": 2
+      },
+      {
+        "category": "Sacks",
+        "header": "Sak",
+        "name": "Colton Johnson",
+        "position": "DL",
+        "value": "1.5",
+        "rank": 3
+      },
+      {
+        "category": "Interceptions",
+        "header": "Int",
+        "name": "Easton Mizell",
+        "position": "DB, FS",
+        "value": "2",
+        "rank": 1
+      },
+      {
+        "category": "Interceptions",
+        "header": "Int",
+        "name": "Colby Braxton",
+        "position": "DB",
+        "value": "1",
+        "rank": 2
+      },
+      {
+        "category": "Interceptions",
+        "header": "Int",
+        "name": "Daniel Rogers",
+        "position": "CB",
+        "value": "1",
+        "rank": 3
+      },
+      {
+        "category": "Passing TDs",
+        "header": "TD Passes",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "11",
+        "rank": 1
+      },
+      {
+        "category": "Passing TDs",
+        "header": "TD Passes",
+        "name": "Trey Reyes",
+        "position": "QB",
+        "value": "2",
+        "rank": 2
+      },
+      {
+        "category": "Receiving TDs",
+        "header": "Rec",
+        "name": "Cooper Karns",
+        "position": "WR",
+        "value": "3",
+        "rank": 1
+      },
+      {
+        "category": "Receiving TDs",
+        "header": "Rec",
+        "name": "Tyson Freeman",
+        "position": "WR",
+        "value": "3",
+        "rank": 2
+      },
+      {
+        "category": "Receiving TDs",
+        "header": "Rec",
+        "name": "Earl Oguinn Jr.",
+        "position": "RB, WR",
+        "value": "2",
+        "rank": 3
+      },
+      {
+        "category": "Rushing TDs",
+        "header": "Run",
+        "name": "Eyan Johnson",
+        "position": "RB, SB",
+        "value": "10",
+        "rank": 1
+      },
+      {
+        "category": "Rushing TDs",
+        "header": "Run",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "6",
+        "rank": 2
+      },
+      {
+        "category": "Rushing TDs",
+        "header": "Run",
+        "name": "Earl Oguinn Jr.",
+        "position": "RB, WR",
+        "value": "4",
+        "rank": 3
+      },
+      {
+        "category": "Caused Fumbles",
+        "header": "Caus",
+        "name": "Wes Young",
+        "position": "TE, LS",
+        "value": "1",
+        "rank": 1
+      },
+      {
+        "category": "Caused Fumbles",
+        "header": "Caus",
+        "name": "Bryson Bucola",
+        "position": "DL",
+        "value": "1",
+        "rank": 2
+      },
+      {
+        "category": "Caused Fumbles",
+        "header": "Caus",
+        "name": "Christian Lovell",
+        "position": "DL",
+        "value": "1",
+        "rank": 3
+      },
+      {
+        "category": "Fumble Recoveries",
+        "header": "Rcv",
+        "name": "Wes Young",
+        "position": "TE, LS",
+        "value": "1",
+        "rank": 1
+      },
+      {
+        "category": "Fumble Recoveries",
+        "header": "Rcv",
+        "name": "Jaiden Pacheco",
+        "position": "DB",
+        "value": "1",
+        "rank": 2
+      },
+      {
+        "category": "QB Hurries",
+        "header": "Hur",
+        "name": "Michael Rhodes Jr.",
+        "position": "DE, DT",
+        "value": "4",
+        "rank": 1
+      },
+      {
+        "category": "QB Hurries",
+        "header": "Hur",
+        "name": "Jaemin Gilstrap",
+        "position": "DL",
+        "value": "4",
+        "rank": 2
+      },
+      {
+        "category": "QB Hurries",
+        "header": "Hur",
+        "name": "Bryson Bucola",
+        "position": "DL",
+        "value": "3",
+        "rank": 3
+      },
+      {
+        "category": "Completion Percentage",
+        "header": "Pct",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "0.575",
+        "rank": 1
+      },
+      {
+        "category": "QB Rating",
+        "header": "Pct",
+        "name": "Jace Hanks",
+        "position": "QB",
+        "value": "97.8",
+        "rank": 1
+      }
+    ],
+    "updated": "2026-10-24T10:12:42",
+    "source": "MaxPreps",
+    "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/",
+    "asOf": "2026-10-24T18:28:24.629Z"
+  },
   "finalScore": {
     "home": 10,
     "away": 44,
@@ -490,5 +785,77 @@
     "MaxPreps",
     "Dave Campbell’s Texas Football"
   ],
-  "current": true
+  "current": true,
+  "gameStats": {
+    "team": "Klein Cain",
+    "playerOfGame": {
+      "name": "Easton Mizell",
+      "number": "47",
+      "image": "/players/easton-mizell.jpg",
+      "headline": "5 tackles",
+      "rationale": "Mizell finished with 5 tackles.",
+      "model": "Cain Impact v1"
+    },
+    "totals": [
+      {
+        "label": "Total offense",
+        "value": "512 yards",
+        "detail": "245 passing · 267 rushing"
+      },
+      {
+        "label": "Passing",
+        "value": "245 yards",
+        "detail": "14 of 23 · 2 TD"
+      },
+      {
+        "label": "Rushing",
+        "value": "267 yards",
+        "detail": "29 carries · 4 TD"
+      },
+      {
+        "label": "Defense",
+        "value": "57 tackles",
+        "detail": "32 solo · 8 TFL"
+      },
+      {
+        "label": "Punting",
+        "value": "33.8 average",
+        "detail": "4 punts · long 39"
+      }
+    ],
+    "leaders": [
+      {
+        "category": "Passing",
+        "name": "Jace Hanks",
+        "number": "9",
+        "stat": "245 passing yards",
+        "detail": "14 of 21 · 2 TD"
+      },
+      {
+        "category": "Rushing",
+        "name": "Eyan Johnson",
+        "number": "16",
+        "stat": "110 rushing yards",
+        "detail": "9 carries · 2 TD"
+      },
+      {
+        "category": "Receiving",
+        "name": "Cooper Karns",
+        "number": "10",
+        "stat": "123 receiving yards",
+        "detail": "6 catches · 1 TD"
+      },
+      {
+        "category": "Tackles",
+        "name": "Jackson Luark",
+        "number": "96",
+        "stat": "7 total tackles",
+        "detail": "3 solo · 1 TFL"
+      }
+    ],
+    "updated": "2026-10-24T11:09:45",
+    "source": "MaxPreps",
+    "sourceUrl": "https://www.maxpreps.com/tx/football/game/klein-cain-houston-vs-tomball-memorial/10-23-2026/?c=96f945f3-f9e5-4616-8e47-9dd0860c9dea&tab=Stats",
+    "asOf": "2026-10-24T18:28:25.244Z"
+  }
 }

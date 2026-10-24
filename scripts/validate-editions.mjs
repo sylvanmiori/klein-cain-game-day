@@ -10,6 +10,9 @@ const dir = path.join(root, 'content/editions');
 const schedule = JSON.parse(await readFile(path.join(root, 'config/season-2026.json'), 'utf8'));
 const publication = JSON.parse(await readFile(path.join(root, 'config/publication.json'), 'utf8'));
 const coaches = JSON.parse(await readFile(path.join(root, 'config/coaches.json'), 'utf8'));
+const rosterNames = new Set(
+  JSON.parse(await readFile(path.join(root, 'content/roster-2026.json'), 'utf8')).players.map((player) => player.name),
+);
 const coachBios = [
   coaches.school?.bio,
   ...Object.values(coaches.opponents ?? {}).map((c) => c.bio),
@@ -137,6 +140,9 @@ for (const file of files) {
       if (!leader.name || !leader.category || leader.value === undefined) {
         fail(`stat leader ${leader.name || '?'} is missing a name, category or value`);
       }
+      if (leader.name && !rosterNames.has(leader.name)) {
+        fail(`stat leader "${leader.name}" is not a roster name; the source may carry it reversed or misspelled, so fix it at ingestion rather than publishing it`);
+      }
     }
     if (!Number.isFinite(Date.parse(stats.updated))) fail('stats.updated must say when the source was updated');
   });
@@ -152,8 +158,14 @@ for (const file of files) {
     if (!Array.isArray(stats.totals) || stats.totals.length === 0) fail('gameStats has no team totals');
     if (!Array.isArray(stats.leaders) || stats.leaders.length === 0) fail('gameStats has no leaders');
     if (!Number.isFinite(Date.parse(stats.updated))) fail('gameStats.updated must be a valid source timestamp');
+    if (stats.playerOfGame?.name && !rosterNames.has(stats.playerOfGame.name)) {
+      fail(`gameStats player of the game "${stats.playerOfGame.name}" is not a roster name`);
+    }
     for (const leader of stats.leaders ?? []) {
       if (!leader.category || !leader.name || !leader.stat) fail('gameStats has an incomplete leader');
+      if (leader.name && !rosterNames.has(leader.name)) {
+        fail(`gameStats leader "${leader.name}" is not a roster name; the source may carry it reversed or misspelled, so fix it at ingestion rather than publishing it`);
+      }
     }
   });
   attributed(edition.weather, 'weather', (weather) => {
