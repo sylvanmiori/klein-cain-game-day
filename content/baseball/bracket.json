@@ -1,188 +1,143 @@
 {
-  "tournament": "2026 15U PG Octoberfest @ Premier",
-  "event_id": "140496",
-  "bracket_url": "https://www.perfectgame.org/events/Brackets.aspx?event=140496",
+  "tournament": "2026 15U PG Halloween Bash @ Premier",
+  "event_id": "140576",
+  "bracket_url": "https://www.perfectgame.org/events/Brackets.aspx?event=140576",
   "games": [
     {
-      "tier": "Platinum Bracket",
+      "tier": "Gold Bracket",
       "round": "Quarterfinal",
-      "matchup": "#1 Magnolia Express 15U vs #8 Loudboyz 2030",
-      "date": "2026-10-11",
+      "matchup": "#4 Den Guys 15u vs #5 Lonestar Baseball Club - American - 2030",
+      "date": "2026-10-25",
+      "time": "8:00 AM",
+      "field": "PLAY BY PLAY | Field 1",
+      "venue": "Schiel Road Park"
+    },
+    {
+      "tier": "Gold Bracket",
+      "round": "Quarterfinal",
+      "matchup": "#2 15U OFFSEASON BASEBALL - WESTBROOKS vs #7 Houston Colts Prospects",
+      "date": "2026-10-25",
       "time": "12:40 PM",
-      "field": "GAME RECAP | Field 2",
+      "field": "PLAY BY PLAY | Field 1",
       "venue": "Schiel Road Park"
     },
     {
-      "tier": "Platinum Bracket",
+      "tier": "Gold Bracket",
       "round": "Quarterfinal",
-      "matchup": "#4 Premier Baseball 2030 Ruiz vs #5 Texas Standard- Crossley",
-      "date": "2026-10-11",
-      "time": "8:00 AM",
-      "field": "GAME RECAP | Field 2",
-      "venue": "Schiel Road Park"
-    },
-    {
-      "tier": "Platinum Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#3 GP31 15U vs #6 USA Prime South Houston - 2030 Red",
-      "date": "2026-10-11",
-      "time": "8:00 AM",
-      "field": "GAME RECAP | Field 1",
-      "venue": "Schiel Road Park"
-    },
-    {
-      "tier": "Platinum Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#2 TBT Houston 2030 vs #7 Scorpions Team Easton 2030",
-      "date": "2026-10-11",
+      "matchup": "#3 Bull Pen Sandoval 15u vs #6 Alpha One Baseball 2030 Scout",
+      "date": "2026-10-25",
       "time": "10:20 AM",
-      "field": "GAME RECAP | Field 2",
+      "field": "PLAY BY PLAY | Field 1",
       "venue": "Schiel Road Park"
     },
     {
-      "tier": "Platinum Bracket",
+      "tier": "Gold Bracket",
       "round": "Semifinal",
-      "matchup": "#5 Texas Standard- Crossley vs #8 Loudboyz 2030",
-      "date": "2026-10-11",
+      "matchup": "#1 USA Prime Houston East vs Winner of Game #19",
+      "date": "2026-10-25",
+      "time": "3:00 PM",
+      "field": "PLAY BY PLAY | Field 1",
+      "venue": "Schiel Road Park"
+    },
+    {
+      "tier": "Gold Bracket",
+      "round": "Semifinal",
+      "matchup": "Winner of Game #20 vs Winner of Game #21",
+      "date": "2026-10-25",
       "time": "5:20 PM",
+      "field": "PLAY BY PLAY | Field 1",
+      "venue": "Schiel Road Park"
+    },
+    {
+      "tier": "Gold Bracket",
+      "round": "Championship",
+      "matchup": "Winner of Game #22 vs Winner of Game #23",
+      "date": "2026-10-25",
+      "time": "7:40 PM",
+      "field": "PLAY BY PLAY | Field 1",
+      "venue": "Schiel Road Park"
+    },
+    {
+      "tier": "Silver Bracket",
+      "round": "Quarterfinal",
+      "matchup": "#4 SETX White Caps vs #5 Mambas baseball",
+      "date": "2026-10-25",
+      "time": "8:00 AM",
       "field": "PLAY BY PLAY | Field 2",
       "venue": "Schiel Road Park"
     },
     {
-      "tier": "Platinum Bracket",
+      "tier": "Silver Bracket",
+      "round": "Quarterfinal",
+      "matchup": "#2 2030 South Texas Sliders - Fall vs #7 BPT Hurricanes",
+      "date": "2026-10-25",
+      "time": "12:40 PM",
+      "field": "PLAY BY PLAY | Field 2",
+      "venue": "Schiel Road Park"
+    },
+    {
+      "tier": "Silver Bracket",
+      "round": "Quarterfinal",
+      "matchup": "#3 4:13 Baseball vs #6 Legacy Baseball Club - Arden",
+      "date": "2026-10-25",
+      "time": "10:20 AM",
+      "field": "PLAY BY PLAY | Field 2",
+      "venue": "Schiel Road Park"
+    },
+    {
+      "tier": "Silver Bracket",
       "round": "Semifinal",
-      "matchup": "#6 USA Prime South Houston - 2030 Red vs #7 Scorpions Team Easton 2030",
-      "date": "2026-10-11",
+      "matchup": "#1 15U OFFSEASON BASEBALL - HAMMOND vs Winner of Game #25",
+      "date": "2026-10-25",
       "time": "3:00 PM",
       "field": "PLAY BY PLAY | Field 2",
       "venue": "Schiel Road Park"
     },
     {
-      "tier": "Platinum Bracket",
+      "tier": "Silver Bracket",
+      "round": "Semifinal",
+      "matchup": "Winner of Game #26 vs Winner of Game #27",
+      "date": "2026-10-25",
+      "time": "5:20 PM",
+      "field": "PLAY BY PLAY | Field 2",
+      "venue": "Schiel Road Park"
+    },
+    {
+      "tier": "Silver Bracket",
       "round": "Championship",
       "matchup": "Winner of Game #28 vs Winner of Game #29",
-      "date": "2026-10-11",
+      "date": "2026-10-25",
       "time": "7:40 PM",
       "field": "PLAY BY PLAY | Field 2",
       "venue": "Schiel Road Park"
     },
     {
-      "tier": "Gold Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#1 Mambas baseball vs #8 Brazos Valley Pirates Gold",
-      "date": "2026-10-11",
-      "time": "12:40 PM",
-      "field": "GAME RECAP | Field 5",
-      "venue": "Premier Baseball of Texas"
-    },
-    {
-      "tier": "Gold Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#4 15U OFFSEASON BASEBALL - WESTBROOKS vs #5 Texas Standard- Williams",
-      "date": "2026-10-11",
-      "time": "8:00 AM",
-      "field": "GAME RECAP | Field 5",
-      "venue": "Premier Baseball of Texas"
-    },
-    {
-      "tier": "Gold Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#3 True Journey Elite vs #6 Bull Pen Sandoval 15u",
-      "date": "2026-10-11",
-      "time": "8:00 AM",
-      "field": "GAME RECAP | Field 6",
-      "venue": "Premier Baseball of Texas"
-    },
-    {
-      "tier": "Gold Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#2 Den Guys 15u vs #7 TSB",
-      "date": "2026-10-11",
-      "time": "10:20 AM",
-      "field": "GAME RECAP | Field 5",
-      "venue": "Premier Baseball of Texas"
-    },
-    {
-      "tier": "Gold Bracket",
+      "tier": "Bronze Bracket",
       "round": "Semifinal",
-      "matchup": "#1 Mambas baseball vs #5 Texas Standard- Williams",
-      "date": "2026-10-11",
-      "time": "5:20 PM",
-      "field": "PLAY BY PLAY | Field 5",
-      "venue": "Premier Baseball of Texas"
-    },
-    {
-      "tier": "Gold Bracket",
-      "round": "Semifinal",
-      "matchup": "#2 Den Guys 15u vs #6 Bull Pen Sandoval 15u",
-      "date": "2026-10-11",
-      "time": "3:00 PM",
-      "field": "PLAY BY PLAY | Field 5",
-      "venue": "Premier Baseball of Texas"
-    },
-    {
-      "tier": "Gold Bracket",
-      "round": "Championship",
-      "matchup": "Winner of Game #35 vs Winner of Game #36",
-      "date": "2026-10-11",
-      "time": "7:40 PM",
-      "field": "PLAY BY PLAY | Field 5",
-      "venue": "Premier Baseball of Texas"
-    },
-    {
-      "tier": "Bronze Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#4 WF Nation TX vs #5 Next Level Baseball",
-      "date": "2026-10-11",
-      "time": "8:00 AM",
-      "field": "GAME RECAP | Field 7",
-      "venue": "Premier Baseball of Texas"
-    },
-    {
-      "tier": "Bronze Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#2 4:13 Baseball vs #7 AMP Academy - 15u",
-      "date": "2026-10-11",
-      "time": "12:40 PM",
-      "field": "GAME RECAP | Field 7",
-      "venue": "Premier Baseball of Texas"
-    },
-    {
-      "tier": "Bronze Bracket",
-      "round": "Quarterfinal",
-      "matchup": "#3 Canes Houston - 15U vs #6 15U OFFSEASON BASEBALL - HAMMOND",
-      "date": "2026-10-11",
-      "time": "10:20 AM",
-      "field": "GAME RECAP | Field 7",
-      "venue": "Premier Baseball of Texas"
+      "matchup": "#1 Scorpions Team Easton BCS 2030 vs #4 Banditos 2030 White",
+      "date": "2026-10-25",
+      "time": "4:40 PM",
+      "field": "PLAY BY PLAY | Field 11",
+      "venue": "Baseball USA"
     },
     {
       "tier": "Bronze Bracket",
       "round": "Semifinal",
-      "matchup": "#1 Scorpions Team Easton 2030 Black vs #4 WF Nation TX",
-      "date": "2026-10-11",
-      "time": "3:00 PM",
-      "field": "PLAY BY PLAY | Field 7",
-      "venue": "Premier Baseball of Texas"
-    },
-    {
-      "tier": "Bronze Bracket",
-      "round": "Semifinal",
-      "matchup": "#2 4:13 Baseball vs #3 Canes Houston - 15U",
-      "date": "2026-10-11",
-      "time": "5:20 PM",
-      "field": "PLAY BY PLAY | Field 7",
-      "venue": "Premier Baseball of Texas"
+      "matchup": "#2 Brazos Valley Pirates Gold vs #3 Blitz Baseball Cypress 15U",
+      "date": "2026-10-25",
+      "time": "2:20 PM",
+      "field": "PLAY BY PLAY | Field 11",
+      "venue": "Baseball USA"
     },
     {
       "tier": "Bronze Bracket",
       "round": "Championship",
-      "matchup": "Winner of Game #41 vs Winner of Game #42",
-      "date": "2026-10-11",
-      "time": "7:40 PM",
-      "field": "PLAY BY PLAY | Field 7",
-      "venue": "Premier Baseball of Texas"
+      "matchup": "Winner of Game #31 vs Winner of Game #32",
+      "date": "2026-10-25",
+      "time": "7:00 PM",
+      "field": "PLAY BY PLAY | Field 11",
+      "venue": "Baseball USA"
     }
   ],
-  "scraped_at": "2026-10-11T20:51:32.957Z"
+  "scraped_at": "2026-10-25T09:03:00.736Z"
 }
