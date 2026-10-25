@@ -97,9 +97,155 @@
         }
       ]
     },
-    "players": [],
-    "recruiting": null,
-    "keys": null,
+    "players": [
+      {
+        "team": "CAIN",
+        "number": "16",
+        "name": "Eyan Johnson",
+        "image": "/players/eyan-johnson.jpg",
+        "role": "RB / SB · Senior",
+        "tag": "84.3 rushing yards per game",
+        "rating": "11 total TDs · 10 rushing",
+        "copy": "**Eyan Johnson (#16)** leads Cain with **84.3** rushing yards per game and **11** total touchdowns, 10 on the ground. He scored twice at Tomball Memorial, on a 1-yard run and an **80-yard** touchdown in the third quarter. When Johnson gets rolling early, Cain controls the clock and keeps Magnolia's offense on the sideline."
+      },
+      {
+        "team": "CAIN",
+        "number": "9",
+        "name": "Jace Hanks",
+        "image": "/players/jace-hanks.jpg",
+        "role": "QB · Junior",
+        "tag": "11 passing touchdowns",
+        "rating": "69.4 rushing yards per game",
+        "copy": "**Jace Hanks (#9)** has thrown **11** touchdown passes, and his legs account for a big chunk of the run game: **69.4** rushing yards per game, second on the team. He threw scoring passes to **Hank Aguirre (#13)** and **Cooper Karns (#10)** at Memorial. Thursday, he'll need to make quick decisions against a Magnolia secondary led by junior **Jacob Gibson (#20)**."
+      },
+      {
+        "team": "CAIN",
+        "number": "10",
+        "name": "Cooper Karns",
+        "image": "/players/cooper-karns.jpg",
+        "role": "WR · Senior",
+        "tag": "74.9 receiving yards per game",
+        "rating": "3 receiving TDs",
+        "copy": "**Cooper Karns (#10)** is Cain's clear No. 1 target at **74.9** receiving yards per game, well ahead of the rest of the group. He caught **six** passes for **123** yards at Memorial, including a **38-yard** touchdown on fourth-and-8 that helped Cain build a 37-0 halftime lead. Magnolia has a choice: bracket Karns and open up the run game, or cover him one-on-one and live with the risk."
+      },
+      {
+        "team": "CAIN",
+        "number": "47",
+        "name": "Easton Mizell",
+        "image": "/players/easton-mizell.jpg",
+        "role": "DB / FS · Junior",
+        "tag": "7.0 tackles per game",
+        "rating": "Team-high 2 interceptions",
+        "copy": "**Easton Mizell (#47)** earned Cain's Player of the Game honors at Tomball Memorial with a forced fumble on Memorial's first drive and a pass breakup in the end zone. He averages **7.0** tackles per game and leads the team with **two** interceptions. Thursday, he'll be part of the answer to the biggest question on the field: how to keep **Chase Lowery (#12)** from beating Cain with his legs."
+      },
+      {
+        "team": "CAIN",
+        "number": "8",
+        "name": "Israel Smith",
+        "image": "/players/israel-smith.jpg",
+        "role": "WR · Sophomore",
+        "tag": "33.6 receiving yards per game",
+        "rating": "75-yard TD at Memorial",
+        "copy": "**Israel Smith (#8)** needed just one play to make his mark at Memorial: a **75-yard** end-around touchdown on Cain's first snap. The sophomore averages **33.6** receiving yards per game, and his speed on the edge gives defenses another look to worry about alongside Johnson and Hanks."
+      },
+      {
+        "team": "MAGNOLIA",
+        "number": "12",
+        "name": "Chase Lowery",
+        "image": "/player-placeholder.svg",
+        "role": "QB · Senior",
+        "tag": "14 rushing touchdowns",
+        "rating": "5 passing TDs",
+        "copy": "**Chase Lowery (#12)** is Magnolia's engine, a true dual threat. According to SportCast's weekly coverage, he had **14** rushing touchdowns and **five** passing scores through the Klein Forest game, along with at least **779** rushing yards and **1,163** passing yards. Against Forest, he ran for two touchdowns and threw a **39-yard** score before the starters sat early in a 48-20 win. Stopping him on the ground is Cain's first priority."
+      },
+      {
+        "team": "MAGNOLIA",
+        "number": "1",
+        "name": "Cash Ferrell",
+        "image": "/player-placeholder.svg",
+        "role": "RB · Senior",
+        "tag": "9 rushing touchdowns",
+        "rating": "Scored in seven straight games",
+        "copy": "**Cash Ferrell (#1)** has scored a rushing touchdown in **seven straight games**, with nine on the season, and has thrown a touchdown pass, too. Lowery gets the headlines, but Ferrell is the back who finishes drives. Together, the two help Magnolia's offense stay patient and avoid having to hurry."
+      },
+      {
+        "team": "MAGNOLIA",
+        "number": "7",
+        "name": "Ty Miller",
+        "image": "/player-placeholder.svg",
+        "role": "MLB / OLB · Senior",
+        "tag": "72 tackles through Oct. 9",
+        "rating": "At least 5 sacks · 2 forced fumbles",
+        "copy": "**Ty Miller (#7)** is the leader of Magnolia's defense. According to SportCast, he had **72** tackles, **four** sacks, **two** forced fumbles and an interception through the bye week. He added a sack against Klein Forest, bringing his total to at least **five**. Cain's offensive line and backs must account for him on every snap, especially on early downs."
+      },
+      {
+        "team": "MAGNOLIA",
+        "number": "20",
+        "name": "Jacob Gibson",
+        "image": "/player-placeholder.svg",
+        "role": "SS / WR · Junior",
+        "tag": "10 tackles vs Tomball Memorial",
+        "rating": "Two-way junior",
+        "copy": "**Jacob Gibson (#20)** led Magnolia with **10** tackles, including half a sack, against Tomball Memorial on October 9. The junior plays both safety and receiver, and Thursday he'll have a tough assignment against Cain's top passing connection: Hanks to Karns."
+      },
+      {
+        "team": "MAGNOLIA",
+        "number": "87",
+        "name": "Aiden Slansky",
+        "image": "/player-placeholder.svg",
+        "role": "TE · Senior",
+        "tag": "Sam Houston State commit",
+        "rating": "On3 No. 124 TE · Class of 2027",
+        "copy": "**Aiden Slansky (#87)** is Magnolia's one rated recruit: a **three-star** tight end committed to **Sam Houston State**, ranked by On3 as the **No. 124** tight end in the class of **2027**. At 6-foot-4, he's a big target in a receiving corps that spreads the scoring around, and he's found the end zone through the air this season. Cain's linebackers and safeties can't lose track of him on play-action looks off the Lowery and Ferrell run game."
+      }
+    ],
+    "recruiting": {
+      "heading": "Magnolia recruiting notes",
+      "note": "One commitment headlines this matchup, and it is not the quarterback. A roster-wide check of On3, 247Sports and Rivals indexed coverage on October 25 found exactly two Magnolia players in On3's recruit database, and Magnolia's senior quarterback is not one of them. On Cain's side, the only rated player in the game is a junior running back whose offer list keeps growing. Production and recruiting footprints do not always match, and this game is the proof.",
+      "rows": [
+        {
+          "name": "Aiden Slansky",
+          "note": "Magnolia's 6-foot-4 senior tight end is a three-star recruit (On3 industry rating 82.00), ranked by On3 as the No. 124 tight end in the class of 2027, who committed to Sam Houston State on August 1, 2026. His other offers, per On3: Nevada, Furman, Georgetown and Lamar.",
+          "href": "https://www.on3.com/rivals/aiden-slansky-294313/"
+        },
+        {
+          "name": "Ty Miller",
+          "note": "Magnolia's senior linebacker is listed in On3's database without a rating or any offers as of October 25, despite recording 72 tackles through October 9. The recruiting services haven't caught up with his season.",
+          "href": "https://www.on3.com/high-school/magnolia-magnolia-tx-5758/football/roster/"
+        },
+        {
+          "name": "Chase Lowery",
+          "note": "No football recruiting profile for Magnolia's quarterback exists in On3, 247Sports or Rivals indexed coverage. SportCast has reported that baseball is his post-high-school focus, and his Perfect Game baseball profile lists no college commitment, so treat any commitment talk about Lowery as unconfirmed.",
+          "href": "https://sportcastmedia.com/bulldogs-run-away-to-fourth-straight-magnolia-bowl-win/"
+        },
+        {
+          "name": "Earl O'Guinn Jr.",
+          "note": "Cain's junior back is a three-star recruit in the class of 2028 (On3 industry rating 83.67, the No. 49 running back in the class). As verified October 25, On3 lists offers from SMU, LSU, Iowa State, Missouri State and UTSA.",
+          "href": "https://www.on3.com/rivals/earl-oguinn-jr-286130/"
+        }
+      ]
+    },
+    "keys": {
+      "heading": "Four keys for Klein Cain",
+      "items": [
+        {
+          "title": "Contain Lowery on the ground",
+          "body": "**Chase Lowery (#12)** has run for **14** touchdowns, and Magnolia's offense starts with his legs. Cain's edge players and second level must keep him inside, gang-tackle him and make the Bulldogs throw on schedule instead of letting him improvise."
+        },
+        {
+          "title": "Keep the turnover run going",
+          "body": "Cain forced **four** turnovers at Tomball Memorial, and short fields can help a team one game back pull off a must-win. Magnolia is balanced and patient, so every extra possession matters even more. It works both ways: Cain can't give a hot team free snaps."
+        },
+        {
+          "title": "Feed Johnson and own the clock",
+          "body": "**Eyan Johnson (#16)** at **84.3** rushing yards per game is Cain's best defense this week. Long ground drives keep Lowery and **Cash Ferrell (#1)** watching from the sideline and shorten a game Cain only needs to win by one."
+        },
+        {
+          "title": "No free plays, no short fields",
+          "body": "Cain turned a Memorial offside penalty into a free-play touchdown on Friday. A disciplined Magnolia team riding a three-game win streak will gladly take gifts like that. Clean snap counts, clean punts and no cheap yards: make the Bulldogs drive the long field every time."
+        }
+      ]
+    },
     "gameInfo": {
       "heading": "Game information",
       "facts": [
@@ -129,6 +275,19 @@
         }
       ],
       "links": []
+    },
+    "opponentRecruitingAudit": {
+      "source": "On3, 247Sports and Rivals indexed coverage checked against the full MaxPreps Magnolia roster (58 players); On3 Magnolia recruit database read directly",
+      "sourceUrl": "https://www.maxpreps.com/tx/magnolia/magnolia-bulldogs/football/roster/",
+      "asOf": "2026-10-25T13:05:00Z",
+      "committedPlayers": [
+        {
+          "name": "Aiden Slansky",
+          "school": "Sam Houston State",
+          "sourceUrl": "https://www.on3.com/rivals/aiden-slansky-294313/"
+        }
+      ],
+      "eliteProspects": []
     }
   },
   "final": null,
