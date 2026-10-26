@@ -362,7 +362,7 @@ export function EditionPage({ edition }: { edition: Edition }) {
   // one, the same fallback the team page uses.
   const statsEdition = edition.stats ? edition : latestEditionWithStats();
   const home = sitePath('/');
-  const rosterHash = sitePath('/#roster-heading');
+  const rosterHash = sitePath('/roster');
   const nextFact = nextGameFact(edition);
   const resultFacts = nextFact ? [...edition.resultFacts, nextFact] : edition.resultFacts;
   // Machine-refreshed facts sit alongside the editorial ones. They appear only

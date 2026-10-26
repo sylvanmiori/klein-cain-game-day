@@ -54,7 +54,7 @@ export default function PhotosPage() {
         <nav aria-label="Site navigation">
           <a href={sitePath('/')}>Home</a>
           <a href={sitePath('/#schedule')}>Schedule</a>
-          <a href={sitePath('/#roster-heading')}>Roster</a>
+          <a href={sitePath('/roster')}>Roster</a>
         </nav>
         <span className="issue">2026 season</span>
       </header>

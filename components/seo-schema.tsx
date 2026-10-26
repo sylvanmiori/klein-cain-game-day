@@ -1,4 +1,5 @@
 import publication from '../config/publication.json';
+import roster from '../content/roster-2026.json';
 import { type Edition, opponentOf } from '../lib/edition';
 import { resolveEditionImage } from '../lib/edition-metadata';
 
@@ -166,6 +167,54 @@ export function gameJsonLd(edition: Edition) {
             '@type': 'ListItem',
             position: 2,
             name: `Week ${edition.week}: ${opponent.name}`,
+            item: pageUrl,
+          },
+        ],
+      },
+    ],
+  };
+}
+
+export function rosterJsonLd() {
+  const pageUrl = `${siteUrl}/roster`;
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${pageUrl}#page`,
+        name: 'Klein Cain Football Roster 2026',
+        description:
+          'The 2026 Klein Cain Hurricanes varsity football roster: every player with jersey number, position, and class.',
+        url: pageUrl,
+        inLanguage: 'en-US',
+        about: { '@id': `${siteUrl}/#team` },
+      },
+      {
+        '@type': 'SportsTeam',
+        '@id': `${siteUrl}/#team`,
+        name: `${publication.schoolName} ${publication.schoolMascot} Football`,
+        sport: 'American Football',
+        athlete: roster.players.map((player) => ({
+          '@type': 'Person',
+          name: player.name,
+          ...(player.image ? { image: `${siteUrl}${player.image}` } : {}),
+        })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: `${siteUrl}/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Roster',
             item: pageUrl,
           },
         ],

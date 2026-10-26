@@ -505,6 +505,27 @@ article>section { border-bottom:1px solid var(--line); }
 .roster-list strong { overflow:hidden; font-size:11px; line-height:1.15; font-weight:850; text-overflow:ellipsis; white-space:nowrap; }
 .roster-list small { font-size:8px; line-height:1.2; font-weight:750; letter-spacing:.08em; text-transform:uppercase; color:#746e65; }
 .roster-note { margin:12px 0 0; font-size:9px; line-height:1.4; color:#746e65; }
+.roster-page-link { margin:14px 0 0; font-size:11px; font-weight:800; }
+.roster-page-link a { color:var(--purple); transition:color .15s ease; }
+.roster-page-link a:hover { color:#32104e; }
+.roster-page { padding:60px var(--pad) 68px; background:#ece8e0; }
+.roster-page .program-intro p { color:#706a61; max-width:62ch; }
+.roster-counts { margin:0 0 26px; font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#706a61; }
+.roster-grid { list-style:none; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0; padding:0; }
+.roster-card { min-width:0; background:#f7f4ee; border:1px solid #aaa49a; }
+.roster-card img { display:block; width:100%; aspect-ratio:1/1; object-fit:cover; object-position:top; background:#ddd6c9; }
+.roster-card-meta { display:grid; grid-template-columns:46px minmax(0,1fr); gap:10px; align-items:center; padding:10px 12px; }
+.roster-card-meta b { font-size:21px; line-height:1; letter-spacing:-.05em; color:var(--purple); font-variant-numeric:tabular-nums; }
+.roster-card-meta span { display:flex; min-width:0; flex-direction:column; gap:2px; }
+.roster-card-meta strong { font-size:12.5px; line-height:1.15; font-weight:850; }
+.roster-card-meta small { font-size:8.5px; line-height:1.2; font-weight:750; letter-spacing:.08em; text-transform:uppercase; color:#746e65; }
+.roster-page .roster-note { font-size:10px; }
+.roster-page .roster-note a { color:var(--purple); }
+.roster-page .team-photo-footer { margin-top:34px; }
+.roster-more { margin:26px 0 0; font-size:12.5px; font-weight:650; color:#4c463e; }
+.roster-more a { color:var(--purple); font-weight:800; }
+@media(max-width:900px){ .roster-grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
+@media(max-width:560px){ .roster-page{padding-top:44px;padding-bottom:50px} .roster-grid{grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px} .roster-card-meta{grid-template-columns:38px minmax(0,1fr); gap:8px; padding:8px 9px} .roster-card-meta b{font-size:18px} .roster-card-meta strong{font-size:11px} .roster-card-meta small{font-size:7.5px} }
 .team-photo-footer { position:relative; margin:0; overflow:hidden; background:#111; }
 .team-photo-footer img { width:100%; max-height:760px; display:block; object-fit:cover; object-position:center 52%; }
 .team-photo-footer figcaption { position:absolute; right:16px; bottom:14px; padding:6px 8px; background:rgba(13,10,15,.76); color:#ddd5e1; font-size:8px; font-weight:750; }

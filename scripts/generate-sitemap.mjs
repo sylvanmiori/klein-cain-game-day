@@ -54,6 +54,13 @@ const urls = [
       'components/seo-schema.tsx', 'content/galleries', 'public/photos',
     ]),
   },
+  {
+    loc: `${domain}/roster`,
+    lastmod: lastmod([
+      'app/roster/page.tsx', 'content/roster-2026.json',
+      'components/seo-schema.tsx', 'components/team-sections.tsx',
+    ]),
+  },
 ];
 
 for (const { edition, file } of editions) {

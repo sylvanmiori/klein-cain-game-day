@@ -78,6 +78,9 @@ export function RosterSection() {
           ))}
         </ol>
         <p className="roster-note">Varsity roster only · missing fields are shown as listed by MaxPreps.</p>
+        <p className="roster-page-link">
+          <a href={sitePath('/roster')}>Full 2026 roster with player photos →</a>
+        </p>
       </section>
 
       <figure className="team-photo-footer">

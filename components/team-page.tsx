@@ -40,7 +40,7 @@ export function TeamPage() {
           <a href={sitePath('/photos')}>Photos</a>
           <a href="#schedule">Schedule</a>
           {stats && <a href="#stats">Stats</a>}
-          <a href="#roster-heading">Roster</a>
+          <a href={sitePath('/roster')}>Roster</a>
         </nav>
         <span className="issue">2026 season</span>
       </header>

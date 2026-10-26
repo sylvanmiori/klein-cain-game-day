@@ -48,6 +48,7 @@ All ten scheduled opponents now have local logo files. As checked September 5, 2
 | `content/galleries/*.json` | editorial game photography, one file per game slug; not written by score or facts automation |
 | `lib/galleries.ts` | types and loaders for editorial game galleries |
 | `app/photos/page.tsx` | `/photos`, season gallery grouped by game |
+| `app/roster/page.tsx` | `/roster`, the full 2026 roster with player photos, built from `content/roster-2026.json`; added 2026-10-25 for roster search intent |
 | `public/photos/` | local game photos; do not hotlink SmugMug |
 | `public/videos/` | local MP4 highlights and poster images; do not hotlink external streams |
 | `public/robots.txt` | crawler directives and sitemap declaration |
@@ -147,7 +148,7 @@ The roster and team photo live only on the program page now, and the Roster link
 One JSON file per game in `content/editions/`, named for its slug. `content/editions/TEMPLATE.md` carries the starting block and the rules. The shape is typed in `lib/edition.ts` (schema v2).
 
 - `config/season-2026.json` is the authority on date, opponent, venue, home/away and kickoff. An edition that disagrees fails validation.
-- Exactly one edition sets `"current": true`. It drives the homepage Next Game card (including live polling) and enables live polling on that game's report. Every edition, including the current one, is prerendered at `/games/week-<n>` by `app/games/[week]/page.tsx`. The roster and team photo appear only on `/`.
+- Exactly one edition sets `"current": true`. It drives the homepage Next Game card (including live polling) and enables live polling on that game's report. Every edition, including the current one, is prerendered at `/games/week-<n>` by `app/games/[week]/page.tsx`. The compact roster section and team photo appear on `/`; the full roster with player photos also has a dedicated page at `/roster`.
 - `config/publication.json` holds the school, wordmark, site-level sources and homepage hero asset paths (`heroNextGameImage`, `heroHelmetCutout`). `config/program.json` holds program history and past seasons. The season record in the schedule card is derived from recorded results.
 - Editions are their own archive. The retired `content/current-edition.json` and `content/archive/` were removed with schema v1.
 
