@@ -16,9 +16,13 @@ const OVERRIDES = {
   // captions. Class is So. (sophomore), corrected by Steven Miori
   // 2026-10-13; an earlier Jr. note (2026-09-23) was wrong.
   8: { position: 'WR', class: 'So.' },
-  // #13: MaxPreps has no position or class. Class of 2029 (freshman)
-  // confirmed by Steven Miori 2026-09-23. Position still unknown.
-  13: { class: 'Fr.' },
+  // #13: MaxPreps has no position or class. Class of 2029, which makes
+  // him a SOPHOMORE in 2026 (class of 2030 is the freshman class).
+  // A 2026-09-23 note converted 2029 to "freshman" in error and pinned
+  // Fr. here; Steven Miori corrected it 2026-10-25. Position WR per game
+  // evidence: he caught the 31-yard TD pass at Tomball Memorial
+  // 2026-10-23 and is covered as a receiver in game copy.
+  13: { position: 'WR', class: 'So.' },
   // #45: MaxPreps has the name reversed as "Lovell Christian". Correct
   // name is Christian Lovell, confirmed by Steven Miori 2026-10-12.
   45: { name: 'Christian Lovell', image: '/players/christian-lovell.jpg' },

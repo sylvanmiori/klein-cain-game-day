@@ -1,7 +1,7 @@
 {
   "source": "MaxPreps",
   "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/roster/",
-  "updated": "September 19, 2026",
+  "updated": "October 17, 2026",
   "players": [
     {
       "number": 1,
@@ -90,8 +90,8 @@
     {
       "number": 13,
       "name": "Hank Aguirre",
-      "position": "—",
-      "class": "Fr.",
+      "position": "WR",
+      "class": "So.",
       "image": "/players/hank-aguirre.jpg"
     },
     {
@@ -239,13 +239,6 @@
       "class": "Sr."
     },
     {
-      "number": 38,
-      "name": "Ryker Mashburn",
-      "position": "LB",
-      "class": "Jr.",
-      "image": "/players/ryker-mashburn.jpg"
-    },
-    {
       "number": 39,
       "name": "Cayden Strong",
       "position": "DB",
@@ -287,13 +280,6 @@
       "image": "/players/christian-lovell.jpg"
     },
     {
-      "number": 46,
-      "name": "Ethan Fox",
-      "position": "MLB / RB",
-      "class": "Jr.",
-      "image": "/players/ethan-fox.jpg"
-    },
-    {
       "number": 47,
       "name": "Easton Mizell",
       "position": "DB / FS",
@@ -314,6 +300,13 @@
       "image": "/players/michael-rhodes.jpg"
     },
     {
+      "number": 51,
+      "name": "Ethan Fox",
+      "position": "MLB / RB",
+      "class": "Jr.",
+      "image": "/players/ethan-fox.jpg"
+    },
+    {
       "number": 52,
       "name": "Joseph Cole",
       "position": "OL",
@@ -324,6 +317,13 @@
       "name": "Leonel Ochoa",
       "position": "G / C",
       "class": "Sr."
+    },
+    {
+      "number": 54,
+      "name": "Ryker Mashburn",
+      "position": "LB",
+      "class": "Jr.",
+      "image": "/players/ryker-mashburn.jpg"
     },
     {
       "number": 56,
