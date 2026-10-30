@@ -3,7 +3,7 @@
   "slug": "2026-10-29-magnolia",
   "week": 9,
   "issue": "08",
-  "state": "preview",
+  "state": "final",
   "date": "2026-10-29",
   "dateLong": "October 29, 2026",
   "dateShort": "OCT 29, 2026",
@@ -25,10 +25,10 @@
     "record": "4–4",
     "rank": 75
   },
-  "pageTitle": "2026 Week 9 Preview: Magnolia at Klein Cain",
-  "metaTitle": "Week 9 Preview: Magnolia at Klein Cain | Cain Game Day",
-  "metaDescription": "Klein Cain (5-3, 3-3) hosts Magnolia (4-4, 4-2) on Thursday, October 29, 2026, one game behind the Bulldogs in the District 15-6A playoff race with two games left.",
-  "socialDescription": "Close to must-win on Thursday night: Klein Cain (5-3, 3-3) hosts Magnolia (4-4, 4-2) on October 29, one game back in the District 15-6A playoff race.",
+  "pageTitle": "2026 Week 9: Magnolia at Klein Cain",
+  "metaTitle": "Week 9: Magnolia at Klein Cain | Cain Game Day",
+  "metaDescription": "Halftime: Magnolia 17, Klein Cain 14. Eyan Johnson scored twice, Hank Aguirre's 56-yard catch set up the tying score, and a wild blocked field goal finish swung the half on October 29, 2026.",
+  "socialDescription": "Halftime: Magnolia 17, Klein Cain 14. Johnson has both Cain touchdowns, and a blocked field goal return touchdown came off the board in the final minute.",
   "ogImage": "",
   "prediction": {
     "margin": 7,
@@ -62,14 +62,14 @@
     "asOf": "2026-09-29T16:47:33.962Z"
   },
   "weather": {
-    "tempF": 79,
+    "tempF": 78,
     "condition": "Mostly Cloudy",
-    "precipPct": 1,
-    "humidityPct": 51,
-    "wind": "5 mph SE",
+    "precipPct": 0,
+    "humidityPct": 52,
+    "wind": "5 mph E",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-10-29T17:18:08.913Z"
+    "asOf": "2026-10-28T16:58:43.746Z"
   },
   "scheduledFacts": [],
   "resultFacts": [],
@@ -309,7 +309,97 @@
       "eliteProspects": []
     }
   },
-  "final": null,
+  "final": {
+    "headline": "Magnolia kicks its way in front at the half, 17-14, after a wild finish at Klein Memorial",
+    "byline": "Cain Game Day desk · Updated 8:31 PM CT",
+    "body": "Klein Cain went to the locker room down a field goal in a game it has led, tied, and nearly blown open. **Magnolia leads 17-14 at halftime** at Klein Memorial Stadium, in front on a **32-yard field goal in the final seconds** of a second quarter that swung every few minutes. Cain (5-3, 3-3 in District 15-6A) came in a game behind Magnolia (4-4, 4-2), and the stakes survived the half intact: win, and the Hurricanes pull even at 4-3 with the head-to-head edge.\n\nMagnolia took the opening kickoff and flashed first, with quarterback **Chase Lowery (#12)** breaking a 23-yard run on the first series. The Cain defense answered from there, forced a punt, and took over at its own 18 after the kick was downed.\n\nCain's first possession produced the game's first points. **Jace Hanks (#9)** ran for 11 yards and a first down, **Eyan Johnson (#16)** caught a 5-yard pass, and **Cooper Karns (#10)** turned a third-down screen into **17 yards** to the Magnolia 48. **Israel Smith (#8)** added an 8-yard catch, a late hit tacked on 15 more, and Johnson converted a fourth-and-1 himself before finishing the drive with a **6-yard touchdown run**. The kick made it **7-0 with 6:29 left in the first quarter**.\n\nMagnolia's next series ended with the defensive plays of the half. **Easton Mizell (#47)** blew up a screen to the left with a heavy hit, then, on third-and-13, stepped in front of a deep ball over the middle for the **interception** and returned it to the Cain 44. A dead-ball unsportsmanlike conduct flag on Magnolia after the return set Cain up at the Bulldog 40. *One series, two plays, and Mizell had flipped the field.*\n\nCain could not cash it in. A double-reverse flea-flicker went nowhere, a deep shot into the end zone was broken up, and **Rico Oguinn (#1)** converted a fourth-and-3 to keep the drive alive. Oguinn then took a screen down the left sideline for an apparent touchdown, but a **holding call erased the score**, and the drive died on downs at the Magnolia 22.\n\nThe second quarter belonged to Magnolia's short fields. Starting at the Cain 38, the Bulldogs drove it in: a 14-yard run, a 10-yard catch by the tight end, and an end zone pass interference call on Cain set up first-and-goal at the 2, and Magnolia's No. 1 scored from inches out on third down to tie it **7-7 with 9:56 left in the half**.\n\nCain gave the ball away twice in the quarter, a Karns screen fumble and a Hanks fumble on a keeper, and Magnolia turned the first into points. Another end zone interference call on Cain put the ball at the 2 again, and No. 1 scored his second touchdown from inside the 1 for a **14-7 Magnolia lead**.\n\nThe Cain defense steadied it after the second fumble. Magnolia reached the Cain 40, but a holding call wiped out a fourth-down conversion, the Bulldogs punted, and **Hank Aguirre (#13)** fielded it at the Cain 7 with 4:18 to play in the half.\n\nFrom there, Cain drove the length of the field. Johnson ran for 7 and 2, Aguirre caught two passes to move the chains, and then Aguirre took a slant **56 yards to the Magnolia 3**. Johnson scored up the middle from a yard out, his **second touchdown** of the night, and the kick tied it **14-14 with 2:02 left**.\n\nThe final minute was chaos. Cain **blocked a 47-yard field goal try**, and the recovery return went back for an apparent touchdown that would have sent Cain to the locker room in front. A **facemask flag on Cain** erased the return score and handed Magnolia a first down at the Cain 15 with seven seconds left, and the Bulldogs kicked the **32-yard field goal** for the 17-14 halftime lead.\n\nCain has had a touchdown taken off the board by a flag in each quarter and still trails by only a field goal, with Johnson's two scores and Aguirre's 56-yard catch carrying the offense. Everything the Hurricanes came for is still on the table in the second half.",
+    "homeScore": 14,
+    "awayScore": 17,
+    "quarters": {
+      "labels": [
+        "1",
+        "2"
+      ],
+      "rows": [
+        {
+          "team": "Cain",
+          "scores": [
+            "7",
+            "7"
+          ],
+          "total": "14"
+        },
+        {
+          "team": "Magnolia",
+          "scores": [
+            "0",
+            "17"
+          ],
+          "total": "17"
+        }
+      ]
+    },
+    "notes": [
+      {
+        "heading": "Two touchdowns came off the board",
+        "paragraphs": [
+          "Cain has put the ball in the end zone four times tonight by the eye test and twice by the scoreboard. Oguinn's screen touchdown was erased by holding in the first quarter, and the blocked field goal return touchdown was erased by a facemask in the second. In a game this tight, the flags are the margin.",
+          "The flags cut the other way on defense: both of Magnolia's touchdown drives were set up at the 2-yard line by end zone pass interference calls on Cain, and the Bulldogs' No. 1 finished each from a yard out or closer."
+        ]
+      },
+      {
+        "heading": "Karns past 600",
+        "paragraphs": [
+          "**Cooper Karns (#10)** went past **600 receiving yards on the season** in the first quarter. He entered the night at 599 yards, just short of the Houston area top-25 cutoff of 601, and cleared it with a 17-yard screen catch on the opening drive. He added a 25-yard catch on third-and-17 in the second quarter."
+        ]
+      },
+      {
+        "heading": "The second half decides it",
+        "paragraphs": [
+          "A win pulls Cain even with Magnolia at 4-3 in District 15-6A with the head-to-head tiebreaker, the strongest position the Hurricanes can still reach. A loss does not end the chase tonight, but it leaves Cain needing a win at Klein Forest in the finale and serious help around the district."
+        ]
+      }
+    ],
+    "leaders": {
+      "heading": "Game leaders",
+      "source": "Klein Cain Gameday Report game notes (estimates)",
+      "items": [
+        {
+          "name": "Eyan Johnson",
+          "number": "16",
+          "role": "RB · Senior (Cain)",
+          "image": "/players/eyan-johnson.jpg",
+          "stat": "2 rushing touchdowns",
+          "detail": "6-yard TD in the first quarter · 1-yard TD in the second"
+        },
+        {
+          "name": "Hank Aguirre",
+          "number": "13",
+          "role": "WR · Sophomore (Cain)",
+          "image": "/players/hank-aguirre.jpg",
+          "stat": "56-yard catch",
+          "detail": "Slant to the Magnolia 3 set up the tying touchdown · 3 catches in the half"
+        },
+        {
+          "name": "Easton Mizell",
+          "number": "47",
+          "role": "DB · Junior (Cain)",
+          "image": "/players/easton-mizell.jpg",
+          "stat": "Interception and a pass breakup",
+          "detail": "Third-and-13 pick over the middle · his third interception of the season"
+        },
+        {
+          "name": "Cooper Karns",
+          "number": "10",
+          "role": "WR · Senior (Cain)",
+          "image": "/players/cooper-karns.jpg",
+          "stat": "Past 600 receiving yards this season",
+          "detail": "17-yard screen in the first quarter · 25-yard catch in the second"
+        }
+      ]
+    },
+    "video": null
+  },
   "sources": [
     {
       "label": "SportCast Media: Magnolia puts away Klein Forest early for 3rd straight win (Oct 24, 2026)",
