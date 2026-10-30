@@ -791,6 +791,21 @@
         "label": "Rushing",
         "value": "162 yards",
         "detail": "35 carries · 2 TD"
+      },
+      {
+        "label": "Defense",
+        "value": "65 tackles",
+        "detail": "41 solo · 2 TFL"
+      },
+      {
+        "label": "Punting",
+        "value": "35.0 average",
+        "detail": "2 punts · long 35"
+      },
+      {
+        "label": "Kicking",
+        "value": "4 points",
+        "detail": "4/5 PAT · no field-goal attempts"
       }
     ],
     "leaders": [
@@ -814,11 +829,25 @@
         "number": "13",
         "stat": "112 receiving yards",
         "detail": "6 catches · 1 TD"
+      },
+      {
+        "category": "Tackles",
+        "name": "Colby Braxton",
+        "number": "31",
+        "stat": "8 total tackles",
+        "detail": "5 solo · 1 TFL"
+      },
+      {
+        "category": "Kicking",
+        "name": "Sage DesAutels",
+        "number": "4",
+        "stat": "3 kicking points",
+        "detail": "3/3 PAT · no field-goal attempts"
       }
     ],
-    "updated": "2026-10-30T06:40:12",
+    "updated": "2026-10-30T14:41:06",
     "source": "MaxPreps",
     "sourceUrl": "https://www.maxpreps.com/tx/football/game/klein-cain-houston-vs-magnolia/10-29-2026/?c=7231c2ef-e2e2-493a-96e4-4bdcfb3dfdd2&tab=Stats",
-    "asOf": "2026-10-30T16:56:23.558Z"
+    "asOf": "2026-10-30T21:51:44.769Z"
   }
 }
