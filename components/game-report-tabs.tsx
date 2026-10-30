@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { LiveScore } from './live-score-card';
 
 type View = 'final' | 'preview';
@@ -20,6 +20,11 @@ export function GameReportTabs({ initialStatus, finalView, previewView }: Props)
   // happen mid-game (a halftime report). Once play is underway, the recap is
   // the page's lead view; before kickoff the preview still leads.
   const [view, setView] = useState<View>(initialStatus === 'scheduled' ? 'preview' : 'final');
+  // The server-rendered initial status is baked at build time and can lag
+  // the real game (a pregame build says 'scheduled' until the score card's
+  // first poll reports 'live'). Until the reader picks a tab themselves,
+  // the view follows the live status: preview before kickoff, recap after.
+  const userSelected = useRef(false);
 
   useEffect(() => {
     const selectFromHash = () => {
@@ -44,7 +49,8 @@ export function GameReportTabs({ initialStatus, finalView, previewView }: Props)
       // recap may already be published (halftime report), so leave the
       // reader's current view alone instead of forcing the preview.
       if (nextStatus === 'final' && window.location.hash !== '#preview') setView('final');
-      else if (nextStatus === 'scheduled') setView('preview');
+      else if (nextStatus === 'live' && !userSelected.current && window.location.hash !== '#preview') setView('final');
+      else if (nextStatus === 'scheduled' && !userSelected.current) setView('preview');
     };
 
     selectFromHash();
@@ -57,6 +63,7 @@ export function GameReportTabs({ initialStatus, finalView, previewView }: Props)
   }, []);
 
   const selectView = (nextView: View) => {
+    userSelected.current = true;
     setView(nextView);
     window.history.replaceState(null, '', nextView === 'final' ? '#final' : '#preview');
   };

@@ -284,7 +284,7 @@ export function FinalView({
                   {final.quarters.labels.map((label) => (
                     <span key={label}>{label}</span>
                   ))}
-                  <b>F</b>
+                  <b>{final.quarters.labels.length >= 4 ? 'F' : 'T'}</b>
                 </div>
                 {final.quarters.rows.map((row) => (
                   <div key={row.team}>
