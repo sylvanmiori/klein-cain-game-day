@@ -16,7 +16,10 @@ const previewHashes = new Set(['#players', '#recruiting', '#keys', '#game-info',
 
 export function GameReportTabs({ initialStatus, finalView, previewView }: Props) {
   const [status, setStatus] = useState(initialStatus);
-  const [view, setView] = useState<View>(initialStatus === 'final' ? 'final' : 'preview');
+  // A recap section only exists once an editor has authored one, which can
+  // happen mid-game (a halftime report). Once play is underway, the recap is
+  // the page's lead view; before kickoff the preview still leads.
+  const [view, setView] = useState<View>(initialStatus === 'scheduled' ? 'preview' : 'final');
 
   useEffect(() => {
     const selectFromHash = () => {
@@ -37,9 +40,11 @@ export function GameReportTabs({ initialStatus, finalView, previewView }: Props)
       // When the game goes final, default to the recap view (2026-10-08:
       // the page sat on Game Preview after the final because the view only
       // ever synced toward preview, never toward final). An explicit
-      // #preview hash (shared link) still wins.
+      // #preview hash (shared link) still wins. While the game is live, a
+      // recap may already be published (halftime report), so leave the
+      // reader's current view alone instead of forcing the preview.
       if (nextStatus === 'final' && window.location.hash !== '#preview') setView('final');
-      else if (nextStatus !== 'final') setView('preview');
+      else if (nextStatus === 'scheduled') setView('preview');
     };
 
     selectFromHash();
@@ -56,7 +61,10 @@ export function GameReportTabs({ initialStatus, finalView, previewView }: Props)
     window.history.replaceState(null, '', nextView === 'final' ? '#final' : '#preview');
   };
 
-  if (status !== 'final') return <>{previewView}</>;
+  // Before kickoff (or when a recap is somehow absent from the payload)
+  // there is nothing to switch to, so the preview stands alone. Once the
+  // game is live or final, the authored recap gets its tab and leads.
+  if (status === 'scheduled') return <>{previewView}</>;
 
   return (
     <div className="game-report" id="game-view">
@@ -69,7 +77,7 @@ export function GameReportTabs({ initialStatus, finalView, previewView }: Props)
           aria-controls="final-panel"
           onClick={() => selectView('final')}
         >
-          Final
+          {status === 'final' ? 'Final' : 'Recap'}
         </button>
         <button
           id="preview-tab"
