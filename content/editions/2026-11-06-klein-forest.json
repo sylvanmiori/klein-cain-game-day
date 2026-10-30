@@ -22,19 +22,27 @@
     "name": "Klein Cain",
     "mascot": "Hurricanes",
     "logo": "/favicon.png",
-    "record": "5–3",
+    "record": "5–4",
     "rank": 49
   },
   "pageTitle": "2026 Week 10 Preview: Klein Cain at Klein Forest",
   "metaTitle": "Week 10 Preview: Klein Cain at Klein Forest | Cain Game Day",
-  "metaDescription": "Matchup facts, records and the published forecast for Klein Cain's Week 10 game against Klein Forest on November 6, 2026.",
-  "socialDescription": "Records, ranking and forecast for Klein Cain at Klein Forest.",
+  "metaDescription": "Klein Cain (5-4, 3-4) closes the regular season at Klein Forest (1-8, 1-6) on Friday, November 6, 2026, needing a win and help around District 15-6A to reach the playoffs.",
+  "socialDescription": "Regular-season finale: Klein Cain (5-4, 3-4) at Klein Forest (1-8, 1-6) on November 6. Cain has to win, then get help, to keep its playoff chase alive.",
   "ogImage": "",
   "prediction": {
     "margin": 23,
     "source": "Dave Campbell’s Texas Football",
     "sourceUrl": "https://www.texasfootball.com/",
     "asOf": "2026-09-29T16:47:34.324Z"
+  },
+  "poll": {
+    "source": "Dave Campbell's Texas Football Class 6A state poll",
+    "sourceUrl": "https://www.timesrecordnews.com/story/sports/high-school/football/2026/10/26/check-out-the-texas-high-school-football-rankings-going-into-week-10-wfisd-uil-windthorst-graham/92266015007/",
+    "asOf": "2026-10-26",
+    "weekLabel": "Week 10",
+    "home": null,
+    "away": null
   },
   "massey": null,
   "rankings": {
@@ -61,11 +69,11 @@
     "playersNote": "",
     "intro": {
       "heading": "The matchup",
-      "body": "Klein Cain plays at Klein Forest on November 6, 2026 at 7:00 PM, at Klein Memorial Stadium. Records, the statewide ranking and the published forecast on this page update automatically as the season goes on. Player notes are added only when they can be checked against a named source.",
+      "body": "One game left, and the math is simple to say and hard to do. **Klein Cain (5-4, 3-4)** closes the regular season at **Klein Forest (1-8, 1-6)** on Friday, November 6 at 7:00 PM at Klein Memorial Stadium. Cain sits **sixth** in **District 15-6A**, and only the **top four** advance to the playoffs. Beating the Golden Eagles is the price of entry. It is not, by itself, enough.\n\nThursday's 37-34 loss to Magnolia set this up. Magnolia (5-2) moved alone into **second** behind Klein (6-1), and Klein Oak, Tomball and Klein Collins are all tied at **4-2** in the fight for the remaining spots. Three district games tonight, Klein at Klein Collins, Klein Oak at Magnolia West and Tomball Memorial at Tomball, will sharpen the picture before the finale, and Klein Collins at Klein Oak next Thursday is the last piece. Cain controls only its own Friday night: win, then see what the table says.\n\nKlein Forest comes in off its bye week on a **five-game losing streak**. Its last outing was a **48-20** loss at Magnolia on October 23, and its lone win was a **43-42** shootout over Magnolia West on September 17. Running back **DeJuane Etheridge** is the offense either way: he ran for **200 yards and three touchdowns** in the win over Magnolia West and scored all three Forest touchdowns against Magnolia. The Golden Eagles have given up **407 points in nine games**, but a team playing its finale at home with nothing to lose is never a formality.\n\nCain averages **36.1 points a game** and has played its best football in bursts this season. If the Hurricanes get in, they go **Division I**: at **3,784** students Cain is the largest school in the district, and the two qualifiers with the largest enrollments play in Division I while the other two play in Division II, each chasing its own state title. Neither team appeared in the **October 26** Class 6A state poll from Dave Campbell's Texas Football. For Cain's seniors, this could be the last game of their high school careers, and the only way to be sure of one more is to win it. *Win first. Scoreboard-watch second. That is the whole week.*",
       "facts": [
         {
           "label": "Cain",
-          "value": "5–3 · 3–3 district · 36.1 points/game",
+          "value": "5–4 · 3–4 district · 36.1 points/game",
           "team": "school"
         },
         {
@@ -86,7 +94,28 @@
     "gameInfo": null
   },
   "final": null,
-  "sources": [],
+  "sources": [
+    {
+      "label": "SportCast Media: Bulldogs rally to beat Klein Cain, extend win streak to 4 (Oct 29, 2026)",
+      "href": "https://sportcastmedia.com/bulldogs-rally-to-beat-klein-cain-extend-win-streak-to-4/"
+    },
+    {
+      "label": "SportCast Media: Magnolia puts away Klein Forest early for 3rd straight win (Oct 24, 2026)",
+      "href": "https://sportcastmedia.com/magnolia-puts-away-klein-forest-early-for-3rd-straight-win/"
+    },
+    {
+      "label": "SportCast Media: Week 9 football preview capsule, Klein Forest at Magnolia (Oct 19, 2026)",
+      "href": "https://sportcastmedia.com/week-9-football-preview-capsule-klein-forest-at-magnolia/"
+    },
+    {
+      "label": "Dave Campbell's Texas Football Class 6A state poll, Week 10 (via Times Record News, Oct 26, 2026)",
+      "href": "https://www.timesrecordnews.com/story/sports/high-school/football/2026/10/26/check-out-the-texas-high-school-football-rankings-going-into-week-10-wfisd-uil-windthorst-graham/92266015007/"
+    },
+    {
+      "label": "MaxPreps: District 15-6A standings",
+      "href": "https://www.maxpreps.com/tx/football/26-27/district/6a-region-ii-district-15/?leagueid=af5271e6-8bb8-4df8-a493-0a3f59161a00"
+    }
+  ],
   "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
   "disclaimerEntities": [
     "Klein ISD",
