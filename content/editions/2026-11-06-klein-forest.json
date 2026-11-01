@@ -63,13 +63,13 @@
   },
   "weather": {
     "tempF": 68,
-    "condition": "Mostly Clear",
-    "precipPct": 2,
-    "humidityPct": 68,
-    "wind": "5 mph N",
+    "condition": "Partly Cloudy",
+    "precipPct": 1,
+    "humidityPct": 70,
+    "wind": "0 mph",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-10-31T22:54:15.960Z"
+    "asOf": "2026-11-01T16:59:49.138Z"
   },
   "scheduledFacts": [],
   "resultFacts": [],
