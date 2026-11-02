@@ -184,6 +184,44 @@ try {
   problems.push(`standings: ${error.message}`);
 }
 
+// Our own results also live in the final editions (promote-edition owns
+// finalScore), so when the Dave Campbell's scores scan above is unavailable
+// (its API has returned 401 since late October 2026) the schedule strip and
+// the season record still advance from the published finals instead of
+// freezing at the last successful scan. Edition finals win per date: on game
+// night the verified score lands in the edition first.
+try {
+  const derived = {};
+  for (const { edition } of editions) {
+    if (edition.state !== 'final' || !edition.finalScore) continue;
+    const isHome = edition.home?.name === publication.schoolName;
+    const isAway = edition.away?.name === publication.schoolName;
+    if (isHome === isAway) continue;
+    const us = isHome ? edition.finalScore.home : edition.finalScore.away;
+    const them = isHome ? edition.finalScore.away : edition.finalScore.home;
+    if (!Number.isInteger(us) || !Number.isInteger(them)) continue;
+    derived[edition.date] = { outcome: us > them ? 'W' : us < them ? 'L' : 'T', us, them };
+  }
+  const file = 'content/season-data.json';
+  const before = await readFile(path.join(root, file), 'utf8').catch(() => '');
+  const previous = before ? JSON.parse(before) : { results: {}, records: {} };
+  const merged = { ...(previous.results ?? {}), ...derived };
+  if (JSON.stringify(previous.results ?? {}) !== JSON.stringify(merged)) {
+    for (const [date, value] of Object.entries(derived)) {
+      const was = previous.results?.[date];
+      if (!was || was.us !== value.us || was.them !== value.them) {
+        changes.push(`${file}: ${date} result (from final edition) -> ${value.outcome} ${value.us}–${value.them}`);
+      }
+    }
+    if (!dryRun) {
+      const next = { ...previous, results: merged };
+      await writeFile(path.join(root, file), `${JSON.stringify(next, null, 2)}\n`);
+    }
+  }
+} catch (error) {
+  problems.push(`results from editions: ${error.message}`);
+}
+
 // Statewide computer rank still comes from Dave Campbell's, when its team
 // page links a current rankings article.
 let ranks = null;
