@@ -62,14 +62,14 @@
     "asOf": "2026-09-29T16:47:34.324Z"
   },
   "weather": {
-    "tempF": 69,
+    "tempF": 68,
     "condition": "Partly Cloudy",
-    "precipPct": 2,
-    "humidityPct": 66,
-    "wind": "5 mph NE",
+    "precipPct": 1,
+    "humidityPct": 68,
+    "wind": "5 mph N",
     "source": "National Weather Service",
     "sourceUrl": "https://www.weather.gov/",
-    "asOf": "2026-11-02T13:43:30.542Z"
+    "asOf": "2026-11-02T20:37:53.095Z"
   },
   "scheduledFacts": [],
   "resultFacts": [],
@@ -145,5 +145,5 @@
     "MaxPreps",
     "Dave Campbell’s Texas Football"
   ],
-  "current": false
+  "current": true
 }
