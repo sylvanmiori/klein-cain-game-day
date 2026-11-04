@@ -10,7 +10,7 @@
   "kickoff": "7:00 PM",
   "venue": "Klein Memorial Stadium",
   "event": "",
-  "updated": "2026-10-30T18:47:44Z",
+  "updated": "2026-11-04T13:52:00Z",
   "home": {
     "name": "Klein Forest",
     "mascot": "Eagles",
@@ -97,10 +97,200 @@
         }
       ]
     },
-    "players": [],
-    "recruiting": null,
-    "keys": null,
-    "gameInfo": null
+    "players": [
+      {
+        "team": "CAIN",
+        "number": "16",
+        "name": "Eyan Johnson",
+        "image": "/players/eyan-johnson.jpg",
+        "role": "RB / SB · Senior",
+        "tag": "79.7 rushing yards per game",
+        "rating": "13 total TDs · 12 rushing",
+        "copy": "**Eyan Johnson (#16)** closes his Cain career as the engine of the offense: a team-high **79.7** rushing yards per game and **13** total touchdowns, 12 of them on the ground. Klein Forest has allowed **407** points in nine games, and Johnson is the back most likely to add to that total early."
+      },
+      {
+        "team": "CAIN",
+        "number": "9",
+        "name": "Jace Hanks",
+        "image": "/players/jace-hanks.jpg",
+        "role": "QB · Junior",
+        "tag": "13 passing touchdowns",
+        "rating": "71.0 rushing yards per game",
+        "copy": "**Jace Hanks (#9)** has thrown **13** touchdown passes this season with a **104.6** quarterback rating, including two scores against Magnolia last week. He is also Cain's second-leading rusher at **71.0** yards per game, so Forest has to defend his legs as much as his arm in his final start of the season."
+      },
+      {
+        "team": "CAIN",
+        "number": "8",
+        "name": "Israel Smith",
+        "image": "/players/israel-smith.jpg",
+        "role": "WR · Sophomore",
+        "tag": "3 receiving touchdowns",
+        "rating": "55-yard TD vs Magnolia",
+        "copy": "**Israel Smith (#8)** turned a slant into a **55-yard** touchdown against Magnolia, the score that put Cain in front in the third quarter. The sophomore is tied for the team lead with **3** receiving touchdowns, and one more on Friday would be a fitting end to a breakout season."
+      },
+      {
+        "team": "CAIN",
+        "number": "47",
+        "name": "Easton Mizell",
+        "image": "/players/easton-mizell.jpg",
+        "role": "DB / FS · Junior",
+        "tag": "Team-high 3 interceptions",
+        "rating": "Anchors the Cain secondary",
+        "copy": "**Easton Mizell (#47)** leads Cain with **3** interceptions, and the finale sets up his kind of game: a run-first opponent that has thrown one touchdown pass all season. If Forest is forced to throw while chasing the game, Mizell is the Hurricane most likely to be waiting on it."
+      },
+      {
+        "team": "CAIN",
+        "number": "34",
+        "name": "Gage Hansberger",
+        "image": "/players/gage-hansberger.jpg",
+        "role": "LB · Senior",
+        "tag": "7.1 tackles per game",
+        "rating": "Team-high tackles average",
+        "copy": "**Gage Hansberger (#34)** leads Cain at **7.1** tackles per game, and his finale assignment is the simplest one on the scouting report: wherever **Dejaune Etheridge (#0)** goes, Hansberger has to get there first. The senior linebacker draws Forest's best player all night."
+      },
+      {
+        "team": "KLEIN FOREST",
+        "number": "0",
+        "name": "Dejaune Etheridge",
+        "image": "/player-placeholder.svg",
+        "role": "RB / SB · Senior",
+        "tag": "65.0 rushing yards per game",
+        "rating": "8 rushing touchdowns",
+        "copy": "**Dejaune Etheridge (#0)** is the Klein Forest offense. The senior leads the Golden Eagles at **65.0** rushing yards per game with **8** rushing touchdowns, ran for **200** yards and three scores in their only win, and scored all three Forest touchdowns at Magnolia on October 23. Slow him down and Forest has to find a second act it has rarely shown this season."
+      },
+      {
+        "team": "KLEIN FOREST",
+        "number": "4",
+        "name": "Jaylon Williams",
+        "image": "/player-placeholder.svg",
+        "role": "QB / WR · Junior",
+        "tag": "41.2 rushing yards per game",
+        "rating": "4 rushing TDs · 1 passing TD",
+        "copy": "**Jaylon Williams (#4)** gives Forest a second runner at quarterback: **41.2** rushing yards per game and **4** rushing touchdowns, completing **58.0** percent of his passes when he does throw. Cain's edge discipline gets tested every time he keeps the ball."
+      },
+      {
+        "team": "KLEIN FOREST",
+        "number": "18",
+        "name": "Ryan Langford-Mathis",
+        "image": "/player-placeholder.svg",
+        "role": "WR · Junior",
+        "tag": "69.0 receiving yards per game",
+        "rating": "Forest's clear No. 1 target",
+        "copy": "**Ryan Langford-Mathis (#18)** is Forest's one proven downfield threat at **69.0** receiving yards per game, more than triple the Golden Eagles' next receiver. When Forest throws, it is usually looking for him, and Cain's secondary can shade his way."
+      },
+      {
+        "team": "KLEIN FOREST",
+        "number": "22",
+        "name": "Aadeyn Brown",
+        "image": "/player-placeholder.svg",
+        "role": "RB / TE · Senior",
+        "tag": "20.7 rushing yards per game",
+        "rating": "Change-of-pace back",
+        "copy": "**Aadeyn Brown (#22)** spells Etheridge in the backfield at **20.7** rushing yards per game. Forest leans on its ground game because the passing attack has produced just **one** touchdown all season, so Brown's carries matter more than the total suggests."
+      }
+    ],
+    "recruiting": {
+      "heading": "Klein Forest recruiting notes",
+      "note": "The finale brings the quietest recruiting board of the season. A roster-wide check of On3, 247Sports and Rivals indexed coverage on November 2 found no Klein Forest player with a verified commitment, offer list or recruiting ranking, and the Golden Eagles' best player is no exception. Cain's one rated recruit remains its junior back, whose offer list was verified in late October.",
+      "rows": [
+        {
+          "name": "Dejaune Etheridge",
+          "note": "Forest's senior workhorse (65.0 rushing yards per game, 8 rushing touchdowns, a 200-yard and three-touchdown game against Magnolia West) has no recruiting profile, offer list or commitment in On3, 247Sports or Rivals indexed coverage as of November 2. Production has not translated into recruiting attention yet.",
+          "href": "https://sportcastmedia.com/week-9-football-preview-capsule-klein-forest-at-magnolia/"
+        },
+        {
+          "name": "Ryan Langford-Mathis",
+          "note": "Forest's leading receiver at 69.0 yards per game likewise has no verified recruiting profile or offers in indexed On3, 247Sports or Rivals coverage as of November 2.",
+          "href": "https://www.maxpreps.com/tx/houston/klein-forest-eagles/football/stats/"
+        },
+        {
+          "name": "Earl Oguinn Jr.",
+          "note": "Cain's junior back is a three-star recruit in the class of 2028 (On3 industry rating 83.67, the No. 49 running back in the class). As verified October 25, On3 lists offers from SMU, LSU, Iowa State, Missouri State and UTSA.",
+          "href": "https://www.on3.com/rivals/earl-oguinn-jr-286130/"
+        }
+      ]
+    },
+    "keys": {
+      "heading": "Four keys for Klein Cain",
+      "items": [
+        {
+          "title": "Win the Etheridge matchup",
+          "body": "Everything Forest does runs through **Dejaune Etheridge (#0)**, who has scored **8** of the Golden Eagles' rushing touchdowns and all three of their scores at Magnolia. Cain's front has to set the edge, gang-tackle him and make someone else beat them. If Etheridge is held near his **65.0** yards per game or below, Forest's offense stalls."
+        },
+        {
+          "title": "Start fast and make Forest chase",
+          "body": "Forest has scored **120** points in nine games, **13.3** a night, and its passing game has produced **one** touchdown. An early two-score lead forces the Golden Eagles out of the only thing they do well. Cain has started slowly in its losses; the finale is the night to flip that script in the first quarter."
+        },
+        {
+          "title": "No freebies for a team with nothing to lose",
+          "body": "A 1-8 team playing its finale at home will empty the playbook: fakes, onside kicks, fourth-down gambles. Cain cannot hand that kind of team short fields or cheap points. Clean special teams, no turnovers in its own end, and make Forest drive the length of the field for everything it gets."
+        },
+        {
+          "title": "Finish drives, finish the season",
+          "body": "Cain averages **35.9** points a game but settled too often in the losses that ended the playoff chase. Friday is about the seniors: turn red-zone trips into touchdowns, close out a **6-4** finish, and send the class of 2027 out with a winning season and a win in its last game together."
+        }
+      ]
+    },
+    "gameInfo": {
+      "heading": "Game information",
+      "facts": [
+        {
+          "label": "Kickoff",
+          "value": "Friday, November 6 · 7:00 PM"
+        },
+        {
+          "label": "Site",
+          "value": "Klein Memorial Stadium · Klein, TX"
+        },
+        {
+          "label": "District",
+          "value": "15-6A"
+        },
+        {
+          "label": "The stakes",
+          "value": "Regular-season finale · Cain (5-4, 3-4) plays for a 6-4 finish and a winning season · The playoff chase ended with the October 29 loss to Magnolia"
+        },
+        {
+          "label": "District race",
+          "value": "One playoff spot remains · Klein Collins (4-3) at Klein Oak (5-2) on Thursday decides the fourth berth · Klein (7-1) has clinched first place"
+        },
+        {
+          "label": "Head coaches",
+          "value": "James Clancy (Klein Cain) · Darrick Vaughn (Klein Forest)"
+        },
+        {
+          "label": "Theme",
+          "value": "Wear Camo · Cain student-section theme for the finale"
+        }
+      ],
+      "links": []
+    },
+    "playerStatsAudit": {
+      "asOf": "2026-11-04",
+      "sources": [
+        {
+          "team": "Klein Cain",
+          "games": 9,
+          "source": "MaxPreps",
+          "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/",
+          "sourceUpdated": "2026-10-30T15:05:00Z"
+        },
+        {
+          "team": "Klein Forest",
+          "games": 9,
+          "source": "MaxPreps",
+          "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-forest-eagles/football/stats/",
+          "sourceUpdated": "2026-10-26T15:14:00Z"
+        }
+      ]
+    },
+    "opponentRecruitingAudit": {
+      "source": "On3, 247Sports and Rivals indexed coverage checked against the full MaxPreps Klein Forest roster (51 players); name searches on Dejaune Etheridge and Edmond Simmons found no profile, offer list or commitment; On3 class of 2027 roster for Klein Forest is empty",
+      "sourceUrl": "https://www.maxpreps.com/tx/houston/klein-forest-eagles/football/roster/",
+      "asOf": "2026-11-02T12:00:00Z",
+      "committedPlayers": [],
+      "eliteProspects": []
+    }
   },
   "final": null,
   "sources": [
@@ -135,6 +325,22 @@
     {
       "label": "MaxPreps: District 15-6A standings",
       "href": "https://www.maxpreps.com/tx/football/26-27/district/6a-region-ii-district-15/?leagueid=af5271e6-8bb8-4df8-a493-0a3f59161a00"
+    },
+    {
+      "label": "MaxPreps: Klein Cain 2026-27 team stats (updated Oct 30, 2026)",
+      "href": "https://www.maxpreps.com/tx/houston/klein-cain-hurricanes/football/stats/"
+    },
+    {
+      "label": "MaxPreps: Klein Forest 2026-27 team stats (updated Oct 26, 2026)",
+      "href": "https://www.maxpreps.com/tx/houston/klein-forest-eagles/football/stats/"
+    },
+    {
+      "label": "MaxPreps: Klein Forest 2026-27 roster",
+      "href": "https://www.maxpreps.com/tx/houston/klein-forest-eagles/football/roster/"
+    },
+    {
+      "label": "Klein Cain Cheer (@cain.cheer): Wear Camo student theme for the finale (Nov 3, 2026)",
+      "href": "https://www.instagram.com/p/DfR8hbVKtcs/"
     }
   ],
   "footerNote": "Independent fan publication · Facts on this page refresh from public sources.",
