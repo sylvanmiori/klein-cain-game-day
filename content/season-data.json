@@ -74,12 +74,6 @@
         "next": ""
       },
       {
-        "team": "Klein Oak Panthers",
-        "district": "5–2",
-        "overall": "5–4",
-        "next": ""
-      },
-      {
         "team": "Tomball Cougars",
         "district": "5–2",
         "overall": "7–2",
@@ -87,8 +81,14 @@
       },
       {
         "team": "Klein Collins Tigers",
-        "district": "4–3",
-        "overall": "5–4",
+        "district": "5–3",
+        "overall": "6–4",
+        "next": ""
+      },
+      {
+        "team": "Klein Oak Panthers",
+        "district": "5–3",
+        "overall": "5–5",
         "next": ""
       },
       {
@@ -118,7 +118,7 @@
     ],
     "source": "MaxPreps",
     "sourceUrl": "https://www.maxpreps.com/tx/football/26-27/district/6a-region-ii-district-15/?leagueid=af5271e6-8bb8-4df8-a493-0a3f59161a00",
-    "asOf": "2026-10-31T12:42:18.309Z"
+    "asOf": "2026-11-06T13:34:40.529Z"
   },
   "source": "Dave Campbell’s Texas Football",
   "sourceUrl": "https://www.texasfootball.com/scores/",
