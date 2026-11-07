@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "slug": "2026-11-06-klein-forest",
-  "status": "live",
-  "statusLabel": "Q4",
+  "status": "final",
+  "statusLabel": "Final",
   "homeScore": 24,
   "awayScore": 66,
   "homeRecord": "",
   "awayRecord": "",
-  "updatedAt": "2026-11-07T03:59:47Z",
+  "updatedAt": "2026-11-07T04:07:42Z",
   "source": "Manual update",
   "sourceUrl": "https://kleincain.gameday.report/"
 }
