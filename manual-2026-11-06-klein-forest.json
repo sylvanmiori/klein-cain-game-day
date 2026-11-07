@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "slug": "2026-11-06-klein-forest",
   "status": "live",
-  "statusLabel": "Halftime",
+  "statusLabel": "Q3",
   "homeScore": 10,
   "awayScore": 38,
   "homeRecord": "",
   "awayRecord": "",
-  "updatedAt": "2026-11-07T02:30:31.137531Z",
+  "updatedAt": "2026-11-07T02:58:00.362356Z",
   "source": "Manual update",
   "sourceUrl": "https://kleincain.gameday.report/"
 }
