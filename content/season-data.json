@@ -44,6 +44,11 @@
       "outcome": "L",
       "us": 34,
       "them": 37
+    },
+    "2026-11-06": {
+      "outcome": "W",
+      "us": 66,
+      "them": 24
     }
   },
   "records": {
@@ -93,8 +98,8 @@
       },
       {
         "team": "Klein Cain Hurricanes",
-        "district": "3–4",
-        "overall": "5–4",
+        "district": "4–4",
+        "overall": "6–4",
         "next": ""
       },
       {
@@ -105,8 +110,8 @@
       },
       {
         "team": "Klein Forest Eagles",
-        "district": "1–6",
-        "overall": "1–8",
+        "district": "1–7",
+        "overall": "1–9",
         "next": ""
       },
       {
@@ -118,9 +123,9 @@
     ],
     "source": "MaxPreps",
     "sourceUrl": "https://www.maxpreps.com/tx/football/26-27/district/6a-region-ii-district-15/?leagueid=af5271e6-8bb8-4df8-a493-0a3f59161a00",
-    "asOf": "2026-11-06T13:34:40.529Z"
+    "asOf": "2026-11-07T04:20:02.000Z"
   },
   "source": "Dave Campbell’s Texas Football",
   "sourceUrl": "https://www.texasfootball.com/scores/",
-  "asOf": "2026-10-24T02:49:17.323948Z"
+  "asOf": "2026-11-07T04:20:02.000Z"
 }

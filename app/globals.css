@@ -94,6 +94,21 @@ a { color:inherit; text-decoration:none; }
 .home-recap-cta:hover { background:linear-gradient(180deg,#5a268f 0%,#4f1f7d 100%); transform:translateY(-1px); box-shadow:0 6px 18px rgba(97,38,148,0.35); color:#ffffff; }
 .home-recap-photos-link { color:var(--purple); font-size:12px; font-weight:750; transition:color .15s ease; }
 .home-recap-photos-link:hover { color:#4f1f7d; text-decoration:underline; }
+.home-recap-hasbg { grid-template-columns:1fr; background:#0c0812; border-color:rgba(97,38,148,0.35); }
+.home-recap-bg { position:absolute; inset:0; overflow:hidden; }
+.home-recap-bg img { display:block; width:100%; height:100%; object-fit:cover; object-position:82% center; }
+.home-recap-bg-scrim { position:absolute; inset:0; background:linear-gradient(90deg,#0c0812 0%,rgba(12,8,18,0.95) 32%,rgba(12,8,18,0.66) 54%,rgba(12,8,18,0.15) 78%,transparent 92%); pointer-events:none; }
+.home-recap-hasbg .home-recap-body { position:relative; z-index:1; background:transparent; max-width:620px; }
+.home-recap-hasbg .home-kicker { color:#b8a8cc; }
+.home-recap-hasbg .home-recap-week { color:#cfc4dd; }
+.home-recap-hasbg .home-recap-head time { color:#a79fb5; }
+.home-recap-hasbg .home-recap-headline a { color:#ffffff; }
+.home-recap-hasbg .home-recap-headline a:hover { color:#d9c8f5; }
+.home-recap-hasbg .home-recap-excerpt { color:rgba(240,238,245,0.86); }
+.home-recap-hasbg .home-recap-performer { background:rgba(255,255,255,0.07); border-color:rgba(255,255,255,0.14); }
+.home-recap-hasbg .performer-name { color:#ffffff; }
+.home-recap-hasbg .performer-stat { color:rgba(240,238,245,0.8); }
+@media(max-width:900px){.home-recap-hasbg .home-recap-body{max-width:none}.home-recap-bg img{object-position:78% 36%}.home-recap-bg-scrim{background:linear-gradient(90deg,rgba(12,8,18,0.97) 0%,rgba(12,8,18,0.88) 58%,rgba(12,8,18,0.55) 100%)}}
 .recap-photos { padding:0 var(--pad) 8px; }
 .social-buzz { padding:44px var(--pad) 52px; }
 .social-buzz .section-head { margin-bottom:22px; }

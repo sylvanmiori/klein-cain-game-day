@@ -30,6 +30,7 @@ export type RecapFeature = {
   } | null;
   photoCount: number;
   photo: { src: string; alt: string; caption: string } | null;
+  background: string | null;
 };
 
 export function ProgramHomeSpotlight({
@@ -75,7 +76,13 @@ export function ProgramHomeSpotlight({
       )}
 
       {recap && (
-        <article className={`home-recap${featuredIsFinal ? ' home-recap-feature' : ''}`} aria-labelledby="home-recap-title">
+        <article className={`home-recap${featuredIsFinal ? ' home-recap-feature' : ''}${recap.background && !recap.photo ? ' home-recap-hasbg' : ''}`} aria-labelledby="home-recap-title">
+          {recap.background && !recap.photo && (
+            <div className="home-recap-bg" aria-hidden="true">
+              <img src={sitePath(recap.background)} alt="" />
+              <div className="home-recap-bg-scrim" />
+            </div>
+          )}
           {recap.photo && (
             <div className="home-recap-visual">
               <a href={recap.href} className="home-recap-visual-link" tabIndex={-1} aria-hidden="true">
@@ -159,9 +166,10 @@ export function buildRecapLink(edition: Edition | null): RecapFeature | null {
   const leadPhoto = photoWithUse(gallery, 'lead');
   const thumbPhoto = photoWithUse(gallery, 'thumb');
   const chosenPhoto = homePhoto || leadPhoto || thumbPhoto;
-  const fallbackThumb = edition.gameStats?.playerOfGame?.image
-    || (edition.ogImage && edition.ogImage.length > 0 && !edition.ogImage.includes('og.png') ? edition.ogImage : null)
-    || '/hero-helmet.jpg';
+  // The helmet art is a background plate (dark left, helmet right), never a
+  // feature photo. Only a real gallery photo of the game becomes the visual;
+  // without one the card renders the recap copy over the helmet background.
+  const fallbackBg = '/hero-helmet.jpg';
 
   const isCainHome = edition.home.name === publication.schoolName;
   const cainScore = isCainHome ? edition.final.homeScore : edition.final.awayScore;
@@ -185,6 +193,7 @@ export function buildRecapLink(edition: Edition | null): RecapFeature | null {
     photoCount: gallery?.photos.length ?? 0,
     photo: chosenPhoto
       ? { src: chosenPhoto.src, alt: chosenPhoto.alt, caption: chosenPhoto.caption }
-      : { src: fallbackThumb, alt: edition.final.headline, caption: '' },
+      : null,
+    background: chosenPhoto ? null : fallbackBg,
   };
 }
