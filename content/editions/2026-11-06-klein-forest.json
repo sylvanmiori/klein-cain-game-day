@@ -793,7 +793,12 @@
       {
         "label": "Rushing",
         "value": "327 yards",
-        "detail": "36 carries · 0 TD"
+        "detail": "36 carries · 3 TD"
+      },
+      {
+        "label": "Kicking",
+        "value": "12 points",
+        "detail": "9/9 PAT · 1/1 FG"
       }
     ],
     "leaders": [
@@ -809,19 +814,26 @@
         "name": "Eyan Johnson",
         "number": "16",
         "stat": "113 rushing yards",
-        "detail": "16 carries · 0 TD"
+        "detail": "16 carries · 2 TD"
       },
       {
         "category": "Receiving",
         "name": "Deaunte Barr",
         "number": "18",
         "stat": "85 receiving yards",
-        "detail": "6 catches · 0 TD"
+        "detail": "6 catches · 1 TD"
+      },
+      {
+        "category": "Kicking",
+        "name": "Sage DesAutels",
+        "number": "4",
+        "stat": "11 kicking points",
+        "detail": "8/8 PAT · 1/1 FG"
       }
     ],
-    "updated": "2026-11-07T07:21:04",
+    "updated": "2026-11-07T09:28:58",
     "source": "MaxPreps",
     "sourceUrl": "https://www.maxpreps.com/tx/football/game/klein-cain-houston-vs-klein-forest-houston/11-6-2026/?c=d0221356-eb2c-44f4-9ab9-bda4a6f94c23&tab=Stats",
-    "asOf": "2026-11-07T16:44:00.341Z"
+    "asOf": "2026-11-07T18:23:13.824Z"
   }
 }
