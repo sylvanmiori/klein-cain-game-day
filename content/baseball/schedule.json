@@ -1,6 +1,6 @@
 {
-  "scraped_at": "2026-11-08T12:07:05.239Z",
-  "snapshot_date": "2026-11-08",
+  "scraped_at": "2026-11-12T17:47:59.425Z",
+  "snapshot_date": "2026-11-12",
   "source": "Perfect Game",
   "source_url": "https://www.perfectgame.org/PGBA/Team/default.aspx?orgid=69753&orgteamid=297202&Year=2027",
   "team": {
@@ -150,9 +150,9 @@
       "pos": "OF",
       "bt": "L/L",
       "grad_year": 2030,
-      "ht": "5-0",
-      "wt": 96,
-      "hs": null,
+      "ht": "5-4",
+      "wt": 115,
+      "hs": "Klein",
       "hometown": "Houston, TX",
       "rank": null,
       "commitment": null
