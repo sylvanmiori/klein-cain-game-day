@@ -123,7 +123,8 @@ export interface ApiPlayer {
 
 export interface ApiGame {
   id: number;
-  date: string;
+  // The stats API returns null for box scores saved without a date.
+  date: string | null;
   opponent: string;
   tournament?: string;
   venue?: string;

@@ -98,7 +98,8 @@ function formatRate(value: number | null | undefined, digits = 3): string {
   return fixed.startsWith('0.') ? fixed.slice(1) : fixed;
 }
 
-function formatGameDate(date: string, short = false): string {
+function formatGameDate(date: string | null, short = false): string {
+  if (!date) return '';
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
   if (!match) return date;
   return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3])).toLocaleDateString(
@@ -111,7 +112,7 @@ function formatGameDate(date: string, short = false): string {
 
 function seasonYearFromGames(games: PlayerGameLogEntry[]): number {
   for (const entry of games) {
-    const m = /^(\d{4})-/.exec(entry.game.date);
+    const m = entry.game.date ? /^(\d{4})-/.exec(entry.game.date) : null;
     if (m) return Number(m[1]);
   }
   return new Date().getFullYear();

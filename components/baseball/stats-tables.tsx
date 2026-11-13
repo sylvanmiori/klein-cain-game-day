@@ -53,7 +53,8 @@ function formatCell(value: unknown, fmt?: number): string {
   return '-';
 }
 
-function formatGameDate(date: string): string {
+function formatGameDate(date: string | null): string {
+  if (!date) return '';
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
   if (!match) return date;
   return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3])).toLocaleDateString('en-US', {
@@ -156,7 +157,9 @@ export function BaseballStatsTables() {
   }, [data, pitSort]);
 
   const games = useMemo(
-    () => [...(data?.games ?? [])].sort((a, b) => b.date.localeCompare(a.date) || b.id - a.id),
+    // Saved games can have a null date (box scores submitted without one).
+    // Undated games sort after dated ones, newest submission first.
+    () => [...(data?.games ?? [])].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? '') || b.id - a.id),
     [data],
   );
 

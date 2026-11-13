@@ -45,7 +45,8 @@ const PITCHING_COLS = [
   ['sv', 'SV'],
 ] as const;
 
-function formatDate(date: string): string {
+function formatDate(date: string | null): string {
+  if (!date) return '';
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
   if (!match) return date;
   return new Date(
