@@ -51,6 +51,9 @@ export function TeamPage() {
             {publication.schoolName} {publication.schoolMascot} Football
           </h1>
           <p>{seasonRecord()} · District 15-6A · 2026 season</p>
+          <p className="program-lede">
+            Klein Cain football, covered game by game. The Hurricanes play in District 15-6A out of Klein Memorial Stadium in Spring, Texas, under head coach James Clancy, who has led the program since it opened in 2017. Cain finished 2026 at 6-4, closing the season with a 66-24 win at Klein Forest. Follow the full schedule and scores, game recaps, season stats, complete varsity roster, and weekly photo galleries throughout the season.
+          </p>
         </div>
 
         <ProgramHomeSpotlight featured={featured} previewHref={previewHref} recap={recap} />
